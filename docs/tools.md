@@ -1,0 +1,84 @@
+# Tools Guide
+
+## Available Tools
+
+| Tool | Key | Description |
+|------|-----|-------------|
+| Brush | B | Paint tiles. Supports multi-tile stamps and adjustable brush size. Shift+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
+| Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Shift+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
+| Fill | F | Flood-fill a contiguous area with the selected tile. |
+| Rectangle | R | Click and drag to fill a rectangular area. Tile pattern preview shown while dragging. |
+| Eyedropper | I | Pick a tile and its properties from the canvas. |
+| Select | S | Click and drag to select an area. Drag the selection to move tiles. Ctrl+drag to add tiles, Shift+drag to remove tiles from selection. |
+| Pan | Space (hold) | Pan the viewport. |
+
+## Brush Properties
+
+When a tool is active you can adjust per-tile properties before painting. These are set in the Tile Properties panel:
+
+- **Opacity**: 0--255 (how transparent the tile appears).
+- **Rotation**: 0--360 degrees.
+- **Hue**: 0--360 (color shift).
+- **Saturation**: 0--200 (color intensity).
+- **Lighting**: -255 to 255 (brightness).
+- **Flip H / Flip V**: Flip the tile horizontally or vertically.
+
+### Lock (🔓 / 🔒)
+
+The lock button in the Tile Properties panel header controls what happens when you pick a different tile.
+
+- **Unlocked** (default): selecting another tile resets all brush properties to defaults — you start each tile fresh.
+- **Locked**: the current brush properties stay applied to whatever you pick next, so you can paint many different tiles with the same effect.
+
+The lock state is remembered across sessions. The Eyedropper always applies the picked tile's properties regardless of the lock state — picking with the eyedropper is treated as "give me this exact tile."
+
+### Presets
+
+Click **Presets…** in the Tile Properties panel header to open the preset manager. From here you can:
+
+- **Save current** as a new named preset — useful for combinations you reuse (e.g. "Faded Night", "Sepia").
+- **Apply** a saved preset to the current brush — the dialog closes after applying.
+- **Rename** an existing preset.
+- **Overwrite** a preset with the current brush values.
+- **Delete** a preset.
+
+A preview canvas shows what the highlighted preset would look like applied to the currently selected tile. Presets are stored per-install (shared across all your projects) and remembered across sessions.
+
+## Brush & Eraser Size
+
+Use the `[` and `]` keys to decrease or increase the brush size while the brush tool is active, or the eraser size while the eraser tool is active. Alt + scroll also adjusts the active tool's size.
+
+## Line Painting (Shift+Click)
+
+With the Brush or Eraser tool active, paint at one position, then hold Shift and paint at another position. A straight line is drawn between the two points using Bresenham's algorithm. The line width matches your current brush or eraser size. This works diagonally as well as on axis-aligned lines. A preview of the line is shown while Shift is held.
+
+## Axis-Locked Painting (Ctrl+Drag)
+
+With the Brush or Eraser tool active, hold Ctrl and drag. The first tile you move off the click position picks the axis (horizontal or vertical, whichever you moved farther on), and all subsequent painting snaps to that single axis. Releasing Ctrl mid-stroke unlocks and resumes free painting. Useful for clean straight lines without needing to reach for Shift+click.
+
+## Multi-Tile Stamps
+
+To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. The entire stamp follows your cursor while painting. Press Q or W to rotate the stamp counter-clockwise or clockwise. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
+
+## Selection Tool
+
+- **Click and drag**: Select a rectangular area.
+- **Ctrl + click/drag**: Add tiles to the current selection (union).
+- **Shift + click/drag**: Remove tiles from the current selection (difference).
+- **Click on a selected tile + drag**: Move the selection to a new position.
+- **Ctrl+A**: Select all tiles on the current layer.
+
+Selections can be non-rectangular when using Ctrl/Shift. The highlight overlay makes selected cells visible with a gold fill and cell borders.
+
+## Copy and Paste
+
+- Ctrl+C copies the selected area with full tile data (including per-tile properties on extended layers).
+- Ctrl+V enters paste preview mode. Move your cursor to position the paste, then click to commit.
+- Press Escape to cancel the paste preview.
+
+## Quick Reference
+
+- Alt + click acts as an eyedropper without switching away from your current tool.
+- Right-click opens a context menu.
+- Q and W rotate the brush or stamp counter-clockwise and clockwise.
+- Ctrl + drag with the Brush or Eraser locks painting to a single axis.
