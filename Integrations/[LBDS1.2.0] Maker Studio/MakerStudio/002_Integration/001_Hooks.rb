@@ -63,7 +63,7 @@ module MakerStudio
     when :windows
       [ENV["LOCALAPPDATA"], ENV["PROGRAMFILES"], ENV["PROGRAMFILES(X86)"], ENV["APPDATA"]].each do |base|
         next unless base
-        exe = File.join(base, "Maker Studio", "Maker Studio.exe")
+        exe = File.join(base, "Maker Studio", "maker-studio.exe")
         return exe if File.exist?(exe)
       end
     when :macos
