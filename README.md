@@ -34,7 +34,8 @@ reference, tutorials, and publishing guide.
 
 To use Maker Studio with a game, install the matching engine-side plugin from
 [`Integrations/`](Integrations/) (e.g. La Base de Sky), then download the editor app above. Each
-integration is also attached as a `.zip` on the Releases page.
+integration is also published as a `.zip` in the separate **Maker Studio Integrations** release on
+the [Releases](https://github.com/Toskan4134/maker-studio/releases) page.
 
 ## About this repository
 
