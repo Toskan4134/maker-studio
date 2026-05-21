@@ -21,15 +21,20 @@ Open the resize dialog from Edit then Resize / Shift Map, or right-click a map i
 
 ### Resizing
 
-Enter the new width and height. The map expands or shrinks from the top-left corner. Any tiles, events, or shadows outside the new bounds are permanently removed.
+Enter the new width and height. A **9-way anchor pad** decides where the existing content lands in the new canvas — pick the center to keep the map centered as it grows or shrinks, or a corner/edge to anchor there. The dialog auto-computes the shift from your anchor choice.
 
-### Shifting
+### Wrap
 
-Use the directional pad in the dialog to shift all tiles, events, and shadows by a set number of tiles in any direction. Shifting uses toroidal wrapping, meaning tiles that move off one edge reappear on the opposite side.
+A **Wrap** toggle (on by default) controls what happens to content that falls outside the new bounds:
 
-### Preview
+- **Wrap on**: tiles, events, and shadows that move off one edge reappear on the opposite side (toroidal wrap).
+- **Wrap off**: anything outside the new bounds is dropped.
 
-The dialog shows live counts of tiles and events that will be affected before you commit, so you can verify the impact before making changes.
+You can also shift content manually by overriding the computed shift values.
+
+### Preview & Undo
+
+An SVG preview shows where your content will sit inside the new canvas before you commit. The resize is a single undo step — press Ctrl+Z afterward to restore the original size and content.
 
 ## Changing a Map's Tileset
 

@@ -2,7 +2,7 @@
 
 ## Viewing Events
 
-Toggle event markers by pressing V or clicking the Events button in the toolbar. Events appear as colored markers on the canvas. When you hover your cursor over an event, the status bar at the bottom shows the event's name.
+Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
 
 ## Creating Events
 
@@ -33,7 +33,7 @@ Control when a page becomes active:
 
 - **Switch 1 / Switch 2**: Require specific switches to be ON.
 - **Variable**: Compare a game variable against a value.
-- **Self Switch**: Check a self switch (A, B, C, or D).
+- **Self Switch**: Check a self switch (A through Z — A–D are the RPG Maker XP standard; E–Z work at runtime in Pokémon Essentials).
 
 ### Graphic
 

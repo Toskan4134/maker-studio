@@ -64,10 +64,12 @@ All shortcuts are customizable via **Edit → Keyboard Shortcuts...**. The defau
 
 | Default Key | Action |
 |-------------|--------|
-| Ctrl+S | Save map |
-| Ctrl+Shift+S | Create shadow from selection |
+| Ctrl+S | Save current map |
+| Ctrl+Shift+S | Save all open maps |
+| Ctrl+Alt+S | Create shadow from selection |
 | Ctrl+Z | Undo |
 | Ctrl+Y | Redo |
+| Ctrl+Enter | Run game |
 
 ## Selection
 
@@ -75,9 +77,12 @@ All shortcuts are customizable via **Edit → Keyboard Shortcuts...**. The defau
 |-------------|--------|
 | Ctrl+A | Select all |
 | Ctrl+D | Deselect (tiles + any selected shadow) |
-| Ctrl+C | Copy selection |
+| Ctrl+C | Copy selection (active layer) |
 | Ctrl+V | Paste (preview mode -- click to commit) |
 | Ctrl+X | Cut selection |
+| Ctrl+Shift+C | Copy all layers |
+| Ctrl+Shift+V | Paste to original layers |
+| Ctrl+Shift+X | Cut all layers |
 | Ctrl + click/drag | Add tiles to selection |
 | Shift + click/drag | Remove tiles from selection |
 | Delete | Delete selection |
@@ -131,6 +136,19 @@ All shortcuts are customizable via **Edit → Keyboard Shortcuts...**. The defau
 | Default Key | Action |
 |-------------|--------|
 | Delete | Delete selected event |
+
+## Game Simulator
+
+| Default Key | Action |
+|-------------|--------|
+| Space | Play / Pause |
+| . | Step one frame |
+| R | Restart |
+| Esc | Close simulator |
+| C | OK / action button |
+| X | Cancel |
+| Y | Toggle camera mode |
+| Arrow keys | Move player (map simulation) |
 
 ## Tabs
 

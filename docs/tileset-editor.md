@@ -2,7 +2,9 @@
 
 ## Opening the Tileset Editor
 
-Open it from the menu bar: Edit then "Edit Tileset Properties..." You can also right-click a map in the Map Tree and choose "Change Tileset..." If the map's tileset has multiple tilesets associated with it, you will be prompted to select which one to edit.
+Open the **Tileset Manager** from the menu bar: **Edit → Tilesets...** The manager lists every tileset (with a searchable list); select one and click **Edit Properties...** to open the Tileset Editor for it.
+
+(The separate **Edit → Change Tileset...** command is different — it swaps which tileset a *map* uses for its native layers; see [Map Management](map-management.md). It does not edit tile properties.)
 
 ## Overview
 
@@ -37,9 +39,9 @@ Toggle the counter flag. This allows interaction across the tile -- useful for t
 
 Click to cycle through terrain tags 0 through 7. Terrain tags are used by events and scripts for terrain-specific behavior, such as changing movement speed on sand versus road.
 
-## Autotile Slots
+## Editing Autotile Properties
 
-The top row of the Tileset Editor shows previews of each autotile slot. When you edit a property for an autotile slot, the change is applied to all 48 pattern tiles that make up that autotile automatically.
+Autotile passage/priority/terrain are edited separately from regular tilesets. In the Tileset Manager, choose the **Autotiles** entry (shown as `000: Autotiles` at the top of the list) and click **Edit Properties...**. This opens a dedicated grid of every autotile (native slots + named extra autotiles). Editing a property for an autotile applies it to all 48 pattern tiles of that autotile at once and is saved across every tileset that uses it.
 
 ## Saving
 

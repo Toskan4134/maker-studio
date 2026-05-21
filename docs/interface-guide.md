@@ -2,20 +2,21 @@
 
 ## Menu Bar
 
-- **File**: New Map, Export Map (JSON/PNG/GIF), Import Map, Close Tab
-- **Edit**: Undo, Redo, Edit Tileset Properties, Resize/Shift Map, Change Tileset, Switches/Variables
-- **View**: Toggle Grid, Collision, Events, Dim Mode, Dark Mode, Reset Layout
-- **Project**: Run Game
-- **Tools**: Tool selection, Rotate/Flip options
-- **Mods**: Mod Manager
+- **Project**: Open Project, New Map, **Import & Export Maps** (Import from JSON; Export as JSON / PNG / GIF / WebP), Save, Save All, Run Game, Export/Import Configuration, Reset Layout, Toggle DevTools
+- **Edit**: Undo, Redo, Switches, Variables, Tilesets (manager), Resize/Shift Map, Change Tileset, Select All, Deselect, Copy/Cut/Paste (+ all-layers variants), Delete Selection, Generate Shadow from Selection, Delete All Shadows, Keyboard Shortcuts
+- **View**: Panel toggles (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap), Show Grid, Show Collision, Show Events, Dim Inactive Layers, Dark Mode, Zoom In/Out/100%, Reset Layout
+- **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical
+- **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
+- **Info**: Check for Updates, About Maker Studio, Stats
 
 ## Toolbar
 
 The toolbar sits at the top of the window and provides quick access to common actions:
 
-💾 Save | ▶ Run | ➕ New | 🖌️ 🧹 🪣 ⬜ 💧 ⬚ ✋ | 🔍 Zoom | Switches | Variables | Tilesets | Grid | Col | Dim | ☀/☾
+💾 Save | ▶ Run | ▶ Sim Map | ➕ New | 🖌️ 🧹 🪣 ⬜ 💧 ⬚ ✋ | 🔍 Zoom | Switches | Variables | Tilesets | Grid | Col | Dim | ☀/☾
 
 - **Save, Run, New** — emoji + text for visibility.
+- **Sim Map** — opens the [Game Simulator](game-simulator.md) on the current map with player input enabled.
 - **Tools** — emoji only. Hover to see the tool name and keyboard shortcut.
 - **Brush tool** — hover to reveal a size slider popup (1–5).
 - **Zoom** — hover to reveal zoom in/out controls.
