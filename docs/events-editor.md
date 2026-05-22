@@ -70,6 +70,8 @@ Click Insert (or press Insert / Enter) to open the Command Picker. The picker or
 
 A search box at the top filters across all categories.
 
+If you have mods installed that add their own event commands, extra tabs marked with a puzzle icon (**🧩1**, **🧩2**, and so on) appear after the numbered category tabs. Each holds up to 24 mod commands. Pick one just like a built-in command; it edits through its own form (or a script box if the mod didn't define fields). Under the hood the form just writes a normal Script command, so it runs in-game like any other event script. Mod commands can be added to Favourites just like built-in ones.
+
 ### Editing Commands
 
 Double-click a command to edit its parameters. Many commands have dedicated typed forms (Show Text, Control Switches, Conditional Branch, and so on). Commands that do not yet have a typed form show a raw JSON editor instead.
