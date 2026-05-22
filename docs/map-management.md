@@ -68,6 +68,15 @@ File then Export Map as WebP creates an animated WebP. WebP supports the full 24
 
 File then Import Map from JSON loads a previously exported JSON file as a new map in your project.
 
+## Setting the Player Start Position
+
+The player start position is where the player appears when a new game begins. To set it:
+
+1. Right-click any tile on the map you want the game to start on.
+2. Choose **Set as Player Start** from the menu.
+
+A green **Start** marker appears on that tile, and the position is saved to your project immediately (no map save needed). There is only one start position per project — setting a new one moves it. The marker is only drawn on the map it belongs to. To move it, right-click a different tile (on any map) and choose Set as Player Start again.
+
 ## Running the Game
 
 Click the green Run button in the toolbar (or use Project then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
