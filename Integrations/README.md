@@ -7,13 +7,19 @@ your game's `Plugins/`, then install the editor app from the
 [Releases](https://github.com/Toskan4134/maker-studio/releases/latest) page.
 
 The editor application itself is the same across integrations and is **not bundled** — each
-integration only ships the engine-side plugin code plus download links.
+integration only ships the engine-side plugin code plus download links. Most integrations install by
+copying their `MakerStudio/` folder into `Plugins/`; older engines without a `Plugins/` auto-loader
+(e.g. the BES build) ship a single merged `.rb` you paste into the Script Editor — see each
+integration's own `README.md`.
 
 ## Available integrations
 
 | Integration | Target | Requires |
 |-------------|--------|----------|
-| [`[LBDS1.2.0] Maker Studio`](<[LBDS1.2.0] Maker Studio>) | La Base de Sky (fork of Essentials v21.1) | La Base de Sky v1.2.0+ |
+| [`[LBDS1.1.0] Maker Studio`](<[LBDS1.1.0] Maker Studio>) | La Base de Sky 1.1.x (fork of Essentials v21.1) | La Base de Sky v1.1.0+ (1.1.x line) |
+| [`[LBDS1.2.0] Maker Studio`](<[LBDS1.2.0] Maker Studio>) | La Base de Sky 1.2.0+ (fork of Essentials v21.1) | La Base de Sky v1.2.0+ |
+| [`[PE21.1] Maker Studio`](<[PE21.1] Maker Studio>) | Vanilla Pokémon Essentials v21.1 | Essentials v21.1 |
+| [`[BES5] Maker Studio`](<[BES5] Maker Studio>) | Pokémon Essentials BES v5 (fork of Essentials v16.2) | BES v5 (runs on RGSS `Game.exe` or mkxp); paste-in install |
 
 ## Adding a new integration
 
