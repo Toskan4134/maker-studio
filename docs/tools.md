@@ -60,6 +60,14 @@ With the Brush or Eraser tool active, hold Ctrl and drag. The first tile you mov
 
 To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. The entire stamp follows your cursor while painting. Press Q or W to rotate the stamp counter-clockwise or clockwise. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
 
+## Switching Tilesets in the Palette
+
+The search box at the top of the Tile Palette filters every tileset by name, graphic file, or id. Type to filter, use the arrow keys and Enter (or click) to pick one, and the palette switches to show that tileset's tiles. Picking a tileset closes the dropdown and removes focus from the search box, so the next keypress goes to your map rather than the search field.
+
+## Live Tileset Graphic Updates
+
+If you edit a tileset's graphic file in `Graphics/Tilesets/` while the project is open — repaint it in an external editor, replace it, or drop in a new version — the Tile Palette picks up the change and redraws with the new image automatically, no reload needed. (This matches how autotile graphics in `Graphics/Autotiles/` refresh.)
+
 ## Selection Tool
 
 - **Click and drag**: Select a rectangular area.
