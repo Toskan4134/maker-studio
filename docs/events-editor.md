@@ -11,6 +11,15 @@ Toggle event markers from the **Events** button in the toolbar (or **View → Sh
 
 Either action creates a new event at that position with default settings.
 
+## Copying Events
+
+With the **Events layer** active, you can duplicate whole events (all pages and settings) on the map:
+
+- **Right-click** an event for **Cut**, **Copy**, and **Paste** (pastes at the cell you clicked).
+- Or use **Ctrl+C** (copy) and **Ctrl+X** (cut) on the selected event, then **Ctrl+V** to paste — no need for the menu.
+
+**Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, and command from the original; only its ID and position change.
+
 ## Event Editor Dialog
 
 Double-click an existing event (or select it and click Edit) to open the Event Editor.

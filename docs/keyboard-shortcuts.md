@@ -80,6 +80,9 @@ All shortcuts are customizable via **Edit → Keyboard Shortcuts...**. The defau
 | Ctrl+C | Copy selection (active layer) |
 | Ctrl+V | Paste (preview mode -- click to commit) |
 | Ctrl+X | Cut selection |
+
+On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event instead — copy or cut a whole event. Ctrl+V shows a preview ghost that follows the cursor; click to drop the copy (Escape to cancel). See [Events Editor](events-editor.md#copying-events).
+
 | Ctrl+Shift+C | Copy all layers |
 | Ctrl+Shift+V | Paste to original layers |
 | Ctrl+Shift+X | Cut all layers |
