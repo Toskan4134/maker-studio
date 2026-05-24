@@ -37,7 +37,7 @@ Toggle the counter flag. This allows interaction across the tile -- useful for t
 
 ### Terrain Tag
 
-Click to cycle through terrain tags 0 through 7. Terrain tags are used by events and scripts for terrain-specific behavior, such as changing movement speed on sand versus road.
+Pick a terrain tag from the searchable dropdown, then click a tile (or drag-select a region and press **Apply**) to assign it. The list ships with named tags 0–17 (the Pokemon Essentials defaults), and you can filter by name or number. Installed mods can add their own named tags to this same dropdown. Terrain tags are used by events and scripts for terrain-specific behavior, such as changing movement speed on sand versus road, and are read in-game via the engine's terrain tag.
 
 ## Editing Autotile Properties
 
