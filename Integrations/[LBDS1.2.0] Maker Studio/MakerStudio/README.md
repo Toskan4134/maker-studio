@@ -112,7 +112,7 @@ MakerStudio/
 
 1. The Tauri editor reads `.rxdata` files directly via the `alox-48` Marshal library
 2. Users edit tiles with full visual feedback and per-tile effects
-3. **Ctrl+S** patches the `.rxdata` file in-place (creates `.rxdata.backup` automatically)
+3. **Ctrl+S** patches the `.rxdata` file in-place (backs it up to `Data/map-backups/` first)
 4. Extended layers are embedded as `@extended_layers` JSON inside the Marshal stream
 5. `RendererOverride` patches `TilemapRenderer` to render extended layers with effects in-game
 6. `GameMapOverride` patches `Game_Map` for collision/terrain on extended layers
@@ -122,7 +122,7 @@ MakerStudio/
 - **Native layers** (0–2): Standard `Data/MapXXX.rxdata` Table3
 - **Extended layers** (3+): Embedded as `@extended_layers` JSON string inside the same `.rxdata`
 - **Shadows**: Source tiles + config only (no PNG), runtime bitmap generation
-- **Backups**: Every save creates `*.rxdata.backup` before writing
+- **Backups**: Every save copies the original into `Data/map-backups/` as `<file>.<timestamp>.backup`, keeping the newest 10 per file
 
 ## Credits
 
