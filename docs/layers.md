@@ -20,8 +20,8 @@ Extended layer data is embedded inside the map's `.rxdata` file. It is invisible
 The Layer Panel lists every layer -- native, extended, and shadow layers alike.
 
 - **Eye icon**: Toggle layer visibility on and off.
-- **Opacity slider**: Adjust the overall transparency of the layer.
-- **Grip handle**: Drag to reorder layers.
+- **Opacity slider**: Adjust the overall transparency of the layer. Dragging the slider adjusts opacity only — it no longer reorders the layer.
+- **Drag a layer row**: Drag an extended layer by its name to reorder it. (Dragging from the eye icon, opacity slider, or delete button does nothing, so you can use those controls freely.)
 - **Right-click**: Rename a layer.
 - **Click a shadow sub-row**: Select that shadow — its sub-row highlights, a cyan outline draws on the canvas, and (in Dim mode) only that shadow recovers full opacity while others stay dimmed. Press `Ctrl+D` to deselect.
 
