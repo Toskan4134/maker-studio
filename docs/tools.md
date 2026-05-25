@@ -41,6 +41,8 @@ Click **Presets…** in the Tile Properties panel header to open the preset mana
 - **Rename** an existing preset.
 - **Overwrite** a preset with the current brush values.
 - **Delete** a preset.
+- **Export…** your presets — tick which presets you want (all are checked by default), choose a folder, and each is saved as its own `ms_<name>_<index>_preset.json` file, so you can share or back up just the presets you pick.
+- **Import…** one or more preset files at once — select several files in the picker and they all merge in. Presets merge by name (a matching name is overwritten); files holding a different kind of preset (e.g. shadow presets) are skipped.
 
 A preview canvas shows what the highlighted preset would look like applied to the currently selected tile. Presets are stored per-install (shared across all your projects) and remembered across sessions.
 

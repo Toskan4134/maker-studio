@@ -38,7 +38,7 @@ When a shadow is generated from animated autotiles, the resulting shadow becomes
 
 ## Presets
 
-Click **Presets…** in the shadow configuration popup header to open the preset manager. Save the current direction / height / tint / opacity / offsets combination as a named preset and apply it later to any new shadow with one click. The dialog also supports rename, overwrite, and delete. Presets are stored per-install (shared across all your projects) and remembered across sessions.
+Click **Presets…** in the shadow configuration popup header to open the preset manager. Save the current direction / height / tint / opacity / offsets combination as a named preset and apply it later to any new shadow with one click. The dialog also supports rename, overwrite, and delete. Use **Export…** to pick which presets to save (all checked by default) — each chosen one is written as its own `ms_<name>_<index>_preset.json` file in a folder you choose — and **Import…** to bring one or more preset files back in at once (for backups or sharing between machines). Presets are stored per-install (shared across all your projects) and remembered across sessions.
 
 ## Managing Shadows
 
