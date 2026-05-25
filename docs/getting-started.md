@@ -19,7 +19,7 @@ The Map Tree panel on the left shows every map in your project, organized in the
 Moving around the canvas is straightforward:
 
 - **Pan**: Hold Space and drag, or middle-click and drag, or Shift and drag.
-- **Zoom**: Ctrl + scroll wheel, or use the + / - buttons in the toolbar.
+- **Zoom**: Ctrl + scroll wheel, or use the + / - buttons in the toolbar. Zoom ranges from 5% to 400% — the low end lets you see a large map in full at once.
 - **Status Bar**: Shows your cursor coordinates (X, Y) along the bottom edge of the window.
 
 ## Saving

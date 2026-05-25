@@ -38,7 +38,7 @@ An SVG preview shows where your content will sit inside the new canvas before yo
 
 ## Changing a Map's Tileset
 
-Right-click a map in the Map Tree and choose Change Tileset, or use Edit then Change Tileset from the menu. Pick from the searchable list. Changing the tileset only affects the native layers. Extended layers can continue to use tiles from any tileset.
+Right-click a map in the Map Tree and choose Change Tileset, or use Edit then Change Tileset from the menu. Pick from the searchable list and click Apply — the map repaints with the new tileset's graphics right away, no reload needed. Changing the tileset only affects the native layers, and does not remap tile IDs (existing tiles keep their numbers, so they may look different under the new tileset). Extended layers can continue to use tiles from any tileset.
 
 ## Deleting a Map
 
