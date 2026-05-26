@@ -134,12 +134,26 @@ def pbRefreshLiveMapData(map_id)
         end
       end
     end
+    # Rebuild events from the fresh map so new/edited/deleted events
+    # appear without a full game restart.
+    if fresh_map.events
+      new_events = {}
+      fresh_map.events.each do |key, rpg_event|
+        new_events[key] = Game_Event.new(map_id, rpg_event, $game_map)
+      end
+      $game_map.instance_variable_set(:@events, new_events)
+    end
   end
   # Reload extended layers (now reads from embedded @extended_layers in fresh_map)
   MakerStudio.load_extended_layers_for_map(map_id, $game_map)
   # Force the TilemapRenderer to rebuild all tile sprites
   if $scene.respond_to?(:map_renderer) && $scene.map_renderer
     $scene.map_renderer.refresh
+  end
+  # Rebuild spriteset so character sprites match the refreshed events
+  if $scene.respond_to?(:disposeSpritesets) && $scene.respond_to?(:createSpritesets)
+    $scene.disposeSpritesets
+    $scene.createSpritesets
   end
 end
 
@@ -200,16 +214,25 @@ EventHandlers.add(:on_leave_map, :maker_studio_cleanup,
 #---------------------------------------------------------------------------
 module Game
   class << self
+    # Alias the original ONCE, but (re)define load_map UNCONDITIONALLY.
+    # An mkxp F12 soft-reset re-evaluates every script: the engine re-runs
+    # 001_StartGame (restoring the stock Game.load_map) and then re-runs the
+    # plugins. If the `def` lived inside this `unless` guard it would be skipped
+    # on that second pass (the alias name already exists), so our override would
+    # be permanently lost after a soft-reset — and on a magic-number-matching
+    # Continue, load_map is the only thing that refreshes MakerStudio map data
+    # (setup/on_game_map_setup are skipped), so the map would load with no
+    # extended layers / native overrides. Keep the def outside the guard.
     unless method_defined?(:__mkst__load_map) || private_method_defined?(:__mkst__load_map)
       alias_method :__mkst__load_map, :load_map
-      def load_map
-        __mkst__load_map
-        return unless MakerStudio::ENABLED
-        return unless $game_map
-        MakerStudio.clear_all_caches if MakerStudio.respond_to?(:clear_all_caches)
-        MakerStudio::TileEffects.clear_cache if defined?(MakerStudio::TileEffects)
-        pbRefreshLiveMapData($game_map.map_id)
-      end
+    end
+    def load_map
+      __mkst__load_map
+      return unless MakerStudio::ENABLED
+      return unless $game_map
+      MakerStudio.clear_all_caches if MakerStudio.respond_to?(:clear_all_caches)
+      MakerStudio::TileEffects.clear_cache if defined?(MakerStudio::TileEffects)
+      pbRefreshLiveMapData($game_map.map_id)
     end
   end
 end
