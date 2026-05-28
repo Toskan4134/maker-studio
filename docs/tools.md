@@ -80,6 +80,14 @@ If you edit a tileset's graphic file in `Graphics/Tilesets/` while the project i
 
 Selections can be non-rectangular when using Ctrl/Shift. The highlight overlay makes selected cells visible with a gold fill and cell borders.
 
+### Dragging Off the Map
+
+For the Rectangle and Select tools, you can start or finish a drag in the empty area beside the map — the selection / rectangle clamps to the nearest border tile instead of being cancelled. The drag also keeps going if your cursor leaves the canvas entirely (e.g. wanders into another panel); release the mouse button anywhere to finish. Moving a selection is unaffected: clicking outside the map always begins a fresh selection rather than triggering a move, even if the clamped border tile happens to fall inside your current selection.
+
+## Undo / Redo with Moved Selections
+
+When you move a selection with the Select tool, the selection marquee now follows the move on Undo / Redo — undoing puts both the tiles and the selection back where they were before the move, and redoing reapplies both. Previously, undoing a move left the selection in its post-move position even though the tiles snapped back.
+
 ## Copy and Paste
 
 - Ctrl+C copies the selected area with full tile data (including per-tile properties on extended layers).

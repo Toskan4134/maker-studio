@@ -88,3 +88,22 @@ When you close a tab that has unsaved changes, the editor asks you to confirm:
 - **Save**: Saves the map, then closes the tab.
 - **Discard**: Closes the tab without saving.
 - **Cancel**: Returns to the editor without closing.
+
+## Switching Projects with Unsaved Changes
+
+If you choose **Project → Open Project…** or pick a project from **Project → Open Recent** while any open map has unsaved changes, the editor opens a Save All / Discard / Cancel dialog before swapping projects:
+
+- **Save All**: Saves every dirty map, then switches to the new project.
+- **Discard**: Switches without saving — unsaved edits are lost.
+- **Cancel**: Stays on the current project.
+
+This is the same prompt used by Project → Reset App and Project → Reset Layout, so unsaved work cannot be lost silently by opening a different project.
+
+## "Not a Project Folder" Dialog
+
+When you point the editor at a folder that does not look like an RPG Maker XP project (no `Data/MapInfos.rxdata` inside), it shows a **Not a Project Folder** dialog with two buttons:
+
+- **Choose Another…**: Re-opens the folder picker so you can try a different folder.
+- **Go Back**: Returns to your previous project (or to the welcome screen if this was the first launch).
+
+This replaces the previous behaviour where picking a non-game folder left the editor in an empty / stuck state.
