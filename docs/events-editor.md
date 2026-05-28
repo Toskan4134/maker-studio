@@ -20,6 +20,8 @@ With the **Events layer** active, you can duplicate whole events (all pages and 
 
 **Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, and command from the original; only its ID and position change.
 
+> **One event per tile.** Two events cannot share a cell — the game treats overlapping events as a single occupant. Pasting onto a tile that already has an event, or dragging an event onto another event, is blocked with a *"Tile already has an event"* notice. Pick an empty tile (or delete/move the existing event first).
+
 ## Event Editor Dialog
 
 Double-click an existing event (or select it and click Edit) to open the Event Editor.
