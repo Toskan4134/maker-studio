@@ -61,6 +61,18 @@ In the **Installed** tab, expand any mod that was installed from the Marketplace
 
 You can also uninstall from the Marketplace tab — same button on the card.
 
+## Reading the status badge
+
+Each row in the **Installed** tab shows a coloured status:
+
+- **active** (green) — loaded and running with no errors logged.
+- **load error** (red) — the mod failed to load (syntax error, bad manifest, import threw). Expand the row to see the error message.
+- **runtime errors** (red) — the mod loaded fine but logged errors after starting. Expand the row and open **Logs** to see what went wrong.
+- **disabled** (grey) — turned off via the **Disable** button. Re-enable to load it.
+- **blocked** (red) — install blocked by a required Pokémon Essentials plugin (missing or version mismatch). The reason explains which plugin.
+
+You can select and copy any text inside an expanded row — id, folder path, error message, log lines — handy when reporting a mod bug. The same goes for Marketplace cards: select the description, author, or changelog to copy.
+
 ## What if there's no internet?
 
 The Marketplace caches everything for 1 hour. If your connection is down, browsing falls back to the last known catalog and release info. Installing requires fresh downloads.
