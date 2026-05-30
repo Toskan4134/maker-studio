@@ -13,9 +13,10 @@
 
 The toolbar sits at the top of the window and provides quick access to common actions:
 
-💾 Save | ▶ Run | ▶ Sim Map | ➕ New | 🖌️ 🧹 🪣 ⬜ 💧 ⬚ ✋ | 🔍 Zoom | Switches | Variables | Tilesets | Grid | Col | Dim | ☀/☾
+💾 Save | ▶ Run | 📁 Saves | ▶ Sim Map | 🖌️ 🧹 🪣 ⬜ 💧 ⬚ ✋ | 🔍 Zoom | Switches | Variables | Tilesets | Grid | Col | Dim | ☀/☾
 
-- **Save, Run, New** — emoji + text for visibility.
+- **Save, Run** — emoji + text for visibility. (Creating a new map now lives in the Maps panel header — see Map Tree below.)
+- **Saves** — appears after the first Run; opens the folder where the game stores its save files. On Windows/macOS this is the native saves folder; on Linux it is the folder inside the Proton/Wine prefix the game ran in. See [Running the Game](map-management.md#running-the-game).
 - **Sim Map** — opens the [Game Simulator](game-simulator.md) on the current map with player input enabled.
 - **Tools** — emoji only. Hover to see the tool name and keyboard shortcut.
 - **Brush tool** — hover to reveal a size slider popup (1–5).
@@ -28,7 +29,7 @@ The toolbar sits at the top of the window and provides quick access to common ac
 
 ## Map Tree (left panel)
 
-The Map Tree shows a hierarchical view of every map in your project. You can:
+The Map Tree shows a hierarchical view of every map in your project. The panel header has a **+** button that creates a new blank map. You can:
 
 - Double-click a map name to rename it.
 - Right-click for a context menu: Open, Rename, Change Tileset, Resize/Shift, Delete.

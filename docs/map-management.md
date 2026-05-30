@@ -2,7 +2,7 @@
 
 ## Creating a New Map
 
-Choose File then New Map from the menu, or click the + button in the toolbar. Fill in the details:
+Choose File then New Map from the menu, or click the **+** button in the **Maps panel header** (next to the map list, mirroring the add-layer **+** in the Layers panel). Fill in the details:
 
 - **Name**: The map's display name.
 - **Width / Height**: Dimensions in tiles.
@@ -80,6 +80,24 @@ A green **Start** marker appears on that tile, and the position is saved to your
 ## Running the Game
 
 Click the green Run button in the toolbar (or use Project then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
+
+### Running on Linux (Proton / Wine)
+
+`Game.exe` is a Windows executable, so on Linux the editor runs it through **Proton** or **Wine**. The first time you press Run, a dialog lets you pick how to launch:
+
+- **Proton**: choose an installed Proton version (and, if needed, the Steam app id to use). The editor sets up a dedicated Wine prefix for your game the first time.
+- **Wine**: launch through your system Wine instead.
+
+Your choice is remembered per project, so later runs launch straight away without asking again.
+
+### Saves Button
+
+After your first Run, a **Saves** button appears in the toolbar that opens the folder where the game writes its save files:
+
+- **Windows / macOS**: opens the native saves folder (on Windows, `%AppData%\<Game>`).
+- **Linux**: opens the relevant folder inside the Proton/Wine prefix the game ran in.
+
+This makes it easy to back up or clear save files while testing.
 
 ## Close Confirmation
 
