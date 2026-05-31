@@ -105,11 +105,15 @@ Each move action also appears as its own colored row beneath the Set Move Route 
 
 Some commands create paired blocks:
 
-- **Conditional Branch** adds a matching Branch End.
+- **Conditional Branch** adds a matching Branch End. Tick **Add Else Branch** in its form to insert an **Else** section (untick to remove it and its commands).
 - **Loop** adds a matching Repeat Above.
-- **Show Choices** adds a matching Choices End.
+- **Show Choices** builds a full block: a **When** branch for each choice plus a **Choices End**. Editing the choices (rename, add, or set the cancel behavior to *Branch*) updates the When / When Cancel branches automatically, keeping the commands you've already put inside each one.
 
-Deleting the opening command also removes its matching closer.
+Deleting a block command (or its closing marker) removes the **whole block**, including every command nested inside it.
+
+### Nesting Commands
+
+To put commands *inside* a block, select the block's opening line (e.g. the Conditional Branch, a When branch, or the Loop) and Insert — the new command lands indented one level inside. Inserting after a command that's already inside a block keeps it at that level. There's no manual indent control; nesting follows where you insert or drop a command.
 
 ### Keyboard Shortcuts in the Command List
 
@@ -120,11 +124,18 @@ Deleting the opening command also removes its matching closer.
 | Insert / Enter | Open the Command Picker |
 | Ctrl+C / Ctrl+V / Ctrl+X | Copy, Paste, or Cut commands |
 | Up / Down arrows | Move the selection |
-| Alt + Up / Down | Reorder the selected command |
+| Alt + Up / Down | Reorder the selected command (or whole block) by one, staying at its current level. To move a command *into* or *out of* a branch, drag it (see below) or cut and paste. A whole block (Conditional, Loop, Show Choices, Set Move Route) moves as one unit. |
+
+You can also **copy and paste between events**: copy commands in one event (a block copies with everything inside it), open another event, and paste — the pasted commands keep their nesting.
 
 ### Drag Reorder
 
-You can drag command rows to reorder them. Block openers drag together with their matching closer, keeping indentation balanced automatically.
+You can drag command rows to reorder them. A block (Conditional, Loop, Show Choices, Set Move Route) drags together with everything inside it. As you drag, a **blue line** snaps to the gap nearest your cursor and shows exactly where the command will land. The command takes the indentation of the line's position, so:
+
+- Drop onto an **Else** (or a **When**) row → the command goes *into* that branch.
+- Drop onto a **Branch End** (or Repeat Above / Choices End) row → the command goes *out, below the whole block*.
+- Drop the line between two commands → it lands at their level.
+- Drop in the empty space below the list → it goes to the end.
 
 ### Color Coding
 
@@ -153,6 +164,6 @@ Colors follow the active editor theme — the same hue family in dark and light 
 
 ## Known Limitations
 
-- Multi-line text and scripts do not auto-split into continuation codes. Use multiple Show Text commands for longer text.
-- Show Choices only inserts the closing marker. Add "When" branches manually.
+- Multi-line **Script** commands are not yet split into continuation lines. (Show Text and Comment handle multiple lines automatically.)
+- Removing a choice from the *middle* of a Show Choices list can shift the commands in the When branches below it (branches are matched by position). Renaming choices or adding new ones at the end is safe.
 - Some commands currently use a raw JSON editor because a typed form is not yet available.
