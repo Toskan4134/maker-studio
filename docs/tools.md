@@ -91,8 +91,11 @@ When you move a selection with the Select tool, the selection marquee now follow
 ## Copy and Paste
 
 - Ctrl+C copies the selected area with full tile data (including per-tile properties on extended layers).
+- Ctrl+Shift+C copies the selection across all layers at once.
 - Ctrl+V enters paste preview mode. Move your cursor to position the paste, then click to commit.
+- Ctrl+Shift+V (Paste All Layers) pastes onto the original source layers each tile was copied from, instead of the active layer — same preview-then-click flow.
 - Press Escape to cancel the paste preview.
+- **Between two open projects:** enable **Edit → Cross-Project Clipboard** in both windows, then a tile (or all-layer) copy can be pasted into another project's window. Off by default.
 
 ## Quick Reference
 

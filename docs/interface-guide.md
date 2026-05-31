@@ -3,7 +3,8 @@
 ## Menu Bar
 
 - **Project**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), New Map, **Import & Export Maps** (Import from JSON; Export as JSON / PNG / GIF / WebP), Save, Save All, Run Game, Export/Import Configuration, Reset Layout, Toggle DevTools
-- **Edit**: Undo, Redo, Switches, Variables, Tilesets (manager), Resize/Shift Map, Change Tileset, Select All, Deselect, Copy/Cut/Paste (+ all-layers variants), Delete Selection, Generate Shadow from Selection, Delete All Shadows, Keyboard Shortcuts
+- **Edit**: Undo, Redo, Switches, Variables, Tilesets (manager), Resize/Shift Map, Change Tileset, Select All, Deselect, Copy/Cut/Paste (+ all-layers variants), **Cross-Project Clipboard** (toggle — see below), Generate Shadow from Selection, Delete All Shadows, Keyboard Shortcuts
+  - **Cross-Project Clipboard** is off by default. When ticked, copying tiles, events, or event commands also places them on your system clipboard so a **second open Maker Studio window** can paste them. Turn it on in *each* window you want to share between. (Deleting a tile selection still works with the **Delete** key; only the old menu entry was replaced by this toggle.)
 - **View**: Panel toggles (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap), Show Grid, Show Collision, Show Events, Dim Inactive Layers, Dark Mode, Zoom In/Out/100%, Reset Layout
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
