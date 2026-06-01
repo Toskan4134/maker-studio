@@ -13,6 +13,7 @@ Welcome to the Maker Studio -- a modern, feature-rich tile map editor designed a
 - [Game Simulator](game-simulator.md) -- Test events and move routes in-editor
 - [Tileset Editor](tileset-editor.md) -- Tile passage, priority, and terrain properties
 - [Map Management](map-management.md) -- Creating, resizing, and exporting maps
+- [Map Versions](map-versions.md) -- Multiple states of one map, switched in-game by a switch/variable
 - [Keyboard Shortcuts](keyboard-shortcuts.md) -- Quick reference
 - [Mod Marketplace](marketplace.md) -- Discover, install, and update community mods
 - [Mod Development](https://github.com/Toskan4134/maker-studio-mods) -- Write JS mods to extend the editor
