@@ -1,6 +1,6 @@
 # Database
 
-The **Database** window gathers your project's data editors into one tabbed window, like RPG Maker XP. Open it from the **Database** button on the toolbar or **Edit → Database…** (the **Switches…**, **Variables…**, and **Tilesets…** menu items open the Database directly on their tab).
+The **Database** window gathers your project's data editors into one tabbed window, like RPG Maker XP. Open it from the **Database** button on the toolbar or **Edit → Database…**. Switches, Variables, and Tilesets each have their own tab inside the window.
 
 Tabs:
 
