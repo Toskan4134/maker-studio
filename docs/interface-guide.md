@@ -22,7 +22,7 @@ The toolbar sits at the top of the window and provides quick access to common ac
 - **Tools** — emoji only. Hover to see the tool name and keyboard shortcut.
 - **Brush tool** — hover to reveal a size slider popup (1–5).
 - **Zoom** — hover to reveal zoom in/out controls.
-- **Switches / Variables** — open a searchable manager dialog where you can rename entries inline.
+- **Switches / Variables** — open a searchable manager dialog where you can rename entries inline. Renames (and the **Add 50 more** button) are saved to your project immediately, so the new names survive a reload and are used by the running game — no separate save step needed.
 - **Tilesets** — opens the tileset manager for creating, editing, and deleting tilesets.
 - **Grid / Col / Dim** — text-only toggle buttons.
 - **Theme** — sun/moon toggle switch. Thumb left = light mode (☀ visible on the right); thumb right = dark mode (☾ visible on the left). Your choice is remembered across sessions.
