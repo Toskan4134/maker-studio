@@ -10,6 +10,7 @@ Welcome to the Maker Studio -- a modern, feature-rich tile map editor designed a
 - [Layers Guide](layers.md) -- Native and extended layers
 - [Shadows Guide](shadows.md) -- Creating and managing shadows
 - [Events Editor](events-editor.md) -- Event editing and command lists
+- [Database](database.md) -- Common Events, Animations, and the tabbed Database window
 - [Game Simulator](game-simulator.md) -- Test events and move routes in-editor
 - [Tileset Editor](tileset-editor.md) -- Tile passage, priority, and terrain properties
 - [Map Management](map-management.md) -- Creating, resizing, and exporting maps
