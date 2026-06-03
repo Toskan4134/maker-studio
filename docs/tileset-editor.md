@@ -2,9 +2,9 @@
 
 ## Opening the Tileset Editor
 
-Open the **Tileset Manager** from the menu bar: **Edit → Tilesets...** The manager lists every tileset (with a searchable list); select one and click **Edit Properties...** to open the Tileset Editor for it.
+Open the **Tileset Manager** from the **Tilesets** tab of the Database (**Tools → Database…**, or the toolbar **Database** button). The manager lists every tileset (with a searchable list); select one and click **Edit Properties...** to open the Tileset Editor for it.
 
-(The separate **Edit → Change Tileset...** command is different — it swaps which tileset a *map* uses for its native layers; see [Map Management](map-management.md). It does not edit tile properties.)
+(The separate **Map → Change Tileset...** command is different — it swaps which tileset a *map* uses for its native layers; see [Map Management](map-management.md). It does not edit tile properties.)
 
 ## Overview
 

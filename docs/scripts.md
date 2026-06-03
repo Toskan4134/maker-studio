@@ -5,7 +5,7 @@ scripts directly from Maker Studio — the same scripts RPG Maker XP keeps in `D
 It is handy on bases that don't ship a `scripts_extract.rb`, so you can work with the code without
 leaving the editor.
 
-Open it from the **Scripts** button on the toolbar (next to **Database**) or **Edit → Scripts…**.
+Open it from the **Scripts** button on the toolbar (next to **Database**) or **Tools → Scripts…**.
 
 ## The window
 

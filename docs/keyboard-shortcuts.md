@@ -1,6 +1,6 @@
 # Keyboard Shortcuts
 
-All shortcuts are customizable via **Edit → Keyboard Shortcuts...**. The defaults are listed below.
+All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defaults are listed below.
 
 ## Tools
 
@@ -163,6 +163,6 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 
 ## Customizing Shortcuts
 
-Open **Edit → Keyboard Shortcuts...** to rebind any action. Click a row, then press the new key combination. If the key is already in use, you can swap or cancel.
+Open **Help → Keyboard Shortcuts...** to rebind any action. Click a row, then press the new key combination. If the key is already in use, you can swap or cancel.
 
 Context-specific shortcuts (Tileset, Event Editor) share some default keys with global shortcuts (e.g. Ctrl+Z for undo). These work based on which panel has focus. Rebinding a context-specific shortcut only affects that context.

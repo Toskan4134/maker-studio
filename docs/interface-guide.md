@@ -2,19 +2,22 @@
 
 ## Menu Bar
 
-- **Project**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), New Map, **Import & Export Maps** (Import from JSON; Export as JSON / PNG / GIF / WebP), Save, Save All, Run Game, Export/Import Configuration, Reset Layout, Toggle DevTools
-- **Edit**: Undo, Redo, Switches, Variables, Tilesets (manager), Resize/Shift Map, Change Tileset, Select All, Deselect, Copy/Cut/Paste (+ all-layers variants), **Cross-Project Clipboard** (toggle — see below), Generate Shadow from Selection, Delete All Shadows, Keyboard Shortcuts
+Every menu item now shows a small icon next to its label so you can spot commands faster. The menus, left to right, are **File, Edit, View, Map, Tools, Mods, Help**.
+
+- **File**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), Save, Save All, Run Game
+- **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, **Cross-Project Clipboard** toggle — see below), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - **Cross-Project Clipboard** is off by default. When ticked, copying tiles, events, or event commands also places them on your system clipboard so a **second open Maker Studio window** can paste them. Turn it on in *each* window you want to share between. (Deleting a tile selection still works with the **Delete** key; only the old menu entry was replaced by this toggle.)
-- **View**: Panel toggles (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap), Show Grid, Show Collision, Show Events, Dim Inactive Layers, Dark Mode, Zoom In/Out/100%, Reset Layout
-- **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical
+- **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap), Show Grid, Show Collision, Show Events, Dim Inactive Layers, Zoom In/Out/100%, Dark Mode, **Layout** submenu (Reset Layout, Import/Export Configuration)
+- **Map**: New Map, Resize / Shift Map, Change Tileset, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
+- **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
-- **Info**: Check for Updates, About Maker Studio, Stats
+- **Help**: Keyboard Shortcuts, Check for Updates, Stats, About Maker Studio, Toggle DevTools
 
 ## Toolbar
 
 The toolbar sits at the top of the window and provides quick access to common actions:
 
-💾 Save | ▶ Run | 📁 Saves | ▶ Sim Map | 🖌️ 🧹 🪣 ⬜ 💧 ⬚ ✋ | 🔍 Zoom | Switches | Variables | Tilesets | Grid | Col | Dim | ☀/☾
+💾 Save | ▶ Run | 📁 Saves | ▶ Sim Map | 🖌️ 🧹 🪣 ⬜ 💧 ⬚ ✋ | 🔍 Zoom | Switches | Variables | Tilesets | Database | Scripts | Grid | Col | Dim | ☀/☾
 
 - **Save, Run** — emoji + text for visibility. (Creating a new map now lives in the Maps panel header — see Map Tree below.)
 - **Saves** — appears after the first Run; opens the folder where the game stores its save files. On Windows/macOS this is the native saves folder; on Linux it is the folder inside the Proton/Wine prefix the game ran in. See [Running the Game](map-management.md#running-the-game).
@@ -24,9 +27,10 @@ The toolbar sits at the top of the window and provides quick access to common ac
 - **Zoom** — hover to reveal zoom in/out controls.
 - **Switches / Variables** — open a searchable manager dialog where you can rename entries inline. Renames (and the **Add 50 more** button) are saved to your project immediately, so the new names survive a reload and are used by the running game — no separate save step needed.
 - **Tilesets** — opens the tileset manager for creating, editing, and deleting tilesets.
-- **Grid / Col / Dim** — text-only toggle buttons.
+- **Database / Scripts** — icon + text buttons that open the [Database](database.md) window and the [Scripts editor](scripts.md). (Also available under the **Tools** menu.)
+- **Grid / Col / Dim** — icon + text toggle buttons for Show Grid, Show Collision, and Dim Inactive Layers.
 - **Theme** — sun/moon toggle switch. Thumb left = light mode (☀ visible on the right); thumb right = dark mode (☾ visible on the left). Your choice is remembered across sessions.
-- **Reset Layout** — available in the Project menu.
+- **Reset Layout** — available under View then Layout.
 
 ## Map Tree (left panel)
 
@@ -53,7 +57,7 @@ On very large or heavy maps it may also show **"⏸ Animations paused (performan
 
 ## Dockable Panels
 
-Every panel in the editor can be dragged, floated as a separate window, and rearranged to suit your workflow. If you ever want to start fresh, use View then Reset Layout to restore the default arrangement.
+Every panel in the editor can be dragged, floated as a separate window, and rearranged to suit your workflow. If you ever want to start fresh, use View then Layout then Reset Layout to restore the default arrangement.
 
 - **Detach a panel**: right-click a tab or empty header area and pick **Detach to floating window**. The panel pops out as a draggable, resizable floating window inside the editor.
 - **Floating windows stay on-screen**: if a floating panel is dragged or resized past the editor bounds, it auto-snaps back inside on release.

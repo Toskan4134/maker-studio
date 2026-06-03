@@ -23,9 +23,9 @@ When a tool is active you can adjust per-tile properties before painting. These 
 - **Lighting**: -255 to 255 (brightness).
 - **Flip H / Flip V**: Flip the tile horizontally or vertically.
 
-### Lock (🔓 / 🔒)
+### Lock
 
-The lock button in the Tile Properties panel header controls what happens when you pick a different tile.
+The lock button in the Tile Properties panel header (an open or closed padlock icon) controls what happens when you pick a different tile.
 
 - **Unlocked** (default): selecting another tile resets all brush properties to defaults — you start each tile fresh.
 - **Locked**: the current brush properties stay applied to whatever you pick next, so you can paint many different tiles with the same effect.
@@ -95,7 +95,7 @@ When you move a selection with the Select tool, the selection marquee now follow
 - Ctrl+V enters paste preview mode. Move your cursor to position the paste, then click to commit.
 - Ctrl+Shift+V (Paste All Layers) pastes onto the original source layers each tile was copied from, instead of the active layer — same preview-then-click flow.
 - Press Escape to cancel the paste preview.
-- **Between two open projects:** enable **Edit → Cross-Project Clipboard** in both windows, then a tile (or all-layer) copy can be pasted into another project's window. Off by default.
+- **Between two open projects:** enable **Edit → Advanced Clipboard → Cross-Project Clipboard** in both windows, then a tile (or all-layer) copy can be pasted into another project's window. Off by default.
 
 ## Quick Reference
 

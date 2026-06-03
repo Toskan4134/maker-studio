@@ -2,7 +2,7 @@
 
 ## Creating a New Map
 
-Choose File then New Map from the menu, or click the **+** button in the **Maps panel header** (next to the map list, mirroring the add-layer **+** in the Layers panel). Fill in the details:
+Choose Map then New Map from the menu, or click the **+** button in the **Maps panel header** (next to the map list, mirroring the add-layer **+** in the Layers panel). Fill in the details:
 
 - **Name**: The map's display name.
 - **Width / Height**: Dimensions in tiles.
@@ -17,7 +17,7 @@ Double-click any map in the Map Tree to open it in a new editor tab.
 
 ## Resizing and Shifting Maps
 
-Open the resize dialog from Edit then Resize / Shift Map, or right-click a map in the Map Tree and choose Resize/Shift.
+Open the resize dialog from Map then Resize / Shift Map, or right-click a map in the Map Tree and choose Resize/Shift.
 
 ### Resizing
 
@@ -38,7 +38,7 @@ An SVG preview shows where your content will sit inside the new canvas before yo
 
 ## Changing a Map's Tileset
 
-Right-click a map in the Map Tree and choose Change Tileset, or use Edit then Change Tileset from the menu. Pick from the searchable list and click Apply — the map repaints with the new tileset's graphics right away, no reload needed. Changing the tileset only affects the native layers, and does not remap tile IDs (existing tiles keep their numbers, so they may look different under the new tileset). Extended layers can continue to use tiles from any tileset.
+Right-click a map in the Map Tree and choose Change Tileset, or use Map then Change Tileset from the menu. Pick from the searchable list and click Apply — the map repaints with the new tileset's graphics right away, no reload needed. Changing the tileset only affects the native layers, and does not remap tile IDs (existing tiles keep their numbers, so they may look different under the new tileset). Extended layers can continue to use tiles from any tileset.
 
 ## Deleting a Map
 
@@ -50,23 +50,23 @@ The editor supports four export formats. All exports stream their work in the ba
 
 ### Export as JSON
 
-File then Export Map as JSON saves a complete dump of the map including extended layers and shadow data. This is useful for backups, sharing, or re-importing.
+Map then Export Map then Export as JSON saves a complete dump of the map including extended layers and shadow data. This is useful for backups, sharing, or re-importing.
 
 ### Export as PNG
 
-File then Export Map as PNG renders the entire map to a PNG image at full resolution.
+Map then Export Map then Export as PNG renders the entire map to a PNG image at full resolution.
 
 ### Export as GIF (Animated)
 
-File then Export Map as GIF creates an animated GIF showing autotile and shadow animations in motion. GIF is limited to a 256-color palette, so heavily shaded maps may look posterized — prefer WebP for those.
+Map then Export Map then Export as GIF creates an animated GIF showing autotile and shadow animations in motion. GIF is limited to a 256-color palette, so heavily shaded maps may look posterized — prefer WebP for those.
 
 ### Export as WebP (Animated)
 
-File then Export Map as WebP creates an animated WebP. WebP supports the full 24-bit color space, so it preserves shadow gradients and fog colors GIF cannot. Before saving, the editor asks whether the animation should loop forever or play once and stop — pick "Play once" if you intend to embed the file somewhere that should not repeat. Output is lossless by default.
+Map then Export Map then Export as WebP creates an animated WebP. WebP supports the full 24-bit color space, so it preserves shadow gradients and fog colors GIF cannot. Before saving, the editor asks whether the animation should loop forever or play once and stop — pick "Play once" if you intend to embed the file somewhere that should not repeat. Output is lossless by default.
 
 ## Importing Maps
 
-File then Import Map from JSON loads a previously exported JSON file as a new map in your project.
+Map then Import Map from JSON loads a previously exported JSON file as a new map in your project.
 
 ## Setting the Player Start Position
 
@@ -79,7 +79,7 @@ A green **Start** marker appears on that tile, and the position is saved to your
 
 ## Running the Game
 
-Click the green Run button in the toolbar (or use Project then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
+Click the green Run button in the toolbar (or use File then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
 
 ### Running on Linux (Proton / Wine)
 
@@ -109,13 +109,13 @@ When you close a tab that has unsaved changes, the editor asks you to confirm:
 
 ## Switching Projects with Unsaved Changes
 
-If you choose **Project → Open Project…** or pick a project from **Project → Open Recent** while any open map has unsaved changes, the editor opens a Save All / Discard / Cancel dialog before swapping projects:
+If you choose **File → Open Project…** or pick a project from **File → Open Recent** while any open map has unsaved changes, the editor opens a Save All / Discard / Cancel dialog before swapping projects:
 
 - **Save All**: Saves every dirty map, then switches to the new project.
 - **Discard**: Switches without saving — unsaved edits are lost.
 - **Cancel**: Stays on the current project.
 
-This is the same prompt used by Project → Reset App and Project → Reset Layout, so unsaved work cannot be lost silently by opening a different project.
+This is the same prompt used by Reset App and View → Layout → Reset Layout, so unsaved work cannot be lost silently by opening a different project.
 
 ## "Not a Project Folder" Dialog
 

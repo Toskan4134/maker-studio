@@ -128,7 +128,7 @@ To put commands *inside* a block, select the block's opening line (e.g. the Cond
 
 You can also **copy and paste between events**: copy commands in one event (a block copies with everything inside it), open another event, and paste — the pasted commands keep their nesting.
 
-**Copy between two open projects:** turn on **Edit → Cross-Project Clipboard** in both windows. Copied event commands (and whole events) then ride your system clipboard, so you can copy in one project's window and paste into another's. It's off by default; non-Maker-Studio clipboard text is ignored.
+**Copy between two open projects:** turn on **Edit → Advanced Clipboard → Cross-Project Clipboard** in both windows. Copied event commands (and whole events) then ride your system clipboard, so you can copy in one project's window and paste into another's. It's off by default; non-Maker-Studio clipboard text is ignored.
 
 ### Drag Reorder
 
