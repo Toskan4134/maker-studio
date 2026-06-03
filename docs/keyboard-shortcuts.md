@@ -166,3 +166,7 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 Open **Help → Keyboard Shortcuts...** to rebind any action. Click a row, then press the new key combination. If the key is already in use, you can swap or cancel.
 
 Context-specific shortcuts (Tileset, Event Editor) share some default keys with global shortcuts (e.g. Ctrl+Z for undo). These work based on which panel has focus. Rebinding a context-specific shortcut only affects that context.
+
+## Mod Shortcuts
+
+Installed mods can add their own menu items with keyboard shortcuts. These appear in the Keyboard Shortcuts dialog under a **Mods** section, and you can rebind them just like built-in shortcuts. Conflicts between a mod shortcut and a built-in (or another mod) are detected when you assign the key, so you can swap or cancel. Your custom mod-shortcut bindings persist across sessions, and **Reset All** restores them to the mod's defaults along with everything else.
