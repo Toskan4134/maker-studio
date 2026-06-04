@@ -15,7 +15,7 @@ Switch to **Marketplace** to browse.
 
 The Marketplace shows a card for each available mod with an icon, name, author, star count, short description, and tags. Use the search box to filter by name, author, or description. Click any tag chip to filter to that tag; click it again to clear.
 
-Click **Changelog** on a card to expand the release notes for that mod's latest version.
+Click **Changelog** on a card to open the release notes for that mod's latest version in a dialog. The notes are shown as formatted Markdown (headings, lists, links, and code render the way they do on GitHub).
 
 ## Verified vs Unverified Mods
 
@@ -71,7 +71,7 @@ Each row in the **Installed** tab shows a coloured status:
 - **disabled** (grey) — turned off via the **Disable** button. Re-enable to load it.
 - **blocked** (red) — install blocked by a required Pokémon Essentials plugin (missing or version mismatch). The reason explains which plugin.
 
-You can select and copy any text inside an expanded row — id, folder path, error message, log lines — handy when reporting a mod bug. The same goes for Marketplace cards: select the description, author, or changelog to copy.
+You can select and copy any text inside an expanded row — id, folder path, error message, log lines — handy when reporting a mod bug. The same goes for Marketplace cards and the Changelog dialog: select the description, author, or release notes to copy.
 
 ## What if there's no internet?
 

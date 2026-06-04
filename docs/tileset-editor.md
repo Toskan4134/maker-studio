@@ -45,4 +45,6 @@ Autotile passage/priority/terrain are edited separately from regular tilesets. I
 
 ## Saving
 
-Click Save to write your changes to `Tilesets.rxdata`. A backup of the original file is created automatically on first save. After saving, collision and priority overlays update immediately on all open maps that use the tileset.
+Click **Save** to write your changes to `Tilesets.rxdata`. A backup of the original file is created automatically on first save. The editor stays open after saving, so you can keep adjusting properties — press **Ctrl+S** (or **Cmd+S** on macOS) to save again without closing, or use **Close** when you're done. If you close with unsaved changes, you'll be asked whether to save, discard, or cancel.
+
+After saving, collision and priority overlays update immediately on all open maps that use the tileset — including tiles you placed earlier. This applies to every placed tile: normal tiles, tiles painted from another tileset, extra (named) autotiles, and tiles you rotated or flipped. Rotated and flipped tiles automatically re-apply the new passage in the correct orientation, in the editor and in-game.

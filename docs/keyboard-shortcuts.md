@@ -106,6 +106,7 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 
 | Default Key | Action |
 |-------------|--------|
+| Ctrl+S | Save tileset (keeps the editor open) |
 | Ctrl+Z | Undo tileset edit |
 | Ctrl+Y | Redo tileset edit |
 | Ctrl+A | Select all tiles |
