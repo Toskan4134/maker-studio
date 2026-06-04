@@ -7,9 +7,30 @@ Toggle event markers from the **Events** button in the toolbar (or **View → Sh
 ## Creating Events
 
 - Click the + button in the Events panel.
-- Or double-click an empty space on the map.
+- Or, with the **Paint (Brush)** tool on the Events layer, **click an empty cell** — a new event is created there with default settings and selected. Double-click it (or any event) to open the editor.
 
-Either action creates a new event at that position with default settings.
+A single-cell preview follows the cursor showing where the event will land.
+
+## Tools on the Events Layer
+
+With the **Events layer** active, only four tools do anything; the rest are greyed out in the toolbar:
+
+- **Paint (Brush)** — **click an empty cell to create an event**; click an existing event to select it, then drag to move it.
+- **Erase** — click an event to delete it, or **drag across the map to delete every event you pass over** (removed together in a single undo step).
+- **Select** — box-select events (see below).
+- **Pan** — move the view.
+
+Double-clicking an event opens the editor; double-clicking does **not** create events (use the Brush). **Fill**, **Rectangle**, and **Eyedropper** are disabled here — you place one event per cell, not tiles. Switching to the Events layer while one of them is active falls back to the Brush automatically. **Brush size** has no effect on this layer, and the cursor preview shows a **single tile** (the first one selected), never a multi-tile group — you create one event at a time. The created event uses default settings regardless of the previewed tile.
+
+## Selecting and Moving Events
+
+Pick the **Select** tool, then on the Events layer:
+
+- **Drag a box** to select every event inside it.
+- **Ctrl+drag** adds events to the selection; **Shift+drag** removes them.
+- **Drag** a selected event to **move the whole selection** together (one undo step). Moves that would leave the map or land on another event are blocked with a notice.
+- **Delete** removes every selected event at once.
+- **Ctrl+D** (or **Esc**) deselects.
 
 ## Copying Events
 

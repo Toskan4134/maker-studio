@@ -76,7 +76,7 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 | Default Key | Action |
 |-------------|--------|
 | Ctrl+A | Select all |
-| Ctrl+D | Deselect (tiles + any selected shadow) |
+| Ctrl+D | Deselect (tiles, any selected shadow, and selected event[s]) |
 | Ctrl+C | Copy selection (active layer) |
 | Ctrl+V | Paste (preview mode -- click to commit) |
 | Ctrl+X | Cut selection |
@@ -139,7 +139,10 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 
 | Default Key | Action |
 |-------------|--------|
-| Delete | Delete selected event |
+| Delete | Delete selected event (or all box-selected events) |
+| Ctrl+D / Escape | Deselect event(s) |
+
+On the **Events layer**, the **Select** tool box-selects events: drag a marquee (Ctrl+drag adds, Shift+drag removes), drag the selection to move the group, Delete removes them all. See [Events Editor](events-editor.md#selecting-and-moving-events).
 
 ## Game Simulator
 

@@ -4,13 +4,15 @@
 
 | Tool | Key | Description |
 |------|-----|-------------|
-| Brush | B | Paint tiles. Supports multi-tile stamps and adjustable brush size. Shift+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
+| Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
 | Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Shift+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
 | Fill | F | Flood-fill a contiguous area with the selected tile. |
 | Rectangle | R | Click and drag to fill a rectangular area. Tile pattern preview shown while dragging. |
 | Eyedropper | I | Pick a tile and its properties from the canvas. |
 | Select | S | Click and drag to select an area. Drag the selection to move tiles. Ctrl+drag to add tiles, Shift+drag to remove tiles from selection. |
 | Pan | Space (hold) | Pan the viewport. |
+
+> **On the Events layer**, only **Brush**, **Eraser**, **Select**, and **Pan** apply — Fill, Rectangle, and Eyedropper are disabled, and brush size has no effect. Select box-selects events for group move/delete. See [Events Editor](events-editor.md#tools-on-the-events-layer).
 
 ## Brush Properties
 
