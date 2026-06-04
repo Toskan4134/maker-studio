@@ -32,14 +32,15 @@ You can reach map versions from several places — they all drive the same actio
 ### The Version Manager
 
 The Version Manager lists every version — **Version 1 (Base)** plus your extra versions — with the
-switch/variable that activates each one. From here you can **Switch to**, **Set Selector (⚙)**,
-**Rename (✎)**, **Delete (🗑)**, and create a **New Version**. The version you're currently editing is
-marked *editing*, and any selector overlaps are flagged with a **⚠** warning.
+switch/variable that activates each one. **Click anywhere on a version's row to switch the canvas to
+it.** Each non-base version's row also has buttons to **Set Selector**, **Rename**, and **Delete** it,
+and the **New Version** button adds one. The version you're currently editing is marked *editing*, and
+any selector overlaps are flagged with a warning icon.
 
 ### Creating a version
 
 1. Open the map you want to version.
-2. Click **＋ New Version**. A dialog asks two things:
+2. Click **New Version**. A dialog asks two things:
    - **Name** for the version.
    - **Start from** — either **Duplicate an existing version** (pick **Version 1 (Base)** or any other
      version to copy its tiles, events and layers) or **Blank (empty map)** to start from scratch at the
