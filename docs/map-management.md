@@ -15,6 +15,15 @@ Click Create to add the map to your project.
 
 Double-click any map in the Map Tree to open it in a new editor tab.
 
+## Duplicating a Map
+
+To make a full copy of a map as a **brand-new map** (a separate `map_id`, not a version):
+
+- Right-click a map in the Map Tree and choose **Duplicate Map**, or
+- Open the map and choose **Map → Duplicate Map** from the menu.
+
+The copy is named *"<original> (copy)"*, placed under the same parent, and opened automatically. It is a faithful clone — tiles, events, layers, shadows/fog, **and any map versions** come along. If the source map has unsaved edits, they're saved first so the copy is current. This is different from a **map version** (same map, swapped in-game); use Duplicate Map when you want an independent map you can change without affecting the original.
+
 ## Resizing and Shifting Maps
 
 Open the resize dialog from Map then Resize / Shift Map, or right-click a map in the Map Tree and choose Resize/Shift.

@@ -19,18 +19,38 @@ Versions share the map's **width and height** (they're the same map), and they s
 `map_id`, so Transfer Player commands, quests, and connections that point at this map keep working
 across every version.
 
-## Creating and editing versions
+## Where to manage versions
 
-The **Version** control sits at the right end of the map tab bar.
+You can reach map versions from several places — they all drive the same actions:
+
+- **Versions** button in the **toolbar** — shows the current version as a badge (e.g. `V2/3`) and opens
+  the **Version Manager**.
+- **Map → Map Versions…** in the menu bar.
+- The **Version** control at the right end of the **status bar** (quick switch + menu).
+- **Right-click a map** in the Maps tree → **Versions** (quick switch) or **Manage Versions…**.
+
+### The Version Manager
+
+The Version Manager lists every version — **Version 1 (Base)** plus your extra versions — with the
+switch/variable that activates each one. From here you can **Switch to**, **Set Selector (⚙)**,
+**Rename (✎)**, **Delete (🗑)**, and create a **New Version**. The version you're currently editing is
+marked *editing*, and any selector overlaps are flagged with a **⚠** warning.
+
+### Creating a version
 
 1. Open the map you want to version.
-2. Click **+** to create a new version. It starts as a **clone of what's currently on screen**, so you
-   can tweak it instead of building from scratch.
+2. Click **＋ New Version**. A dialog asks two things:
+   - **Name** for the version.
+   - **Start from** — either **Duplicate an existing version** (pick **Version 1 (Base)** or any other
+     version to copy its tiles, events and layers) or **Blank (empty map)** to start from scratch at the
+     base map's size.
 3. The canvas switches to the new version — paint tiles, place events, add fog/shadows, then **Ctrl+S**
    to save. Edits to a version only affect that version; the base map is untouched.
-4. Use the **Version** dropdown to switch between **Base (v0)** and your versions at any time. Unsaved
-   edits are saved automatically before switching.
-5. **✎** renames a version, **🗑** deletes it.
+4. Switch between **Version 1 (Base)** and your versions at any time from any of the controls above.
+   Unsaved edits are saved automatically before switching.
+
+> **Numbering stays tidy:** versions are numbered **Version 1 (Base), Version 2, Version 3 …**. If you
+> delete a version in the middle, the ones after it are **renumbered down** so there's never a gap.
 
 ## Choosing what activates a version
 
