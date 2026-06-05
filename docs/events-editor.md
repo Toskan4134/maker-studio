@@ -108,6 +108,16 @@ If you have mods installed that add their own event commands, extra tabs marked 
 
 Double-click a command to edit its parameters. Many commands have dedicated typed forms (Show Text, Control Switches, Conditional Branch, and so on). Commands that do not yet have a typed form show a raw JSON editor instead.
 
+### Fog Commands and Multiple Fog Layers
+
+Because a Maker Studio map can have **several fog layers** (not just the single tileset fog of stock RPG Maker XP), the three fog-related event commands let you pick **which fog layer** to affect:
+
+- **Change Map Settings** (when the type is set to **Fog**) — pick the fog layer; the form pre-fills with that layer's current properties (graphic, hue, blend type, zoom, scroll X/Y, follow-camera), which you can then edit. (Opacity is handled by Change Fog Opacity below.)
+- **Change Fog Color Tone** — pick the fog layer, then set the tone. The **Frames** field fades the tone in gradually over that many frames (0 = instant).
+- **Change Fog Opacity** — pick the fog layer, then set the opacity. The **Frames** field fades the opacity gradually (0 = instant).
+
+The dropdown lists the current map's fog layers by name. In-game the command changes that specific layer; if it can't find the layer it falls back to the map's main fog. (Panorama and Battleback are normally set per-map outside the event editor — see [Map Management](map-management.md#per-map-panorama-and-battleback).)
+
 ### Set Move Route
 
 Editing a **Set Move Route** command opens a route editor: pick the target (This Event, Player, or another event), toggle Repeat / Skip If Cannot Move, and build the list of move actions. Add actions from the dropdown; reorder, delete, undo/redo within the route.

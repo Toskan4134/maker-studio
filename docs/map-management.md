@@ -49,6 +49,25 @@ An SVG preview shows where your content will sit inside the new canvas before yo
 
 Right-click a map in the Map Tree and choose Change Tileset, or use Map then Change Tileset from the menu. Pick from the searchable list and click Apply — the map repaints with the new tileset's graphics right away, no reload needed. Changing the tileset only affects the native layers, and does not remap tile IDs (existing tiles keep their numbers, so they may look different under the new tileset). Extended layers can continue to use tiles from any tileset.
 
+## Per-Map Panorama and Battleback
+
+In stock RPG Maker XP the **panorama** (the scrolling background image behind a map) and the **battleback** (the battle background) are set on the *tileset*, so every map sharing a tileset looks the same. Maker Studio lets you set them **per map** instead — two maps on the same tileset can have different panoramas and battlebacks.
+
+There are three ways to set them, all opening the same image picker:
+
+- **Menu bar → Map → Change Panorama…** or **Change Battleback…** (next to Change Tileset…).
+- **Right-click a map** in the Map Tree → **Change Panorama…** or **Change Battleback…**.
+- When you're editing a [map version](map-versions.md), the version's right-click submenu has **Change Panorama (this version)…** / **Change Battleback (this version)…**, so each version can carry its own.
+
+Pick an image from `Graphics/Panoramas/` (panorama) or `Graphics/Battlebacks/` (battleback). The panorama picker also has a **hue** slider; battlebacks have no hue. Leave the name blank to clear the override.
+
+- The **panorama is drawn on the editor canvas**, tiled beneath your tiles, so you can see exactly how it looks while mapping.
+- The **battleback is not shown on the map canvas** — it only appears in battles in-game — but it is stored and editable here.
+
+Each map version stores its own panorama and battleback, so a "destroyed" version can have a different sky than the normal one. Settings are saved into the map file; press **Ctrl+S** to keep them.
+
+> The first time you open a map that has never had per-map settings, it inherits whatever its tileset used, so nothing changes visually until you pick something. The in-game plugin applies your per-map choice and stops the tileset's own fog from drawing twice when the map uses Maker Studio fog layers.
+
 ## Deleting a Map
 
 Right-click a map in the Map Tree and choose Delete Map, then confirm the deletion. Any child maps are moved up to the deleted map's parent so they are not lost. The map's `.rxdata` file is removed from disk.
