@@ -108,6 +108,19 @@ If you have mods installed that add their own event commands, extra tabs marked 
 
 Double-click a command to edit its parameters. Many commands have dedicated typed forms (Show Text, Control Switches, Conditional Branch, and so on). Commands that do not yet have a typed form show a raw JSON editor instead.
 
+### Choosing a Graphic (Favourites)
+
+Every graphic picker has a live preview and favourites: the event page **Graphic** (character sheet), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), the Move Route **Change Graphic** action, and the per-map Panorama / Battleback pickers.
+
+- **Nested folders are listed** — graphics tucked inside subfolders (e.g. `Graphics/Characters/NPCs/oldman`) now appear in the list as `NPCs/oldman`, so you can pick and favourite them directly instead of hunting through **Browse**.
+- **Browse never duplicates** — the **…** button can pick any image under your project's `Graphics/` folder. If it's in another subfolder, the editor stores a relative `../Folder/name` reference instead of copying the file in (only an image from *outside* `Graphics/` is copied). The preview updates instantly, and previews you've already viewed are cached so flipping between the list and the **★ Favourites** tab doesn't re-load them.
+- **Star any graphic** — hover a name in the list and click its star to favourite it (filled star = favourited). Favourites are remembered across projects and sessions.
+- **Current image always has a star** — if the selected image isn't in the current folder list (you reached it through **Browse**, or it lives in another folder), it shows up as its own row just under **(None)**, labelled with its folder path — star it from there.
+- **Favourites on top** — graphics you've starred in the current folder jump to the top of the list.
+- **★ Favourites tab** — once you have any favourite, a tab appears listing **every** favourite, no matter which folder it lives in. A favourite from a different folder shows its folder name beside it; pick it and the editor stores the right reference automatically, so you can reuse one favourite across different picker types (including as an event's character graphic).
+
+The same star works everywhere, so a character you favourite on an event's page is also pinned the next time you pick a Move Route graphic.
+
 ### Fog Commands and Multiple Fog Layers
 
 Because a Maker Studio map can have **several fog layers** (not just the single tileset fog of stock RPG Maker XP), the three fog-related event commands let you pick **which fog layer** to affect:
