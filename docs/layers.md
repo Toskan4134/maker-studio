@@ -13,7 +13,7 @@ Beyond the three native layers, the editor supports unlimited extended layers. E
 - **Per-tile effects**: Set individual opacity, rotation, hue, saturation, lighting, and flip for each tile.
 - **Per-tile passage, priority, and terrain**: Override game properties on a per-tile basis.
 
-Extended layer data is embedded inside the map's `.rxdata` file. It is invisible to RMXP itself, but the editor's runtime mod reads and renders it in-game.
+Extended layer data is embedded inside the map's `.rxdata` file. It is invisible to RMXP itself, but the editor's runtime plugin reads and renders it in-game.
 
 ## Layer Panel
 

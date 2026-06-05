@@ -132,4 +132,4 @@ MakerStudio/
 
 ## License
 
-This plugin is provided as-is for use with Pokemon Essentials v21.1 projects.
+This plugin is licensed under the GNU General Public License v3.0 (GPL-3.0). See the repository's `LICENSE` file for details.

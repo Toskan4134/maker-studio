@@ -1,7 +1,8 @@
 # Maker Studio
 
-A modern, feature-rich tile map editor built as a drop-in companion for **RPG Maker XP**. It
-reads and writes `.rxdata` files directly, so existing projects work without conversion — plus
+A modern, feature-rich tile map editor built as a **replacement for RPG Maker XP**'s game editor,
+with upgraded features and quality-of-life improvements. It reads and writes `.rxdata` files directly,
+so existing projects work without conversion — plus
 dockable panels, multi-tile brushes, per-tile properties, unlimited extended layers, multi-tileset
 support, unlimited autotiles, a built-in shadow system, a full event editor, an in-editor game
 simulator, and a JavaScript mod system.
