@@ -14,6 +14,8 @@ The editor remembers your last-opened project, so subsequent launches go straigh
 
 The Map Tree panel on the left shows every map in your project, organized in the same hierarchy you set up in RPG Maker XP. Double-click any map to open it in a new editor tab. Maps with a dot indicator next to their name have unsaved changes.
 
+When you open a project, a "Loading project..." card appears in the map editor area listing each load step (maps, tilesets, system data, opening the first map, and tileset graphics) with a progress count. The rest of the layout stays visible around it, and the card disappears once everything -- including all tileset graphics -- has loaded, leaving the first map ready to edit.
+
 ## Navigation
 
 Moving around the canvas is straightforward:
