@@ -73,6 +73,7 @@ Set the event's visual appearance:
 
 - Character graphic or tile graphic.
 - Direction and pattern.
+- **Sheet Cols / Sheet Rows** — the number of columns and rows in the character sheet grid (1–16 each, default 4). Standard RPG Maker XP character sheets are 4x4 (4 directions, 4 animation frames). Change these when using non-standard layouts: a 1x1 single-frame icon, a 3x2 sprite sheet, an 8x8 extended sheet, and so on. The Pattern dropdown adapts to the column count automatically.
 - Opacity and blend mode.
 
 ### Autonomous Movement
