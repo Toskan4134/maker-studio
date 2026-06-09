@@ -72,9 +72,11 @@ Control when a page becomes active:
 Set the event's visual appearance:
 
 - Character graphic or tile graphic.
-- Direction and pattern.
-- **Sheet Cols / Sheet Rows** — the number of columns and rows in the character sheet grid (1–16 each, default 4). Standard RPG Maker XP character sheets are 4x4 (4 directions, 4 animation frames). Change these when using non-standard layouts: a 1x1 single-frame icon, a 3x2 sprite sheet, an 8x8 extended sheet, and so on. The Pattern dropdown adapts to the column count automatically.
+- **Row** and **Col** — which cell of the sheet to show. **Col** is the horizontal frame (1…number of columns). **Row** is the vertical frame (1…number of rows): rows 1–4 are the standard directions (**1 – Down, 2 – Left, 3 – Right, 4 – Up**) and any rows beyond that are plain numbers, so a sprite can start on *any* row of a tall sheet.
+- **Sheet Cols / Sheet Rows** — the number of columns and rows in the character sheet grid (1 or more each, no upper limit; default 4). Standard RPG Maker XP character sheets are 4x4 (4 directions, 4 animation frames). Change these when using non-standard layouts: a 1x1 single-frame icon, a 3x2 sprite sheet, an 8x8 extended sheet, a long effect strip, and so on. The Col and Row dropdowns adapt to the grid automatically.
 - Opacity and blend mode.
+
+The preview works like the map: **Ctrl+scroll** to zoom toward the cursor, **scroll / Shift+scroll** to pan up-down / left-right, and **middle-drag** or **Space+drag** to pan (the image always stays in view). Click a cell to pick its Row/Col; the **Fit** button resets the view. Handy for lining up cells on large or dense sheets.
 
 ### Autonomous Movement
 
@@ -143,6 +145,19 @@ Actions that take parameters open their own form, using the same pickers as the 
 - **Script** — multi-line Ruby code box.
 - **Change Speed / Change Freq** — labelled dropdowns (Slowest…Fastest, Lowest…Highest), matching RPG Maker XP.
 - **Switch ON/OFF**, **Jump**, **Wait**, **Change Opacity**, **Change Blending** — dedicated fields.
+
+#### Frame actions (Maker Studio)
+
+Below the standard actions is a **Frame** group that steps or sets which cell of the character sheet the target shows, using the page's **Sheet Cols / Sheet Rows** grid (see [Graphic](#graphic)). The sheet's **columns are the horizontal frames** and its **rows are the vertical frames**.
+
+- **Next Frame / Previous Frame** — move one frame across the row; at the end of a row it wraps to the start of the next row (and the whole sheet wraps around at the very end).
+- **Next / Previous Horizontal Frame** — move one column, wrapping within the current row only.
+- **Next / Previous Vertical Frame** — move one row, wrapping within the current column only.
+- **Set Frame…** — set the column and/or row directly. Each axis has its own checkbox, so you can change just the column, just the row, or both, leaving the other unchanged. Frame numbers are 1-based.
+
+These let you drive a sprite's animation by hand — e.g. a stepped torch flicker, a portrait that cycles expressions, or a wide pose sheet. Because the frame is set manually, turn the target's **Move Animation** and **Stop Animation** off (Move Animation OFF / Stop Animation OFF actions) so the engine's automatic walk cycle doesn't overwrite the frame you set.
+
+> The in-editor **Test Move Route** simulator previews these approximately — only the first four rows render distinctly there. In-game, all rows of the sheet are reachable.
 
 Each move action also appears as its own colored row beneath the Set Move Route command in the main list. To re-edit one, double-click it — or select it and use Edit (Edit button / Space / right-click → Edit). Either jumps straight to that action's form.
 
