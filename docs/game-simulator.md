@@ -121,7 +121,7 @@ Move-route entries are prefixed with `Move:` and colored as move sub-commands; t
 
 **The log stays put while you read.** The panel size is fixed, so streaming logs never resize the simulator window or change row heights. Auto-scroll only follows the newest entry while you're already at the bottom — scroll up to inspect an earlier row and new entries won't yank you down. A **↓ Latest** button appears to jump back to the bottom.
 
-Repeated identical entries (common with parallel events) collapse into a single row with a `×N` counter.
+Repeated entries collapse with a `×N` counter instead of flooding the log. This is loop-aware: a single command that fires 100× counts as one row, and a repeating **multi-command loop body** (e.g. text → move → move → wait → move, over and over) collapses to that body's rows, each showing how many times it ran. So a tight loop counts as one pass against the log limit and never flushes your earlier history off the top.
 
 ## Settings
 
