@@ -49,24 +49,29 @@ An SVG preview shows where your content will sit inside the new canvas before yo
 
 Right-click a map in the Map Tree and choose Change Tileset, or use Map then Change Tileset from the menu. Pick from the searchable list and click Apply — the map repaints with the new tileset's graphics right away, no reload needed. Changing the tileset only affects the native layers, and does not remap tile IDs (existing tiles keep their numbers, so they may look different under the new tileset). Extended layers can continue to use tiles from any tileset.
 
-## Per-Map Panorama and Battleback
+## Panorama and Battleback
 
-In stock RPG Maker XP the **panorama** (the scrolling background image behind a map) and the **battleback** (the battle background) are set on the *tileset*, so every map sharing a tileset looks the same. Maker Studio lets you set them **per map** instead — two maps on the same tileset can have different panoramas and battlebacks.
+In RPG Maker XP the **panorama** (the scrolling background image behind a map) and the **battleback** (the battle background) belong to the *tileset*, so every map sharing a tileset shares them. Maker Studio lets you change them right from the map you're editing — and each [map version](map-versions.md) can carry its own override.
 
-There are three ways to set them, all opening the same image picker:
+There are three ways to change them, all opening the same image picker:
 
 - **Menu bar → Map → Change Panorama…** or **Change Battleback…** (next to Change Tileset…).
 - **Right-click a map** in the Map Tree → **Change Panorama…** or **Change Battleback…**.
-- When you're editing a [map version](map-versions.md), the version's right-click submenu has **Change Panorama (this version)…** / **Change Battleback (this version)…**, so each version can carry its own.
+- When you're editing a [map version](map-versions.md), the version's right-click submenu has **Change Panorama (this version)…** / **Change Battleback (this version)…**.
 
-Pick an image from `Graphics/Panoramas/` (panorama) or `Graphics/Battlebacks/` (battleback). The panorama picker also has a **hue** slider; battlebacks have no hue. Leave the name blank to clear the override.
+Pick an image from `Graphics/Panoramas/` (panorama) or `Graphics/Battlebacks/` (battleback). The panorama picker also has a **hue** slider; battlebacks have no hue. Leave the name blank to clear it.
+
+What the change does depends on what you're editing:
+
+- **On the base map, you are editing the tileset** — exactly like RPG Maker XP. The new panorama/battleback is written to the tileset immediately and applies to **every map that uses that tileset** (other open maps update on the spot). This works in any game, with no plugin needed, so these menu items show no MS badge while you're on the base map.
+- **On a map version, you set a per-version override** — a "destroyed" version can have a different sky than the normal one. Version overrides are stored in the map file (press **Ctrl+S** to keep them) and applied in-game by the MakerStudio plugin, so these items carry the MS badge.
+
+Either way:
 
 - The **panorama is drawn on the editor canvas**, tiled beneath your tiles, so you can see exactly how it looks while mapping.
 - The **battleback is not shown on the map canvas** — it only appears in battles in-game — but it is stored and editable here.
 
-Each map version stores its own panorama and battleback, so a "destroyed" version can have a different sky than the normal one. Settings are saved into the map file; press **Ctrl+S** to keep them.
-
-> The first time you open a map that has never had per-map settings, it inherits whatever its tileset used, so nothing changes visually until you pick something. The in-game plugin applies your per-map choice and stops the tileset's own fog from drawing twice when the map uses Maker Studio fog layers.
+> Maps saved with an older Maker Studio build may still contain a per-map base override; the editor now ignores it (the base map always shows the tileset's settings) and removes it the next time you save that map. Unrelated to panoramas but handled by the same in-game plugin: when a map uses Maker Studio fog layers, the plugin stops the tileset's own fog from drawing twice.
 
 ## Deleting a Map
 

@@ -113,7 +113,7 @@ Double-click a command to edit its parameters. Many commands have dedicated type
 
 ### Choosing a Graphic (Favourites)
 
-Every graphic picker has a live preview and favourites: the event page **Graphic** (character sheet), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), the Move Route **Change Graphic** action, and the per-map Panorama / Battleback pickers.
+Every graphic picker has a live preview and favourites: the event page **Graphic** (character sheet), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), the Move Route **Change Graphic** action, and the map Panorama / Battleback pickers.
 
 - **Nested folders are listed** — graphics tucked inside subfolders (e.g. `Graphics/Characters/NPCs/oldman`) now appear in the list as `NPCs/oldman`, so you can pick and favourite them directly instead of hunting through **Browse**.
 - **Browse never duplicates** — the **…** button can pick any image under your project's `Graphics/` folder. If it's in another subfolder, the editor stores a relative `../Folder/name` reference instead of copying the file in (only an image from *outside* `Graphics/` is copied). The preview updates instantly, and previews you've already viewed are cached so flipping between the list and the **★ Favourites** tab doesn't re-load them.
@@ -132,7 +132,7 @@ Because a Maker Studio map can have **several fog layers** (not just the single 
 - **Change Fog Color Tone** — pick the fog layer, then set the tone. The **Frames** field fades the tone in gradually over that many frames (0 = instant).
 - **Change Fog Opacity** — pick the fog layer, then set the opacity. The **Frames** field fades the opacity gradually (0 = instant).
 
-The dropdown lists the current map's fog layers by name. In-game the command changes that specific layer; if it can't find the layer it falls back to the map's main fog. (Panorama and Battleback are normally set per-map outside the event editor — see [Map Management](map-management.md#per-map-panorama-and-battleback).)
+The dropdown lists the current map's fog layers by name. In-game the command changes that specific layer; if it can't find the layer it falls back to the map's main fog. (Panorama and Battleback are normally set outside the event editor — see [Map Management](map-management.md#panorama-and-battleback).)
 
 ### Set Move Route
 

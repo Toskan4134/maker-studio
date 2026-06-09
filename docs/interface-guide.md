@@ -7,11 +7,27 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **File**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), Save, Save All, Run Game
 - **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, **Cross-Project Clipboard** toggle — see below), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - **Cross-Project Clipboard** is off by default. When ticked, copying tiles, events, or event commands also places them on your system clipboard so a **second open Maker Studio window** can paste them. Turn it on in *each* window you want to share between. (Deleting a tile selection still works with the **Delete** key; only the old menu entry was replaced by this toggle.)
-- **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap), Show Grid, Show Collision, Show Events, Dim Inactive Layers, Zoom In/Out/100%, Dark Mode, **Layout** submenu (Reset Layout, Import/Export Configuration)
+- **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap), Show Grid, Show Collision, Show Events, Dim Inactive Layers, **Show MS-Exclusive Indicators** (see below), Zoom In/Out/100%, Dark Mode, **Layout** submenu (Reset Layout, Import/Export Configuration)
 - **Map**: New Map, Resize / Shift Map, Change Tileset, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
 - **Help**: Keyboard Shortcuts, Check for Updates, Stats, About Maker Studio, Toggle DevTools
+
+## MS-Exclusive Feature Indicators
+
+Some editor features go beyond what stock RPG Maker XP supports — they only work in the running game if your project has the **MakerStudio plugin** installed (the integration that ships with the editor). A tiny **MS** badge marks those features throughout the interface so you always know which ones depend on the plugin. Hover a badge for a reminder of why — most say *"Maker Studio exclusive — requires the MakerStudio plugin in-game"*, while some explain their specific reason.
+
+You will see the badge on, for example:
+
+- Menu items such as **Edit → Shadows** and **Map → Map Versions…** (also on the matching Map Tree right-click entries).
+- **Map → Change Panorama… / Change Battleback…** — but **only while you are editing a [map version](map-versions.md)**. On the base map these change the tileset exactly like RPG Maker XP does, so no plugin is needed and no badge is shown; only per-version overrides need the plugin (the version submenu's "(this version)" entries always carry the badge).
+- Layer panel rows for fog groups, shadow groups, and extra (non-native) tile layers.
+- The **Autotiles** section of the Tile Palette — Maker Studio uses its own autotile system that is not tied to a map's tileset, so **all** painted autotiles need the plugin in-game (the badge's tooltip says so). Also a small badge over the tileset search box while you are browsing a tileset other than the map's own (cross-tileset painting).
+- The **Tile Properties** panel header, and plugin-dependent event command forms (Change Map Settings when its type is set to **Fog**, fog color/opacity, the move-route **Set Frame** section). In tight spots — like the Sheet Cols/Rows fields in the graphic picker — the badge appears as a small dot instead.
+
+If you use these features in a game that does not have the plugin, the game simply ignores them (or they are unavailable) at runtime — your maps still load fine in stock RPG Maker XP.
+
+The badges are on by default. Hide or show them with **View → Show MS-Exclusive Indicators**; your choice is remembered across sessions.
 
 ## Toolbar
 
