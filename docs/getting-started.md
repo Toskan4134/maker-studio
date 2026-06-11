@@ -26,7 +26,7 @@ Moving around the canvas is straightforward:
 
 ## Saving
 
-Press Ctrl+S to save the current map. Changes are written directly to the corresponding `.rxdata` file. A backup of the original file is created automatically on the first save, so you can always revert if something goes wrong.
+Press Ctrl+S to save the current map. Changes are written directly to the corresponding `.rxdata` file. Every save first backs up the previous file into `Data/map-backups/` (the newest 10 backups per file are kept), so you can always revert if something goes wrong, and writes are crash-safe — a crash or power loss mid-save can never leave a half-written file. Unsaved work is also autosaved in the background every few minutes; see [Map Management → Autosave and Crash Recovery](map-management.md#autosave-and-crash-recovery).
 
 ## Building from Source
 

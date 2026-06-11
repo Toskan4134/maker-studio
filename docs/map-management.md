@@ -142,6 +142,21 @@ After your first Run, a **Saves** button appears in the toolbar that opens the f
 
 This makes it easy to back up or clear save files while testing.
 
+## Autosave and Crash Recovery
+
+You still save with **Ctrl+S** as usual, but the editor quietly protects unsaved work in the background:
+
+- Every **5 minutes**, any open map with unsaved changes is snapshotted to a private autosave folder in your user profile. Your real map files are **never** touched by an autosave — there is nothing to clean up and nothing changes in your project.
+- Saving a map normally discards its snapshot (it is no longer needed).
+- If the editor (or your PC) crashes with unsaved changes, the next time you open that project a notification lists the maps with autosaved work and offers **Restore**. Restoring writes the autosaved changes into the map files and reloads any of those maps you have open. The pre-restore state is kept in the regular `Data/map-backups/` history, so you can still go back if you didn't want the restore.
+- If you'd rather discard the autosaved work, just ignore or dismiss the notification — it won't be applied unless you click Restore.
+
+Saves themselves are also crash-safe: the editor writes to a temporary file and swaps it in only once it is fully on disk, so a crash or power loss mid-save can never leave a half-written map file. On top of that, every save first copies the previous file into `Data/map-backups/` (the newest 10 backups per file are kept).
+
+## Opening the Same Project in Two Windows
+
+Running two Maker Studio windows on **different** projects is fully supported (it's how the [Cross-Project Clipboard](interface-guide.md) works). Opening the **same** project in two windows is risky, though: both windows write the same map files, and the last one to save silently wins. The editor detects this and shows a warning when a second window opens a project that is already open elsewhere. You can keep editing, but it's best to close one of the windows.
+
 ## Close Confirmation
 
 When you close a tab that has unsaved changes, the editor asks you to confirm:
