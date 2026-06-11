@@ -3,8 +3,8 @@
 **Map Versions** let one map hold several different states of itself — for example a
 **normal** town, a **cinematic** variant, and a **destroyed** version after a story event — without
 creating separate maps. In‑game you switch between versions with a single **switch or variable**, and
-the whole map (tiles, events, fog, shadows) changes **in place**: the player stays exactly where they
-are, and the world transforms around them. No Transfer Player, no loading a parallel map.
+the whole map (tiles, events, fog, panoramas, shadows) changes **in place**: the player stays exactly
+where they are, and the world transforms around them. No Transfer Player, no loading a parallel map.
 
 Everything is stored **inside the same map file** (`MapXXX.rxdata`), as pure additions, so the map still
 opens in stock RPG Maker XP and the base version is never modified.
@@ -45,8 +45,8 @@ any selector overlaps are flagged with a warning icon.
    - **Start from** — either **Duplicate an existing version** (pick **Version 1 (Base)** or any other
      version to copy its tiles, events and layers) or **Blank (empty map)** to start from scratch at the
      base map's size.
-3. The canvas switches to the new version — paint tiles, place events, add fog/shadows, then **Ctrl+S**
-   to save. Edits to a version only affect that version; the base map is untouched.
+3. The canvas switches to the new version — paint tiles, place events, add fog/panorama layers/shadows,
+   then **Ctrl+S** to save. Edits to a version only affect that version; the base map is untouched.
 4. Switch between **Version 1 (Base)** and your versions at any time from any of the controls above.
    Unsaved edits are saved automatically before switching.
 
