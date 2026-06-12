@@ -15,7 +15,7 @@ Every menu item now shows a small icon next to its label so you can spot command
 
 ## Language
 
-The interface is available in **English** and **Español**. Switch under **View → Language** — the change applies immediately and is remembered across sessions. On first launch the editor picks your system language (Spanish systems start in Español; everything else defaults to English). Translation is still rolling out across the interface: the menus, welcome screen, and notifications are translated first, and any text without a translation yet simply shows in English.
+The interface is available in **English** and **Español**. Switch under **View → Language** — the change applies immediately and is remembered across sessions. On first launch the editor picks your system language (Spanish systems start in Español; everything else defaults to English). The whole interface is translated — menus, panels, dialogs, the event editor and its command forms, the simulator, and notifications. A few technical terms stay in English on purpose (for example *tile*, *tileset*, *autotile*, *script*, *mod*, and audio kinds like *BGM*/*SE*) so they match RPG Maker and the modding API.
 
 ## MS-Exclusive Feature Indicators
 
