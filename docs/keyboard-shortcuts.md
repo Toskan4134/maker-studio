@@ -45,7 +45,7 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 
 | Default Key | Action |
 |-------------|--------|
-| 1--9 | Select layer by number |
+| 1--9 | Select the 1st–9th tile layer (counted top to bottom, skipping the Shadows/Fog/Panorama group rows — so **4** always selects the layer shown as "Layer 4") |
 | V | Select Events layer |
 | ↑ | Previous layer (skips shadows) |
 | ↓ | Next layer (skips shadows) |
@@ -70,6 +70,7 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 | Ctrl+Z | Undo |
 | Ctrl+Y | Redo |
 | Ctrl+Enter | Run game |
+| Ctrl+R | Reset App — reloads the editor (your panel layout is kept; to restore the default layout use **View → Layout → Refresh Layout** instead) |
 
 ## Selection
 
@@ -129,11 +130,26 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 
 ## Event Editor (Move Route)
 
+The move-action list in **Set Move Route** supports the same editing keys as the main command list. Click selects a single action; **Shift+click** extends the selection and **Ctrl+click** toggles — copy, cut, delete, and drag all act on the whole selection.
+
 | Default Key | Action |
 |-------------|--------|
+| Space / Enter | Edit the selected move action |
+| Ctrl+C / Ctrl+V / Ctrl+X | Copy / Paste / Cut move actions (separate clipboard from event commands) |
 | Ctrl+Z | Undo move route edit |
 | Ctrl+Y | Redo move route edit |
 | Delete | Delete move command |
+| ↑ / ↓ | Previous / next move action |
+| Alt + ↑ / ↓ | Move the selected action up / down |
+
+## Scripts Editor
+
+| Default Key | Action |
+|-------------|--------|
+| Ctrl+F | Find (and replace) in the current script |
+| Ctrl+Shift+F | Search across all scripts |
+
+See the [Scripts editor guide](scripts.md#finding-things) for details.
 
 ## Events Panel
 

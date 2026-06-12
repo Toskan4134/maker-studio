@@ -136,7 +136,15 @@ The dropdown lists the current map's fog layers by name. In-game the command cha
 
 ### Set Move Route
 
-Editing a **Set Move Route** command opens a route editor: pick the target (This Event, Player, or another event), toggle Repeat / Skip If Cannot Move, and build the list of move actions. Add actions from the dropdown; reorder, delete, undo/redo within the route.
+Editing a **Set Move Route** command opens a route editor: pick the target (This Event, Player, or another event), toggle Repeat / Skip If Cannot Move, and build the list of move actions.
+
+The move-action list edits just like the main command list:
+
+- **Select** with a click; **Shift+click** extends the selection and **Ctrl+click** adds or removes individual actions — everything below acts on the whole selection.
+- **Copy / Cut / Paste** with `Ctrl+C` / `Ctrl+X` / `Ctrl+V` — move actions have their own clipboard, so copying them never overwrites copied event commands (and vice versa). Pasted actions land after the selection, always inside the route.
+- **Undo / Redo** with `Ctrl+Z` / `Ctrl+Y`, scoped to the route you are editing.
+- **Edit** the selected action with `Space` or `Enter` (opens its parameter form), **Delete** removes it, the **arrow keys** move the selection, and `Alt+↑` / `Alt+↓` reorder.
+- **Drag and drop** one action — or a whole multi-selection — to reorder; a line shows where it will land.
 
 Actions that take parameters open their own form, using the same pickers as the rest of the editor instead of raw text:
 

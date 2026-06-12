@@ -11,8 +11,9 @@ Open it from the **Scripts** button on the toolbar (next to **Database**) or **T
 
 - **Left:** the list of scripts, in the order RPG Maker XP runs them. Section dividers (titles made of
   `=` signs) appear dimmed.
-- **Right:** the selected script's code, with Ruby syntax highlighting, line numbers, and find
-  (`Ctrl+F`). Edit it like any code editor; standard `Ctrl+Z` / `Ctrl+Y` undo/redo work inside it.
+- **Right:** the selected script's code, with Ruby syntax highlighting, line numbers, and find &
+  replace (`Ctrl+F` — see [Finding things](#finding-things)). Edit it like any code editor; standard
+  `Ctrl+Z` / `Ctrl+Y` undo/redo work inside it.
 
 ## Managing scripts
 
@@ -25,6 +26,19 @@ Use the small buttons above the list:
 - **Double-click** a script's name to rename it.
 
 A dot (•) in the title bar means you have unsaved changes.
+
+## Finding things
+
+- **Find in the current script** — press `Ctrl+F` to open a find & replace bar at the top of the code
+  editor. It supports match case, regular expressions, whole-word matching, and replace / replace all,
+  and it follows the editor's language and theme.
+- **Search all scripts** — press `Ctrl+Shift+F` to open a search panel that looks through **every**
+  script's title and code at once. Results appear grouped by script with line numbers and the match
+  highlighted; click a result to jump straight to that line, even in a different script. Toggle **Aa**
+  for case-sensitive matching or **.*** for regular expressions (an invalid pattern simply shows no
+  results). Very broad searches stop at 500 results — narrow the query to see the rest.
+
+Both shortcuts are rebindable under **Help → Keyboard Shortcuts...** (the "Scripts" section).
 
 ## Saving
 

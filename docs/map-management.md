@@ -173,7 +173,7 @@ If you choose **File → Open Project…** or pick a project from **File → Ope
 - **Discard**: Switches without saving — unsaved edits are lost.
 - **Cancel**: Stays on the current project.
 
-This is the same prompt used by Reset App and View → Layout → Reset Layout, so unsaved work cannot be lost silently by opening a different project.
+This is the same prompt used by Help → Reset App and View → Layout → Refresh Layout, so unsaved work cannot be lost silently by opening a different project.
 
 ## "Not a Project Folder" Dialog
 

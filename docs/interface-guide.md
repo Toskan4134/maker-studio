@@ -7,15 +7,15 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **File**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), Save, Save All, Run Game
 - **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, **Cross-Project Clipboard** toggle — see below), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - **Cross-Project Clipboard** is off by default. When ticked, copying tiles, events, or event commands also places them on your system clipboard so a **second open Maker Studio window** can paste them. Turn it on in *each* window you want to share between. (Deleting a tile selection still works with the **Delete** key; only the old menu entry was replaced by this toggle.)
-- **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap), Show Grid, Show Collision, Show Events, Dim Inactive Layers, **Show MS-Exclusive Indicators** (see below), Zoom In/Out/100%, Dark Mode, **Language** submenu (see below), **Layout** submenu (Reset Layout, Import/Export Configuration)
+- **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — clicking an entry **focuses** that panel, bringing it to the front or reopening it as a floating window if closed; it never closes a panel, and the checkmark still shows which panels are open), Show Grid, Show Collision, Show Events, Dim Inactive Layers, **Show MS-Exclusive Indicators** (see below), Zoom In/Out/100%, Dark Mode, **Language** submenu (see below), **Layout** submenu (Refresh Layout, Import/Export Configuration)
 - **Map**: New Map, Resize / Shift Map, Change Tileset, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
-- **Help**: Keyboard Shortcuts, Check for Updates, Stats, About Maker Studio, Toggle DevTools
+- **Help**: Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), Check for Updates, Stats, About Maker Studio, Toggle DevTools
 
 ## Language
 
-The interface is available in **English** and **Español**. Switch under **View → Language** — the change applies immediately and is remembered across sessions. On first launch the editor picks your system language (Spanish systems start in Español; everything else defaults to English). The whole interface is translated — menus, panels, dialogs, the event editor and its command forms, the simulator, and notifications. A few technical terms stay in English on purpose (for example *tile*, *tileset*, *autotile*, *script*, *mod*, and audio kinds like *BGM*/*SE*) so they match RPG Maker and the modding API.
+The interface is available in **English** and **Español**, and installed [mods](marketplace.md) can add more languages — any language a mod provides appears in the same menu automatically (if the mod that provides your chosen language is disabled, the editor falls back to its default language and switches back when the mod returns). Switch under **View → Language** — the change applies immediately and is remembered across sessions. On first launch the editor picks your system language (Spanish systems start in Español; everything else defaults to English). The whole interface is translated — menus, panels, dialogs, the event editor and its command forms, the simulator, and notifications. A few technical terms stay in English on purpose (for example *tile*, *tileset*, *autotile*, *script*, *mod*, and audio kinds like *BGM*/*SE*) so they match RPG Maker and the modding API.
 
 ## MS-Exclusive Feature Indicators
 
@@ -50,7 +50,7 @@ The toolbar sits at the top of the window and provides quick access to common ac
 - **Database / Scripts** — icon + text buttons that open the [Database](database.md) window and the [Scripts editor](scripts.md). (Also available under the **Tools** menu.)
 - **Grid / Col / Dim** — icon + text toggle buttons for Show Grid, Show Collision, and Dim Inactive Layers.
 - **Theme** — sun/moon toggle switch. Thumb left = light mode (☀ visible on the right); thumb right = dark mode (☾ visible on the left). Your choice is remembered across sessions.
-- **Reset Layout** — available under View then Layout.
+- **Refresh Layout** — available under View then Layout (restores the default panel arrangement).
 
 ## Map Tree (left panel)
 
@@ -77,11 +77,16 @@ On very large or heavy maps it may also show **"⏸ Animations paused (performan
 
 ## Dockable Panels
 
-Every panel in the editor can be dragged, floated as a separate window, and rearranged to suit your workflow. If you ever want to start fresh, use View then Layout then Reset Layout to restore the default arrangement.
+Every panel in the editor can be dragged, floated as a separate window, and rearranged to suit your workflow. If you ever want to start fresh, use **View → Layout → Refresh Layout** to restore the default arrangement. (To just reload the editor while *keeping* your layout, use **Help → Reset App** / `Ctrl+R`.)
 
 - **Detach a panel**: right-click a tab or empty header area and pick **Detach to floating window**. The panel pops out as a draggable, resizable floating window inside the editor.
 - **Floating windows stay on-screen**: if a floating panel is dragged or resized past the editor bounds, it auto-snaps back inside on release.
 - **Reattach**: drag the floating window's tab back onto a dock zone, or close the panel.
+- **Focus from the menu**: **View → Panels** brings a panel to the front (or reopens it floating if you closed it) — it never closes panels.
+
+### Mod panels and layouts
+
+Panels added by [mods](marketplace.md) keep their place in your layout. If a mod is disabled, uninstalled, or reloading, its panel slot stays where you docked it and shows a placeholder ("Panel provided by mod … — not loaded") until the mod is back; close the placeholder if you don't want to keep the slot. Exported layout configurations (**View → Layout → Export Configuration**) also record which mods provided which panels — importing a layout that uses panels from mods you don't have installed warns you with the list of missing mods and keeps those panels as placeholders. Older exported configurations still import fine.
 
 ## Minimap
 
