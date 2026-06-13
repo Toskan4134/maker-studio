@@ -17,14 +17,16 @@ The Marketplace shows a card for each available mod with an icon, name, author, 
 
 Click **Changelog** on a card to open the release notes for that mod's latest version in a dialog. The notes are shown as formatted Markdown (headings, lists, links, and code render the way they do on GitHub).
 
-## Verified vs Unverified Mods
+## Verified vs Tampered vs Unverified Mods
 
-Every card shows one of two chips next to the mod name:
+Every card shows a chip next to the mod name that reflects the SHA-256 integrity check against the registry's pinned hash:
 
-- **Verified** (green) — the mod's release was signed with the author's minisign key and the registry has the public key. The signature was checked before install.
-- **Unverified** (yellow) — no signature was available. The mod can still be installed, but you have to confirm a second time and tick "I understand this is unverified code from the internet".
+- **Verified** (green) — the release asset's SHA-256 matches the hash pinned in the registry. The bytes you would download are exactly what was reviewed.
+- **Tampered** (red) — the release bytes do not match the registry's pinned SHA-256. The **Install and Update buttons are disabled** and cannot be clicked. A tooltip on the greyed-out button explains why.
+- **Unverified** (yellow) — the hash could not be checked yet (network error, asset not yet fetched). You can still install, but the consent dialog shows the unverified path with an extra confirmation step.
+- **Checking...** — the asset is being downloaded and hashed. The button enables or disables once the result is known.
 
-Verified does not mean the mod is safe to run; it means the bytes you downloaded match what the signer published. Always read the description and check the author before installing.
+Verified does not mean the mod is safe to run; it means the bytes match what the registry maintainer pinned. Always read the description and check the author before installing.
 
 ## Installing a Mod
 
@@ -34,7 +36,7 @@ Click **Install** on a card. A consent dialog appears showing:
 - The list of capabilities it requests (read/write inside its own folder, access project files, show dialogs, etc.).
 - Cancel / Install buttons.
 
-If you accept, the editor downloads the release, verifies the signature (when present), unzips the mod into your mods folder, and activates it immediately. A toast confirms the install. The mod now appears in the **Installed** tab.
+If you accept, the editor downloads the release, verifies the SHA-256 hash against the registry's pinned value, unzips the mod into your mods folder, and activates it immediately. A toast confirms the install. The mod now appears in the **Installed** tab.
 
 ### Where the mod is installed
 
@@ -91,10 +93,10 @@ No data is sent back. The editor identifies itself with a `Maker-Studio-Marketpl
 
 **"Could not load registry"** — GitHub is unreachable or rate-limited. Wait a minute and click Refresh.
 
-**"signature did not verify"** — the release was modified after signing, or the registry's pubkey is wrong. Install is blocked. Do not bypass; report the mod.
+**"Tampered" chip (red)** — the release asset's SHA-256 does not match the hash pinned in the registry. Install and Update are blocked (buttons are disabled). This means the asset was replaced or corrupted after the registry entry was created. Report the mod so the registry maintainer can investigate.
 
 **"manifest id mismatch"** — the zip's `manifest.json` declares a different id than the registry entry. Likely the wrong asset was uploaded. Report the mod.
 
-**Install button greyed out** — usually means the install is in progress. Hover the button to see the current step (Downloading, Verifying, Installing).
+**Install/Update button greyed out** — either an install is already in progress (hover the button to see the current step: Downloading, Verifying, Installing), or the card shows a red **Tampered** chip meaning the release failed its SHA-256 check and install is blocked.
 
 **Project install disabled** — open a project first. The Project install path needs a `Plugins/MakerStudio/003_Editor/Mods/` folder, which only exists inside a real project.
