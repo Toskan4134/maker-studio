@@ -14,6 +14,8 @@
 
 > **On the Events layer**, only **Brush**, **Eraser**, **Select**, and **Pan** apply — Fill, Rectangle, and Eyedropper are disabled, and brush size has no effect. Select box-selects events for group move/delete. See [Events Editor](events-editor.md#tools-on-the-events-layer).
 
+> **Autotile previews:** when an autotile is selected, the Brush hover preview and the Rectangle drag preview show it fully edge-bordered — corners, edges and interior render just as they will be placed, and the preview connects to matching autotile already on the map. A locked autotile detail part previews as the exact part you picked. The placed result matches the preview.
+
 ## Brush Properties
 
 When a tool is active you can adjust per-tile properties before painting. These are set in the Tile Properties panel:
