@@ -148,8 +148,11 @@ You still save with **Ctrl+S** as usual, but the editor quietly protects unsaved
 
 - Every **5 minutes**, any open map with unsaved changes is snapshotted to a private autosave folder in your user profile. Your real map files are **never** touched by an autosave — there is nothing to clean up and nothing changes in your project.
 - Saving a map normally discards its snapshot (it is no longer needed).
-- If the editor (or your PC) crashes with unsaved changes, the next time you open that project a notification lists the maps with autosaved work and offers **Restore**. Restoring writes the autosaved changes into the map files and reloads any of those maps you have open. The pre-restore state is kept in the regular `Data/map-backups/` history, so you can still go back if you didn't want the restore.
-- If you'd rather discard the autosaved work, just ignore or dismiss the notification — it won't be applied unless you click Restore.
+- If the editor (or your PC) crashes with unsaved changes, the next time you open that project a notification lists the maps with autosaved work and offers two choices. The notification stays up until you pick one:
+  - **Restore** — writes the autosaved changes into the map files and reloads any of those maps you have open. The pre-restore state is kept in the regular `Data/map-backups/` history, so you can still go back if you didn't want the restore.
+  - **Discard** — throws the autosaved work away and removes the snapshot, so the notification won't come back for it.
+- Closing the notification with the **✕** without choosing leaves the snapshot in place, so you'll be offered the recovery again next session. Use **Discard** to stop the prompt for good.
+- Discarding a map's unsaved changes (when closing a tab, switching projects, or exiting) also drops that map's snapshot, so discarded work is never offered for recovery later.
 
 Saves themselves are also crash-safe: the editor writes to a temporary file and swaps it in only once it is fully on disk, so a crash or power loss mid-save can never leave a half-written map file. On top of that, every save first copies the previous file into `Data/map-backups/` (the newest 10 backups per file are kept).
 
