@@ -31,6 +31,7 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 | Alt + scroll | Adjust brush/eraser size |
 | Q | Rotate brush counter-clockwise |
 | W | Rotate brush clockwise |
+| A | Toggle custom brush — switch between your last-used [custom brush](tools.md#custom-shape-brush) and the default square brush |
 | Shift + click | Draw line from last painted position |
 
 ## Eraser

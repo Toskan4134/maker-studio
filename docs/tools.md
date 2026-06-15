@@ -75,7 +75,7 @@ Open the Brush Editor from either of:
 
 The Brush hover popover also has a **quick switcher** — a dropdown listing your saved brush presets plus **Default (square)** and **Custom (unsaved)**. Pick one to activate it immediately without opening the editor.
 
-While a custom brush is active, a compact indicator on the toolbar shows the brush's **name** (its preset name, or "Custom"). Click the **✕** on it to clear the brush and return to the default square.
+Once you've used a custom brush, a compact indicator on the toolbar shows its **name** (its preset name, or "Custom") and works as an **on/off switch** between that brush and the default square brush. Click the toggle (or press **A**) to flip between them — the indicator stays visible, dimmed, while switched off so you can flip back. Click the **✕** to clear the brush entirely and forget it (the indicator disappears, leaving you on the default square brush).
 
 ### Building a brush
 
