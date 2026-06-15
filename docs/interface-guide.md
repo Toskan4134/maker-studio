@@ -52,6 +52,8 @@ The toolbar sits at the top of the window and provides quick access to common ac
 - **Theme** — sun/moon toggle switch. Thumb left = light mode (☀ visible on the right); thumb right = dark mode (☾ visible on the left). Your choice is remembered across sessions.
 - **Refresh Layout** — available under View then Layout (restores the default panel arrangement).
 
+If the window is too narrow to show every toolbar group at once, the groups that don't fit collapse into a **"…" (More)** button at the right end of the toolbar. Click it to reveal the hidden groups in a dropdown. Widening the window brings them back into the toolbar automatically.
+
 ## Map Tree (left panel)
 
 The Map Tree shows a hierarchical view of every map in your project. The panel header has a **+** button that creates a new blank map. You can:
