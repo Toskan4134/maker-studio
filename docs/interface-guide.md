@@ -43,7 +43,7 @@ The toolbar sits at the top of the window and provides quick access to common ac
 - **Saves** — appears after the first Run; opens the folder where the game stores its save files. On Windows/macOS this is the native saves folder; on Linux it is the folder inside the Proton/Wine prefix the game ran in. See [Running the Game](map-management.md#running-the-game).
 - **Sim Map** — opens the [Game Simulator](game-simulator.md) on the current map with player input enabled.
 - **Tools** — emoji only. Hover to see the tool name and keyboard shortcut.
-- **Brush tool** — hover to reveal a size slider popup (1–5).
+- **Brush tool** — hover to reveal a popover with a size slider, a **quick brush switcher** (your saved Custom Shape Brush presets plus Default/Custom), and a **Brush Editor…** opener. When a custom brush is active, a compact indicator next to the tools shows the brush's name with a ✕ to clear it. See [Custom Shape Brush](tools.md#custom-shape-brush).
 - **Zoom** — hover to reveal zoom in/out controls.
 - **Switches / Variables** — open a searchable manager dialog where you can rename entries inline. Renames (and the **Add 50 more** button) are saved to your project immediately, so the new names survive a reload and are used by the running game — no separate save step needed.
 - **Tilesets** — opens the tileset manager for creating, editing, and deleting tilesets.
