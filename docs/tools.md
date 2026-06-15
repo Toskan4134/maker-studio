@@ -113,6 +113,17 @@ To paint more than one tile at a time, click and drag in the Tile Palette to sel
 
 The search box at the top of the Tile Palette filters every tileset by name, graphic file, or id. Type to filter, use the arrow keys and Enter (or click) to pick one, and the palette switches to show that tileset's tiles. Picking a tileset closes the dropdown and removes focus from the search box, so the next keypress goes to your map rather than the search field.
 
+## Autotiles in the Palette
+
+Below the tileset grid, the **Autotiles** section lists every named autotile from your `Graphics/Autotiles/` folder. Click the header to expand or collapse it.
+
+- **Search**: type in the search box above the autotiles grid to filter the list by name (case-insensitive, matches any part of the name). Click the **×** button to clear the search and show every autotile again.
+- **Names on hover**: hover over any autotile in the grid and a small tooltip shows its name.
+- **Select to paint**: click an autotile to select it for the Brush, Fill, and Rectangle tools.
+- **Open detail**: double-click an autotile (or right-click it and choose **Open Autotile**) to open its detail panel, where you can pick an individual piece of the autotile to stamp as a fixed part.
+
+If your filter matches nothing, the section shows **"No autotiles match."**; if the project has no autotiles at all, it shows **"No autotiles found."**
+
 ## Live Tileset Graphic Updates
 
 If you edit a tileset's graphic file in `Graphics/Tilesets/` while the project is open — repaint it in an external editor, replace it, or drop in a new version — the Tile Palette picks up the change and redraws with the new image automatically, no reload needed. (This matches how autotile graphics in `Graphics/Autotiles/` refresh.)
