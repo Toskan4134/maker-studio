@@ -68,15 +68,21 @@ Click **Brush Editor…** in the toolbar to open the Custom Shape Brush editor �
 
 The editor has four parts:
 
-- **Shape** — pick **Square**, **Circle**, **Diamond**, **Plus**, or **Custom**. The size slider sets the footprint, bounded by the **Min size** / **Max size** you set below it. **Custom** instead gives you a grid: set its Width and Height, then click cells to toggle them on or off and draw any shape you like. Resizing the grid keeps the cells you've already drawn.
-- **Tiles** — build a weighted pool of tiles the brush draws from.
+- **Shape** — pick **Square**, **Circle**, **Diamond**, **Plus**, or **Custom**. The size slider sets the footprint, bounded by the **Min size** / **Max size** you set below it. There is no hard upper limit on size — set Max as large as you like. **Custom** instead gives you a grid: set its Width and Height, then click cells to toggle them on or off and draw any shape you like. Resizing the grid keeps the cells you've already drawn.
+- **Tiles** — build a weighted pool of tiles the brush draws from. Each cell the brush paints rolls the pool independently, so a single stroke scatters tiles according to their weights.
   - **Add fixed tile** adds the tile currently selected in the palette.
   - **Add Current Tile** adds a special entry that always uses whatever tile is selected at the moment you paint (you can have at most one of these).
   - Each entry has a **weight**; the percentage shown next to it is the chance that entry is picked, normalized against the others. Remove an entry with its **✕**.
   - Leave the pool empty to simply paint the currently selected tile.
 - **Props** — the visual and game properties baked into painted tiles: **Hue**, **Saturation**, **Lighting**, **Opacity**, a **Transform** group (rotate 90° either way, flip horizontal/vertical), **Priority**, **Terrain tag**, and a **Passage** toggle for each of the four directions. Choose **Shared** to apply one set of properties to the whole brush, or **Per-tile** to give each tile in the pool its own — in Per-tile mode, click a tile in the pool first to edit its properties.
 
+A **live preview** in the editor shows the brush's shape filled with a representative sample of its tile pool and properties, so you can see the result before painting.
+
 Click **Apply** to save the brush, or **Close** to discard your changes.
+
+**Erasing:** while a custom brush is active, the **Eraser** uses the same shape and size as the brush (the tile pool is ignored — erasing always clears to empty). Clear the brush to return the eraser to its normal square footprint.
+
+**Saving and sharing:** click **Presets…** in the editor to save the current brush as a named preset, apply a saved one, or **Export** / **Import** brushes as files to share them or move them between projects. The brush's size range travels with it, so an imported brush keeps its own Min/Max. (This works just like the Tile Properties presets — see [Presets](#presets) above.)
 
 ## Multi-Tile Stamps
 
