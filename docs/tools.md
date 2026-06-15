@@ -62,6 +62,22 @@ With the Brush or Eraser tool active, paint at one position, then hold Shift and
 
 With the Brush or Eraser tool active, hold Ctrl and drag. The first tile you move off the click position picks the axis (horizontal or vertical, whichever you moved farther on), and all subsequent painting snaps to that single axis. Releasing Ctrl mid-stroke unlocks and resumes free painting. Useful for clean straight lines without needing to reach for Shift+click.
 
+## Custom Shape Brush
+
+Click **Brush Editor…** in the toolbar to open the Custom Shape Brush editor — a dialog for building a reusable brush from a shape, a pool of tiles, and a set of paint properties. While a custom brush is set, a small indicator appears next to the button showing the brush's shape; click the **✕** on it to clear the brush.
+
+The editor has four parts:
+
+- **Shape** — pick **Square**, **Circle**, **Diamond**, **Plus**, or **Custom**. The size slider sets the footprint, bounded by the **Min size** / **Max size** you set below it. **Custom** instead gives you a grid: set its Width and Height, then click cells to toggle them on or off and draw any shape you like. Resizing the grid keeps the cells you've already drawn.
+- **Tiles** — build a weighted pool of tiles the brush draws from.
+  - **Add fixed tile** adds the tile currently selected in the palette.
+  - **Add Current Tile** adds a special entry that always uses whatever tile is selected at the moment you paint (you can have at most one of these).
+  - Each entry has a **weight**; the percentage shown next to it is the chance that entry is picked, normalized against the others. Remove an entry with its **✕**.
+  - Leave the pool empty to simply paint the currently selected tile.
+- **Props** — the visual and game properties baked into painted tiles: **Hue**, **Saturation**, **Lighting**, **Opacity**, a **Transform** group (rotate 90° either way, flip horizontal/vertical), **Priority**, **Terrain tag**, and a **Passage** toggle for each of the four directions. Choose **Shared** to apply one set of properties to the whole brush, or **Per-tile** to give each tile in the pool its own — in Per-tile mode, click a tile in the pool first to edit its properties.
+
+Click **Apply** to save the brush, or **Close** to discard your changes.
+
 ## Multi-Tile Stamps
 
 To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. The entire stamp follows your cursor while painting. Press Q or W to rotate the stamp counter-clockwise or clockwise. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
