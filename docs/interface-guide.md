@@ -8,8 +8,8 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, **Cross-Project Clipboard** toggle — see below), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - **Cross-Project Clipboard** is off by default. When ticked, copying tiles, events, or event commands also places them on your system clipboard so a **second open Maker Studio window** can paste them. Turn it on in *each* window you want to share between. (Deleting a tile selection still works with the **Delete** key; only the old menu entry was replaced by this toggle.)
 - **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — clicking an entry **focuses** that panel, bringing it to the front or reopening it as a floating window if closed; it never closes a panel, and the checkmark still shows which panels are open), Show Grid, Show Collision, Show Events, Dim Inactive Layers, **Show MS-Exclusive Indicators** (see below), Zoom In/Out/100%, Dark Mode, **Language** submenu (see below), **Layout** submenu (Refresh Layout, Import/Export Configuration)
-- **Map**: New Map, Resize / Shift Map, Change Tileset, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
-- **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, Database, Scripts
+- **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
+- **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
 - **Help**: Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), Check for Updates, Stats, About Maker Studio, Toggle DevTools
 
@@ -37,17 +37,18 @@ The badges are on by default. Hide or show them with **View → Show MS-Exclusiv
 
 The toolbar sits at the top of the window and provides quick access to common actions:
 
-💾 Save | ▶ Run | 📁 Saves | ▶ Sim Map | 🖌️ 🧹 🪣 ⬜ 💧 ⬚ ✋ | 🔍 Zoom | Switches | Variables | Tilesets | Database | Scripts | Grid | Col | Dim | ☀/☾
+Left to right, the toolbar groups are:
 
-- **Save, Run** — emoji + text for visibility. (Creating a new map now lives in the Maps panel header — see Map Tree below.)
+`Save · Run · Saves · Sim Map` | `Brush · Eraser · Fill · Rectangle · Eyedropper · Select · Pan` | `Zoom` | `Database · Scripts` | `Versions` | `Grid · Col · Dim` | `Theme`
+
+- **Save, Run** — **Save** writes the current map (Shift+Click saves every open map); **Run** launches the game (on Linux, Shift+Click lets you choose the Proton/Wine prefix). (Creating a new map now lives in the Maps panel header — see Map Tree below.)
 - **Saves** — appears after the first Run; opens the folder where the game stores its save files. On Windows/macOS this is the native saves folder; on Linux it is the folder inside the Proton/Wine prefix the game ran in. See [Running the Game](map-management.md#running-the-game).
 - **Sim Map** — opens the [Game Simulator](game-simulator.md) on the current map with player input enabled.
-- **Tools** — emoji only. Hover to see the tool name and keyboard shortcut.
+- **Tools** — the seven drawing tools (Brush, Eraser, Fill, Rectangle, Eyedropper, Select, Pan), shown as icons. Hover any of them to see its name and keyboard shortcut.
 - **Brush tool** — hover to reveal a popover with a size slider, a **quick brush switcher** (your saved Custom Shape Brush presets plus Default/Custom), and a **Brush Editor…** opener. When a custom brush is active, a compact indicator next to the tools shows the brush's name with a ✕ to clear it. See [Custom Shape Brush](tools.md#custom-shape-brush).
-- **Zoom** — hover to reveal zoom in/out controls.
-- **Switches / Variables** — open a searchable manager dialog where you can rename entries inline. Renames (and the **Add 50 more** button) are saved to your project immediately, so the new names survive a reload and are used by the running game — no separate save step needed.
-- **Tilesets** — opens the tileset manager for creating, editing, and deleting tilesets.
-- **Database / Scripts** — icon + text buttons that open the [Database](database.md) window and the [Scripts editor](scripts.md). (Also available under the **Tools** menu.)
+- **Zoom** — shows the current zoom percentage; hover to reveal zoom in/out controls.
+- **Database / Scripts** — open the [Database](database.md) window and the [Scripts editor](scripts.md). (Also available under the **Tools** menu.) Switches, Variables, and Tilesets no longer have their own toolbar buttons — they are now tabs **inside the Database** (where you can still rename entries inline, add more slots, and edit tilesets).
+- **Versions** — shows the current [map version](map-versions.md) as a badge (e.g. `V2/3`) and opens the Version Manager. Relevant once a map has extra versions.
 - **Grid / Col / Dim** — icon + text toggle buttons for Show Grid, Show Collision, and Dim Inactive Layers.
 - **Theme** — sun/moon toggle switch. Thumb left = light mode (☀ visible on the right); thumb right = dark mode (☾ visible on the left). Your choice is remembered across sessions.
 - **Refresh Layout** — available under View then Layout (restores the default panel arrangement).

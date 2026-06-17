@@ -1,0 +1,136 @@
+name: Deploy docs site to GitHub Pages
+
+# Builds one Astro Starlight docs-site per version (latest = main, plus every
+# `vX.Y.Z` tag on the maker-studio repo), then deploys them side by side:
+# latest at the site root, each tag under a `/vX.Y.Z/` subpath with a version
+# switcher in the header.
+#
+# Doc sources are fetched from GitHub raw at each version's git ref:
+#   - guides (EN + es): Toskan4134/maker-studio@<app ref>/docs/
+#   - mods   (EN + es): Toskan4134/maker-studio-mods@<mods ref>/docs/
+# `latest` uses `main` for both. A tagged app version pins mod docs to a mods
+# tag of the same name if one exists, else `main` (the mods repo has no tags
+# yet, so all versions currently show main mod docs).
+#
+# The version list is derived from the tags API at build time (no manifest file).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**" # user guides (latest version is built from raw main)
+      - "docs-site/**" # site config, theme, components
+      - ".github/workflows/docs-pages.yml"
+  # Daily rebuild: picks up new version tags and changes in the separate
+  # maker-studio-mods repo without a push here.
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Project site served at https://<owner>.github.io/maker-studio/
+      SITE_PREFIX: /maker-studio
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+
+      - name: Install deps
+        working-directory: docs-site
+        run: npm ci
+
+      - name: Build every version
+        working-directory: docs-site
+        run: |
+          set -euo pipefail
+          AUTH=(-H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json")
+          TAG_RE='^v[0-9]+\.[0-9]+\.[0-9]+$'
+
+          # App version tags (newest first). Tolerant: an API hiccup just means
+          # we build latest only this run.
+          mapfile -t APP_TAGS < <(
+            curl -fsSL "${AUTH[@]}" \
+              "https://api.github.com/repos/Toskan4134/maker-studio/tags?per_page=100" \
+              | jq -r '.[].name' | grep -E "$TAG_RE" | sort -rV || true
+          )
+          # Mods tags, for per-version mod-doc pinning (empty today).
+          MODS_TAGS="$(
+            curl -fsSL "${AUTH[@]}" \
+              "https://api.github.com/repos/Toskan4134/maker-studio-mods/tags?per_page=100" \
+              | jq -r '.[].name' | grep -E "$TAG_RE" || true
+          )"
+
+          # Version list consumed by the VersionSelect component: [{id,label}].
+          VERSIONS_JSON="$(printf '%s\n' latest "${APP_TAGS[@]}" \
+            | jq -Rsc 'split("\n") | map(select(length>0))
+                       | map({id:., label:(if .=="latest" then "Latest" else . end)})')"
+          echo "Versions: latest ${APP_TAGS[*]:-}"
+          echo "DOCS_VERSIONS_JSON=$VERSIONS_JSON"
+
+          build_one() {
+            # `npm run build` runs the custom docs loader, which inherits these
+            # env vars to fetch this version's docs from GitHub (no port step).
+            local id="$1" app_ref="$2" mods_ref="$3" site_base="$4" out="$5"
+            echo "::group::Build $id (app@$app_ref mods@$mods_ref → $site_base)"
+            DOCS_SOURCE=remote DOCS_VERSION="$id" DOCS_VERSIONS_JSON="$VERSIONS_JSON" \
+              DOCS_APP_REF="$app_ref" DOCS_MODS_REF="$mods_ref" \
+              SITE_BASE="$site_base" OUT_DIR="$out" \
+              npm run build
+            echo "::endgroup::"
+          }
+
+          # latest (strict — a failure here must fail the deploy)
+          build_one latest main main "$SITE_PREFIX" build-latest
+
+          # tagged versions (best-effort — a broken old version is skipped, not fatal)
+          for id in "${APP_TAGS[@]}"; do
+            if grep -qx "$id" <<<"$MODS_TAGS"; then mods_ref="$id"; else mods_ref=main; fi
+            if build_one "$id" "$id" "$mods_ref" "$SITE_PREFIX/$id" "build-$id"; then
+              :
+            else
+              echo "::endgroup::"
+              echo "::warning::Version $id build failed — skipping."
+              rm -rf "build-$id"
+            fi
+          done
+
+          # Merge: latest → dist root, each tag → dist/<id>/
+          rm -rf dist
+          mkdir -p dist
+          cp -a build-latest/. dist/
+          for id in "${APP_TAGS[@]}"; do
+            [ -d "build-$id" ] || continue
+            mkdir -p "dist/$id"
+            cp -a "build-$id/." "dist/$id/"
+          done
+          echo "Deployed versions: latest ${APP_TAGS[*]:-}"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs-site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
