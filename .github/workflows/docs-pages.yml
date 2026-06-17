@@ -57,6 +57,11 @@ jobs:
 
       - name: Build every version
         working-directory: docs-site
+        # GITHUB_TOKEN isn't auto-exposed to run: steps — map it explicitly, or
+        # `set -u` aborts on the unbound var below (also raises the tags-API rate
+        # limit over anonymous).
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           AUTH=(-H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json")
