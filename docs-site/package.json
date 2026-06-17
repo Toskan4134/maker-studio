@@ -1,0 +1,25 @@
+{
+  "name": "maker-studio-docs",
+  "version": "1.0.0",
+  "description": "Maker Studio documentation site — user guides + Mod API reference, English & Español.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "dev:remote": "cross-env DOCS_SOURCE=remote npm run dev",
+    "build:remote": "cross-env DOCS_SOURCE=remote npm run build"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.40.0",
+    "astro": "^6.4.7",
+    "esbuild": "^0.28.1",
+    "sharp": "^0.35.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "cross-env": "^7.0.3"
+  }
+}

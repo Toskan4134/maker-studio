@@ -1,0 +1,100 @@
+---
+import Select from '@astrojs/starlight/components/Select.astro';
+
+// Mod API version dropdown — shown on mod pages (per-doc-set versioning). The
+// list comes from the maker-studio-mods repo's GitHub tags (latest = `main`,
+// plus every `vX.Y.Z` tag). The mods repo has no tags yet, so this currently
+// offers only "Latest"; it activates automatically once mod releases are tagged.
+//
+// CI can pass the list via DOCS_MODS_VERSIONS_JSON (so it does no extra request);
+// local dev fetches the tags API directly. Any failure falls back to [latest].
+//
+// Target pathnames are computed server-side (see VersionSelect for the rationale
+// — same approach, no client-side regex). The mod-version URL segment is
+// `/<id>/` (mirrors the docs selector); mod-version builds are a follow-up once
+// the mods repo is tagged.
+
+const TAGS_API = 'https://api.github.com/repos/Toskan4134/maker-studio-mods/tags?per_page=100';
+const VERSION_RE = /^v\d+\.\d+\.\d+$/;
+
+const bySemverDesc = (a: string, b: string) => {
+	const pa = a.slice(1).split('.').map(Number);
+	const pb = b.slice(1).split('.').map(Number);
+	return pb[0] - pa[0] || pb[1] - pa[1] || pb[2] - pa[2];
+};
+
+const FALLBACK = [{ id: 'latest', label: 'Latest' }];
+let cache;
+async function getModVersions() {
+	if (cache) return cache;
+	if (process.env.DOCS_MODS_VERSIONS_JSON) {
+		try {
+			cache = JSON.parse(process.env.DOCS_MODS_VERSIONS_JSON);
+			return cache;
+		} catch {
+			return FALLBACK;
+		}
+	}
+	try {
+		const res = await fetch(TAGS_API, {
+			headers: { 'User-Agent': 'maker-studio-docs-site', Accept: 'application/vnd.github+json' },
+		});
+		if (!res.ok) return FALLBACK;
+		const tags = (await res.json())
+			.map((t: { name: string }) => t.name)
+			.filter((n: string) => VERSION_RE.test(n))
+			.sort(bySemverDesc);
+		cache = [{ id: 'latest', label: 'Latest' }, ...tags.map((t: string) => ({ id: t, label: t }))];
+		return cache;
+	} catch {
+		return FALLBACK;
+	}
+}
+
+const versions = await getModVersions();
+const CURRENT = process.env.DOCS_MODS_VERSION || 'latest';
+const SITE_PREFIX = (process.env.SITE_PREFIX || '').replace(/\/+$/, '');
+const base = import.meta.env.BASE_URL;
+const rest = (
+	Astro.url.pathname.startsWith(base)
+		? Astro.url.pathname.slice(base.length)
+		: Astro.url.pathname
+).replace(/^\/+/, '');
+
+const options = versions.map((v) => {
+	const vBase = SITE_PREFIX + (v.id === 'latest' ? '/' : `/${v.id}/`);
+	return { value: vBase + rest, selected: v.id === CURRENT, label: v.label };
+});
+---
+
+{
+	options.length > 0 && (
+		<starlight-mod-version-select>
+			<Select icon="puzzle" label="Mod API version" options={options} width="9em" />
+		</starlight-mod-version-select>
+	)
+}
+
+<script>
+	class StarlightModVersionSelect extends HTMLElement {
+		constructor() {
+			super();
+			const select = this.querySelector('select');
+			if (!select) return;
+			select.addEventListener('change', (e) => {
+				if (e.currentTarget instanceof HTMLSelectElement) {
+					window.location.pathname = e.currentTarget.value;
+				}
+			});
+			window.addEventListener('pageshow', (event) => {
+				if (!event.persisted) return;
+				const markupSelectedIndex =
+					select.querySelector<HTMLOptionElement>('option[selected]')?.index;
+				if (markupSelectedIndex !== select.selectedIndex) {
+					select.selectedIndex = markupSelectedIndex ?? 0;
+				}
+			});
+		}
+	}
+	customElements.define('starlight-mod-version-select', StarlightModVersionSelect);
+</script>

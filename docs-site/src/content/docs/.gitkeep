@@ -1,0 +1,2 @@
+# Intentionally empty. All docs pages are loaded in memory by src/lib/docs-loader.ts.
+# This file just keeps the content-collection directory present on fresh checkouts.

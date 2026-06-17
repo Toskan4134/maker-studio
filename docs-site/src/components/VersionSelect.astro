@@ -1,0 +1,105 @@
+---
+import Select from '@astrojs/starlight/components/Select.astro';
+
+// Version dropdown. The list of versions comes straight from the maker-studio
+// repo's GitHub tags (latest = `main`, plus every `vX.Y.Z` tag, newest first).
+// No manifest file is committed: CI passes the list it already fetched for the
+// build loop via DOCS_VERSIONS_JSON (so CI does no extra request), and local dev
+// fetches the tags API directly. Any fetch failure falls back to [latest] only.
+//
+// Each option's target pathname is computed here, server-side, by stripping the
+// current build's base (import.meta.env.BASE_URL) off the page URL and
+// re-prefixing the target version's base. The locale segment (e.g. `es`) lives
+// inside the base, so it is preserved unchanged across versions. The client only
+// does `window.location.pathname = value` on change — no regex, no edge cases.
+
+const TAGS_API = 'https://api.github.com/repos/Toskan4134/maker-studio/tags?per_page=100';
+const VERSION_RE = /^v\d+\.\d+\.\d+$/;
+
+/** semver desc sort for bare `vX.Y.Z` strings */
+const bySemverDesc = (a, b) => {
+	const pa = a.slice(1).split('.').map(Number);
+	const pb = b.slice(1).split('.').map(Number);
+	return pb[0] - pa[0] || pb[1] - pa[1] || pb[2] - pa[2];
+};
+
+const FALLBACK = [{ id: 'latest', label: 'Latest' }];
+let cache;
+async function getVersions() {
+	if (cache) return cache;
+	// CI hands us the list it already fetched for the build loop.
+	if (process.env.DOCS_VERSIONS_JSON) {
+		try {
+			cache = JSON.parse(process.env.DOCS_VERSIONS_JSON);
+			return cache;
+		} catch {
+			return FALLBACK;
+		}
+	}
+	// Local dev: fetch the tags directly. Memoized module-level → one fetch/build.
+	try {
+		const res = await fetch(TAGS_API, {
+			headers: { 'User-Agent': 'maker-studio-docs-site', Accept: 'application/vnd.github+json' },
+		});
+		if (!res.ok) return FALLBACK;
+		const tags = (await res.json())
+			.map((t) => t.name)
+			.filter((n) => VERSION_RE.test(n))
+			.sort(bySemverDesc);
+		cache = [{ id: 'latest', label: 'Latest' }, ...tags.map((t) => ({ id: t, label: t }))];
+		return cache;
+	} catch {
+		return FALLBACK;
+	}
+}
+
+const versions = await getVersions();
+const CURRENT = process.env.DOCS_VERSION || 'latest';
+const SITE_PREFIX = (process.env.SITE_PREFIX || '').replace(/\/+$/, '');
+const base = import.meta.env.BASE_URL; // may or may not end with '/'
+// Page path with the current build's base stripped, leading slashes removed so
+// the join with each version's base (which always ends with '/') is clean.
+const rest = (
+	Astro.url.pathname.startsWith(base)
+		? Astro.url.pathname.slice(base.length)
+		: Astro.url.pathname
+).replace(/^\/+/, '');
+
+const options = versions.map((v) => {
+	const vBase = SITE_PREFIX + (v.id === 'latest' ? '/' : `/${v.id}/`);
+	return { value: vBase + rest, selected: v.id === CURRENT, label: v.label };
+});
+---
+
+{
+	options.length > 0 && (
+		<starlight-version-select>
+			<Select icon="clock" label="Docs version" options={options} width="8em" />
+		</starlight-version-select>
+	)
+}
+
+<script>
+	class StarlightVersionSelect extends HTMLElement {
+		constructor() {
+			super();
+			const select = this.querySelector('select');
+			if (!select) return;
+			select.addEventListener('change', (e) => {
+				if (e.currentTarget instanceof HTMLSelectElement) {
+					window.location.pathname = e.currentTarget.value;
+				}
+			});
+			// Re-sync the selected index if the page is restored from bfcache.
+			window.addEventListener('pageshow', (event) => {
+				if (!event.persisted) return;
+				const markupSelectedIndex =
+					select.querySelector<HTMLOptionElement>('option[selected]')?.index;
+				if (markupSelectedIndex !== select.selectedIndex) {
+					select.selectedIndex = markupSelectedIndex ?? 0;
+				}
+			});
+		}
+	}
+	customElements.define('starlight-version-select', StarlightVersionSelect);
+</script>

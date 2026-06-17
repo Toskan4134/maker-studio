@@ -1,0 +1,14 @@
+# build output
+dist/
+# generated types & cache
+.astro/
+# deps
+node_modules/
+# pagefind
+src/content/docs/**/.pagefind/
+# os
+.DS_Store
+Thumbs.db
+# env
+.env
+.env.production

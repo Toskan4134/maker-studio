@@ -1,0 +1,188 @@
+---
+// Extends Starlight's footer with the editor's own credit + social links,
+// mirroring the app's welcome-screen footer.
+import Default from "@astrojs/starlight/components/Footer.astro";
+
+const lang = (Astro.currentLocale || "en").startsWith("es") ? "es" : "en";
+const madeBy = lang === "es" ? "Hecho por" : "Made by";
+const downloadText = lang === "es" ? "Descargar" : "Download";
+const platforms = "Windows · macOS · Linux";
+const RELEASE_URL = "https://github.com/Toskan4134/maker-studio/releases/latest";
+
+// On the splash page Starlight's default footer (pagination + meta) is empty and
+// just adds dead space — skip it there and show only the credit block.
+const isSplash =
+  (Astro.locals as any)?.starlightRoute?.entry?.data?.template === "splash";
+
+const socials = [
+  {
+    label: "Discord",
+    href: "https://discord.gg/QMWJt5KQ8U",
+    path: '<path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>',
+  },
+  {
+    label: "X / Twitter",
+    href: "https://x.com/Toskan4134",
+    path: '<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>',
+  },
+  {
+    label: "Ko-fi",
+    href: "https://ko-fi.com/toskan4134",
+    path: '<path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/>',
+  },
+];
+---
+
+{!isSplash && <Default><slot /></Default>}
+
+<div class="ms-footer">
+  <div class="ms-footer__main">
+    <a class="ms-download" href={RELEASE_URL} target="_blank" rel="noopener">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>{downloadText}</span>
+    </a>
+    <span class="ms-platforms">{platforms}</span>
+  </div>
+  <div class="ms-footer__meta">
+    <span class="ms-footer__credit">
+      {madeBy}{" "}
+      <a href="https://x.com/Toskan4134" target="_blank" rel="noopener">Toskan4134</a>
+    </span>
+    <span class="ms-footer__socials">
+      {
+        socials.map((s) => (
+          <a class="ms-social" href={s.href} target="_blank" rel="noopener" aria-label={s.label}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" set:html={s.path} />
+            <span>{s.label}</span>
+          </a>
+        ))
+      }
+    </span>
+  </div>
+</div>
+
+<script>
+  // Persist a sidebar group's open/closed state in Starlight's own format so
+  // its restore logic reopens/collapses the group correctly on navigation.
+  // Mirrors @astrojs/starlight's SidebarPersistState (key `sl-sidebar-state`,
+  // shape { hash, open: Array<boolean|null>, scroll }).
+  function persistGroupState(details, open) {
+    try {
+      const persist = document.querySelector("sl-sidebar-state-persist");
+      if (!persist) return;
+      const hash = persist.dataset.hash || "";
+      const restore = details.querySelector("sl-sidebar-restore");
+      const idx = parseInt(restore?.dataset.index || "", 10);
+      if (Number.isNaN(idx)) return;
+      const scroller = document.getElementById("starlight__sidebar");
+      const stored = JSON.parse(sessionStorage.getItem("sl-sidebar-state") || "{}");
+      const state = {
+        hash,
+        open:
+          Array.isArray(stored.open) && stored.hash === hash ? stored.open.slice() : [],
+        scroll: scroller?.scrollTop || 0,
+      };
+      state.open[idx] = open;
+      sessionStorage.setItem("sl-sidebar-state", JSON.stringify(state));
+    } catch {}
+  }
+
+  // Apply persisted sidebar group state from sessionStorage to the DOM.
+  // Starlight ships its own restore, but it parses sessionStorage once into a
+  // closure at first load; on later client-side navigations its restore uses
+  // that stale snapshot and ignores writes made during the session, so the
+  // group always snaps back to its server-rendered default. We restore
+  // ourselves on every navigation to make the persisted state authoritative.
+  function applyGroupStates(root = document) {
+    try {
+      const persist = root.querySelector("sl-sidebar-state-persist");
+      if (!persist) return;
+      const hash = persist.dataset.hash || "";
+      const stored = JSON.parse(sessionStorage.getItem("sl-sidebar-state") || "{}");
+      if (!Array.isArray(stored.open) || stored.hash !== hash) return;
+      root.querySelectorAll(".sidebar-content details").forEach((d) => {
+        const el = /** @type {HTMLDetailsElement} */ (d);
+        const restore = el.querySelector("sl-sidebar-restore");
+        const idx = parseInt(restore?.dataset.index || "", 10);
+        if (!Number.isNaN(idx) && typeof stored.open[idx] === "boolean") {
+          el.open = stored.open[idx];
+        }
+      });
+    } catch {}
+  }
+
+  // Animate the sidebar's collapsible <details> groups on expand AND collapse.
+  // Native <details> can't transition height, so drive it with the Web Animations API.
+  function setupSidebarAnimations() {
+    applyGroupStates();
+    const groups = document.querySelectorAll(".sidebar-content details");
+    groups.forEach((d) => {
+      const el = /** @type {HTMLDetailsElement} */ (d);
+      const summary = el.querySelector(":scope > summary");
+      const content = el.querySelector(":scope > ul");
+      if (!summary || !content || el.dataset.animWired) return;
+      el.dataset.animWired = "1";
+
+      summary.addEventListener("click", (ev) => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        ev.preventDefault();
+        // Stop the click bubbling to Starlight's own persist handler
+        // (`sl-sidebar-state-persist`). That handler reads `details.open`
+        // synchronously on the same click and stores the inverted value, but
+        // our animation flips `open` at a different moment — so its stored
+        // value is wrong and the group stays collapsed after navigation once
+        // it has been closed. We persist the correct state ourselves below.
+        ev.stopPropagation();
+        if (el.dataset.animating) return;
+        el.dataset.animating = "1";
+        const list = /** @type {HTMLElement} */ (content);
+        list.style.overflow = "hidden";
+        const willOpen = !el.open;
+        persistGroupState(el, willOpen);
+
+        const clear = () => {
+          list.style.overflow = "";
+          list.style.height = "";
+          delete el.dataset.animating;
+        };
+
+        if (willOpen) {
+          el.open = true;
+          const h = list.scrollHeight;
+          list
+            .animate(
+              [
+                { height: "0px", opacity: 0 },
+                { height: h + "px", opacity: 1 },
+              ],
+              { duration: 200, easing: "cubic-bezier(0.2,0.7,0.2,1)" }
+            )
+            .addEventListener("finish", clear);
+        } else {
+          const h = list.scrollHeight;
+          const anim = list.animate(
+            [
+              { height: h + "px", opacity: 1 },
+              { height: "0px", opacity: 0 },
+            ],
+            { duration: 170, easing: "ease" }
+          );
+          anim.addEventListener("finish", () => {
+            el.open = false;
+            clear();
+          });
+        }
+      });
+    });
+  }
+
+  setupSidebarAnimations();
+  // Restore persisted group state on the incoming document BEFORE it is swapped
+  // in, so the right groups are already open/collapsed on first paint (no
+  // flash of the server-rendered default). `astro:page-load` covers the
+  // initial load and acts as a safety net after the swap.
+  document.addEventListener("astro:before-swap", (ev) => {
+    applyGroupStates(ev.newDocument);
+  });
+  document.addEventListener("astro:page-load", setupSidebarAnimations);
+</script>

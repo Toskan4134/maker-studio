@@ -1,0 +1,78 @@
+---
+// Wraps Starlight's default search and injects a "suggested pages" list into the
+// search modal while the query is empty, so the dialog isn't blank on open.
+import Default from "@astrojs/starlight/components/Search.astro";
+---
+
+<Default><slot /></Default>
+
+<script>
+  const BASE = import.meta.env.BASE_URL; // "/" or "/maker-studio/" etc.
+
+  const RECOS = {
+    en: {
+      title: "Suggested pages",
+      links: [
+        ["guides/getting-started/", "Getting Started"],
+        ["guides/interface-guide/", "Interface Guide"],
+        ["guides/keyboard-shortcuts/", "Keyboard Shortcuts"],
+        ["guides/marketplace/", "Mod Marketplace"],
+        ["mods/getting-started/", "Write your first mod"],
+        ["mods/api-reference/", "Mod API Reference"],
+      ],
+    },
+    es: {
+      title: "Páginas sugeridas",
+      links: [
+        ["es/guides/getting-started/", "Primeros pasos"],
+        ["es/guides/interface-guide/", "Guía de la interfaz"],
+        ["es/guides/keyboard-shortcuts/", "Atajos de teclado"],
+        ["es/guides/marketplace/", "Marketplace de mods"],
+        ["es/mods/getting-started/", "Crea tu primer mod"],
+        ["es/mods/api-reference/", "Referencia de la API"],
+      ],
+    },
+  };
+
+  function locale() {
+    return (document.documentElement.lang || "en").startsWith("es") ? "es" : "en";
+  }
+
+  function buildBox() {
+    const data = RECOS[locale()];
+    const box = document.createElement("div");
+    box.className = "search-recos";
+    box.innerHTML =
+      `<p class="search-recos__title">${data.title}</p><ul class="search-recos__list">` +
+      data.links
+        .map(([h, t]) => `<li><a href="${BASE}${h}">${t}</a></li>`)
+        .join("") +
+      `</ul>`;
+    return box;
+  }
+
+  function wire(dialog) {
+    if (dialog.dataset.recosWired) return;
+    dialog.dataset.recosWired = "1";
+    const obs = new MutationObserver(() => {
+      const ui = dialog.querySelector(".pagefind-ui");
+      const input = dialog.querySelector("input.pagefind-ui__search-input");
+      if (!ui || !input || dialog.querySelector(".search-recos")) return;
+      const box = buildBox();
+      ui.appendChild(box);
+      const update = () => {
+        box.hidden = input.value.trim().length > 0;
+      };
+      input.addEventListener("input", update);
+      update();
+    });
+    obs.observe(dialog, { childList: true, subtree: true });
+  }
+
+  function init() {
+    document.querySelectorAll("site-search dialog").forEach(wire);
+  }
+
+  init();
+  document.addEventListener("astro:page-load", init);
+</script>

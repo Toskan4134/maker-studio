@@ -1,0 +1,658 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Maker Studio docs theme — mirrors the editor's own palette.
+   Dark navy (#1e1e2e) surfaces, periwinkle (#7c8aff) accent, Segoe UI stack.
+   Source of truth: maker-studio-dev/src/styles/index.css
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --sl-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --sl-font-mono: "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Dark theme (default) */
+  --sl-color-accent-low: #25294d;
+  --sl-color-accent: #7c8aff;
+  --sl-color-accent-high: #c8cdff;
+
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #e0e0e8;
+  --sl-color-gray-2: #c2c2cf;
+  --sl-color-gray-3: #a0a0b0;
+  --sl-color-gray-4: #666680;
+  --sl-color-gray-5: #333350;
+  --sl-color-gray-6: #252538;
+  --sl-color-gray-7: #1c1c2b;
+  --sl-color-black: #1e1e2e;
+
+  --sl-color-bg: #1e1e2e;
+  --sl-color-bg-nav: #181825;
+  --sl-color-bg-sidebar: #181825;
+  --sl-color-bg-inline-code: #252538;
+  --sl-color-hairline-light: #333350;
+  --sl-color-hairline: #2a2a40;
+
+  --sl-color-text-accent: #959fff;
+
+  /* Brand status colors borrowed from the app */
+  --ms-danger: #ff6b6b;
+  --ms-warning: #fbbf24;
+  --ms-success: #34a347;
+
+  --sl-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --sl-content-width: 50rem;
+}
+
+/* Light theme */
+:root[data-theme="light"] {
+  --sl-color-accent-low: #dcdef9;
+  --sl-color-accent: #4a56e0;
+  --sl-color-accent-high: #2a3296;
+
+  --sl-color-white: #16161f;
+  --sl-color-gray-1: #1a1a2e;
+  --sl-color-gray-2: #3a3a4a;
+  --sl-color-gray-3: #555566;
+  --sl-color-gray-4: #888899;
+  --sl-color-gray-5: #c8c8d4;
+  --sl-color-gray-6: #ebebf0;
+  --sl-color-gray-7: #f5f5f8;
+  --sl-color-black: #ffffff;
+
+  --sl-color-bg: #ffffff;
+  --sl-color-bg-nav: #f5f5f8;
+  --sl-color-bg-sidebar: #f5f5f8;
+  --sl-color-bg-inline-code: #ebebf0;
+  --sl-color-hairline-light: #c8c8d4;
+  --sl-color-hairline: #dddde4;
+
+  --sl-color-text-accent: #4a56e0;
+
+  --ms-danger: #e04040;
+  --ms-warning: #b45309;
+  --ms-success: #1e7a2e;
+
+  --sl-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Branding polish ──────────────────────────────────────────────────────── */
+
+.site-title img,
+header .site-title img {
+  height: 2rem;
+}
+
+.site-title {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.sidebar-content a[aria-current="page"],
+.sidebar-content a[aria-current="page"]:hover {
+  background-color: var(--sl-color-accent-low);
+  color: var(--sl-color-text-accent);
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.expressive-code .frame,
+:not(pre) > code {
+  border-radius: 8px;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2 {
+  letter-spacing: -0.015em;
+}
+
+.sl-markdown-content h2 {
+  border-bottom: 1px solid var(--sl-color-hairline);
+  padding-bottom: 0.3rem;
+}
+
+.sl-markdown-content table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.sl-markdown-content th {
+  background: var(--sl-color-gray-6);
+  text-transform: uppercase;
+  font-size: 0.78em;
+  letter-spacing: 0.04em;
+}
+
+.sl-markdown-content a {
+  text-underline-offset: 0.18em;
+  transition: color 0.12s ease;
+}
+
+.sl-markdown-content kbd {
+  background: var(--sl-color-gray-6);
+  border: 1px solid var(--sl-color-hairline-light);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 0.1em 0.45em;
+  font-family: var(--sl-font-mono);
+  font-size: 0.85em;
+  color: var(--sl-color-gray-1);
+}
+
+/* ── Splash / hero ───────────────────────────────────────────────────────── */
+
+.hero h1,
+.hero .tagline {
+  text-wrap: balance;
+}
+
+.hero > .copy > h1 {
+  background: linear-gradient(120deg, #c8cdff 0%, #7c8aff 55%, #959fff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+:root[data-theme="light"] .hero > .copy > h1 {
+  background: linear-gradient(120deg, #4a56e0 0%, #636df0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Feature cards (splash) + LinkCards: same surface and a subtle neutral hover.
+   Borders stay neutral on hover — the lift comes from elevation, not color. */
+.sl-markdown-content .feature-card,
+.sl-markdown-content .sl-link-card {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.85rem;
+  background-color: var(--sl-color-gray-6);
+  box-shadow: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+.sl-markdown-content .feature-card:hover,
+.sl-markdown-content .sl-link-card:hover {
+  background-color: var(--sl-color-gray-7);
+  border-color: var(--sl-color-gray-5);
+  transform: translateY(-3px);
+  box-shadow: var(--sl-shadow-md);
+}
+
+.sl-markdown-content .feature-card {
+  padding: 1.25rem;
+}
+.feature-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.7rem;
+  background-color: var(--sl-color-accent-low);
+  color: var(--sl-color-text-accent);
+  margin-bottom: 0.85rem;
+  transition: transform 0.18s ease;
+}
+.feature-card__icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.sl-markdown-content .feature-card:hover .feature-card__icon {
+  transform: scale(1.08) rotate(-3deg);
+}
+.feature-card__title {
+  margin: 0 0 0.35rem;
+  font-size: var(--sl-text-h4);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--sl-color-white);
+}
+.feature-card__body {
+  margin: 0;
+  font-size: var(--sl-text-sm);
+  color: var(--sl-color-gray-3);
+  line-height: 1.5;
+}
+
+/* Card grid + LinkCard layout. The splash body is built as raw HTML by the docs
+   loader (not Astro components), so Starlight's own scoped CardGrid/LinkCard
+   styles don't reach it — these rules port the layout (and the comfortable gaps).
+   Source: @astrojs/starlight CardGrid.astro / LinkCard.astro. */
+.sl-markdown-content .card-grid {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 1rem;
+}
+.sl-markdown-content .card-grid > * {
+  margin-top: 0 !important;
+}
+@media (min-width: 50rem) {
+  .sl-markdown-content .card-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.sl-markdown-content .sl-link-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  padding: 1rem;
+  position: relative;
+}
+.sl-markdown-content .sl-link-card a {
+  text-decoration: none;
+  line-height: var(--sl-line-height-headings);
+}
+/* Full-card click target (a11y: the whole card is the link). */
+.sl-markdown-content .sl-link-card a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.sl-markdown-content .sl-link-card .stack {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sl-markdown-content .sl-link-card .title {
+  color: var(--sl-color-white);
+  font-weight: 600;
+  font-size: var(--sl-text-lg);
+}
+.sl-markdown-content .sl-link-card .description {
+  color: var(--sl-color-gray-3);
+  line-height: 1.5;
+}
+.sl-markdown-content .sl-link-card .icon {
+  color: var(--sl-color-gray-3);
+}
+.sl-markdown-content .sl-link-card:hover .icon {
+  color: var(--sl-color-white);
+}
+
+/* Glow behind the hero app-icon image (the icon already has its own rounded
+   shape baked in, so no border-radius here). */
+.hero img {
+  filter: drop-shadow(0 12px 40px rgba(124, 138, 255, 0.3));
+}
+
+/* ── Search modal: suggested links shown before the user types ─────────────── */
+.search-recos {
+  padding: 0.75rem 0.25rem 0.25rem;
+}
+.search-recos[hidden] {
+  display: none;
+}
+.search-recos__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sl-color-gray-3);
+}
+.search-recos__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.search-recos__list a {
+  display: block;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  color: var(--sl-color-white);
+  text-decoration: none;
+  font-weight: 500;
+}
+.search-recos__list a:hover,
+.search-recos__list a:focus-visible {
+  background-color: var(--sl-color-accent-low);
+  color: var(--sl-color-text-accent);
+  outline: none;
+}
+
+/* Put the footer's top spacing on the footer container, not on the (empty)
+   `.meta` row — the meta itself keeps no top margin. */
+footer:has(.meta) {
+  margin-top: 3rem;
+}
+.meta {
+  display: none;
+}
+
+/* Smooth-scroll to a heading when clicking the right-sidebar "On this page" TOC
+   (and any in-page anchor). Starlight already sets scroll-padding-top so the
+   target clears the sticky header. Disabled for reduced-motion users. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── Mobile hamburger (menu toggle) ───────────────────────────────────────────
+   We override --sl-color-white/--sl-color-black, which Starlight uses directly
+   for this button — leaving it near-invisible (white on light) by default. Give
+   it a proper themed surface in both modes. `starlight-menu-button button`
+   (specificity 0,0,2) outranks Starlight's `button:where(...)` (0,0,1). */
+starlight-menu-button button {
+  background-color: var(--sl-color-gray-6);
+  color: var(--sl-color-white);
+  border: 1px solid var(--sl-color-hairline);
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+starlight-menu-button button:hover {
+  background-color: var(--sl-color-gray-5);
+  border-color: var(--sl-color-accent);
+}
+starlight-menu-button[aria-expanded="true"] button {
+  background-color: var(--sl-color-gray-5);
+  border-color: var(--sl-color-accent);
+}
+
+/* ── Prev / Next pagination buttons ───────────────────────────────────────────
+   Starlight's default hover sets the border to gray-2 (near-white in dark mode),
+   which reads as a stray white outline. Match the app's button hover instead.
+   `a[href]` raises specificity above Starlight's scoped `a:hover`. */
+.pagination-links a[href] {
+  border-radius: 0.7rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+.pagination-links a[href]:hover {
+  border-color: var(--sl-color-accent);
+  background-color: var(--sl-color-gray-6);
+  box-shadow: var(--sl-shadow-md);
+  transform: translateY(-2px);
+}
+.pagination-links a[href]:hover .link-title {
+  color: var(--sl-color-text-accent);
+}
+
+/* ── Focus rings only for keyboard users ──────────────────────────────────────
+   Mouse/touch clicks shouldn't leave a focus outline; keyboard (Tab) still does
+   via :focus-visible. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none;
+}
+
+/* ── Footer: download + credit (mirrors the app's welcome footer) ──────────── */
+.ms-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-top: 1px solid var(--sl-color-hairline);
+  border-bottom: 1px solid var(--sl-color-hairline);
+  font-size: var(--sl-text-sm);
+}
+.ms-footer__main,
+.ms-footer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+.ms-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 0.6rem;
+  background-color: var(--sl-color-accent);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.ms-download:hover {
+  background-color: #959fff;
+  transform: translateY(-1px);
+  box-shadow: var(--sl-shadow-md);
+}
+.ms-download svg {
+  width: 1rem;
+  height: 1rem;
+}
+.ms-platforms {
+  color: var(--sl-color-gray-3);
+  font-variant-numeric: tabular-nums;
+}
+.ms-footer__credit {
+  color: var(--sl-color-gray-3);
+}
+.ms-footer__credit a {
+  color: var(--sl-color-text-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.ms-footer__credit a:hover {
+  text-decoration: underline;
+}
+.ms-footer__socials {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.ms-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 0.55rem;
+  color: var(--sl-color-gray-2);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease,
+    transform 0.15s ease;
+}
+.ms-social:hover {
+  border-color: var(--sl-color-accent);
+  background-color: var(--sl-color-accent-low);
+  color: var(--sl-color-text-accent);
+  transform: translateY(-1px);
+}
+.ms-social svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+}
+
+/* ── Motion: entrance + hover micro-animations ────────────────────────────── */
+/* Always-on hover transitions (cheap, no layout entrance) */
+.sidebar-content a {
+  transition: background-color 0.13s ease, color 0.13s ease, transform 0.13s ease;
+}
+.sidebar-content a:hover {
+  transform: translateX(2px);
+}
+.sl-markdown-content a {
+  transition: color 0.12s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes ms-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes ms-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .hero > .copy > h1,
+  .hero > .copy > .tagline,
+  .hero > .copy > .actions {
+    animation: ms-fade-up 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero > .copy > .tagline {
+    animation-delay: 0.08s;
+  }
+  .hero > .copy > .actions {
+    animation-delay: 0.16s;
+  }
+  .hero img {
+    animation: ms-fade-in 0.7s ease both;
+  }
+
+  .sl-markdown-content .card-grid > * {
+    animation: ms-fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .sl-markdown-content .card-grid > *:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+  .sl-markdown-content .card-grid > *:nth-child(3) {
+    animation-delay: 0.12s;
+  }
+  .sl-markdown-content .card-grid > *:nth-child(4) {
+    animation-delay: 0.18s;
+  }
+
+  .sl-markdown-content {
+    animation: ms-fade-up 0.4s ease both;
+  }
+
+}
+
+/* ── Hero CTA buttons (Descargar / Empezar / View on GitHub) ───────────────── */
+/* Mirrors the Maker Studio app's flat button style (.btn-primary in the app):
+   solid accent, 6px radius, weight 500, hover dims via opacity — no gradient,
+   glow, or lift. Unlayered rules win over @layer starlight.components. */
+.hero .actions .sl-link-button {
+  border-radius: .6rem;
+  font-weight: 500;
+  transition: opacity 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.hero .actions .sl-link-button.primary {
+  background: var(--sl-color-accent);
+  border: 1px solid var(--sl-color-accent);
+  color: #fff;
+}
+.hero .actions .sl-link-button.primary:hover {
+  opacity: 0.9;
+}
+
+.hero .actions .sl-link-button.secondary {
+  border-radius: .6rem;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--sl-color-accent) 40%, transparent);
+  color: var(--sl-color-white);
+}
+.hero .actions .sl-link-button.secondary:hover {
+  background: color-mix(in srgb, var(--sl-color-accent) 15%, transparent);
+  border-color: var(--sl-color-accent);
+}
+
+.hero .actions .sl-link-button.minimal {
+  color: var(--sl-color-gray-2);
+}
+.hero .actions .sl-link-button.minimal:hover {
+  color: var(--sl-color-white);
+  opacity: 0.9;
+}
+
+.hero .actions .sl-link-button:focus-visible {
+  outline: 2px solid var(--sl-color-accent-high);
+  outline-offset: 3px;
+}
+
+/* ── Sidebar caret + search modal animations ──────────────────────────────── */
+/* Caret rotates smoothly; the height itself is animated by JS (Footer.astro). */
+.sidebar-content details > summary .caret,
+.sidebar-content details > summary svg {
+  transition: transform 0.2s ease;
+}
+
+site-search button {
+  transition: transform 0.13s ease, background-color 0.13s ease, border-color 0.13s ease;
+}
+site-search button:hover {
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Search dialog open AND close — modern browsers via @starting-style +
+     allow-discrete; older browsers just show/hide instantly. */
+  dialog[aria-label="Search"] {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.99);
+    transition: opacity 0.18s ease, transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
+      overlay 0.2s ease allow-discrete, display 0.2s ease allow-discrete;
+  }
+  dialog[aria-label="Search"][open] {
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    dialog[aria-label="Search"][open] {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.99);
+    }
+  }
+  dialog[aria-label="Search"]::backdrop {
+    opacity: 0;
+    transition: opacity 0.18s ease, overlay 0.18s ease allow-discrete,
+      display 0.18s ease allow-discrete;
+  }
+  dialog[aria-label="Search"][open]::backdrop {
+    opacity: 1;
+  }
+  @starting-style {
+    dialog[aria-label="Search"][open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .pagefind-ui__result {
+    animation: ms-fade-up 0.25s ease both;
+  }
+}
+
+/* ── Header selects auto-size to their selected value ─────────────────────── */
+/* Overrides Starlight's fixed per-select width (Select.astro sets a fixed
+   --sl-select-width). These rules are unlayered, so they win over Starlight's
+   @layer starlight.core. width:auto makes the closed control size to its
+   currently-selected option (theme/language/docs-version/mod-version). */
+starlight-theme-select select,
+starlight-lang-select select,
+starlight-version-select select,
+starlight-mod-version-select select {
+  width: auto;
+  border-radius: 6px;
+  /* Drop the click/native focus outline browsers draw on <select>. */
+  outline: none;
+}
+/* Keyboard users get a ring — a rounded box-shadow (outline is always
+   rectangular; box-shadow follows the 6px border-radius above). Browsers only
+   match :focus-visible for keyboard on <select>, so this stays keyboard-only. */
+starlight-theme-select select:focus-visible,
+starlight-lang-select select:focus-visible,
+starlight-version-select select:focus-visible,
+starlight-mod-version-select select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--sl-color-accent);
+}
+
+/* ── Hide the focus outline on mouse clicks ───────────────────────────────── */
+/* The browser draws a focus outline when you click dropdowns, inputs, links,
+   etc. Suppress it for pointer focus, but keep it for keyboard users via
+   :focus-visible (the accessible default — keyboard nav still shows a ring). */
+:focus:not(:focus-visible) {
+  outline: none;
+}

@@ -1,0 +1,165 @@
+{
+  "locales": {
+    "en": { "label": "English", "lang": "en", "root": true },
+    "es": { "label": "Español", "lang": "es" }
+  },
+  "sidebarGroups": {
+    "userGuide": { "en": "User Guide", "es": "Guía de usuario" },
+    "modDevelopment": { "en": "Mod Development", "es": "Desarrollo de mods" }
+  },
+  "downloadUrl": "https://github.com/Toskan4134/maker-studio/releases/latest",
+  "hero": {
+    "pageTitle": { "en": "Home", "es": "Inicio" },
+    "metaDescription": {
+      "en": "A modern, feature-rich tile map editor built as a replacement for RPG Maker XP's game editor. Reads and writes .rxdata directly — plus a full event editor, shadow system, and a JavaScript mod API.",
+      "es": "Un editor de mapas de tiles moderno y completo creado como reemplazo del editor de juego de RPG Maker XP. Lee y escribe .rxdata directamente — con editor de eventos, sistema de sombras y una API de mods en JavaScript."
+    },
+    "title": { "en": "Maker Studio", "es": "Maker Studio" },
+    "tagline": {
+      "en": "A modern, feature-rich replacement for RPG Maker XP's game editor — reads and writes your <code>.rxdata</code> files directly, no conversion. Build maps, edit events, and extend it all with mods.",
+      "es": "Un reemplazo moderno y completo del editor de juego de RPG Maker XP — lee y escribe tus archivos <code>.rxdata</code> directamente, sin conversión. Crea mapas, edita eventos y amplíalo todo con mods."
+    },
+    "image": { "alt": "Maker Studio" },
+    "actions": [
+      {
+        "icon": "cloud-download",
+        "variant": "primary",
+        "link": "https://github.com/Toskan4134/maker-studio/releases/latest",
+        "text": { "en": "Download", "es": "Descargar" }
+      },
+      {
+        "icon": "right-arrow",
+        "variant": "secondary",
+        "link": "guides/getting-started/",
+        "text": { "en": "Get Started", "es": "Empezar" }
+      },
+      {
+        "icon": "external",
+        "variant": "minimal",
+        "link": "https://github.com/Toskan4134/maker-studio",
+        "text": { "en": "View on GitHub", "es": "Ver en GitHub" }
+      }
+    ]
+  },
+  "intro": {
+    "en": "Maker Studio is a modern, feature-rich tile map editor built as a replacement for RPG Maker XP's game editor, with upgraded features and quality-of-life improvements. It reads and writes <code>.rxdata</code> files directly, so existing projects work <strong>without conversion</strong> — plus dockable panels, multi-tile brushes, per-tile properties, unlimited extended layers, multi-tileset support, unlimited autotiles, a built-in shadow system, a full event editor, an in-editor game simulator, and a JavaScript mod system.",
+    "es": "Maker Studio es un editor de mapas de tiles moderno y completo, creado como reemplazo del editor de juego de RPG Maker XP, con funciones mejoradas y comodidades de uso. Lee y escribe los archivos <code>.rxdata</code> directamente, así que tus proyectos actuales funcionan <strong>sin conversión</strong> — con paneles acoplables, pinceles multi-tile, propiedades por tile, capas extendidas ilimitadas, soporte de varios tilesets, autotiles ilimitados, un sistema de sombras integrado, un editor de eventos completo, un simulador de juego dentro del editor y un sistema de mods en JavaScript."
+  },
+  "available": {
+    "en": "Available for Windows, macOS, and Linux.",
+    "es": "Disponible para Windows, macOS y Linux."
+  },
+  "downloadText": {
+    "en": "Download the latest release →",
+    "es": "Descarga la última versión →"
+  },
+  "sections": {
+    "whatIs": { "heading": { "en": "What is Maker Studio?", "es": "¿Qué es Maker Studio?" } },
+    "startHere": { "heading": { "en": "Start here", "es": "Empieza aquí" } },
+    "buildMod": { "heading": { "en": "Build a mod", "es": "Crea un mod" } }
+  },
+  "features": [
+    {
+      "icon": "brush",
+      "title": { "en": "Paint faster", "es": "Pinta más rápido" },
+      "desc": {
+        "en": "Multi-tile brushes, custom shape brushes, autotiles, and per-tile passage, priority, and terrain properties — all on an infinitely zoomable canvas.",
+        "es": "Pinceles multi-tile, pinceles de forma personalizada, autotiles y propiedades de paso, prioridad y terreno por tile — todo en un lienzo con zoom infinito."
+      }
+    },
+    {
+      "icon": "layers",
+      "title": { "en": "Unlimited layers", "es": "Capas ilimitadas" },
+      "desc": {
+        "en": "Three RMXP-compatible native layers plus unlimited extended layers, fog, panorama, and shadow groups — switch states in-game with a switch or variable.",
+        "es": "Tres capas nativas compatibles con RMXP más capas extendidas ilimitadas, niebla, panorama y grupos de sombras — cambia de estado en el juego con un switch o variable."
+      }
+    },
+    {
+      "icon": "events",
+      "title": { "en": "Full event editor", "es": "Editor de eventos completo" },
+      "desc": {
+        "en": "Edit event pages and command lists with syntax-colored commands, then test them live in the built-in game simulator without leaving the editor.",
+        "es": "Edita páginas de eventos y listas de comandos con resaltado por colores, y pruébalos en vivo en el simulador integrado sin salir del editor."
+      }
+    },
+    {
+      "icon": "mods",
+      "title": { "en": "Extend with mods", "es": "Amplía con mods" },
+      "desc": {
+        "en": "Write JavaScript mods that add tools, panels, menu items, overlays, and keyboard shortcuts. Install community mods from the Marketplace in one click.",
+        "es": "Escribe mods en JavaScript que añaden herramientas, paneles, elementos de menú, overlays y atajos de teclado. Instala mods de la comunidad desde el Marketplace con un clic."
+      }
+    }
+  ],
+  "links": {
+    "startHere": [
+      {
+        "href": "guides/getting-started/",
+        "title": { "en": "Getting Started", "es": "Primeros pasos" },
+        "desc": {
+          "en": "Install, launch, and open your first RPG Maker XP project.",
+          "es": "Instala, abre el programa y carga tu primer proyecto de RPG Maker XP."
+        }
+      },
+      {
+        "href": "guides/interface-guide/",
+        "title": { "en": "Interface Guide", "es": "Guía de la interfaz" },
+        "desc": {
+          "en": "A tour of the menus, toolbar, panels, and tabs.",
+          "es": "Un recorrido por los menús, la barra de herramientas, los paneles y las pestañas."
+        }
+      },
+      {
+        "href": "guides/keyboard-shortcuts/",
+        "title": { "en": "Keyboard Shortcuts", "es": "Atajos de teclado" },
+        "desc": {
+          "en": "Every default shortcut — all of them customizable.",
+          "es": "Todos los atajos por defecto — todos personalizables."
+        }
+      },
+      {
+        "href": "guides/marketplace/",
+        "title": { "en": "Mod Marketplace", "es": "Marketplace de mods" },
+        "desc": {
+          "en": "Discover, install, and update community mods in-editor.",
+          "es": "Descubre, instala y actualiza mods de la comunidad desde el editor."
+        }
+      }
+    ],
+    "buildMod": [
+      {
+        "href": "mods/getting-started/",
+        "title": { "en": "Mod: Getting Started", "es": "Mods: primeros pasos" },
+        "desc": {
+          "en": "Write your first mod in five minutes.",
+          "es": "Escribe tu primer mod en cinco minutos."
+        }
+      },
+      {
+        "href": "mods/api-reference/",
+        "title": { "en": "API Reference", "es": "Referencia de la API" },
+        "desc": {
+          "en": "Every method, type, and ctx surface available to mods.",
+          "es": "Cada método, tipo y superficie de ctx disponible para los mods."
+        }
+      },
+      {
+        "href": "mods/events-reference/",
+        "title": { "en": "Events Reference", "es": "Referencia de eventos" },
+        "desc": {
+          "en": "Every editor event and its payload shape.",
+          "es": "Cada evento del editor y la forma de su payload."
+        }
+      },
+      {
+        "href": "mods/quick-reference/",
+        "title": { "en": "Quick Reference", "es": "Referencia rápida" },
+        "desc": {
+          "en": "A one-page cheat sheet for common API calls.",
+          "es": "Una chuleta de una página para las llamadas comunes de la API."
+        }
+      }
+    ]
+  }
+}
