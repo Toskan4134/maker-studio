@@ -11,7 +11,7 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
-- **Help**: Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), Check for Updates, Stats, About Maker Studio, Toggle DevTools
+- **Help**: **Documentation** (opens this online documentation in your browser), Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), Check for Updates, Stats, About Maker Studio, Toggle DevTools
 
 ## Language
 
