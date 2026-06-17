@@ -7,7 +7,10 @@ import Default from "@astrojs/starlight/components/Search.astro";
 <Default><slot /></Default>
 
 <script>
-  const BASE = import.meta.env.BASE_URL; // "/" or "/maker-studio/" etc.
+  // BASE_URL may lack a trailing slash (e.g. "/maker-studio"), so normalize to
+  // exactly one — otherwise "/maker-studio" + "guides/…" → "/maker-studioguides/…".
+  const RAW_BASE = import.meta.env.BASE_URL; // "/" or "/maker-studio" etc.
+  const BASE = RAW_BASE.endsWith("/") ? RAW_BASE : RAW_BASE + "/";
 
   const RECOS = {
     en: {
@@ -45,7 +48,7 @@ import Default from "@astrojs/starlight/components/Search.astro";
     box.innerHTML =
       `<p class="search-recos__title">${data.title}</p><ul class="search-recos__list">` +
       data.links
-        .map(([h, t]) => `<li><a href="${BASE}${h}">${t}</a></li>`)
+        .map(([h, t]) => `<li><a href="${BASE}${h.replace(/^\/+/, "")}">${t}</a></li>`)
         .join("") +
       `</ul>`;
     return box;
