@@ -10,9 +10,13 @@
     "preview": "astro preview",
     "astro": "astro",
     "dev:remote": "cross-env DOCS_SOURCE=remote npm run dev",
-    "build:remote": "cross-env DOCS_SOURCE=remote npm run build"
+    "build:remote": "cross-env DOCS_SOURCE=remote npm run build",
+    "gen:og": "node scripts/gen-og.mjs",
+    "prebuild": "node scripts/gen-og.mjs",
+    "predev": "node scripts/gen-og.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@astrojs/starlight": "^0.40.0",
     "astro": "^6.4.7",
     "esbuild": "^0.28.1",

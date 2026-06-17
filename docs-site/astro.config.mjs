@@ -1,5 +1,6 @@
 // @ts-check
 import starlight from "@astrojs/starlight";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import { readFileSync } from "node:fs";
 
@@ -64,6 +65,8 @@ export default defineConfig({
         Search: "./src/components/Search.astro",
         Footer: "./src/components/Footer.astro",
         Header: "./src/components/Header.astro",
+        // Appends OG / Twitter Card / theme-color / JSON-LD to Starlight's own head.
+        Head: "./src/components/Head.astro",
       },
       defaultLocale: "root",
       locales,
@@ -96,5 +99,8 @@ export default defineConfig({
         },
       ],
     }),
+    // Sitemap: the `latest` (root) build emits the canonical sitemap-index.xml;
+    // versioned builds emit their own under /vX.Y.Z/ (harmless extras).
+    sitemap(),
   ],
 });
