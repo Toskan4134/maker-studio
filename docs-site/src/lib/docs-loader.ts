@@ -206,11 +206,14 @@ function relRoot(locale?: string): string {
 
 /** Rewrite a single link target for a doc section + optional locale. */
 function rewriteTarget(target: string, section: "guides" | "mods", locale?: string): string {
-	if (/^(https?:|mailto:|#|\/)/.test(target)) return target;
-	// mod-api.d.ts → download directly from the mods repo at this version's ref (no local hosting).
+	// Special repo files rewrite to an external URL regardless of how the doc
+	// authored the link — including a leading "/" (e.g. the ES docs write
+	// "/mod-api.d.ts"), which the absolute-path guard below would otherwise pass
+	// through unchanged and 404 against the site root.
 	if (/mod-api\.d\.ts$/.test(target)) return `${RAW_BASE}/maker-studio-mods/${MODS_REF}/docs/mod-api.d.ts`;
 	if (/examples\/mods\/?$/.test(target)) return `${MODS_REPO}/tree/main/examples/mods`;
 	if (/PUBLISHING\.md$/.test(target)) return `${MODS_REPO}/blob/main/PUBLISHING.md`;
+	if (/^(https?:|mailto:|#|\/)/.test(target)) return target;
 	const m = target.match(/^(?:\.\/|\.\.\/)*([\w.-]+)\.md(#.*)?$/);
 	if (m) {
 		let base = m[1];
