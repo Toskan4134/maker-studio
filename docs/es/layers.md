@@ -46,8 +46,12 @@ Los grupos por encima de los tiles (fog y grupos personalizados con prioridad �
 
 ## Overlay de colisión
 
-Pulsa C para alternar el overlay de colisión. Muestra las banderas de paso directamente en el lienzo como flechas direccionales e indicadores de bloqueado/abierto. El overlay lee de los valores base del tileset combinados con cualquier sustitución por tile en las capas extendidas.
+Pulsa C para alternar el overlay de colisión. Muestra las banderas de paso directamente en el lienzo como flechas direccionales e indicadores de bloqueado/abierto. Para cada casilla muestra el paso y el terreno del tile **superior** colocado ahí, combinando los valores base del tileset con cualquier sustitución por tile.
 
-## Renderizado por prioridad
+## Prioridad y orden de capas
 
-Los tiles con prioridad 1 o superior se renderizan por encima de los eventos y se desplazan hacia arriba en pantalla, igual que el comportamiento estándar de RPG Maker XP. Los tiles de suelo (prioridad 0) se renderizan por debajo de los eventos.
+En el lienzo del editor, los tiles se dibujan puramente en **orden de capa** — un tile en una capa superior siempre cubre a uno en una capa inferior, sin importar su prioridad — y los eventos se dibujan por encima de todos los tiles. Esto coincide con el propio editor de mapas de RPG Maker XP, donde la prioridad nunca cambia lo que se dibuja encima.
+
+La **prioridad** solo controla la **oclusión en el juego y en el Simulador**: un tile con prioridad 1 o superior (un tile "por encima", como la copa de un árbol) se dibuja delante del jugador cuando este pasa por detrás. La prioridad que se aplica en una casilla se toma del tile **superior** colocado ahí. Los tiles de suelo (prioridad 0) nunca ocultan al jugador.
+
+Así que la prioridad ya no sube ni pone un tile delante de los eventos en el editor — usa las **capas** para controlar qué se dibuja encima, y la **prioridad** (en el Editor de Tilesets) para decidir tras qué puede caminar el jugador en el juego.

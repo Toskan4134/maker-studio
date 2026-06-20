@@ -24,8 +24,10 @@ Haz clic en uno de los cuatro cuadrantes dentro de un tile para bloquear o desbl
 
 Haz clic para recorrer los niveles de prioridad 0 a 5:
 
-- **0** = Suelo. Se renderiza por debajo de los eventos.
-- **1–5** = Por encima. Se renderiza por encima de los eventos y se desplaza hacia arriba según el nivel de prioridad.
+- **0** = Suelo. El jugador camina por delante del tile.
+- **1–5** = Por encima. El jugador camina por detrás del tile (p. ej. copas de árboles), en el juego y en el Simulador.
+
+La prioridad controla la **oclusión del jugador en el juego**, no el orden de dibujo del editor — en el lienzo del editor los tiles siempre se dibujan en orden de capa (ver [Capas](layers.md)). En el juego, la prioridad que se aplica en una casilla viene del tile superior colocado ahí.
 
 ### Bush Flag
 

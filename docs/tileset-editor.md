@@ -24,8 +24,10 @@ Click one of the four quadrants within a tile to block or unblock that specific 
 
 Click to cycle through priority levels 0 through 5:
 
-- **0** = Ground. Renders below events.
-- **1--5** = Overhead. Renders above events and is shifted upward by the priority level.
+- **0** = Ground. The player walks in front of the tile.
+- **1--5** = Overhead. The player walks behind the tile (e.g. treetops), in-game and in the Game Simulator.
+
+Priority controls **player occlusion in-game**, not editor draw order — on the editor canvas tiles are always drawn in layer order (see [Layers](layers.md)). In-game and in the Game Simulator, occlusion is decided **per tile** by its own priority, except that a ground tile on a higher layer covers the tiles beneath it on that square. See [Layers](layers.md#priority-and-layer-order) for details.
 
 ### Bush Flag
 

@@ -46,8 +46,14 @@ Above-tile groups (fog and custom groups with priority ≥ 0) are listed near th
 
 ## Collision Overlay
 
-Press C to toggle the collision overlay. This displays passage flags directly on the canvas as directional arrows and blocked/open indicators. The overlay reads from the tileset's base values combined with any per-tile overrides on extended layers.
+Press C to toggle the collision overlay. This displays passage flags directly on the canvas as directional arrows and blocked/open indicators. For each square it shows the passage and terrain of the **top-most tile** placed there, combining the tileset's base values with any per-tile overrides.
 
-## Priority Rendering
+## Priority and Layer Order
 
-Tiles with a priority of 1 or higher render above events and are shifted upward on screen, matching RPG Maker XP's standard behavior. Ground tiles (priority 0) render below events.
+On the editor canvas, tiles are drawn purely in **layer order** — a tile on a higher layer always covers a tile on a lower layer, regardless of its priority — and events are drawn on top of all tiles. This matches RPG Maker XP's own map editor, where priority never changes what's drawn on top.
+
+**Priority** only controls **in-game and Game Simulator occlusion**: a tile with a priority of 1 or higher (an "overhead" tile, such as a treetop) draws in front of the player when the player walks behind it. Ground tiles (priority 0) never hide the player.
+
+This is decided **per tile**: each tile keeps its own priority, so an overhead tile and the ground tile beneath it on the same square behave independently (the treetop hides the player while the path under it does not). The one exception is layering — **a ground tile on a higher layer covers everything beneath it on that square**, so an overhead tile only draws in front of the player when no higher layer places a ground tile over it. The in-game plugin and the Game Simulator follow the same rule, so what you test in the simulator matches the game.
+
+So priority no longer moves a tile up or in front of events in the editor — use **layers** to control what's drawn on top, and use **priority** (set in the Tileset Editor) to decide what the player can walk behind in-game.
