@@ -47,6 +47,8 @@ Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las p�
 
 Haz doble clic en un evento existente (o selecciónalo y haz clic en Edit) para abrir el editor de eventos.
 
+La ventana del diálogo se puede redimensionar — arrastra su esquina inferior derecha para agrandarla, lo que ayuda cuando un evento tiene muchas páginas o una lista de comandos larga.
+
 ### General
 
 - **Name**: el nombre visible del evento.

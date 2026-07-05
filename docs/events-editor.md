@@ -47,6 +47,8 @@ With the **Events layer** active, you can duplicate whole events (all pages and 
 
 Double-click an existing event (or select it and click Edit) to open the Event Editor.
 
+The dialog window is resizable — drag its bottom-right corner to make it bigger, which helps when an event has many pages or a long command list.
+
 ### General
 
 - **Name**: The event's display name.

@@ -124,21 +124,23 @@ A green **Start** marker appears on that tile, and the position is saved to your
 
 Click the green Run button in the toolbar (or use File then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
 
-### Running on Linux (Proton / Wine)
+### Running on Linux (Proton / Wine / Native)
 
-`Game.exe` is a Windows executable, so on Linux the editor runs it through **Proton** or **Wine**. The first time you press Run, a dialog lets you pick how to launch:
+`Game.exe` is a Windows executable, so on Linux the editor normally runs it through **Proton** or **Wine**. If your project also has a native Linux build (a `Game_Linux` folder next to `Game.exe`, from a native mkxp-z build), the editor detects it and offers that as an option too. The first time you press Run, a dialog lets you pick how to launch:
 
 - **Proton**: choose an installed Proton version (and, if needed, the Steam app id to use). The editor sets up a dedicated Wine prefix for your game the first time.
 - **Wine**: launch through your system Wine instead.
+- **Native Linux build** (when available): runs `Game_Linux` directly, with no Proton/Wine involved. If it's already running, the editor just focuses its window instead of starting a second copy; otherwise it opens your terminal emulator and launches it there in debug mode.
 
-Your choice is remembered per project, so later runs launch straight away without asking again.
+Your choice is remembered per project, so later runs launch straight away without asking again. To make the dialog reappear later — for example to switch between Proton and the native build — use **File → Clear Proton Preference**.
 
 ### Saves Button
 
 After your first Run, a **Saves** button appears in the toolbar that opens the folder where the game writes its save files:
 
 - **Windows / macOS**: opens the native saves folder (on Windows, `%AppData%\<Game>`).
-- **Linux**: opens the relevant folder inside the Proton/Wine prefix the game ran in.
+- **Linux, Proton/Wine**: opens the relevant folder inside the Proton/Wine prefix the game ran in.
+- **Linux, native build**: opens `~/.local/share/<GameTitle>/`, where native Linux builds keep their save data.
 
 This makes it easy to back up or clear save files while testing.
 

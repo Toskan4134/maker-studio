@@ -4,7 +4,7 @@
 
 Every menu item now shows a small icon next to its label so you can spot commands faster. The menus, left to right, are **File, Edit, View, Map, Tools, Mods, Help**.
 
-- **File**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), Save, Save All, Run Game
+- **File**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), Save, Save All, Run Game, **Clear Proton Preference** (Linux only — forgets your remembered Proton/Wine/native launch choice so the picker dialog shows again next time you press Run)
 - **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, **Cross-Project Clipboard** toggle — see below), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - **Cross-Project Clipboard** is off by default. When ticked, copying tiles, events, or event commands also places them on your system clipboard so a **second open Maker Studio window** can paste them. Turn it on in *each* window you want to share between. (Deleting a tile selection still works with the **Delete** key; only the old menu entry was replaced by this toggle.)
 - **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — clicking an entry **focuses** that panel, bringing it to the front or reopening it as a floating window if closed; it never closes a panel, and the checkmark still shows which panels are open), Show Grid, Show Collision, Show Events, Dim Inactive Layers, **Show MS-Exclusive Indicators** (see below), Zoom In/Out/100%, Dark Mode, **Language** submenu (see below), **Layout** submenu (Refresh Layout, Import/Export Configuration)
@@ -41,8 +41,8 @@ Left to right, the toolbar groups are:
 
 `Save · Run · Saves · Sim Map` | `Brush · Eraser · Fill · Rectangle · Eyedropper · Select · Pan` | `Zoom` | `Database · Scripts` | `Versions` | `Grid · Col · Dim` | `Theme`
 
-- **Save, Run** — **Save** writes the current map (Shift+Click saves every open map); **Run** launches the game (on Linux, Shift+Click lets you choose the Proton/Wine prefix). (Creating a new map now lives in the Maps panel header — see Map Tree below.)
-- **Saves** — appears after the first Run; opens the folder where the game stores its save files. On Windows/macOS this is the native saves folder; on Linux it is the folder inside the Proton/Wine prefix the game ran in. See [Running the Game](map-management.md#running-the-game).
+- **Save, Run** — **Save** writes the current map (Shift+Click saves every open map); **Run** launches the game (on Linux, Shift+Click lets you choose the Proton/Wine prefix or, if available, a native Linux build). (Creating a new map now lives in the Maps panel header — see Map Tree below.)
+- **Saves** — appears after the first Run; opens the folder where the game stores its save files. On Windows/macOS this is the native saves folder; on Linux it is the folder inside the Proton/Wine prefix the game ran in, or — after a native-build run — the game's own Linux save folder. See [Running the Game](map-management.md#running-the-game).
 - **Sim Map** — opens the [Game Simulator](game-simulator.md) on the current map with player input enabled.
 - **Tools** — the seven drawing tools (Brush, Eraser, Fill, Rectangle, Eyedropper, Select, Pan), shown as icons. Hover any of them to see its name and keyboard shortcut.
 - **Brush tool** — hover to reveal a popover with a size slider, a **quick brush switcher** (your saved Custom Shape Brush presets plus Default/Custom), and a **Brush Editor…** opener. When a custom brush is active, a compact indicator next to the tools shows the brush's name with a ✕ to clear it. See [Custom Shape Brush](tools.md#custom-shape-brush).

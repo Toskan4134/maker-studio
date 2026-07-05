@@ -124,21 +124,23 @@ Un marcador verde **Start** aparece en ese tile, y la posición se guarda en tu 
 
 Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego Run Game). El editor guarda todos los mapas abiertos con cambios sin guardar, luego lanza `Game.exe` en modo depuración desde la carpeta de tu proyecto.
 
-### Ejecutar en Linux (Proton / Wine)
+### Ejecutar en Linux (Proton / Wine / Nativo)
 
-`Game.exe` es un ejecutable de Windows, así que en Linux el editor lo ejecuta a través de **Proton** o **Wine**. La primera vez que pulsas Run, un diálogo te deja elegir cómo lanzar:
+`Game.exe` es un ejecutable de Windows, así que en Linux el editor normalmente lo ejecuta a través de **Proton** o **Wine**. Si tu proyecto también tiene una build nativa de Linux (una carpeta `Game_Linux` junto a `Game.exe`, de una build nativa de mkxp-z), el editor la detecta y también la ofrece como opción. La primera vez que pulsas Run, un diálogo te deja elegir cómo lanzar:
 
 - **Proton**: elige una versión de Proton instalada (y, si hace falta, el id de app de Steam a usar). El editor configura un prefijo de Wine dedicado para tu juego la primera vez.
 - **Wine**: lanza a través del Wine de tu sistema en su lugar.
+- **Build nativa de Linux** (cuando está disponible): ejecuta `Game_Linux` directamente, sin Proton ni Wine de por medio. Si ya se está ejecutando, el editor simplemente enfoca su ventana en vez de abrir una segunda copia; si no, abre tu emulador de terminal y lo lanza ahí en modo depuración.
 
-Tu elección se recuerda por proyecto, así que las ejecuciones posteriores lanzan directo sin volver a preguntar.
+Tu elección se recuerda por proyecto, así que las ejecuciones posteriores lanzan directo sin volver a preguntar. Para que el diálogo vuelva a aparecer más adelante — por ejemplo, para cambiar entre Proton y la build nativa — usa **File → Clear Proton Preference**.
 
 ### Botón Saves
 
 Tras tu primer Run, aparece un botón **Saves** en la barra que abre la carpeta donde el juego escribe sus archivos de guardado:
 
 - **Windows / macOS**: abre la carpeta de guardado nativa (en Windows, `%AppData%\<Game>`).
-- **Linux**: abre la carpeta correspondiente dentro del prefijo Proton/Wine en el que se ejecutó el juego.
+- **Linux, Proton/Wine**: abre la carpeta correspondiente dentro del prefijo Proton/Wine en el que se ejecutó el juego.
+- **Linux, build nativa**: abre `~/.local/share/<GameTitle>/`, donde las builds nativas de Linux guardan sus datos de guardado.
 
 Esto facilita respaldar o limpiar archivos de guardado mientras pruebas.
 
