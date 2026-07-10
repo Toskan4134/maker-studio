@@ -130,7 +130,7 @@ MakerStudio/
 ## Credits
 
 - **Author**: Toskan4134
-- **Framework**: La Base de Sky v1.2.0 (a Spanish fork of Pokémon Essentials v21.1)
+- **Framework**: La Base de Sky v1.1.x (a Spanish fork of Pokémon Essentials v21.1)
 - **Editor**: Tauri v2, React 19, TypeScript, Rust
 
 ## License

@@ -27,5 +27,5 @@ integration's own `README.md`.
 2. Inside it, add the `MakerStudio/` plugin folder (start from an existing integration and adapt the
    Ruby in `001_Core/` + `002_Integration/` to the target engine).
 3. Keep `003_Editor/` as download links only — **never** commit the editor binary.
-4. On the next release, CI zips every folder here as a release asset and syncs them to the public
-   `maker-studio` repo.
+4. On the next release, CI zips every folder here into the separate "Maker Studio Integrations"
+   release and syncs this folder to the public `maker-studio` repo.

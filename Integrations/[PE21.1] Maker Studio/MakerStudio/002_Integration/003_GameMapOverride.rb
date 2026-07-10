@@ -591,7 +591,7 @@ class Game_Map
     native_props = ext_data ? ext_data["nativeProperties"] : nil
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
+      next if tid == 0
       key = "#{x},#{y}"
       td = native_props ? (native_props[layer] || {})[key] : nil
       passage = resolve_tile_passage(tid, td, @passages)
@@ -674,7 +674,7 @@ class Game_Map
     native_props = ext_data ? ext_data["nativeProperties"] : nil
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
+      next if tid == 0
       key = "#{x},#{y}"
       td = native_props ? (native_props[layer] || {})[key] : nil
       passage = resolve_tile_passage(tid, td, @passages)
@@ -730,7 +730,7 @@ class Game_Map
     native_props = ext_data ? ext_data["nativeProperties"] : nil
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
+      next if tid == 0
       key = "#{x},#{y}"
       td = native_props ? (native_props[layer] || {})[key] : nil
       passage = resolve_tile_passage(tid, td, @passages)
@@ -750,7 +750,7 @@ class Game_Map
     bit = (1 << ((dir / 2) - 1)) & 0x0f
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
+      next if tid == 0
       key = "#{x},#{y}"
       td = native_props ? (native_props[layer] || {})[key] : nil
       passage = resolve_tile_passage(tid, td, @passages)
@@ -783,7 +783,7 @@ class Game_Map
     bit = (1 << ((dir / 2) - 1)) & 0x0f
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
+      next if tid == 0
       key = "#{x},#{y}"
       td = native_props ? (native_props[layer] || {})[key] : nil
       if td && td["tileset_id"]
@@ -827,7 +827,7 @@ class Game_Map
     native_props = ext_data ? ext_data["nativeProperties"] : nil
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
+      next if tid == 0
       key = "#{x},#{y}"
       td = native_props ? (native_props[layer] || {})[key] : nil
       passage = resolve_tile_passage(tid, td, @passages)
@@ -847,10 +847,11 @@ end
 # passability_needs_update? already tracks $PokemonGlobal.surfing, so the
 # overlay auto-refreshes on surf state changes without extra work here.
 #
-# Guard: Debug_Passability is an LBDS class — vanilla v21.1 and some v21.1
-# bases (v21.1 Hotfixes / Grand Order) DON'T define it. Reopening a missing
-# class + aliasing playerPassable? raises NameError and aborts plugin load
-# (LBDS pluginErrorMsg then crashes formatting it). Skip the patch when absent.
+# NOTE: Debug_Passability is an LBDS addition — it does NOT exist in vanilla
+# Pokémon Essentials v21.1. Guard the whole patch so loading on vanilla v21.1
+# doesn't raise (reopening a missing class + aliasing playerPassable? would
+# NameError). On vanilla the only effect is that the debug passability overlay
+# won't reflect extended layers — debug-only, harmless.
 #===============================================================================
 if defined?(Debug_Passability)
 class Debug_Passability

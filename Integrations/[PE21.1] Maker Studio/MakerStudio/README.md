@@ -1,6 +1,6 @@
 # Maker Studio
 
-A La Base de Sky (LBDS — a Spanish fork of Pokémon Essentials v21.1) plugin that provides an advanced external tilemap editor, replacing RPG Maker XP's native editor with a multi-layer system, per-tile visual effects, cross-tileset painting, unlimited autotiles, and a shadow system.
+A Pokemon Essentials v21.1 plugin that provides an advanced external tilemap editor, replacing RPG Maker XP's native editor with a multi-layer system, per-tile visual effects, cross-tileset painting, unlimited autotiles, and a shadow system.
 
 ## Features
 
@@ -53,7 +53,7 @@ Brush, Eraser, Fill, Rectangle, Eyedropper, Select (drag-to-move), Pan
 ## Installation
 
 1. Copy the `MakerStudio` folder to your project's `Plugins/` directory
-2. The plugin loads automatically with La Base de Sky (its `Plugins/` auto-loader)
+2. The plugin loads automatically with Pokemon Essentials
 
 ## Usage
 
@@ -98,7 +98,7 @@ MakerStudio/
   meta.txt                        - Plugin metadata (name, version, author)
   000_Settings.rb                 - Configuration constants
   001_Core/
-    001_DataStore.rb              - Data persistence, extended layer loading/saving
+    001_DataStore.rb              - Extended-layer loading/saving + bundled MakerStudio::JSON parser
     003_TileEffects.rb            - Per-tile visual effects (opacity, hue, saturation, flip)
   002_Integration/
     001_Hooks.rb                  - Debug menu entries, lifecycle handlers, editor launcher
@@ -130,9 +130,9 @@ MakerStudio/
 ## Credits
 
 - **Author**: Toskan4134
-- **Framework**: La Base de Sky v1.2.0 (a Spanish fork of Pokémon Essentials v21.1)
+- **Framework**: Pokemon Essentials v21.1
 - **Editor**: Tauri v2, React 19, TypeScript, Rust
 
 ## License
 
-This plugin is provided as-is for use with La Base de Sky (LBDS) projects.
+This plugin is provided as-is for use with Pokemon Essentials v21.1 projects.

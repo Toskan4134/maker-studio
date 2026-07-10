@@ -69,7 +69,12 @@ module MakerStudio
 
   def shadow_current_frame(frame_count)
     return 0 if frame_count <= 1
-    return 0 if defined?($PokemonSystem) && $PokemonSystem && $PokemonSystem.autotile_animations == 1
+    # $PokemonSystem.autotile_animations is an LBDS/older-Essentials option that
+    # does NOT exist in vanilla v21.1 — guard with respond_to? so this never
+    # NoMethodErrors on vanilla (where autotile animation is always on).
+    return 0 if defined?($PokemonSystem) && $PokemonSystem &&
+                $PokemonSystem.respond_to?(:autotile_animations) &&
+                $PokemonSystem.autotile_animations == 1
     @shadow_timer_start ||= System.uptime
     duration = TilemapRenderer::AUTOTILE_FRAME_DURATION.to_f / 20
     return 0 if duration <= 0

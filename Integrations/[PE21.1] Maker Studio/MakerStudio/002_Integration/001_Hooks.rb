@@ -9,7 +9,7 @@
 if $DEBUG
   # Register the parent menu. MenuHandlers.add overwrites by key, so re-adding
   # is a harmless no-op — no existence guard needed. (Avoid MenuHandlers.get:
-  # it is absent on some LBDS / Essentials v21.1 builds and raises NoMethodError.)
+  # it is absent on the vanilla v21.1 release and raises NoMethodError.)
   MenuHandlers.add(:debug_menu, :maker_studio_menu, {
     "name"        => _INTL("Maker Studio..."),
     "parent"      => :main,
@@ -237,28 +237,22 @@ module Game
     # Alias the original ONCE, but (re)define load_map UNCONDITIONALLY.
     # An mkxp F12 soft-reset re-evaluates every script: the engine re-runs
     # 001_StartGame (restoring the stock Game.load_map) and then re-runs the
-    # plugins. If the `def` lived inside the alias guard it would be skipped
+    # plugins. If the `def` lived inside this `unless` guard it would be skipped
     # on that second pass (the alias name already exists), so our override would
     # be permanently lost after a soft-reset — and on a magic-number-matching
     # Continue, load_map is the only thing that refreshes MakerStudio map data
     # (setup/on_game_map_setup are skipped), so the map would load with no
     # extended layers / native overrides. Keep the def outside the guard.
-    # Also guard the alias itself: some v21.1-lineage bases (e.g. v21.1 Hotfixes /
-    # Grand Order) may not define load_map, in which case alias_method would raise
-    # NameError and abort plugin load.
-    if (method_defined?(:load_map) || private_method_defined?(:load_map)) &&
-       !method_defined?(:__mkst__load_map) && !private_method_defined?(:__mkst__load_map)
+    unless method_defined?(:__mkst__load_map) || private_method_defined?(:__mkst__load_map)
       alias_method :__mkst__load_map, :load_map
     end
-    if method_defined?(:__mkst__load_map) || private_method_defined?(:__mkst__load_map)
-      def load_map
-        __mkst__load_map
-        return unless MakerStudio::ENABLED
-        return unless $game_map
-        MakerStudio.clear_all_caches if MakerStudio.respond_to?(:clear_all_caches)
-        MakerStudio::TileEffects.clear_cache if defined?(MakerStudio::TileEffects)
-        pbRefreshLiveMapData($game_map.map_id)
-      end
+    def load_map
+      __mkst__load_map
+      return unless MakerStudio::ENABLED
+      return unless $game_map
+      MakerStudio.clear_all_caches if MakerStudio.respond_to?(:clear_all_caches)
+      MakerStudio::TileEffects.clear_cache if defined?(MakerStudio::TileEffects)
+      pbRefreshLiveMapData($game_map.map_id)
     end
   end
 end
