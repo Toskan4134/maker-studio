@@ -10,7 +10,16 @@ simulator, and a JavaScript mod system.
 ## Download
 
 Get the latest installer from the [**Releases**](https://github.com/Toskan4134/maker-studio/releases/latest)
-page (Windows / macOS / Linux). The app auto-updates from these releases.
+page — Windows, macOS (Apple Silicon), and Linux. The app auto-updates from these releases.
+
+> [!NOTE]
+> The installers are **not code-signed** yet, so your OS shows a one-time warning on install:
+>
+> - **Windows** — SmartScreen says "Windows protected your PC". Click **More info → Run anyway**.
+> - **macOS** — Gatekeeper blocks the first launch. Right-click the app and choose **Open**, or on
+>   macOS 15+ go to **System Settings → Privacy & Security** and click **Open Anyway**.
+> - **Linux** — no warning, but the AppImage uses your system's WebKit: if the app doesn't start,
+>   install `webkit2gtk-4.1` and `gtk3` (Arch) or `libwebkit2gtk-4.1-0` and `libgtk-3-0` (Debian/Ubuntu).
 
 ## Documentation
 
