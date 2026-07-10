@@ -58,7 +58,7 @@ A 404 in remote mode (a page that didn't exist at an old tag) is skipped, not fa
 DOCS_SOURCE, DOCS_APP_REF, DOCS_MODS_REF   # local | remote  +  git refs (default "main")
 DOCS_VERSION                               # version id ("latest" | "vX.Y.Z")
 DOCS_VERSIONS_JSON                         # [{id,label}] list for the header switcher
-SITE_PREFIX, SITE_BASE, OUT_DIR            # /maker-studio[/vX.Y.Z], per-version output dir
+SITE_PREFIX, SITE_BASE, OUT_DIR            # "" (custom-domain root) or /vX.Y.Z, per-version output dir
 ```
 
 `mod-api.d.ts` is not hosted locally — its download link points straight at the mods repo on GitHub at
@@ -107,9 +107,10 @@ to GitHub Pages on each push to `main` that touches `docs/**` or `docs-site/**`,
 and on manual dispatch. It queries the GitHub tags API, then builds one Starlight site per version
 (`latest` at the site root, each tag under `/vX.Y.Z/`) and merges them into a single `dist/`.
 
-One-time setup: in the repo's **Settings → Pages**, set **Source = GitHub Actions**. The site then
-publishes at `https://toskan4134.github.io/maker-studio/` (latest at the root; older versions under
-`/vX.Y.Z/`).
+One-time setup: in the repo's **Settings → Pages**, set **Source = GitHub Actions** and the custom
+domain `makerstudio.toskan.es` (Cloudflare CNAME `makerstudio` → `toskan4134.github.io`, DNS only).
+The site publishes at `https://makerstudio.toskan.es/` (latest at the root; older versions under
+`/vX.Y.Z/`); the old `toskan4134.github.io/maker-studio` URLs 301-redirect there.
 
 The output is a plain static `dist/` — it can also be hosted on Netlify, Cloudflare Pages, S3, etc.
 

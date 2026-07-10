@@ -73,7 +73,7 @@ jobs:
 
           changed=true
           if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
-            deployed=$(curl -fsSL "https://toskan4134.github.io/maker-studio/build-state.json" \
+            deployed=$(curl -fsSL "https://makerstudio.toskan.es/build-state.json" \
               | jq -r '.fingerprint' 2>/dev/null || echo none)
             if [ "$fp" = "$deployed" ]; then
               echo "Nothing changed since the last deploy ($fp) — skipping scheduled rebuild."
@@ -87,8 +87,11 @@ jobs:
     if: needs.check.outputs.changed == 'true'
     runs-on: ubuntu-latest
     env:
-      # Project site served at https://<owner>.github.io/maker-studio/
-      SITE_PREFIX: /maker-studio
+      # Custom domain (Cloudflare CNAME makerstudio -> toskan4134.github.io,
+      # cname set in Settings -> Pages). Served at the domain root, so no
+      # path prefix; the old github.io/maker-studio URLs 301 here.
+      SITE_PREFIX: ""
+      SITE_URL: https://makerstudio.toskan.es
     steps:
       - uses: actions/checkout@v4
 

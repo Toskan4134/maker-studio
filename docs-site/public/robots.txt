@@ -1,7 +1,6 @@
 User-agent: *
 Allow: /
 
-# Canonical sitemap (latest build). Note: on a GitHub Pages project path this
-# file is served at /maker-studio/robots.txt, so it isn't auto-discovered at the
-# domain root — submit the sitemap in Google Search Console too.
-Sitemap: https://toskan4134.github.io/maker-studio/sitemap-index.xml
+# Canonical sitemap (latest build). Served at the custom-domain root, so
+# crawlers auto-discover this file.
+Sitemap: https://makerstudio.toskan.es/sitemap-index.xml

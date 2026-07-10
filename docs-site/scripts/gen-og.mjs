@@ -74,7 +74,7 @@ const svg = `
   <text x="96" y="520" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="28" fill="${MUTED}">${platforms}</text>
 
   <!-- Docs URL, bottom-right -->
-  <text x="${W - 96}" y="${H - 60}" text-anchor="end" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="26" fill="${ACCENT}">toskan4134.github.io/maker-studio</text>
+  <text x="${W - 96}" y="${H - 60}" text-anchor="end" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="26" fill="${ACCENT}">makerstudio.toskan.es</text>
 </svg>`;
 
 const out = resolve(root, "public/og-image.png");
