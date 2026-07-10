@@ -37,7 +37,54 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Cheap preflight so the daily cron doesn't redeploy an identical site.
+  # Fingerprints everything the build consumes: the docs/ + docs-site/ trees
+  # on this repo's main, the docs/ tree on the mods repo's main, and both
+  # repos' tag lists. The build publishes the fingerprint as build-state.json
+  # inside the deployed site; a scheduled run that computes the same value
+  # skips the build. push / workflow_dispatch always build.
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.diff.outputs.changed }}
+      fingerprint: ${{ steps.diff.outputs.fingerprint }}
+    steps:
+      - id: diff
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          AUTH=(-H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json")
+          API=https://api.github.com/repos
+          # Any curl failing just yields a partial fingerprint that won't match
+          # the deployed one -> we build. Safe default.
+          fp=$(
+            {
+              curl -fsSL "${AUTH[@]}" "$API/Toskan4134/maker-studio/git/trees/main" \
+                | jq -r '.tree[] | select(.path == "docs" or .path == "docs-site") | "\(.path)=\(.sha)"' || true
+              curl -fsSL "${AUTH[@]}" "$API/Toskan4134/maker-studio-mods/git/trees/main" \
+                | jq -r '.tree[] | select(.path == "docs") | "mods-docs=\(.sha)"' || true
+              curl -fsSL "${AUTH[@]}" "$API/Toskan4134/maker-studio/tags?per_page=100" \
+                | jq -r '.[].name' || true
+              curl -fsSL "${AUTH[@]}" "$API/Toskan4134/maker-studio-mods/tags?per_page=100" \
+                | jq -r '.[].name' || true
+            } | sort | sha256sum | cut -d' ' -f1
+          )
+          echo "fingerprint=$fp" >> "$GITHUB_OUTPUT"
+
+          changed=true
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
+            deployed=$(curl -fsSL "https://toskan4134.github.io/maker-studio/build-state.json" \
+              | jq -r '.fingerprint' 2>/dev/null || echo none)
+            if [ "$fp" = "$deployed" ]; then
+              echo "Nothing changed since the last deploy ($fp) — skipping scheduled rebuild."
+              changed=false
+            fi
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: check
+    if: needs.check.outputs.changed == 'true'
     runs-on: ubuntu-latest
     env:
       # Project site served at https://<owner>.github.io/maker-studio/
@@ -125,6 +172,11 @@ jobs:
             cp -a "build-$id/." "dist/$id/"
           done
           echo "Deployed versions: latest ${APP_TAGS[*]:-}"
+
+      # Published at the site root so the check job can fetch it next run.
+      - name: Write build state (scheduled-run skip check)
+        working-directory: docs-site
+        run: printf '{"fingerprint":"%s"}\n' "${{ needs.check.outputs.fingerprint }}" > dist/build-state.json
 
       - uses: actions/upload-pages-artifact@v3
         with:
