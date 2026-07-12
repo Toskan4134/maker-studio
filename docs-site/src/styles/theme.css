@@ -118,6 +118,14 @@ header .site-title img {
   font-size: 0.78em;
   letter-spacing: 0.04em;
 }
+/* Starlight zeroes the outer padding of the edge cells; with a filled header and
+   rounded corners that glues their text to the table border. */
+.sl-markdown-content :is(th, td):first-child {
+  padding-inline-start: 1rem;
+}
+.sl-markdown-content :is(th, td):last-child {
+  padding-inline-end: 1rem;
+}
 
 .sl-markdown-content a {
   text-underline-offset: 0.18em;
@@ -510,13 +518,16 @@ starlight-menu-button[aria-expanded="true"] button {
     animation: ms-fade-in 0.7s ease both;
   }
 
-  .sl-markdown-content .card-grid > * {
+  .sl-markdown-content .card-grid > *,
+  .sl-markdown-content .dl-grid > * {
     animation: ms-fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
-  .sl-markdown-content .card-grid > *:nth-child(2) {
+  .sl-markdown-content .card-grid > *:nth-child(2),
+  .sl-markdown-content .dl-grid > *:nth-child(2) {
     animation-delay: 0.06s;
   }
-  .sl-markdown-content .card-grid > *:nth-child(3) {
+  .sl-markdown-content .card-grid > *:nth-child(3),
+  .sl-markdown-content .dl-grid > *:nth-child(3) {
     animation-delay: 0.12s;
   }
   .sl-markdown-content .card-grid > *:nth-child(4) {
@@ -570,6 +581,64 @@ starlight-menu-button[aria-expanded="true"] button {
 .hero .actions .sl-link-button:focus-visible {
   outline: 2px solid var(--sl-color-accent-high);
   outline-offset: 3px;
+}
+
+/* ── Splash download cards (one per OS) ───────────────────────────────────── */
+/* The cards carry .feature-card too — surface, icon tile and text come from it. */
+@media (min-width: 50rem) {
+  .sl-markdown-content .dl-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.sl-markdown-content .dl-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.sl-markdown-content a.dl-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 1.1rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.6rem;
+  background: var(--sl-color-accent);
+  border: 1px solid var(--sl-color-accent);
+  color: #fff;
+  font-size: var(--sl-text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+.sl-markdown-content a.dl-card__btn:hover {
+  opacity: 0.9;
+}
+.sl-markdown-content .dl-card__alt {
+  margin: 0.7rem 0 0;
+  font-size: var(--sl-text-xs);
+  color: var(--sl-color-gray-3);
+}
+
+.sl-markdown-content .dl-links {
+  font-size: var(--sl-text-sm);
+      text-align: center;
+}
+
+/* Starlight centers the hero below this width; follow it. */
+@media (max-width: 49.999rem) {
+  .sl-markdown-content .dl-heading {
+    text-align: center;
+  }
+
+  .ms-footer,
+  .ms-footer__main,
+  .ms-footer__meta {
+    justify-content: center;
+  }
+  .ms-footer__meta {
+    text-align: center;
+  }
 }
 
 /* ── Sidebar caret + search modal animations ──────────────────────────────── */

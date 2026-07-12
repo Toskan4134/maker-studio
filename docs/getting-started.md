@@ -4,6 +4,52 @@
 
 You need an RPG Maker XP project folder -- specifically, a directory that contains `Game.exe` and a `Data/` subdirectory with your map and tileset files. The editor reads and writes `.rxdata` files directly, so no export or conversion step is required.
 
+## Installation
+
+Maker Studio has two parts, and you want both:
+
+1. **The editor app** — the desktop program (Windows / macOS / Linux) you make maps with.
+2. **A game-side plugin ("integration")** — a small Ruby plugin you copy into your game project. It is what makes your *game* display the Maker Studio content that plain RPG Maker XP doesn't support (extended layers, shadows, extra autotiles…), and it adds a **Maker Studio** entry to the game's Debug menu to launch the editor. The editor itself runs fine without it, but the game will ignore the extended content until the plugin is installed.
+
+### Step 1 — Install the editor app
+
+Download the build for your system (these links always point to the latest version):
+
+| Platform | Direct download |
+|----------|-----------------|
+| **Windows** | [`.exe` installer](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_x64-setup.exe) (recommended) · [`.msi`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_x64_en-US.msi) (alternative) |
+| **macOS** | [`.dmg`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_aarch64.dmg) (Apple Silicon) |
+| **Linux** | [`.AppImage`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_x86_64.AppImage) (universal) · [`.deb`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_amd64.deb) (Debian/Ubuntu) |
+
+Every build (current and previous versions) is also on the [Releases](https://github.com/Toskan4134/maker-studio/releases) page. Once installed, the app keeps itself up to date automatically.
+
+The installers are **not code-signed** yet, so your OS shows a one-time warning on install:
+
+- **Windows** — run the `.exe` and when SmartScreen says "Windows protected your PC", click **More info → Run anyway**, then follow the installer.
+- **macOS** — open the `.dmg` and drag Maker Studio into **Applications**. Gatekeeper blocks the first launch: right-click the app and choose **Open**, or on macOS 15+ go to **System Settings → Privacy & Security** and click **Open Anyway**.
+- **Linux** — make the AppImage executable (`chmod +x Maker.Studio_x86_64.AppImage`) and run it. It uses your system's WebKit: if it doesn't start, install `webkit2gtk-4.1` and `gtk3` (Arch) or `libwebkit2gtk-4.1-0` and `libgtk-3-0` (Debian/Ubuntu). The `.deb` installs with `sudo apt install ./Maker.Studio_amd64.deb`.
+
+### Step 2 — Install the game-side plugin
+
+Download the integration that matches your project:
+
+| Your project | Direct download |
+|--------------|-----------------|
+| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/PE21.1.Maker.Studio.v1.0.0.zip) |
+| **La Base de Sky 1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/LBDS1.1.0.Maker.Studio.v1.0.0.zip) |
+| **La Base de Sky 1.2.0+** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/LBDS1.2.0.Maker.Studio.v1.0.0.zip) |
+| Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/BES5.Maker.Studio.v1.0.0.zip) |
+
+Then:
+
+1. Unzip the download.
+2. Copy the **`MakerStudio`** folder from inside it into your game's **`Plugins/`** directory, so the final path is `<your game>/Plugins/MakerStudio/`. Don't rename the folder — the editor reads project mods, config, and stats from `Plugins/MakerStudio/003_Editor/`.
+3. **BES v5 only:** that engine has no `Plugins/` auto-loader, so instead of copying a folder you paste a single merged `.rb` into the Script Editor — follow the `README.md` inside the zip.
+
+Each zip also ships its own `README.md` with engine-specific notes, in case anything differs on your setup.
+
+To check it worked: start your game in **Debug mode**, open the Debug menu (F9), and look for **Maker Studio…** — from there you can launch the editor directly (if the app isn't installed yet, that menu shows the download link).
+
 ## Launching
 
 Run the editor executable. On first launch you will see a welcome screen prompting you to select a game folder. Click **Browse** and navigate to your RPG Maker XP project root (the folder containing `Game.exe`).

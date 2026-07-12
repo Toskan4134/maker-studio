@@ -8,6 +8,47 @@
     "modDevelopment": { "en": "Mod Development", "es": "Desarrollo de mods" }
   },
   "downloadUrl": "https://github.com/Toskan4134/maker-studio/releases/latest",
+  "download": {
+    "base": "https://github.com/Toskan4134/maker-studio/releases/latest/download",
+    "heading": { "en": "Download", "es": "Descargar" },
+    "platforms": [
+      {
+        "os": "Windows",
+        "icon": "windows",
+        "meta": { "en": "Windows 10/11 · 64-bit", "es": "Windows 10/11 · 64 bits" },
+        "primary": { "label": { "en": "Installer .exe", "es": "Instalador .exe" }, "file": "Maker.Studio_x64-setup.exe" },
+        "alt": [{ "label": { "en": ".msi package", "es": "Paquete .msi" }, "file": "Maker.Studio_x64_en-US.msi" }]
+      },
+      {
+        "os": "macOS",
+        "icon": "apple",
+        "meta": { "en": "Apple Silicon", "es": "Apple Silicon" },
+        "primary": { "label": { "en": "Disk image .dmg", "es": "Imagen .dmg" }, "file": "Maker.Studio_aarch64.dmg" },
+        "alt": []
+      },
+      {
+        "os": "Linux",
+        "icon": "linux",
+        "meta": { "en": "x86-64", "es": "x86-64" },
+        "primary": { "label": { "en": "Universal .AppImage", "es": ".AppImage universal" }, "file": "Maker.Studio_x86_64.AppImage" },
+        "alt": [{ "label": { "en": ".deb (Debian/Ubuntu)", "es": ".deb (Debian/Ubuntu)" }, "file": "Maker.Studio_amd64.deb" }]
+      }
+    ],
+    "links": [
+      {
+        "href": "guides/getting-started/#installation",
+        "text": { "en": "Installation guide", "es": "Guía de instalación" }
+      },
+      {
+        "href": "https://github.com/Toskan4134/maker-studio/releases",
+        "text": { "en": "All versions & release notes", "es": "Todas las versiones y notas" }
+      },
+      {
+        "href": "https://github.com/Toskan4134/maker-studio/releases?q=integrations&expanded=true",
+        "text": { "en": "Game-side plugin (integrations)", "es": "Plugin del juego (integraciones)" }
+      }
+    ]
+  },
   "hero": {
     "pageTitle": { "en": "Home", "es": "Inicio" },
     "metaDescription": {
@@ -25,7 +66,7 @@
         "icon": "cloud-download",
         "variant": "primary",
         "link": "https://github.com/Toskan4134/maker-studio/releases/latest",
-        "text": { "en": "Download", "es": "Descargar" }
+        "text": { "en": "Latest release", "es": "Última release" }
       },
       {
         "icon": "right-arrow",
@@ -44,14 +85,6 @@
   "intro": {
     "en": "Maker Studio is a modern, feature-rich tile map editor built as a replacement for RPG Maker XP's game editor, with upgraded features and quality-of-life improvements. It reads and writes <code>.rxdata</code> files directly, so existing projects work <strong>without conversion</strong> — plus dockable panels, multi-tile brushes, per-tile properties, unlimited extended layers, multi-tileset support, unlimited autotiles, a built-in shadow system, a full event editor, an in-editor game simulator, and a JavaScript mod system.",
     "es": "Maker Studio es un editor de mapas de tiles moderno y completo, creado como reemplazo del editor de juego de RPG Maker XP, con funciones mejoradas y comodidades de uso. Lee y escribe los archivos <code>.rxdata</code> directamente, así que tus proyectos actuales funcionan <strong>sin conversión</strong> — con paneles acoplables, pinceles multi-tile, propiedades por tile, capas extendidas ilimitadas, soporte de varios tilesets, autotiles ilimitados, un sistema de sombras integrado, un editor de eventos completo, un simulador de juego dentro del editor y un sistema de mods en JavaScript."
-  },
-  "available": {
-    "en": "Available for Windows, macOS, and Linux.",
-    "es": "Disponible para Windows, macOS y Linux."
-  },
-  "downloadText": {
-    "en": "Download the latest release →",
-    "es": "Descarga la última versión →"
   },
   "sections": {
     "whatIs": { "heading": { "en": "What is Maker Studio?", "es": "¿Qué es Maker Studio?" } },
