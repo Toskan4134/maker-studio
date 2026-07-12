@@ -37,7 +37,7 @@ Download the integration that matches your project:
 |--------------|-----------------|
 | Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/PE21.1.Maker.Studio.v1.0.0.zip) |
 | **La Base de Sky 1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/LBDS1.1.0.Maker.Studio.v1.0.0.zip) |
-| **La Base de Sky 1.2.0+** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/LBDS1.2.0.Maker.Studio.v1.0.0.zip) |
+| **La Base de Sky 1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/LBDS1.2.0.Maker.Studio.v1.0.0.zip) |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/BES5.Maker.Studio.v1.0.0.zip) |
 
 Then:
