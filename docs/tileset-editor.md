@@ -41,6 +41,8 @@ Toggle the counter flag. This allows interaction across the tile -- useful for t
 
 Pick a terrain tag from the searchable dropdown, then click a tile (or drag-select a region and press **Apply**) to assign it. The list ships with named tags 0–17 (the Pokemon Essentials defaults), and you can filter by name or number. Installed mods can add their own named tags to this same dropdown. Terrain tags are used by events and scripts for terrain-specific behavior, such as changing movement speed on sand versus road, and are read in-game via the engine's terrain tag.
 
+**Grass rustle sound.** When the player steps onto a tile whose terrain tag rustles (such as **Grass**), the engine — not Maker Studio — plays **animation 1** ("Grass rustle") from your project's Animations database. In a vanilla Pokemon Essentials project that animation has no SE timing, so the rustle plays silently; some kits (La Base de Sky, for one) ship a sound in it. To add the sound, give animation 1 an SE timing in the **Animations** tab of the [Database](database.md). The terrain tag itself is working correctly — the sound lives in the animation.
+
 ## Editing Autotile Properties
 
 Autotile passage/priority/terrain are edited separately from regular tilesets. In the Tileset Manager, choose the **Autotiles** entry (shown as `000: Autotiles` at the top of the list) and click **Edit Properties...**. This opens a dedicated grid of every autotile (native slots + named extra autotiles). Editing a property for an autotile applies it to all 48 pattern tiles of that autotile at once and is saved across every tileset that uses it.
