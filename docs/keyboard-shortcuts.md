@@ -126,8 +126,8 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 | Ctrl+X | Cut command |
 | Alt + ↑ | Move command up |
 | Alt + ↓ | Move command down |
-| ↑ | Previous command |
-| ↓ | Next command |
+| ↑ | Previous command (steps over the extra lines of a multi-line Show Text / Comment / Script) |
+| ↓ | Next command (same) |
 
 ## Event Editor (Move Route)
 

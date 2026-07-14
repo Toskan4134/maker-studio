@@ -126,8 +126,8 @@ En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X actúan sobre el evento sele
 | Ctrl+X | Cortar comando |
 | Alt + ↑ | Mover comando arriba |
 | Alt + ↓ | Mover comando abajo |
-| ↑ | Comando anterior |
-| ↓ | Comando siguiente |
+| ↑ | Comando anterior (salta las líneas extra de un Show Text / Comment / Script multilínea) |
+| ↓ | Comando siguiente (igual) |
 
 ## Editor de eventos (ruta de movimiento)
 

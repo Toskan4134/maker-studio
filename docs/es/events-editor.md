@@ -113,6 +113,24 @@ Si tienes mods instalados que añaden sus propios comandos de evento, aparecen p
 
 Haz doble clic en un comando para editar sus parámetros. Muchos comandos tienen formularios tipados dedicados (Show Text, Control Switches, Conditional Branch, etc.). Los comandos que aún no tienen un formulario tipado muestran un editor JSON en bruto en su lugar.
 
+### Comandos multilínea (Show Text, Comment, Script)
+
+**Show Text**, **Comment** y **Script** pueden contener tantas líneas como necesites — escríbelas en el cuadro de texto del comando, una por línea. En la lista de comandos, **cada línea tiene su propia fila**, igual que en RPG Maker XP: la fila del comando muestra la primera línea, y cada línea extra aparece debajo en una fila que empieza por `:`.
+
+```
+@>Text: "¡Hola!"
+:       "Hoy hace buen tiempo."
+:       "¿Vas al gimnasio?"
+```
+
+Esas filas extra son *líneas del comando*, no comandos propios:
+
+- **Haz doble clic en cualquiera de ellas** (o selecciónala y pulsa Space) — el formulario del comando se abre con el texto **completo**, así que siempre lo editas como un bloque. Pulsa OK y las líneas se reescriben.
+- **Seleccionar, arrastrar, copiar, cortar o borrar** cualquiera de las filas actúa sobre el **comando entero**, con todas sus líneas. No se puede soltar nada entre un comando y sus propias líneas.
+- Las **flechas** saltan por encima de las líneas extra, así que la selección siempre cae sobre un comando completo.
+
+Para partir un mensaje en varios cuadros de texto en el juego, inserta un *segundo* comando Show Text en vez de añadir más líneas al primero.
+
 ### Elegir un gráfico (Favoritos)
 
 Cada selector de gráficos tiene vista previa en vivo y favoritos: el **Graphic** de la página de evento (hoja de personaje), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), la acción **Change Graphic** de la ruta de movimiento, el selector de Battleback del mapa y el popup de edición de capa de fog / panorama / personalizada del panel de capas.
@@ -216,7 +234,7 @@ Las filas de comando se colorean por categoría para que la lista se lea como c�
 | Color | Categoría | Códigos |
 |-------|----------|-------|
 | Verde (cursiva) | Comentarios | Comment, Comment (cont.) |
-| Crema / blanco roto | Texto y entrada | Show Text, Input Number, Change Text Options, Button Input |
+| Crema / blanco roto | Texto y entrada | Show Text, Show Text (cont.), Input Number, Change Text Options, Button Input |
 | Color de texto atenuado | Condicionales | Conditional Branch, Else, Branch End, Show Choices, When [**], When Cancel, Choices End |
 | Ámbar | Otro flujo | Loop / Repeat Above, Break Loop, Wait, Label, Jump to Label, Exit Event, Erase Event, Call Common Event |
 | Rosa | Variables | Control Switches, Control Variables, Control Self Switch, Control Timer |
@@ -236,6 +254,5 @@ Los colores siguen el tema activo del editor — la misma familia de tonos en mo
 
 ## Limitaciones conocidas
 
-- Los comandos **Script** multilínea aún no se dividen en líneas de continuación. (Show Text y Comment manejan varias líneas automáticamente.)
 - Quitar una elección del *centro* de una lista Show Choices puede desplazar los comandos de las ramas When de debajo (las ramas se emparejan por posición). Renombrar elecciones o añadir nuevas al final es seguro.
 - Algunos comandos usan actualmente un editor JSON en bruto porque aún no hay un formulario tipado disponible.

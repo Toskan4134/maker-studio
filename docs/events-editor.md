@@ -113,6 +113,24 @@ If you have mods installed that add their own event commands, extra tabs marked 
 
 Double-click a command to edit its parameters. Many commands have dedicated typed forms (Show Text, Control Switches, Conditional Branch, and so on). Commands that do not yet have a typed form show a raw JSON editor instead.
 
+### Multi-Line Commands (Show Text, Comment, Script)
+
+**Show Text**, **Comment**, and **Script** can hold as many lines as you need — just type them in the command's text box, one per line. In the command list, **each line gets its own row**, exactly like RPG Maker XP: the command row shows the first line, and every extra line appears below it on a row starting with `:`.
+
+```
+@>Text: "Hello there!"
+:       "Nice weather today."
+:       "Are you heading to the gym?"
+```
+
+Those extra rows are *lines of the command*, not commands of their own:
+
+- **Double-click any of them** (or select one and press Space) — the command's form opens with the **whole** text, so you always edit it as one block. Press OK and the lines are written back.
+- **Selecting, dragging, copying, cutting, or deleting** any of the rows acts on the **whole command**, all its lines included. Nothing can be dropped between a command and its own lines.
+- The **arrow keys** step over the extra lines, so the selection always lands on a whole command.
+
+To break a message into separate text boxes in-game, insert a *second* Show Text command rather than adding more lines to the first one.
+
 ### Choosing a Graphic (Favourites)
 
 Every graphic picker has a live preview and favourites: the event page **Graphic** (character sheet), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), the Move Route **Change Graphic** action, the map Battleback picker, and the fog / panorama / custom layer edit popup in the Layer panel.
@@ -216,7 +234,7 @@ Command rows are colored by category so the list reads like syntax-highlighted c
 | Color | Category | Codes |
 |-------|----------|-------|
 | Green (italic) | Comments | Comment, Comment (cont.) |
-| Cream / off-white | Text & Input | Show Text, Input Number, Change Text Options, Button Input |
+| Cream / off-white | Text & Input | Show Text, Show Text (cont.), Input Number, Change Text Options, Button Input |
 | Dimmed text color | Conditionals | Conditional Branch, Else, Branch End, Show Choices, When [**], When Cancel, Choices End |
 | Amber | Other Flow | Loop / Repeat Above, Break Loop, Wait, Label, Jump to Label, Exit Event, Erase Event, Call Common Event |
 | Pink | Variables | Control Switches, Control Variables, Control Self Switch, Control Timer |
@@ -236,6 +254,5 @@ Colors follow the active editor theme — the same hue family in dark and light 
 
 ## Known Limitations
 
-- Multi-line **Script** commands are not yet split into continuation lines. (Show Text and Comment handle multiple lines automatically.)
 - Removing a choice from the *middle* of a Show Choices list can shift the commands in the When branches below it (branches are matched by position). Renaming choices or adding new ones at the end is safe.
 - Some commands currently use a raw JSON editor because a typed form is not yet available.
