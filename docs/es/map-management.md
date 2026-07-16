@@ -124,6 +124,10 @@ Un marcador verde **Start** aparece en ese tile, y la posición se guarda en tu 
 
 Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego Run Game). El editor guarda todos los mapas abiertos con cambios sin guardar, luego lanza `Game.exe` en modo depuración desde la carpeta de tu proyecto.
 
+### Ejecutar en macOS (Wine)
+
+`Game.exe` es un ejecutable de Windows, así que en macOS el editor lo lanza a través de **Wine**. Necesitas una instalación de Wine que funcione: Wine normal en Macs con Intel, o **Game Porting Toolkit / Whisky** en Apple Silicon (ambos exponen el comando `wine`/`wine64` que el editor busca). El editor crea su propio prefijo de Wine dedicado la primera vez que pulsas Run, separado del `~/.wine` por defecto, y suprime los avisos habituales de instalación de Mono/Gecko del primer arranque. Si Wine no está instalado, Run se detiene con un error pidiéndote que lo instales y reintentes.
+
 ### Ejecutar en Linux (Proton / Wine / Nativo)
 
 `Game.exe` es un ejecutable de Windows, así que en Linux el editor normalmente lo ejecuta a través de **Proton** o **Wine**. Si tu proyecto también tiene una build nativa de Linux (una carpeta `Game_Linux` junto a `Game.exe`, de una build nativa de mkxp-z), el editor la detecta y también la ofrece como opción. La primera vez que pulsas Run, un diálogo te deja elegir cómo lanzar:

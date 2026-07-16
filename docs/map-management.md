@@ -124,6 +124,10 @@ A green **Start** marker appears on that tile, and the position is saved to your
 
 Click the green Run button in the toolbar (or use File then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
 
+### Running on macOS (Wine)
+
+`Game.exe` is a Windows executable, so on macOS the editor launches it through **Wine**. You need a working Wine install: plain Wine on Intel Macs, or **Game Porting Toolkit / Whisky** on Apple Silicon (both expose the `wine`/`wine64` command the editor looks for). The editor creates its own dedicated Wine prefix the first time you press Run, separate from any default `~/.wine`, and suppresses the usual first-run Mono/Gecko install prompts. If Wine isn't installed, Run stops with an error asking you to install it and try again.
+
 ### Running on Linux (Proton / Wine / Native)
 
 `Game.exe` is a Windows executable, so on Linux the editor normally runs it through **Proton** or **Wine**. If your project also has a native Linux build (a `Game_Linux` folder next to `Game.exe`, from a native mkxp-z build), the editor detects it and offers that as an option too. The first time you press Run, a dialog lets you pick how to launch:
