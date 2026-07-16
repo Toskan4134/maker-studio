@@ -45,7 +45,9 @@ Elige un terrain tag del desplegable con búsqueda, luego haz clic en un tile (o
 
 ## Editar propiedades de autotiles
 
-El paso/prioridad/terreno de los autotiles se edita por separado de los tilesets normales. En el Tileset Manager, elige la entrada **Autotiles** (mostrada como `000: Autotiles` en lo alto de la lista) y haz clic en **Edit Properties...**. Esto abre una cuadrícula dedicada de cada autotile (ranuras nativas + autotiles extra con nombre). Editar una propiedad para un autotile la aplica a los 48 tiles de patrón de ese autotile a la vez y se guarda en todos los tilesets que lo usan.
+El paso/prioridad/terreno de los autotiles se edita por separado de los tilesets normales. En el Tileset Manager, elige la entrada **Autotiles** (mostrada como `000: Autotiles` en lo alto de la lista) y haz clic en **Edit Properties...**. Esto abre una cuadrícula dedicada de cada autotile (ranuras nativas + autotiles extra con nombre). Editar una propiedad para un autotile la aplica a los 48 tiles de patrón de ese autotile a la vez.
+
+Las propiedades de autotile son **por gráfico**: la cuadrícula muestra los valores actuales de cada autotile leídos del tileset que lo contiene de forma nativa, y al guardar esos valores se aplican a todos los tilesets que usan ese gráfico (emparejado por su nombre de archivo). Los tilesets que no contienen el gráfico no se tocan, así que el resto de ajustes de autotiles de cada tileset se conservan.
 
 ## Guardar
 

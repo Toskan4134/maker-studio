@@ -45,7 +45,9 @@ Pick a terrain tag from the searchable dropdown, then click a tile (or drag-sele
 
 ## Editing Autotile Properties
 
-Autotile passage/priority/terrain are edited separately from regular tilesets. In the Tileset Manager, choose the **Autotiles** entry (shown as `000: Autotiles` at the top of the list) and click **Edit Properties...**. This opens a dedicated grid of every autotile (native slots + named extra autotiles). Editing a property for an autotile applies it to all 48 pattern tiles of that autotile at once and is saved across every tileset that uses it.
+Autotile passage/priority/terrain are edited separately from regular tilesets. In the Tileset Manager, choose the **Autotiles** entry (shown as `000: Autotiles` at the top of the list) and click **Edit Properties...**. This opens a dedicated grid of every autotile (native slots + named extra autotiles). Editing a property for an autotile applies it to all 48 pattern tiles of that autotile at once.
+
+Autotile properties are **per graphic**: the grid shows each autotile's current values from whichever tileset natively contains it, and saving applies those values to every tileset that uses that graphic (matched by its file name). Tilesets that don't contain the graphic are left untouched, so each tileset's other autotile settings are preserved.
 
 ## Saving
 
