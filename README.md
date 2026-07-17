@@ -36,7 +36,7 @@ simulator, and a JavaScript mod system.
 
 Use the direct-download buttons at the top of this page, or get any build (current or previous)
 from the [**Releases**](https://github.com/Toskan4134/maker-studio/releases/latest)
-page — Windows, macOS (Apple Silicon), and Linux. The app auto-updates from these releases.
+page — Windows, macOS (Apple Silicon), and Linux. Windows and macOS auto-update; on Linux use [Gear Lever](https://flathub.org/apps/io.githubsemicolon.GearLever) for auto-updates.
 Step-by-step instructions: [installation guide](docs/getting-started.md#installation).
 
 > [!NOTE]
@@ -47,6 +47,8 @@ Step-by-step instructions: [installation guide](docs/getting-started.md#installa
 >   macOS 15+ go to **System Settings → Privacy & Security** and click **Open Anyway**.
 > - **Linux** — no warning, but the AppImage uses your system's WebKit: if the app doesn't start,
 >   install `webkit2gtk-4.1` and `gtk3` (Arch) or `libwebkit2gtk-4.1-0` and `libgtk-3-0` (Debian/Ubuntu).
+>   The AppImage does not self-update — use [**Gear Lever**](https://flathub.org/apps/io.githubsemicolon.GearLever)
+>   to manage updates (it can auto-update AppImages from GitHub releases).
 
 ## Documentation
 
