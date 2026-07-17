@@ -19,3 +19,4 @@ Welcome to Maker Studio -- a modern, feature-rich tile map editor that replaces 
 - [Keyboard Shortcuts](keyboard-shortcuts.md) -- Quick reference
 - [Mod Marketplace](marketplace.md) -- Discover, install, and update community mods
 - [Mod Development](https://github.com/Toskan4134/maker-studio-mods) -- Write JS mods to extend the editor
+- [Changelog](changelog.md) -- User-facing changes per release

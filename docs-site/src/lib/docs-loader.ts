@@ -107,6 +107,7 @@ const GUIDE_ORDER = [
 	"map-versions",
 	"marketplace",
 	"keyboard-shortcuts",
+	"changelog",
 ];
 const MOD_ORDER = [
 	"overview", // from README.md

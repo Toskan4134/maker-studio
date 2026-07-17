@@ -35,10 +35,14 @@ Download the integration that matches your project:
 
 | Your project | Direct download |
 |--------------|-----------------|
-| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/PE21.1.Maker.Studio.v1.0.0.zip) |
-| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/LBDS1.1.0.Maker.Studio.v1.0.0.zip) |
-| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/LBDS1.2.0.Maker.Studio.v1.0.0.zip) |
-| Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.0.0/BES5.Maker.Studio.v1.0.0.zip) |
+| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/PE21.1.Maker.Studio.v1.1.0.zip) |
+| Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/PE20.1.Maker.Studio.v1.1.0.zip) |
+| Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/PE19.1.Maker.Studio.v1.1.0.zip) |
+| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/LBDS1.1.0.Maker.Studio.v1.1.0.zip) |
+| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/LBDS1.2.0.Maker.Studio.v1.1.0.zip) |
+| Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/BES5.Maker.Studio.v1.1.0.zip) |
+
+> **Note on v19.1:** this engine's older tile renderer means per-tile passage/priority/terrain overrides on a plain (non-extended) tile don't affect in-game collision. Extended layers, extra autotiles, and cross-tileset tiles all work normally.
 
 Then:
 
