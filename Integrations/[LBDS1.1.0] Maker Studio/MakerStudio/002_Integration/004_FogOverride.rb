@@ -100,10 +100,13 @@ module MakerStudio
       dir       = group[2]
       layers    = group[3]
 
-      # Create clipping viewport sized to the map, one per group so each group
-      # sits at its own z. Position set to (0,0) initially —
-      # update_fog_sprites corrects it each frame.
-      vp = Viewport.new(0, 0, map.width * 32, map.height * 32)
+      # Clipping viewport, one per group so each group sits at its own z.
+      # Sized to the SCREEN, not to the map: a Plane fills its whole viewport
+      # rect, so a map-sized viewport made every fog/panorama layer draw a
+      # map-sized surface (a 500x500 map = 16000x16000 px) every frame, most of
+      # it off-camera. update_fog_sprites re-clips it to the visible part of the
+      # map each frame and shifts the plane to compensate.
+      vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
       vp.z = group_z
       vp.visible = true
       viewports[group_key] = vp
@@ -187,15 +190,32 @@ module MakerStudio
       map = factory_maps[map_id]
       in_factory = !!map
 
-      # Update each group's clipping viewport to track the map's screen position
+      # Where this map sits on screen, and how much of it the camera actually
+      # sees. The viewport is clipped to that intersection, so each layer paints
+      # at most one screenful — never the whole map.
+      clip_dx = 0
+      clip_dy = 0
+      on_screen = false
+      if in_factory
+        vx = -(map.display_x / 4.0).round
+        vy = -(map.display_y / 4.0).round
+        cx = [vx, 0].max
+        cy = [vy, 0].max
+        cw = [vx + (map.width * 32), Graphics.width].min - cx
+        ch = [vy + (map.height * 32), Graphics.height].min - cy
+        on_screen = cw > 0 && ch > 0
+        # Pixels of the map clipped off the left/top edge: the plane's pattern
+        # has to shift by the same amount to stay anchored to the map.
+        clip_dx = cx - vx
+        clip_dy = cy - vy
+      end
+
       vps = @fog_viewports_cache[map_id]
       if vps
         vps.each do |group_key, vp|
           next if vp.nil? || vp.disposed?
-          if in_factory
-            vx = -(map.display_x / 4.0).round
-            vy = -(map.display_y / 4.0).round
-            vp.rect.set(vx, vy, map.width * 32, map.height * 32)
+          if on_screen
+            vp.rect.set(cx, cy, cw, ch)
             # Apply screen shake so layers wobble with the map. viewport1
             # receives `+= $game_screen.shake` in Spriteset_Map; these
             # viewports are separate so we must re-apply it here ourselves.
@@ -210,8 +230,8 @@ module MakerStudio
       sprites.each do |sprite|
         next if sprite.nil? || sprite.disposed?
 
-        # Hide layers for maps that left the factory
-        sprite.visible = in_factory
+        # Hide layers for maps that left the factory or are fully off-camera.
+        sprite.visible = on_screen
         next unless in_factory
 
         layer_id = sprite.instance_variable_get(:@fog_id)
@@ -225,11 +245,14 @@ module MakerStudio
         # Accumulate scroll.
         # Plane.ox positive shifts pattern LEFT, so negate sx/sy so that
         # positive values move the layer RIGHT / DOWN (matching editor).
+        # Accumulated for every factory map, on-camera or not, so a layer's scroll
+        # phase doesn't depend on which maps happen to be visible.
         scroll = @fog_scroll_offsets["#{group_key}:#{layer_id}"]
         if scroll
           scroll[:ox] -= sx * 0.1667 if sx != 0
           scroll[:oy] -= sy * 0.1667 if sy != 0
         end
+        next unless on_screen
 
         # Camera-follow with a camera-tracking viewport. The viewport moves
         # with the camera (vx = -display_x/4); Plane.ox is relative to it.
@@ -240,8 +263,10 @@ module MakerStudio
         #   p=0 -> ox = -(display_x/4)+scroll (fixed on screen)
         p = follow ? 0.0 : (par.nil? ? 1.0 : par.to_f)
         comp = 1.0 - p
-        sprite.ox = -(map.display_x / 4.0) * comp + (scroll ? scroll[:ox] : 0)
-        sprite.oy = -(map.display_y / 4.0) * comp + (scroll ? scroll[:oy] : 0)
+        # clip_dx/clip_dy re-anchor the pattern after the viewport was clipped to
+        # the visible part of the map (its origin moved right/down by that much).
+        sprite.ox = -(map.display_x / 4.0) * comp + clip_dx + (scroll ? scroll[:ox] : 0)
+        sprite.oy = -(map.display_y / 4.0) * comp + clip_dy + (scroll ? scroll[:oy] : 0)
       end
     end
   end

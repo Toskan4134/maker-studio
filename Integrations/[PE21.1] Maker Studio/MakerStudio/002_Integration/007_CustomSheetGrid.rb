@@ -28,21 +28,45 @@ module MakerStudio
 end
 
 #===============================================================================
-# Patch Sprite_Character to use custom grid dimensions
+# Patch Sprite_Character to use custom grid dimensions.
+# Hook point differs per base: customized bases (e.g. Chronoverse) expose
+# update_bitmap; vanilla v21.1-family bases compute the frame size in
+# refresh_graphic instead — aliasing update_bitmap there NameErrors at plugin
+# load, so pick whichever method the base actually defines.
 #===============================================================================
 class Sprite_Character
-  unless method_defined?(:__mkst__update_bitmap)
-    alias __mkst__update_bitmap update_bitmap
-  end
+  if method_defined?(:update_bitmap)
+    unless method_defined?(:__mkst__update_bitmap)
+      alias __mkst__update_bitmap update_bitmap
+    end
 
-  def update_bitmap
-    __mkst__update_bitmap
-    return unless self.bitmap && !self.bitmap.disposed?
-    cols, rows = MakerStudio.character_sheet_grid(@character)
-    # Only override when the grid differs from 4×4
-    if cols != 4 || rows != 4
-      @cw = self.bitmap.width / cols
-      @ch = self.bitmap.height / rows
+    def update_bitmap
+      __mkst__update_bitmap
+      return unless self.bitmap && !self.bitmap.disposed?
+      cols, rows = MakerStudio.character_sheet_grid(@character)
+      # Only override when the grid differs from 4×4
+      if cols != 4 || rows != 4
+        @cw = self.bitmap.width / cols
+        @ch = self.bitmap.height / rows
+      end
+    end
+  else
+    unless method_defined?(:__mkst__refresh_graphic)
+      alias __mkst__refresh_graphic refresh_graphic
+    end
+
+    def refresh_graphic
+      __mkst__refresh_graphic
+      return unless @charbitmap
+      cols, rows = MakerStudio.character_sheet_grid(@character)
+      # Only override when the grid differs from 4×4
+      if cols != 4 || rows != 4
+        @cw = @charbitmap.width / cols
+        @ch = @charbitmap.height / rows
+        # Mirror what the base does right after computing @cw/@ch
+        self.ox = @cw / 2
+        @character.sprite_size = [@cw, @ch] if @character.respond_to?(:sprite_size=)
+      end
     end
   end
 end

@@ -5,7 +5,10 @@
 # and iterates all cached maps' extended data.
 #
 # Now also checks native layer properties for extra autotiles and cross-tileset
-# tiles. Collision priority: native extra tiles → extended layers → native default.
+# tiles. Scan order is strictly top-down: extended layers (top id first) →
+# native layers [2,1,0], where each native layer resolves its extra-autotile /
+# cross-tileset / plain tile INLINE (native_layer_* helpers) — a ground tile
+# only decides the cell for everything BELOW its own layer.
 #
 # Cross-tileset tiles: use that tileset's passages/priorities/terrain_tags.
 # Extra autotiles: use per-tile passage/priority/terrain_tag from tile_data,
@@ -102,6 +105,27 @@ class Game_Map
   end
   private :resolve_tile_passage
 
+  #---------------------------------------------------------------------------
+  # Does this cell carry a CROSS-TILESET tile on a native layer?
+  #
+  # Such a tile keeps the FOREIGN tileset's tile id in the map Table, so every
+  # engine method that indexes the MAP's own tileset with that id (bush?,
+  # deepBush?, counter?) answers about a completely unrelated tile that happens
+  # to share the number — e.g. tile 391 is a shop shelf in "Mart interior" but
+  # tall grass (passage 0x40) in "Outside", so standing behind the shelf made the
+  # player render as if he were in grass (bush depth), fading out his lower half.
+  # Those methods must therefore ignore the engine's answer here and resolve the
+  # cell against the tileset the tile actually came from.
+  #---------------------------------------------------------------------------
+  def ms_cross_tileset_cell?(x, y)
+    found = false
+    MakerStudio.each_native_extra_tile_at(x, y) do |_tile_id, tile_data|
+      found = true if tile_data && tile_data["tileset_id"]
+    end
+    found
+  end
+  private :ms_cross_tileset_cell?
+
   def resolve_tile_priority(tid, td, default_priorities)
     return td["priority"].to_i if td && td["priority"]
     if td && td["tileset_id"]
@@ -143,31 +167,6 @@ class Game_Map
     # Player delegates to patched playerPassable? (which also handles native extras)
     return playerPassable?(x, y, dir, self_event) if self_event == $game_player
     bit = (1 << ((dir / 2) - 1)) & 0x0f
-    # Native layer extra tiles (autotile_name / cross-tileset on layers 0-2)
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
-      if tile_data && tile_data["autotile_name"]
-        resolved = resolve_extra_autotile_data(tile_data)
-        if resolved
-          passage, priority, terrain_tag = resolved
-          terrain = GameData::TerrainTag.try_get(terrain_tag)
-          next if terrain&.ignore_passability
-          return false if passage & bit != 0 || passage & 0x0f == 0x0f
-          return true if priority == 0
-          next
-        end
-        next
-      end
-      if tile_data && tile_data["tileset_id"]
-        ts = $data_tilesets[tile_data["tileset_id"].to_i]
-        next unless ts
-        terrain = GameData::TerrainTag.try_get(ts.terrain_tags[tile_id])
-        next if terrain&.ignore_passability
-        passage = tile_data["passage"] ? tile_data["passage"].to_i : (ts.passages[tile_id] || 0)
-        return false if passage & bit != 0 || passage & 0x0f == 0x0f
-        next if (tile_data["priority"] ? tile_data["priority"].to_i : (ts.priorities[tile_id] || 0)) == 0
-        next
-      end
-    end
     # Extended layer tiles
     MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       # Extra autotiles: explicit passage data only for non-player events
@@ -220,66 +219,6 @@ class Game_Map
   def playerPassable?(x, y, dir, self_event = nil)
     return __mkst__playerPassable(x, y, dir, self_event) unless MakerStudio::ENABLED
     bit = (1 << ((dir / 2) - 1)) & 0x0f
-    # Native layer extra tiles
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
-      if tile_data && tile_data["autotile_name"]
-        terrain = extended_tile_terrain(tile_id, tile_data)
-        if terrain && terrain.id != :None
-          if terrain.bridge
-            if $PokemonGlobal.bridge == 0
-              next
-            else
-              resolved = resolve_extra_autotile_data(tile_data)
-              passage_val = resolved ? resolved[0] : 0
-              return (passage_val & bit == 0 && passage_val & 0x0f != 0x0f)
-            end
-          end
-          if terrain.can_surf && !terrain.waterfall
-            return $PokemonGlobal.surfing
-          end
-          if $PokemonGlobal.bicycle && (terrain.must_walk || terrain.must_walk_or_run)
-            return false
-          end
-          next if terrain.ignore_passability
-        end
-        resolved = resolve_extra_autotile_data(tile_data)
-        if resolved
-          passage, priority, terrain_tag = resolved
-          terrain2 = GameData::TerrainTag.try_get(terrain_tag)
-          next if terrain2&.ignore_passability
-          return false if passage & bit != 0 || passage & 0x0f == 0x0f
-          return true if priority == 0
-          next
-        end
-        next
-      end
-      if tile_data && tile_data["tileset_id"]
-        ts = $data_tilesets[tile_data["tileset_id"].to_i]
-        next unless ts
-        terrain = GameData::TerrainTag.try_get(ts.terrain_tags[tile_id])
-        if terrain && terrain.id != :None
-          if terrain.bridge
-            if $PokemonGlobal.bridge == 0
-              next
-            else
-              passage = tile_data["passage"] ? tile_data["passage"].to_i : (ts.passages[tile_id] || 0)
-              return (passage & bit == 0 && passage & 0x0f != 0x0f)
-            end
-          end
-          if terrain.can_surf && !terrain.waterfall
-            return $PokemonGlobal.surfing
-          end
-          if $PokemonGlobal.bicycle && (terrain.must_walk || terrain.must_walk_or_run)
-            return false
-          end
-          next if terrain.ignore_passability
-        end
-        passage = tile_data["passage"] ? tile_data["passage"].to_i : (ts.passages[tile_id] || 0)
-        return false if passage & bit != 0 || passage & 0x0f == 0x0f
-        next if (tile_data["priority"] ? tile_data["priority"].to_i : (ts.priorities[tile_id] || 0)) == 0
-        next
-      end
-    end
     # Extended layer tiles
     MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
@@ -376,31 +315,6 @@ class Game_Map
   alias __mkst__passableStrict passableStrict? unless method_defined?(:__mkst__passableStrict)
   def passableStrict?(x, y, dir, self_event = nil)
     return __mkst__passableStrict(x, y, dir, self_event) unless MakerStudio::ENABLED
-    # Native layer extra tiles
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
-      if tile_data && tile_data["autotile_name"]
-        resolved = resolve_extra_autotile_data(tile_data)
-        if resolved
-          passage, priority, terrain_tag = resolved
-          terrain = GameData::TerrainTag.try_get(terrain_tag)
-          next if terrain&.ignore_passability
-          return false if passage & 0x0f != 0
-          return true if priority == 0
-          next
-        end
-        next
-      end
-      if tile_data && tile_data["tileset_id"]
-        ts = $data_tilesets[tile_data["tileset_id"].to_i]
-        next unless ts
-        terrain = GameData::TerrainTag.try_get(ts.terrain_tags[tile_id])
-        next if terrain&.ignore_passability
-        passage = tile_data["passage"] ? tile_data["passage"].to_i : (ts.passages[tile_id] || 0)
-        return false if passage & 0x0f != 0
-        next if (tile_data["priority"] ? tile_data["priority"].to_i : (ts.priorities[tile_id] || 0)) == 0
-        next
-      end
-    end
     # Extended layer tiles
     MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
@@ -447,34 +361,6 @@ class Game_Map
   alias __mkst__terrain_tag terrain_tag unless method_defined?(:__mkst__terrain_tag)
   def terrain_tag(x, y, countBridge = false)
     return __mkst__terrain_tag(x, y, countBridge) unless MakerStudio::ENABLED
-    # Native layer extra tiles first (same layer as native, but with extra data)
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
-      if tile_data && tile_data["autotile_name"]
-        tt = tile_data["terrain_tag"]
-        if tt && tt.to_i != 0
-          terrain = GameData::TerrainTag.try_get(tt.to_i)
-          next if terrain.id == :None || terrain.ignore_passability
-          next if !countBridge && terrain.bridge && $PokemonGlobal.bridge == 0
-          return terrain
-        end
-        resolved = resolve_extra_autotile_data(tile_data)
-        if resolved
-          terrain = GameData::TerrainTag.try_get(resolved[2])
-          next if terrain.id == :None || terrain.ignore_passability
-          next if !countBridge && terrain.bridge && $PokemonGlobal.bridge == 0
-          return terrain
-        end
-        next
-      end
-      if tile_data && tile_data["tileset_id"]
-        ts = $data_tilesets[tile_data["tileset_id"].to_i]
-        next unless ts
-        terrain = GameData::TerrainTag.try_get(ts.terrain_tags[tile_id])
-        next if terrain.id == :None || terrain.ignore_passability
-        next if !countBridge && terrain.bridge && $PokemonGlobal.bridge == 0
-        return terrain
-      end
-    end
     # Extended layer tiles
     MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
@@ -520,11 +406,31 @@ class Game_Map
     return GameData::TerrainTag.try_get(0) unless @terrain_tags && @map && @map.data
     ext_data = MakerStudio.get_extended_data_for(@map_id)
     native_props = ext_data ? ext_data["nativeProperties"] : nil
+    key = "#{x},#{y}"
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0
-      key = "#{x},#{y}"
+      next if tid.nil?
       td = native_props ? (native_props[layer] || {})[key] : nil
+      # Extra autotile stored as tile_id=0 — resolve inline at ITS layer so its
+      # terrain can't beat (or be beaten by) tiles on the wrong layer.
+      if td && td["autotile_name"]
+        tt = td["terrain_tag"]
+        if tt && tt.to_i != 0
+          terrain = GameData::TerrainTag.try_get(tt.to_i)
+          next if terrain.id == :None || terrain.ignore_passability
+          next if !countBridge && terrain.bridge && $PokemonGlobal.bridge == 0
+          return terrain
+        end
+        resolved = resolve_extra_autotile_data(td)
+        if resolved
+          terrain = GameData::TerrainTag.try_get(resolved[2])
+          next if terrain.id == :None || terrain.ignore_passability
+          next if !countBridge && terrain.bridge && $PokemonGlobal.bridge == 0
+          return terrain
+        end
+        next
+      end
+      next if tid == 0
       if td && td["tileset_id"]
         ts = $data_tilesets[td["tileset_id"].to_i]
         next unless ts
@@ -547,9 +453,11 @@ class Game_Map
   def bush?(x, y)
     result = __mkst__bush(x, y)
     return result unless MakerStudio::ENABLED
-    return result if result == true
-    # Native layer extra tiles
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
+    # The engine answered from the map Table read against the MAP's own tileset —
+    # meaningless on a cross-tileset cell (see ms_cross_tileset_cell?), so re-resolve.
+    return result if result == true && !ms_cross_tileset_cell?(x, y)
+    # Extended layer tiles
+    MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
         resolved = resolve_extra_autotile_data(tile_data)
         if resolved
@@ -565,8 +473,8 @@ class Game_Map
       return false if terrain&.bridge && $PokemonGlobal.bridge > 0
       return true if passage & 0x40 == 0x40
     end
-    # Extended layer tiles
-    MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
+    # Native layer extra tiles
+    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
         resolved = resolve_extra_autotile_data(tile_data)
         if resolved
@@ -617,13 +525,16 @@ class Game_Map
   def deepBush?(x, y)
     result = __mkst__deepBush(x, y)
     return result unless MakerStudio::ENABLED
-    return result if result == true
-    # Native layer extra tiles
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
+    # The engine answered from the map Table read against the MAP's own tileset —
+    # meaningless on a cross-tileset cell (see ms_cross_tileset_cell?), so re-resolve.
+    return result if result == true && !ms_cross_tileset_cell?(x, y)
+    # Extended layer tiles
+    MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
         terrain = extended_tile_terrain(tile_id, tile_data)
         if terrain && terrain.id != :None
           return false if terrain.bridge && $PokemonGlobal.bridge > 0
+          # deep_bush terrain (TallGrass) → deep bush without needing passage 0x40
           return true if terrain.deep_bush
         else
           resolved = resolve_extra_autotile_data(tile_data)
@@ -641,13 +552,12 @@ class Game_Map
       return false if terrain.bridge && $PokemonGlobal.bridge > 0
       return true if terrain.deep_bush && passage & 0x40 == 0x40
     end
-    # Extended layer tiles
-    MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
+    # Native layer extra tiles
+    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
         terrain = extended_tile_terrain(tile_id, tile_data)
         if terrain && terrain.id != :None
           return false if terrain.bridge && $PokemonGlobal.bridge > 0
-          # deep_bush terrain (TallGrass) → deep bush without needing passage 0x40
           return true if terrain.deep_bush
         else
           resolved = resolve_extra_autotile_data(tile_data)
@@ -696,9 +606,11 @@ class Game_Map
   def counter?(x, y)
     result = __mkst__counter(x, y)
     return result unless MakerStudio::ENABLED
-    return result if result == true
-    # Native layer extra tiles
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
+    # The engine answered from the map Table read against the MAP's own tileset —
+    # meaningless on a cross-tileset cell (see ms_cross_tileset_cell?), so re-resolve.
+    return result if result == true && !ms_cross_tileset_cell?(x, y)
+    # Extended layer tiles
+    MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
         resolved = resolve_extra_autotile_data(tile_data)
         if resolved
@@ -709,8 +621,8 @@ class Game_Map
       passage = resolve_tile_passage(tile_id, tile_data, @passages)
       return true if passage & 0x80 == 0x80
     end
-    # Extended layer tiles
-    MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
+    # Native layer extra tiles
+    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]
         resolved = resolve_extra_autotile_data(tile_data)
         if resolved
@@ -748,11 +660,25 @@ class Game_Map
     ext_data = MakerStudio.get_extended_data_for(@map_id)
     native_props = ext_data ? ext_data["nativeProperties"] : nil
     bit = (1 << ((dir / 2) - 1)) & 0x0f
+    key = "#{x},#{y}"
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
-      key = "#{x},#{y}"
+      next if tid.nil?   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
       td = native_props ? (native_props[layer] || {})[key] : nil
+      # Extra autotile stored as tile_id=0 — resolve inline at ITS layer so a
+      # ground extra autotile can't short-circuit tiles on higher layers.
+      if td && td["autotile_name"]
+        resolved = resolve_extra_autotile_data(td)
+        if resolved
+          passage, priority, terrain_tag = resolved
+          terrain = GameData::TerrainTag.try_get(terrain_tag)
+          next if terrain&.ignore_passability
+          return false if passage & bit != 0 || passage & 0x0f == 0x0f
+          return true if priority == 0
+        end
+        next
+      end
+      next if tid == 0
       passage = resolve_tile_passage(tid, td, @passages)
       priority = resolve_tile_priority(tid, td, @priorities)
       return false if passage & bit != 0
@@ -781,11 +707,44 @@ class Game_Map
     ext_data = MakerStudio.get_extended_data_for(@map_id)
     native_props = ext_data ? ext_data["nativeProperties"] : nil
     bit = (1 << ((dir / 2) - 1)) & 0x0f
+    key = "#{x},#{y}"
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
-      key = "#{x},#{y}"
+      next if tid.nil?   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
       td = native_props ? (native_props[layer] || {})[key] : nil
+      # Extra autotile stored as tile_id=0 — resolve inline at ITS layer so a
+      # ground extra autotile can't short-circuit tiles on higher layers.
+      if td && td["autotile_name"]
+        terrain = extended_tile_terrain(tid, td)
+        if terrain && terrain.id != :None
+          if terrain.bridge
+            if $PokemonGlobal.bridge == 0
+              next
+            else
+              resolved = resolve_extra_autotile_data(td)
+              passage_val = resolved ? resolved[0] : 0
+              return (passage_val & bit == 0 && passage_val & 0x0f != 0x0f)
+            end
+          end
+          if terrain.can_surf && !terrain.waterfall
+            return $PokemonGlobal.surfing
+          end
+          if $PokemonGlobal.bicycle && (terrain.must_walk || terrain.must_walk_or_run)
+            return false
+          end
+          next if terrain.ignore_passability
+        end
+        resolved = resolve_extra_autotile_data(td)
+        if resolved
+          passage, priority, terrain_tag = resolved
+          terrain2 = GameData::TerrainTag.try_get(terrain_tag)
+          next if terrain2&.ignore_passability
+          return false if passage & bit != 0 || passage & 0x0f == 0x0f
+          return true if priority == 0
+        end
+        next
+      end
+      next if tid == 0
       if td && td["tileset_id"]
         ts = $data_tilesets[td["tileset_id"].to_i]
         next unless ts
@@ -825,11 +784,25 @@ class Game_Map
   def native_layer_passable_strict(x, y, self_event = nil)
     ext_data = MakerStudio.get_extended_data_for(@map_id)
     native_props = ext_data ? ext_data["nativeProperties"] : nil
+    key = "#{x},#{y}"
     [2, 1, 0].each do |layer|
       tid = @map.data[x, y, layer]
-      next if tid.nil? || tid == 0   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
-      key = "#{x},#{y}"
+      next if tid.nil?   # tid is nil for out-of-bounds (x,y) — e.g. Debug Passability scans border tiles
       td = native_props ? (native_props[layer] || {})[key] : nil
+      # Extra autotile stored as tile_id=0 — resolve inline at ITS layer so a
+      # ground extra autotile can't short-circuit tiles on higher layers.
+      if td && td["autotile_name"]
+        resolved = resolve_extra_autotile_data(td)
+        if resolved
+          passage, priority, terrain_tag = resolved
+          terrain = GameData::TerrainTag.try_get(terrain_tag)
+          next if terrain&.ignore_passability
+          return false if passage & 0x0f != 0
+          return true if priority == 0
+        end
+        next
+      end
+      next if tid == 0
       passage = resolve_tile_passage(tid, td, @passages)
       priority = resolve_tile_priority(tid, td, @priorities)
       return false if passage & 0x0f != 0
@@ -858,63 +831,6 @@ class Debug_Passability
   def playerPassable?(x, y, d, self_event = nil)
     return __mkst__dp_playerPassable(x, y, d, self_event) unless MakerStudio::ENABLED
     bit = (1 << ((d / 2) - 1)) & 0x0f
-    # Native layer extra tiles
-    MakerStudio.each_native_extra_tile_at(x, y) do |tile_id, tile_data|
-      if tile_data && tile_data["autotile_name"]
-        terrain = $game_map.send(:extended_tile_terrain, tile_id, tile_data)
-        if terrain && terrain.id != :None
-          if terrain.bridge
-            if $PokemonGlobal.bridge == 0
-              next
-            else
-              resolved = $game_map.send(:resolve_extra_autotile_data, tile_data)
-              passage_val = resolved ? resolved[0] : 0
-              return (passage_val & bit == 0 && passage_val & 0x0f != 0x0f)
-            end
-          end
-          if terrain.can_surf && !terrain.waterfall
-            return $PokemonGlobal.surfing
-          end
-          if $PokemonGlobal.bicycle && (terrain.must_walk || terrain.must_walk_or_run)
-            return false
-          end
-          next if terrain.ignore_passability
-        end
-        resolved = $game_map.send(:resolve_extra_autotile_data, tile_data)
-        if resolved
-          passage, priority, terrain_tag = resolved
-          terrain2 = GameData::TerrainTag.try_get(terrain_tag)
-          next if terrain2&.ignore_passability
-          return false if passage & bit != 0 || passage & 0x0f == 0x0f
-          return true if priority == 0
-          next
-        end
-        next
-      end
-      if tile_data && tile_data["tileset_id"]
-        ts = $data_tilesets[tile_data["tileset_id"].to_i]
-        next unless ts
-        terrain = GameData::TerrainTag.try_get(ts.terrain_tags[tile_id])
-        if terrain && terrain.id != :None
-          if terrain.bridge
-            next if $PokemonGlobal.bridge == 0
-            passage = tile_data["passage"] ? tile_data["passage"].to_i : (ts.passages[tile_id] || 0)
-            return (passage & bit == 0 && passage & 0x0f != 0x0f)
-          end
-          if terrain.can_surf && !terrain.waterfall
-            return $PokemonGlobal.surfing
-          end
-          if $PokemonGlobal.bicycle && (terrain.must_walk || terrain.must_walk_or_run)
-            return false
-          end
-          next if terrain.ignore_passability
-        end
-        passage = tile_data["passage"] ? tile_data["passage"].to_i : (ts.passages[tile_id] || 0)
-        return false if passage & bit != 0 || passage & 0x0f == 0x0f
-        next if (tile_data["priority"] ? tile_data["priority"].to_i : (ts.priorities[tile_id] || 0)) == 0
-        next
-      end
-    end
     # Extended layer tiles
     MakerStudio.each_extended_tile_at(x, y) do |tile_id, tile_data|
       if tile_data && tile_data["autotile_name"]

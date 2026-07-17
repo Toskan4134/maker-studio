@@ -19,6 +19,8 @@ integration's own `README.md`.
 | [`[LBDS1.1.0] Maker Studio`](<[LBDS1.1.0] Maker Studio>) | La Base de Sky 1.1.x (fork of Essentials v21.1) | La Base de Sky v1.1.0+ (1.1.x line) |
 | [`[LBDS1.2.0] Maker Studio`](<[LBDS1.2.0] Maker Studio>) | La Base de Sky 1.2.0+ (fork of Essentials v21.1) | La Base de Sky v1.2.0+ |
 | [`[PE21.1] Maker Studio`](<[PE21.1] Maker Studio>) | Vanilla Pokémon Essentials v21.1 | Essentials v21.1 |
+| [`[PE20.1] Maker Studio`](<[PE20.1] Maker Studio>) | Vanilla Pokémon Essentials v20.1 | Essentials v20.1 |
+| [`[PE19.1] Maker Studio`](<[PE19.1] Maker Studio>) | Vanilla Pokémon Essentials v19.1 | Essentials v19.1 |
 | [`[BES5] Maker Studio`](<[BES5] Maker Studio>) | Pokémon Essentials BES v5 (fork of Essentials v16.2) | BES v5 (runs on RGSS `Game.exe` or mkxp); paste-in install |
 
 ## Adding a new integration

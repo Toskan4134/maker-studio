@@ -1,0 +1,9 @@
+# NOTE: no "Essentials" line here on purpose. v19.1's PluginManager has no :essentials key in its
+# sort order AND guards the lookup with `order.index(key) == -1`, but Array#index returns nil, so
+# ANY unrecognised meta key makes the sort block return nil and PluginManager.register raises
+# "ArgumentError: comparison of Symbol with :version failed" at boot. v20.1 fixed both (it lists
+# :essentials and uses `|| order.size`), so only this build must omit it.
+Name         = MakerStudio
+Version      = 1.0.0
+Website      = https://toskan4134.github.io
+Credits      = Toskan4134

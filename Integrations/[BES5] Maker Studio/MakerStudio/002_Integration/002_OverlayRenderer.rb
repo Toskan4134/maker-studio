@@ -44,6 +44,11 @@ module MakerStudio
   @shadow_bitmap_cache  = {}   # key => [bitmap, frame_count, frame_w]
   @tinted_tile_cache    = {}   # sig => 32x32 tinted Bitmap
   @blanked_cells        = {}   # map_id => { "x,y,layer" => original_tile_id }
+  # Plain native tiles blanked because they sat ABOVE a native-extra autotile
+  # at the same cell (see blank_covered_plain_tiles). Kept separate from
+  # @blanked_cells so collision can yield ONLY these (demoted-priority blanks
+  # must stay collision-invisible — their covering ground tile decides).
+  @covered_plain_cells  = {}   # map_id => { "x,y,layer" => original_tile_id }
   # Per-map "ground cap": { map_id => { (y*w + x) => cap_layer } }. cap_layer =
   # the highest UNIFIED layer (native 0-2, then NATIVE_LAYERS+ext_id) holding a
   # priority-0 (ground) tile at the cell; absent = -1. An OVERLAY tile renders
@@ -90,6 +95,7 @@ module MakerStudio
   def clear_extended_layers
     @extended_data_cache = {}
     @blanked_cells = {}
+    @covered_plain_cells = {}
     @cell_band_cache = {}
   end
 
@@ -105,6 +111,9 @@ module MakerStudio
 
   # Full flush — dispose cached bitmaps. Called on editor-driven reloads.
   def clear_all_caches
+    # The tilesets may have been re-saved by the editor — drop the parsed
+    # expanded-autotile config so the next lookup re-reads them.
+    DataStore.clear_expanded_autotile_index if DataStore.respond_to?(:clear_expanded_autotile_index)
     @shadow_bitmap_cache.each_value do |v|
       bmp = v.is_a?(Array) ? v[0] : v
       bmp.dispose if bmp && !bmp.disposed?
@@ -456,7 +465,7 @@ module MakerStudio
   # sits on a higher layer, so the engine CustomTilemap would wrongly draw this
   # tile overhead. We zero it (CustomTilemap stops drawing it) and redraw it as a
   # ground-band overlay sprite instead. Returns the plain map-tileset cells for
-  # build_native_priority_sprites; effect cells are redrawn by build_native_extra.
+  # collect_native_priority_cells; effect cells are redrawn by collect_native_extra.
   # Collision-safe: the higher priority-0 tile is decisive in the [2,1,0] passable
   # scan, so the blanked tile beneath it never changes passability.
   # NOTE: requires the ground cap computed from the UN-blanked Table — call
@@ -492,7 +501,7 @@ module MakerStudio
               record[ck] = tid unless record.key?(ck)
               rpg.data[x, y, layer] = 0
               # Plain map-tileset cells (no props) need a fresh overlay sprite;
-              # effect cells are redrawn by build_native_extra_sprites.
+              # effect cells are redrawn by collect_native_extra_cells.
               plain << [x, y, layer, tid] if td.nil?
             end
           end
@@ -502,6 +511,71 @@ module MakerStudio
       end
     end
     plain
+  end
+
+  # Blank plain native tiles that sit ABOVE a native-extra autotile at the same
+  # cell. Ground native-extra overlays draw at z >= 2 — above the ENTIRE z=0
+  # floor bitmap the plain tile is baked into — so without this the autotile
+  # covered tiles on higher native layers. Blanked cells are redrawn by
+  # collect_covered_plain_cells at ord = their own layer (correct order vs the
+  # autotile's ord = its layer). Registered in @covered_plain_cells so collision
+  # (ms_each_tile_at) still sees their passage/priority.
+  # Cells that qualify as DEMOTED (priority >= 1 below the ground cap) are left
+  # to blank_demoted_native_priority. Cells with props are already redrawn by
+  # collect_native_extra_cells at their own layer order and are skipped.
+  # NOTE: like blank_demoted, call cell_caps_for BEFORE this (un-blanked Table).
+  def blank_covered_plain_tiles(map)
+    ext = @extended_data_cache[map.map_id]
+    rpg = map.instance_variable_get(:@map)
+    return [] unless ext && rpg && rpg.data
+    native_props = ext["nativeProperties"]
+    return [] unless native_props
+    c = cell_caps_for(map)
+    caps = c[:caps]
+    w = c[:w]
+    record = (@blanked_cells[map.map_id] ||= {})
+    cov = (@covered_plain_cells[map.map_id] = {})
+    covered = []
+    (MakerStudio::NATIVE_LAYERS - 1).times do |layer|
+      props = native_props[layer]
+      next unless props
+      props.each do |key, td|
+        next unless td && td["autotile_name"]
+        comma = key.index(",")
+        next unless comma
+        x = key[0, comma].to_i
+        y = key[comma + 1..-1].to_i
+        next if x < 0 || y < 0 || x >= rpg.data.xsize || y >= rpg.data.ysize
+        ((layer + 1)...MakerStudio::NATIVE_LAYERS).each do |above|
+          ap = native_props[above]
+          next if ap && ap[key]   # has props → collect_native_extra_cells redraws it
+          tid = rpg.data[x, y, above]
+          tid = original_native_tile_id(map.map_id, x, y, above, tid) if tid == 0
+          next if tid.nil? || tid == 0
+          ck = "#{x},#{y},#{above}"
+          next if cov.key?(ck)
+          # Demoted cells belong to blank_demoted_native_priority.
+          next if native_cell_priority(map, tid, nil) >= 1 && above < (caps[y * w + x] || -1)
+          record[ck] = rpg.data[x, y, above] unless record.key?(ck)
+          rpg.data[x, y, above] = 0
+          cov[ck] = tid
+          covered << [x, y, above, tid]
+        end
+      end
+    end
+    covered
+  end
+
+  # Yield [tid, {}] for plain native tiles blanked by blank_covered_plain_tiles
+  # at (x,y), top layer first — collision must keep honouring them even though
+  # the Table now reads 0 there.
+  def each_covered_plain_tile_at(map_id, x, y)
+    rec = @covered_plain_cells[map_id]
+    return unless rec
+    (MakerStudio::NATIVE_LAYERS - 1).downto(0) do |layer|
+      tid = rec["#{x},#{y},#{layer}"]
+      yield tid, {} if tid && tid != 0
+    end
   end
 
   # Original Table id for a (possibly blanked) native cell.
@@ -562,22 +636,38 @@ module MakerStudio
 # ONLY its own spriteset's map — never the whole factory (doing the latter
 # created N² sprites across N connected maps: lag + overlapping z).
 class Overlay
+  # Screen-cell sprite pool: the overlay holds sprites for the cells the camera
+  # can see (plus a small ring around them), NOT one sprite per painted tile of
+  # the map. A 500x500 map with ten full extended layers therefore costs the same
+  # per frame as a 20x20 one. POOL_MARGIN is that ring, so a rotated/scaled tile
+  # and a hard camera cut always find a sprite ready.
+  POOL_MARGIN = 2
+
   def initialize(viewport, map, tilemap = nil)
     @viewport = viewport
     @map      = map
     @map_id   = map ? map.map_id : nil
     @tilemap  = tilemap   # spriteset's TilemapLoader — source of day/night tone
-    @sprites  = []   # extended + native-extra tile sprites
-    @shadows  = []   # shadow sprites
-    @last_visible = []
+    # (y * map_w + x) => [entry, ...], entry = [base_tid, td, ord, eff_priority, layer_opacity]
+    @cells    = {}
+    @max_slots = 0
+    @pool     = []   # @pool[i][j][slot] — screen-sized, sprites created on demand
+    @pool_ready = false
+    @visible_pool = []
+    @gen      = 0    # bumped on rebuild; forces every pooled sprite to rebind
+    @shadows  = []   # shadow sprites (one map-sized bitmap each, few)
+    @last_visible_shadows = []
     rebuild
   end
 
   def dispose
-    (@sprites + @shadows).each { |s| s.dispose rescue nil }
-    @sprites.clear
+    each_pool_sprite { |s| s.dispose rescue nil }
+    @pool = []
+    @pool_ready = false
+    @visible_pool = []
+    @shadows.each { |s| s.dispose rescue nil }
     @shadows.clear
-    @last_visible.clear
+    @last_visible_shadows.clear
     # Dispose only THIS map's fog (other maps have their own spriteset/overlay).
     MakerStudio.dispose_fog_sprites(@map_id) if @map_id && MakerStudio.respond_to?(:dispose_fog_sprites)
   end
@@ -586,14 +676,27 @@ class Overlay
     @viewport.nil? || @viewport.disposed?
   end
 
+  def each_pool_sprite
+    @pool.each do |col|
+      next unless col
+      col.each do |cell|
+        next unless cell
+        cell.each { |s| yield s if s && !s.disposed? }
+      end
+    end
+  end
+
   #---------------------------------------------------------------------------
-  # Build sprites for THIS overlay's single map.
+  # Index THIS overlay's single map: what does each cell hold? No sprites are
+  # created here — the pool binds them as the camera reaches each cell.
   #---------------------------------------------------------------------------
   def rebuild
-    (@sprites + @shadows).each { |s| s.dispose rescue nil }
-    @sprites = []
+    @shadows.each { |s| s.dispose rescue nil }
     @shadows = []
-    @last_visible = []
+    @last_visible_shadows = []
+    @cells = {}
+    @max_slots = 0
+    @gen += 1
     # PERF state — force the next #update to run a full position + tone pass.
     @last_dx = @last_dy = @last_frame = nil
     @tr = @tg = @tb = @tgr = nil
@@ -606,19 +709,27 @@ class Overlay
     MakerStudio.cell_caps_for(@map)
     MakerStudio.apply_native_blanks(@map)
     demoted = MakerStudio.blank_demoted_native_priority(@map)
+    covered = MakerStudio.blank_covered_plain_tiles(@map)
     ext = MakerStudio.get_extended_data_for(@map_id)
     return unless ext
-    build_extended_sprites(@map, ext)
-    build_native_extra_sprites(@map, ext)
-    build_native_priority_sprites(@map, demoted)
+    collect_extended_cells(@map, ext)
+    collect_native_extra_cells(@map, ext)
+    collect_native_priority_cells(@map, demoted)
+    collect_covered_plain_cells(@map, covered)
+    @cells.each_value { |entries| @max_slots = entries.length if entries.length > @max_slots }
     build_shadow_sprites(@map, ext)
     MakerStudio.create_fog_sprites_for_map(@map_id, @map) if MakerStudio.respond_to?(:create_fog_sprites_for_map)
+  end
+
+  def add_cell_entry(mx, my, entry)
+    idx = my * @map.width + mx
+    (@cells[idx] ||= []) << entry
   end
 
   #---------------------------------------------------------------------------
   # Extended layer tiles
   #---------------------------------------------------------------------------
-  def build_extended_sprites(map, ext)
+  def collect_extended_cells(map, ext)
     layers = (ext["layers"] || []).select { |l| l["visible"] }.sort_by { |l| l["id"] }
     layers.each_with_index do |layer, order|
       layer_opacity = (layer["opacity"] || 255).to_i
@@ -634,8 +745,7 @@ class Overlay
         eff = MakerStudio.overlay_effective_priority(map, mx, my, ul, MakerStudio.resolve_priority(tid, td, map))
         # ord keeps extended ABOVE native overlay tiles in the ground band
         # (native ord = 0-2; extended = NATIVE_LAYERS+order = 3+).
-        spr = make_tile_sprite(tid, td, map, mx, my, layer_opacity, MakerStudio::NATIVE_LAYERS + order, eff)
-        @sprites << spr if spr
+        add_cell_entry(mx, my, [tid, td, MakerStudio::NATIVE_LAYERS + order, eff, layer_opacity])
       end
     end
   end
@@ -644,7 +754,7 @@ class Overlay
   # Native-layer extra tiles (autotile_name / cross-tileset / effects), drawn
   # on top of the (blanked, where needed) native layers.
   #---------------------------------------------------------------------------
-  def build_native_extra_sprites(map, ext)
+  def collect_native_extra_cells(map, ext)
     native_props = ext["nativeProperties"]
     return unless native_props
     rpg = map.instance_variable_get(:@map)
@@ -674,59 +784,83 @@ class Overlay
           next if base_tid <= 0
         end
         eff = MakerStudio.overlay_effective_priority(map, mx, my, layer, MakerStudio.resolve_priority(base_tid, td, map))
-        spr = make_tile_sprite(base_tid, td, map, mx, my, 255, layer, eff)
-        @sprites << spr if spr
+        add_cell_entry(mx, my, [base_tid, td, layer, eff, 255])
       end
     end
   end
 
   #---------------------------------------------------------------------------
   # Plain map-tileset native priority tiles that were demoted + blanked
-  # (blank_demoted_native_priority) — redraw them as ground-band overlay sprites
+  # (blank_demoted_native_priority) — redraw them as ground-band overlay tiles
   # so they sit below the higher ground tile that covers them. eff = 0 (ground).
   #---------------------------------------------------------------------------
-  def build_native_priority_sprites(map, demoted)
+  def collect_native_priority_cells(map, demoted)
     demoted.each do |x, y, layer, tid|
-      # Render BELOW the engine floor (z=0): make_tile_sprite uses z = 2 + ord
-      # for ground (pri 0), so ord = layer - NATIVE_LAYERS - 2 gives z = layer -
-      # NATIVE_LAYERS (< 0). The covering native ground tile (baked into the
-      # z=0 floor bitmap) then hides this demoted tile — fixing native-vs-native
-      # layer order (a lower-layer priority tile no longer floats above a higher
-      # native ground tile). Lower layers get a more-negative z (further below).
+      # Render BELOW the engine floor (z=0): the pool uses z = 2 + ord for ground
+      # (pri 0), so ord = layer - NATIVE_LAYERS - 2 gives z = layer - NATIVE_LAYERS
+      # (< 0). The covering native ground tile (baked into the z=0 floor bitmap)
+      # then hides this demoted tile — fixing native-vs-native layer order (a
+      # lower-layer priority tile no longer floats above a higher native ground
+      # tile). Lower layers get a more-negative z (further below).
       ord = layer - MakerStudio::NATIVE_LAYERS - 2
-      spr = make_tile_sprite(tid, { "tile_id" => tid }, map, x, y, 255, ord, 0)
-      @sprites << spr if spr
+      add_cell_entry(x, y, [tid, { "tile_id" => tid }, ord, 0, 255])
     end
   end
 
   #---------------------------------------------------------------------------
-  # Build one tile sprite (shared by extended + native-extra paths).
+  # Plain native tiles blanked because a native-extra autotile sits BELOW them
+  # at the same cell (blank_covered_plain_tiles) — redraw at ord = their own
+  # layer so they sit ABOVE the autotile overlay (ord = its lower layer),
+  # restoring native layer order. Effective priority comes from the cap model
+  # so overhead tiles keep interleaving with characters.
   #---------------------------------------------------------------------------
-  def make_tile_sprite(base_tid, td, map, mx, my, layer_opacity, order, eff_priority)
-    composed = MakerStudio.compose_tile_strip(base_tid, td, map)
-    return nil unless composed
+  def collect_covered_plain_cells(map, covered)
+    covered.each do |x, y, layer, tid|
+      eff = MakerStudio.overlay_effective_priority(
+        map, x, y, layer, MakerStudio.native_cell_priority(map, tid, nil)
+      )
+      add_cell_entry(x, y, [tid, { "tile_id" => tid }, layer, eff, 255])
+    end
+  end
+
+  #---------------------------------------------------------------------------
+  # Bind one pooled sprite to one cell entry. Runs only when that sprite starts
+  # showing a different cell (the camera crossed a tile) or after a rebuild.
+  #---------------------------------------------------------------------------
+  def bind_pool_sprite(spr, entry, map, idx)
+    spr.instance_variable_set(:@ms_cell, idx)
+    spr.instance_variable_set(:@ms_gen, @gen)
+    composed = MakerStudio.compose_tile_strip(entry[0], entry[1], map)
+    unless composed
+      spr.bitmap = nil
+      spr.visible = false
+      spr.instance_variable_set(:@ms_frames, 0)
+      return
+    end
     strip, frames = composed
-    spr = Sprite.new(@viewport)
     spr.bitmap = strip
+    # Reset transform state before re-applying effects: this sprite may still
+    # carry a previous cell's flip (negative zoom_y) or rotation.
+    spr.zoom_x = 1.0
+    spr.zoom_y = 1.0
     spr.src_rect.set(0, 0, MakerStudio::TILE_WIDTH, MakerStudio::TILE_HEIGHT)
-    spr.instance_variable_set(:@ms_mx, mx)
-    spr.instance_variable_set(:@ms_my, my)
-    spr.instance_variable_set(:@ms_map_id, map.map_id)
     spr.instance_variable_set(:@ms_frames, frames)
     # Effective (cap-model) priority, not the tile's raw priority — so an overlay
     # tile below a higher ground tile drops to the ground band. See @cell_band_cache.
-    spr.instance_variable_set(:@ms_priority, eff_priority)
-    spr.instance_variable_set(:@ms_order, order)
+    spr.instance_variable_set(:@ms_priority, entry[3])
+    spr.instance_variable_set(:@ms_order, entry[2])
     # Sprite-level effects (opacity/rotation/flip/lighting). hue/sat are already
     # baked into the strip. IMPORTANT: do NOT assign sprite.tone for non-lighting
     # tiles — the spriteset sets @viewport1.tone = $game_screen.tone (day/night +
     # weather), and our sprites share that viewport, so leaving the default tone
-    # lets the screen filter reach them exactly like native tiles. Only lighting
-    # tiles get an explicit tone (which still composes with the viewport tone).
-    apply_tile_effects(spr, td)
+    # lets the screen filter reach them exactly like native tiles.
+    apply_tile_effects(spr, entry[1])
+    layer_opacity = entry[4]
     spr.opacity = (spr.opacity * layer_opacity / 255.0).round if layer_opacity < 255
+    # The ambient (day/night) tone is only re-applied when it CHANGES, so a
+    # freshly bound sprite has to pick up the current one here.
+    spr.tone = @dn_tone if @dn_tone
     spr.visible = false
-    spr
   end
 
   def apply_tile_effects(spr, td)
@@ -741,6 +875,18 @@ class Overlay
     needs_center = angle != 0 || td["flipV"]
     spr.ox = needs_center ? MakerStudio::TILE_WIDTH / 2 : 0
     spr.oy = needs_center ? MakerStudio::TILE_HEIGHT / 2 : 0
+  end
+
+  # Build the (empty) pool grid once. Sprites inside it are created on demand.
+  def ensure_pool(gw, gh, tw, th)
+    return if @pool_ready
+    h = (gw / tw) + 1 + (POOL_MARGIN * 2)
+    v = (gh / th) + 1 + (POOL_MARGIN * 2)
+    h.times do |i|
+      col = (@pool[i] ||= [])
+      v.times { |j| col[j] ||= [] }
+    end
+    @pool_ready = true
   end
 
   #---------------------------------------------------------------------------
@@ -823,8 +969,9 @@ class Overlay
   end
 
   #---------------------------------------------------------------------------
-  # Per-frame update: position every sprite from each map's display offset and
-  # set z so they interleave correctly with the native tilemap + characters.
+  # Per-frame update: bind the pool to the cells the camera is over, position
+  # them from the map's display offset, and set z so they interleave correctly
+  # with the native tilemap + characters.
   #---------------------------------------------------------------------------
   def update
     return unless @map
@@ -847,16 +994,16 @@ class Overlay
 
     # PERF: if the map hasn't scrolled, the autotile frame hasn't advanced, and
     # the day/night tone is unchanged, nothing about any sprite changes — RGSS
-    # keeps them where they are — so skip the whole per-sprite pass. This is most
-    # frames (player standing still) and is the main lag win on the RGSS player.
+    # keeps them where they are — so skip the whole pass.
     return if dx == @last_dx && dy == @last_dy && frame == @last_frame && !tone_changed
     @last_dx = dx; @last_dy = dy; @last_frame = frame
 
     # Tone changes only at dawn/dusk. Sprite#tone= is a per-sprite native call, so
-    # (re)apply it to EVERY sprite (incl. culled ones, so they are correct when
-    # they scroll back on-screen) only when it actually changes — never per frame.
+    # (re)apply it only when it actually changes — never per frame. Cells bound
+    # later pick @dn_tone up in bind_pool_sprite.
     if tone_changed
-      @sprites.each { |s| s.tone = dn_tone unless s.disposed? }
+      @dn_tone = dn_tone
+      each_pool_sprite { |s| s.tone = dn_tone }
       @shadows.each { |s| s.tone = dn_tone unless s.disposed? }
       @tr = dn_tone.red; @tg = dn_tone.green; @tb = dn_tone.blue; @tgr = dn_tone.gray
     end
@@ -868,35 +1015,75 @@ class Overlay
     gw = Graphics.width
     gh = Graphics.height
 
-    @last_visible.each { |s| s.visible = false unless s.disposed? }
-    @last_visible = []
+    @visible_pool.each { |s| s.visible = false unless s.disposed? }
+    @visible_pool = []
 
-    @sprites.each do |spr|
-      next if spr.disposed?
-      mx = spr.instance_variable_get(:@ms_mx)
-      my = spr.instance_variable_get(:@ms_my)
-      sx = (mx * realx - dx + 3) / 4
-      sy = (my * realy - dy + 3) / 4
-      next if sx <= -tw * 2 || sx >= gw + tw || sy <= -th * 2 || sy >= gh + th
-      spr.x = sx
-      spr.y = sy
-      # Centre-origin effects (rotation/flipV) offset the sprite — compensate.
-      ox = spr.ox; oy = spr.oy
-      if ox != 0 || oy != 0
-        spr.x += (ox * spr.zoom_x.abs).round
-        spr.y += (oy * spr.zoom_y.abs).round
+    unless @cells.empty?
+      ensure_pool(gw, gh, tw, th)
+      map_w = @map.width
+      map_h = @map.height
+      # floor(), not just "/": display_x is a FLOAT while a character is mid-step
+      # (v19.1's move_speed_real scales by 40.0 / frame_rate), and a Float cell
+      # index never matches @cells' Integer keys — every step would blank out
+      # everything Maker Studio draws until the character landed on the tile.
+      base_tx = (dx / realx).floor
+      base_ty = (dy / realy).floor
+      slots = @max_slots
+      @pool.each_index do |i|
+        mx = base_tx + i - POOL_MARGIN
+        next if mx < 0 || mx >= map_w
+        sx = (mx * realx - dx + 3) / 4
+        col = @pool[i]
+        col.each_index do |j|
+          my = base_ty + j - POOL_MARGIN
+          next if my < 0 || my >= map_h
+          idx = my * map_w + mx
+          entries = @cells[idx]
+          next unless entries
+          cell = col[j]
+          sy = (my * realy - dy + 3) / 4
+          slot = 0
+          while slot < slots
+            entry = entries[slot]
+            break unless entry
+            spr = cell[slot]
+            unless spr
+              spr = Sprite.new(@viewport)
+              spr.visible = false
+              cell[slot] = spr
+            end
+            if spr.instance_variable_get(:@ms_cell) != idx ||
+               spr.instance_variable_get(:@ms_gen) != @gen
+              bind_pool_sprite(spr, entry, @map, idx)
+            end
+            frames = spr.instance_variable_get(:@ms_frames) || 0
+            if frames > 0
+              spr.x = sx
+              spr.y = sy
+              # Centre-origin effects (rotation/flipV) offset the sprite — compensate.
+              ox = spr.ox; oy = spr.oy
+              if ox != 0 || oy != 0
+                spr.x += (ox * spr.zoom_x.abs).round
+                spr.y += (oy * spr.zoom_y.abs).round
+              end
+              pri = spr.instance_variable_get(:@ms_priority) || 0
+              ord = spr.instance_variable_get(:@ms_order) || 0
+              # z mirrors the native CustomTilemap: priority 0 sits just above the
+              # ground layer (z=0); priority>0 uses screen-y so it interleaves with
+              # characters.
+              spr.z = (pri == 0) ? (2 + ord) : (sy + pri * th + th + ord)
+              spr.src_rect.x = (frame % frames) * tw if frames > 1
+              spr.visible = true
+              @visible_pool << spr
+            end
+            slot += 1
+          end
+        end
       end
-      pri = spr.instance_variable_get(:@ms_priority) || 0
-      ord = spr.instance_variable_get(:@ms_order) || 0
-      # z mirrors the native CustomTilemap: priority 0 sits just above the ground
-      # layer (z=0); priority>0 uses screen-y so it interleaves with characters.
-      spr.z = (pri == 0) ? (2 + ord) : (sy + pri * th + th + ord)
-      frames = spr.instance_variable_get(:@ms_frames) || 1
-      spr.src_rect.x = (frame % frames) * tw if frames > 1
-      spr.visible = true
-      @last_visible << spr
     end
 
+    @last_visible_shadows.each { |s| s.visible = false unless s.disposed? }
+    @last_visible_shadows = []
     @shadows.each do |spr|
       next if spr.disposed?
       mx = spr.instance_variable_get(:@ms_mx)
@@ -917,7 +1104,7 @@ class Overlay
         spr.src_rect.x = ((frames - 1) - src) * fw
       end
       spr.visible = true
-      @last_visible << spr
+      @last_visible_shadows << spr
     end
   end
 end

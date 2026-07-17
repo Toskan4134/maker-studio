@@ -25,23 +25,22 @@ module MakerStudio
       #  to keep the editor's Canvas 2D clockwise display correct)
       angle = (tile_data["rotation"] || EFFECT_RANGES[:rotation][:default]).to_i
       sprite.angle = -angle
-      # Lighting via Tone
-      lighting = (tile_data["lighting"] || EFFECT_RANGES[:lighting][:default]).to_i
-      if lighting != 0
-        r = [lighting, 0].max
-        g = [lighting, 0].max
-        b = [lighting, 0].max
-        gray = [-lighting, 0].max
-        sprite.tone = Tone.new(r, g, b, gray)
-      else
-        sprite.tone = ZERO_TONE
-      end
-      # Hue and Saturation require bitmap modification
+      # Hue / saturation / lighting are baked into the tile's bitmap: the renderer
+      # drives the day/night filter through sprite.tone, so anything written there
+      # is overwritten. Lighting used to be a Tone for exactly that reason and was
+      # silently erased on every bind.
       hue = (tile_data["hue"] || EFFECT_RANGES[:hue][:default]).to_i
       saturation = (tile_data["saturation"] || EFFECT_RANGES[:saturation][:default]).to_i
-      if hue != 0 || saturation != 100
-        apply_bitmap_effects(sprite, tile_data, tileset_bitmap, autotile_bitmaps)
+      lighting = (tile_data["lighting"] || EFFECT_RANGES[:lighting][:default]).to_i
+      baked = false
+      if hue != 0 || saturation != 100 || lighting != 0
+        baked = apply_bitmap_effects(sprite, tile_data, tileset_bitmap, autotile_bitmaps)
       end
+      sprite.tone = ZERO_TONE
+      # Autotiles have no bakeable per-tile bitmap (their sprite shares the whole
+      # expanded strip), so their lighting falls back to a Tone. The renderer adds
+      # ms_light to its day/night tone instead of overwriting it.
+      sprite.ms_light = baked ? 0 : lighting if sprite.respond_to?(:ms_light=)
       # Horizontal flip (uses RPG Maker's built-in mirror property)
       sprite.mirror = tile_data["flipH"] ? true : false
       # Vertical flip (achieved via negative zoom_y)
@@ -68,28 +67,31 @@ module MakerStudio
     #---------------------------------------------------------------------------
     # Apply bitmap-level effects (hue, saturation) using cached modified bitmaps
     #---------------------------------------------------------------------------
+    # Returns true when the effects were baked into a (cached) bitmap.
     def apply_bitmap_effects(sprite, tile_data, tileset_bitmap, autotile_bitmaps)
       tile_id = tile_data["tile_id"].to_i
       hue = (tile_data["hue"] || 0).to_i
       saturation = (tile_data["saturation"] || 100).to_i
+      lighting = (tile_data["lighting"] || 0).to_i
       ts_id = tile_data["tileset_id"]
       at_name = tile_data["autotile_name"]
-      cache_key = "#{tile_id}_ts#{ts_id}_at#{at_name}_h#{hue}_s#{saturation}"
+      cache_key = "#{tile_id}_ts#{ts_id}_at#{at_name}_h#{hue}_s#{saturation}_l#{lighting}"
       cached = @bitmap_cache[cache_key]
       if cached && !cached.disposed?
         sprite.bitmap = cached
-        return
+        return true
       end
       # Create a modified bitmap
       src_bitmap = get_source_bitmap(tile_id, tileset_bitmap, autotile_bitmaps, tile_data)
-      return unless src_bitmap && !src_bitmap.disposed?
-      modified = create_modified_bitmap(src_bitmap, tile_id, hue, saturation, tileset_bitmap)
-      return unless modified
+      return false unless src_bitmap && !src_bitmap.disposed?
+      modified = create_modified_bitmap(src_bitmap, tile_id, hue, saturation, lighting, tileset_bitmap)
+      return false unless modified
       # Cache it (limit cache size)
       @bitmap_cache.delete_if { |_k, v| v.disposed? }
       @bitmap_cache = {} if @bitmap_cache.size > 500
       @bitmap_cache[cache_key] = modified
       sprite.bitmap = modified
+      true
     end
 
     #---------------------------------------------------------------------------
@@ -129,7 +131,7 @@ module MakerStudio
     #---------------------------------------------------------------------------
     # Create a bitmap with hue/saturation modifications
     #---------------------------------------------------------------------------
-    def create_modified_bitmap(src_bitmap, tile_id, hue, saturation, tileset_bitmap)
+    def create_modified_bitmap(src_bitmap, tile_id, hue, saturation, lighting, tileset_bitmap)
       # Extract the tile region
       bmp = Bitmap.new(TILE_WIDTH, TILE_HEIGHT)
       if tile_id >= TILESET_START_ID
@@ -137,22 +139,58 @@ module MakerStudio
         ts_id = tile_id - TILESET_START_ID
         src_x = (ts_id % TILESET_TILES_PER_ROW) * TILE_WIDTH
         src_y = (ts_id / TILESET_TILES_PER_ROW) * TILE_HEIGHT
-        bmp.blt(0, 0, src_bitmap, Rect.new(src_x, src_y, TILE_WIDTH, TILE_HEIGHT))
+        rect = Rect.new(src_x, src_y, TILE_WIDTH, TILE_HEIGHT)
+        # A tileset taller than the GPU's max texture size (a mega surface) is folded
+        # into side-by-side 256px columns by the engine (TilesetWrapper), so a tall
+        # tileset's tiles do NOT live at the naive y offset. The map's own tileset
+        # arrives here already folded (it comes from the renderer's TilesetBitmaps),
+        # while a cross-tileset source is the raw bitmap. Detect the fold by width —
+        # an unfolded tileset is exactly TILESET_TILES_PER_ROW tiles wide.
+        if src_bitmap.width > TILE_WIDTH * TILESET_TILES_PER_ROW &&
+           defined?(TilemapRenderer::TilesetWrapper)
+          rect = (TilemapRenderer::TilesetWrapper.getWrappedRect(rect) rescue rect)
+        end
+        bmp.blt(0, 0, src_bitmap, rect)
       else
         # Autotile - blit current src_rect
         return nil # Autotile bitmap effects are complex, skip for now
       end
-      # Apply hue shift
+      # Editor order: hue-rotate -> saturate -> brightness. Keep it.
       bmp.hue_change(hue) if hue != 0
       # Apply saturation (desaturate by blending with grayscale)
       if saturation != 100
         apply_saturation(bmp, saturation)
       end
+      apply_brightness(bmp, lighting) if lighting != 0
       return bmp
     rescue => e
       Console.echo_error("MakerStudio: Bitmap effect error: #{e.message}") if defined?(Console)
       bmp&.dispose
       return nil
+    end
+
+    #---------------------------------------------------------------------------
+    # Lighting, matching the editor's CSS `brightness(1 + lighting/255)` — a
+    # MULTIPLIER, not the additive Tone the plugin used to reach for (which the
+    # renderer's day/night tone overwrote anyway).
+    #---------------------------------------------------------------------------
+    def apply_brightness(bitmap, lighting)
+      factor = 1.0 + (lighting / 255.0)
+      factor = 0.0 if factor < 0.0
+      w = bitmap.width
+      h = bitmap.height
+      (0...h).each do |y|
+        (0...w).each do |x|
+          color = bitmap.get_pixel(x, y)
+          next if color.alpha == 0
+          bitmap.set_pixel(x, y, Color.new(
+            (color.red * factor).round.clamp(0, 255),
+            (color.green * factor).round.clamp(0, 255),
+            (color.blue * factor).round.clamp(0, 255),
+            color.alpha
+          ))
+        end
+      end
     end
 
     #---------------------------------------------------------------------------

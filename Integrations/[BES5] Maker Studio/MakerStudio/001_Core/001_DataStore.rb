@@ -240,20 +240,44 @@ module MakerStudio
     end
 
     # Expanded autotile lookup (from @expanded_autotiles JSON on tileset objects).
-    def get_expanded_autotile(autotile_name)
-      return nil unless autotile_name && $data_tilesets
-      $data_tilesets.each do |ts|
+    #---------------------------------------------------------------------------
+    # Expanded autotile config, parsed ONCE into { name => entry }.
+    #
+    # The raw JSON lives on the tileset objects and only changes when the tilesets
+    # are reloaded, but passable? / bush? / deepBush? / terrain_tag ask for it on
+    # every step of every character. Re-parsing every tileset's config on each of
+    # those calls cost ~1.1 ms per lookup (vs 0.002 ms on a plain cell), so walking
+    # on a Maker Studio autotile — grass, most visibly — dropped the frame rate.
+    #---------------------------------------------------------------------------
+    def expanded_autotile_index
+      return @expanded_autotile_index if @expanded_autotile_index
+      index = {}
+      ($data_tilesets || []).each do |ts|
         next unless ts
         raw = ts.instance_variable_get(:@expanded_autotiles)
         next unless raw.is_a?(String) && !raw.empty?
         begin
-          expanded = MakerStudio::JSON.parse(raw)
-          entry = expanded.find { |e| e.is_a?(Hash) && e["name"] == autotile_name }
-          return entry if entry
+          parsed = MakerStudio::JSON.parse(raw)
+          next unless parsed.is_a?(Array)
+          parsed.each do |e|
+            next unless e.is_a?(Hash) && e["name"]
+            # First tileset wins, matching the old first-match-scan behaviour.
+            index[e["name"]] = e unless index[e["name"]]
+          end
         rescue
         end
       end
-      nil
+      @expanded_autotile_index = index
+    end
+
+    # Call whenever the tilesets are reloaded (editor hot-reload).
+    def clear_expanded_autotile_index
+      @expanded_autotile_index = nil
+    end
+
+    def get_expanded_autotile(autotile_name)
+      return nil unless autotile_name && $data_tilesets
+      expanded_autotile_index[autotile_name]
     end
   end
 end

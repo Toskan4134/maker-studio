@@ -14,25 +14,41 @@ module MakerStudio
   @extra_autotile_cache = {}
   # Cache for extra tileset bitmaps (by tileset name)
   @extra_tileset_cache = {}
+  # Sprite-bindable copies of the above: a tileset taller than the GPU's max
+  # texture size is a mega surface, which mkxp refuses to bind to a Sprite, so it
+  # gets folded into columns (see get_extra_tileset_for_sprite). Keyed by tileset
+  # name; @extra_tileset_wrapped records which ones were actually folded (their
+  # src_rects must be folded too).
+  @extra_tileset_sprite_cache = {}
+  @extra_tileset_wrapped = {}
   # Cache for shadow layer bitmaps (by shadow layer id + map_id) — value is
   # [bitmap, frame_count, frame_w] when the shadow contains animated autotiles.
   @shadow_bitmap_cache = {}
   # Shared timer for shadow frame animation
   @shadow_timer_start = nil
-  # Cache for shadow source tile positions per map (avoids rebuilding every frame)
-  # Value is { map_w: Integer, source_keys: { (y*map_w+x) => tile_id } } —
-  # integer keys avoid per-frame string allocation in adjust_ground_z_for_shadows.
-  @shadow_source_tiles_cache = {}
   # Cache for pre-tinted 32×32 tile silhouettes used by shadow generation.
   # Keyed by tile identity + frame + tint hex; survives across all shadows on
   # all maps in the session so the costly per-pixel tint loop runs at most once
   # per (tile, tint, frame) combination instead of per shadow.
   @tinted_tile_cache = {}
-  # Per-map row index of native layer properties:
-  #   { map_id => [ layer_idx => { row_y => [[col_x, key_str, props_hash], ...] } ] }
-  # Lets apply_native_tile_properties iterate only rows overlapping the viewport
-  # instead of scanning every property entry on the map every frame.
-  @native_props_by_row_cache = {}
+  # Per-map cell index of native layer properties:
+  #   { map_id => [ layer_idx => { (y * map_w + x) => [props, has_visual_effects?] } ] }
+  # Integer keys (no per-frame "x,y" string building). Looked up only when the
+  # engine (re)binds a cell's tile sprite — never scanned per frame.
+  #
+  # has_visual_effects? is precomputed once per props: when false, the bind path
+  # replaces the TileEffects.apply_to_sprite call with cheap direct setters. The
+  # bulk of native extra-autotile / per-tile-property tiles carry only collision
+  # or terrain overrides, so most entries are trivial.
+  @native_props_index_cache = {}
+  # Per-map extended layer index, sorted by layer id, VISIBLE layers only:
+  #   { map_id => [ { "id", "opacity", :tiles => { (y * map_w + x) => tile_data } } ] }
+  # The screen-cell sprite pool asks "what sits at this cell on this layer?" and
+  # nothing else, so extended tiles cost what the camera sees, not what the map holds.
+  @ext_layer_index_cache = {}
+  # Per-map shadow environment: { has_shadows, source_keys, passages }. Decides
+  # whether a ground tile draws above or below the map's shadows.
+  @shadow_env_cache = {}
   # Per-map "ground cap" index: { map_id => { (y*map_w + x) => cap_layer } }.
   # cap_layer = the highest UNIFIED layer (native 0-2, then NATIVE_LAYERS+ext_id
   # for extended) holding a non-empty PRIORITY-0 (ground) tile at the cell;
@@ -87,9 +103,14 @@ module MakerStudio
 
   def load_extended_layers_for_map(map_id, map)
     @extended_data_cache[map_id] = DataStore.get_extended_data(map_id, map.width, map.height, map)
-    # Invalidate the row-index cache for this map; rebuilt lazily by
-    # native_props_by_row_for on next access.
-    @native_props_by_row_cache.delete(map_id) if @native_props_by_row_cache
+    drop_map_indices(map_id)
+  end
+
+  # Drop every lazily-built per-map index derived from the extended data.
+  def drop_map_indices(map_id)
+    @native_props_index_cache.delete(map_id) if @native_props_index_cache
+    @ext_layer_index_cache.delete(map_id) if @ext_layer_index_cache
+    @shadow_env_cache.delete(map_id) if @shadow_env_cache
     @cell_band_cache.delete(map_id) if @cell_band_cache
   end
 
@@ -99,19 +120,25 @@ module MakerStudio
 
   # Priority of a single tile, self-contained (mirrors resolve_tile_priority /
   # resolve_autotile_priority but callable at module level for cap building).
+  # Live-first like the editor's resolveTilePriority: the autotile config /
+  # referenced tileset wins so tileset property edits reach already-painted
+  # tiles in-game. The baked per-tile "priority" (embedded at paint time) is
+  # only a fallback when the live data no longer resolves the tile (e.g.
+  # Tilesets.rxdata was never re-saved with the expanded_autotiles config).
   def resolve_band_priority(map, tid, td)
-    return td["priority"].to_i if td && td["priority"]
     if td && td["autotile_name"]
       entry = DataStore.get_expanded_autotile(td["autotile_name"])
       return entry["priority"].to_i if entry
       idx = map.autotile_names.index(td["autotile_name"])
       return (map.priorities[(idx + 1) * MakerStudio::TILES_PER_AUTOTILE] || 0) if idx
-      return 0
+      return td["priority"] ? td["priority"].to_i : 0
     end
     if td && td["tileset_id"]
       ts = $data_tilesets[td["tileset_id"].to_i]
-      return (ts && ts.priorities[tid]) ? ts.priorities[tid] : 0
+      return (ts.priorities[tid] || 0) if ts
+      return td["priority"] ? td["priority"].to_i : 0
     end
+    return td["priority"].to_i if td && td["priority"]
     map.priorities[tid] || 0
   end
 
@@ -138,9 +165,12 @@ module MakerStudio
         x = 0
         while x < w
           tid = rpg.data[x, y, layer]
-          if tid && tid != 0
-            entry = lp ? lp["#{x},#{y}"] : nil
-            if resolve_band_priority(map, tid, entry) == 0
+          entry = lp ? lp["#{x},#{y}"] : nil
+          # Extra autotiles / cross-tileset overrides live at tile_id=0 with
+          # props — they must raise the cap too (mirrors the sim's groundCap:
+          # skip only when tid==0 AND no autotile_name AND no tileset_id).
+          if (tid && tid != 0) || (entry && (entry["autotile_name"] || entry["tileset_id"]))
+            if resolve_band_priority(map, tid || 0, entry) == 0
               idx = y * w + x
               caps[idx] = layer if (caps[idx] || -1) < layer
             end
@@ -187,8 +217,9 @@ module MakerStudio
     # per-hop regeneration cost). Use clear_all_caches for the full nuke
     # needed on explicit editor-driven reloads.
     @extended_data_cache = {}
-    @shadow_source_tiles_cache = {}
-    @native_props_by_row_cache = {}
+    @native_props_index_cache = {}
+    @ext_layer_index_cache = {}
+    @shadow_env_cache = {}
     @cell_band_cache = {}
     if $map_factory
       $map_factory.maps.each do |map|
@@ -204,6 +235,9 @@ module MakerStudio
   # autotile/tileset bitmaps. Call only when map data has actually changed
   # (e.g. editor hot-reload), since regenerating shadow bitmaps is costly.
   def clear_all_caches
+    # The tilesets may have been re-saved by the editor — drop the parsed
+    # expanded-autotile config so the next lookup re-reads them.
+    DataStore.clear_expanded_autotile_index if DataStore.respond_to?(:clear_expanded_autotile_index)
     if @shadow_bitmap_cache
       @shadow_bitmap_cache.each_value do |v|
         bmp = v.is_a?(Array) ? v[0] : v
@@ -213,7 +247,18 @@ module MakerStudio
     @shadow_bitmap_cache = {}
     @extra_autotile_cache = {}
     @extra_tileset_cache = {}
-    @native_props_by_row_cache = {}
+    # Only the FOLDED copies are ours to dispose; the raw ones belong to RPG::Cache.
+    if @extra_tileset_sprite_cache
+      @extra_tileset_sprite_cache.each_pair do |k, bmp|
+        next unless @extra_tileset_wrapped && @extra_tileset_wrapped[k]
+        bmp.dispose if bmp && !bmp.disposed?
+      end
+    end
+    @extra_tileset_sprite_cache = {}
+    @extra_tileset_wrapped = {}
+    @native_props_index_cache = {}
+    @ext_layer_index_cache = {}
+    @shadow_env_cache = {}
     @cell_band_cache = {}
     if @tinted_tile_cache
       @tinted_tile_cache.each_value { |bmp| bmp.dispose if bmp && !bmp.disposed? }
@@ -226,22 +271,12 @@ module MakerStudio
   end
 
   #---------------------------------------------------------------------------
-  # Row-indexed view of nativeProperties for one map, built lazily and
-  # invalidated whenever the extended-data cache for the map is rewritten
-  # (load_extended_layers_for_map / clear_extended_layers / clear_all_caches).
-  # Returns: [ layer_idx => { row_y => sorted [[col_x, props_hash, has_effects?], ...] } ]
-  #
-  # Per-row entries are sorted by col so the hot loop can `break` as soon as
-  # col > viewport max — avoids scanning whole rows on wide maps with native
-  # properties spanning many columns.
-  #
-  # has_effects? is precomputed once per props: when false, the per-frame
-  # apply_to_sprite call is replaced with cheap direct setters to sprite
-  # defaults. The bulk of native extra-autotile / per-tile-property tiles
-  # carry only collision/terrain overrides, so most entries are trivial.
+  # Cell-indexed view of nativeProperties for one map, built lazily and dropped
+  # whenever the map's extended data is rewritten (see drop_map_indices).
+  # Returns: [ layer_idx => { (y * map_w + x) => [props, has_effects?] } ]
   #---------------------------------------------------------------------------
-  def native_props_by_row_for(map_id)
-    cached = @native_props_by_row_cache[map_id]
+  def native_props_index_for(map_id, map_w)
+    cached = @native_props_index_cache[map_id]
     return cached if cached
     ext_data = @extended_data_cache[map_id]
     return nil unless ext_data
@@ -251,19 +286,79 @@ module MakerStudio
     MakerStudio::NATIVE_LAYERS.times do |layer|
       layer_props = native_props[layer]
       next unless layer_props && !layer_props.empty?
-      rows = {}
+      cells = {}
       layer_props.each do |key, props|
         comma = key.index(",")
         next unless comma
-        col = key[0, comma].to_i
-        row = key[comma + 1..].to_i
-        (rows[row] ||= []) << [col, props, props_has_visual_effects?(props)]
+        idx = key[comma + 1..].to_i * map_w + key[0, comma].to_i
+        cells[idx] = [props, props_has_visual_effects?(props)]
       end
-      rows.each_value { |entries| entries.sort_by! { |e| e[0] } }
-      by_layer[layer] = rows
+      by_layer[layer] = cells
     end
-    @native_props_by_row_cache[map_id] = by_layer
+    @native_props_index_cache[map_id] = by_layer
     by_layer
+  end
+
+  # Properties of one native cell, or nil. [props, has_visual_effects?].
+  def native_props_at(map_id, map_w, layer, idx)
+    by_layer = native_props_index_for(map_id, map_w)
+    return nil unless by_layer
+    cells = by_layer[layer]
+    cells ? cells[idx] : nil
+  end
+
+  #---------------------------------------------------------------------------
+  # Cell-indexed view of the map's VISIBLE extended layers, sorted by layer id.
+  # Each entry: { "id", "opacity", :tiles => { (y * map_w + x) => tile_data } }.
+  # Feeds the screen-cell sprite pool.
+  #---------------------------------------------------------------------------
+  def ext_layers_index_for(map_id, map_w)
+    cached = @ext_layer_index_cache[map_id]
+    return cached if cached
+    ext_data = @extended_data_cache[map_id]
+    return (@ext_layer_index_cache[map_id] = []) unless ext_data
+    layers = (ext_data["layers"] || [])
+      .select { |l| l["visible"] }
+      .sort_by { |l| l["id"].to_i }
+    index = layers.map do |layer|
+      cells = {}
+      (layer["tiles"] || {}).each do |key, td|
+        next unless td
+        next unless td["tile_id"].to_i > 0 || td["autotile_name"]
+        comma = key.index(",")
+        next unless comma
+        idx = key[comma + 1..].to_i * map_w + key[0, comma].to_i
+        cells[idx] = td
+      end
+      { "id" => layer["id"].to_i, "opacity" => (layer["opacity"] || 255).to_i, :tiles => cells }
+    end
+    @ext_layer_index_cache[map_id] = index
+    index
+  end
+
+  #---------------------------------------------------------------------------
+  # Shadow environment for one map: does it have visible shadows, and which
+  # cells are shadow sources? Ground tiles that are a shadow source (or are
+  # impassable) draw ABOVE the shadow; passable ground draws below it.
+  #---------------------------------------------------------------------------
+  def shadow_env_for(map)
+    cached = @shadow_env_cache[map.map_id]
+    return cached if cached
+    ext_data = @extended_data_cache[map.map_id]
+    shadows = ext_data ? (ext_data["shadowLayers"] || []) : []
+    shadows = [ext_data["shadowLayer"]].compact if ext_data && shadows.empty?
+    visible = shadows.select { |s| s && s["visible"] }
+    env = { :has_shadows => !visible.empty?, :source_keys => {} }
+    if env[:has_shadows]
+      map_w = map.width
+      visible.each do |shadow|
+        (shadow["sourceTiles"] || []).each do |st|
+          env[:source_keys][st["y"].to_i * map_w + st["x"].to_i] = st["tileId"].to_i
+        end
+      end
+    end
+    @shadow_env_cache[map.map_id] = env
+    env
   end
 
   #---------------------------------------------------------------------------
@@ -406,6 +501,52 @@ module MakerStudio
     end
     return bmp
   end
+
+  #---------------------------------------------------------------------------
+  # Sprite-bindable bitmap for a foreign (cross-tileset) tileset.
+  #
+  # A tileset taller than the GPU's max texture size is a "mega surface" in mkxp:
+  # it can be blitted FROM (the effect/shadow strips do that with the raw bitmap
+  # above), but binding it to a Sprite raises
+  #   MKXPError: Operation not supported for mega surfaces
+  # The engine handles its OWN tileset in TilesetBitmaps#add by folding it into
+  # side-by-side columns (TilesetWrapper.wrapTileset) and folding tile src_rects
+  # to match (TilesetBitmaps#set_src_rect). Cross-tileset tiles never go through
+  # that collection, so fold them here — once per tileset name.
+  #
+  # The folded bitmap is OURS (disposed in clear_all_caches); the raw one belongs
+  # to RPG::Cache and must never be disposed here.
+  #---------------------------------------------------------------------------
+  def get_extra_tileset_for_sprite(name)
+    return nil unless name
+    bmp = @extra_tileset_sprite_cache[name]
+    return bmp if bmp && !bmp.disposed?
+    raw = get_extra_tileset(name)
+    return nil unless raw && !raw.disposed?
+    folded = raw
+    if raw.respond_to?(:mega?) && raw.mega? && defined?(TilemapRenderer::TilesetWrapper)
+      folded = (TilemapRenderer::TilesetWrapper.wrapTileset(raw) rescue raw)
+    end
+    @extra_tileset_wrapped[name] = !folded.equal?(raw)
+    @extra_tileset_sprite_cache[name] = folded
+    folded
+  end
+
+  # src_rect of a regular tile in a foreign tileset, folded when that tileset was
+  # wrapped above (mirrors TilemapRenderer::TilesetBitmaps#set_src_rect).
+  def extra_tileset_src_rect(name, tile_id)
+    i = tile_id - MakerStudio::TILESET_START_ID
+    rect = Rect.new(
+      (i % MakerStudio::TILESET_TILES_PER_ROW) * MakerStudio::TILE_WIDTH,
+      (i / MakerStudio::TILESET_TILES_PER_ROW) * MakerStudio::TILE_HEIGHT,
+      MakerStudio::TILE_WIDTH,
+      MakerStudio::TILE_HEIGHT
+    )
+    if @extra_tileset_wrapped[name] && defined?(TilemapRenderer::TilesetWrapper)
+      rect = (TilemapRenderer::TilesetWrapper.getWrappedRect(rect) rescue rect)
+    end
+    rect
+  end
 end
 
 #===============================================================================
@@ -414,6 +555,20 @@ end
 class TilemapRenderer::TileSprite
   attr_accessor :map_x, :map_y
   attr_accessor :map_id   # which map this sprite belongs to (for connections)
+  # Tile id to feed @autotiles.set_src_rect with when this sprite shows an EXTRA
+  # autotile (painted by name, so the map Table holds 0 and the engine's own
+  # tile_id can't address it). nil for ordinary tiles.
+  attr_accessor :ms_src_id
+  # Ground-band z for this cell (0 = below the map's shadows, 2 = above them).
+  # Resolved once per bind; the per-frame z refresh just reads it.
+  attr_accessor :ms_ground_z
+  # Pool bookkeeping for extended-layer sprites: which data generation this
+  # sprite was bound against (a reload bumps it, forcing a rebind).
+  attr_accessor :ms_gen
+  # Per-tile "lighting" that could NOT be baked into a bitmap (autotiles). The
+  # renderer ADDS it to its day/night tone; writing it straight to sprite.tone
+  # would just be overwritten by that tone.
+  attr_accessor :ms_light
   # Shadow animation: width of one frame within a sprite-sheet shadow bitmap
   # and total frame count.  When frame_count > 1, sprite.src_rect.x is updated
   # each Graphics frame to cycle through frames.
@@ -439,13 +594,22 @@ class TilemapRenderer
   # Small z-offset per extended layer to guarantee layer stacking order
   EXT_LAYER_Z_OFFSET = 0.001
 
+  # Extra ring of pooled cells kept around the screen, so a tile that rotates or
+  # scales past its own cell (and a hard camera cut) still has a sprite ready.
+  EXT_POOL_MARGIN = 2
+
   alias __mkst__initialize initialize unless method_defined?(:__mkst__initialize)
   def initialize(viewport)
     __mkst__initialize(viewport)
-    @extended_tile_sprites = []
-    @tile_sprites_by_map_row = {}   # { map_id => { row => [sprites] } }
-    @shadow_sprites = []            # flat list of shadow sprites only
-    @last_visible_extended_sprites = []  # sprites we set visible last frame
+    # Screen-cell sprite pool for extended layers: @ext_pool[i][j][slot], sized to
+    # the viewport (+ margin), NOT to the map. Sprites are created lazily and
+    # rebound as the camera scrolls, so a 500x500 map with ten full extended
+    # layers costs the same as a 20x20 one.
+    @ext_pool = []
+    @ext_gen = 0
+    @ext_visible = []               # pool sprites shown last frame
+    @shadow_sprites = []            # shadow sprites (map-sized bitmaps, few)
+    @last_visible_shadows = []
     @extended_data_loaded  = false
     @last_extended_cache_sig = nil
   end
@@ -462,12 +626,222 @@ class TilemapRenderer
     @extended_data_loaded = false
     # Hide extended/shadow sprites immediately so stale sprites from the
     # previous map don't appear at wrong screen positions during the
-    # transition frame (before ensure_extended_sprites disposes them).
-    @extended_tile_sprites.each { |spr| spr.visible = false rescue nil }
+    # transition frame (before the pool rebinds them).
+    @ext_gen += 1
+    each_ext_pool_sprite { |spr| spr.visible = false }
+    @shadow_sprites.each { |spr| spr.visible = false unless spr.disposed? }
+  end
+
+  def each_ext_pool_sprite
+    @ext_pool.each do |col|
+      next unless col
+      col.each do |cell|
+        next unless cell
+        cell.each { |spr| yield spr if spr && !spr.disposed? }
+      end
+    end
   end
 
   #---------------------------------------------------------------------------
-  # Create extended layer sprites for ALL connected maps (called per refresh)
+  # ENGINE BIND HOOKS
+  #
+  # The engine rebinds a native tile sprite only when that sprite starts showing
+  # a different map cell (scroll, map change, refresh) — never per frame. Maker
+  # Studio's native-layer content (extra autotiles, cross-tileset tiles, per-tile
+  # effects, cap-model z) is applied from inside those same hooks, so it costs
+  # what changes, not what is on screen.
+  #
+  # An extra autotile lives in the Table as tile_id 0, so the sprite's tile_id is
+  # left at the Table's value (keeping the engine's dirty check quiet) and the
+  # autotile's virtual id is kept in ms_src_id for src_rect refreshes.
+  #---------------------------------------------------------------------------
+  alias __mkst__refresh_tile refresh_tile unless method_defined?(:__mkst__refresh_tile)
+  def refresh_tile(tile, x, y, map, layer, tile_id)
+    __mkst__refresh_tile(tile, x, y, map, layer, tile_id)
+    return unless MakerStudio::ENABLED
+    tile.ms_src_id = nil
+    tile.cell_band = nil
+    tile.ms_ground_z = 0
+    # A recycled sprite may still carry the previous cell's lighting tone; the
+    # engine's own rebind does not touch tone.
+    if tile.ms_light && tile.ms_light != 0
+      tile.ms_light = 0
+      tile.tone = @tone if @tone
+    end
+    ext_data = MakerStudio.get_extended_data_for(map.map_id)
+    return unless ext_data
+    offs = ms_tile_offsets(map)
+    tile_x = x + offs[0]
+    tile_y = y + offs[1]
+    tile.map_id = map.map_id
+    tile.map_x = tile_x
+    tile.map_y = tile_y
+    return if tile_x < 0 || tile_y < 0 || tile_x >= map.width || tile_y >= map.height
+    idx = tile_y * map.width + tile_x
+    entry = MakerStudio.native_props_at(map.map_id, map.width, layer, idx)
+    props = entry ? entry[0] : nil
+    bind_native_prop_tile(tile, props, entry && entry[1], map, tile_id) if props
+    # The engine took shows_reflection / bridge from the MAP's tileset terrain tag
+    # for the id in the Table. A cross-tileset tile keeps its FOREIGN tileset's id
+    # there, so that terrain belongs to an unrelated tile — re-derive both from the
+    # tileset the tile actually came from.
+    apply_cross_tileset_terrain_flags(tile, props) if props && props["tileset_id"]
+    # Cap model: a tile only renders overhead (above the player) when its OWN
+    # priority is >= 1 AND its layer sits above the cell's highest ground tile.
+    own_pri = props ? resolve_tile_priority(tile.tile_id, props, map) : tile.priority
+    tile.cell_band = (own_pri >= 1 && layer > MakerStudio.cell_ground_cap(map, tile_x, tile_y)) ? own_pri : 0
+    tile.ms_ground_z = ground_band_z(map, idx, tile.tile_id, props)
+    refresh_tile_coordinates(tile, x, y)
+    refresh_tile_z(tile, map, y, layer, tile_id)
+    # set_bitmap re-arms need_refresh; leaving it armed would make the engine
+    # rebind this sprite again next frame, and every frame after that.
+    tile.need_refresh = false
+  end
+
+  # Bind an extra autotile / cross-tileset tile / per-tile effects onto a native
+  # layer sprite. Runs on (re)bind only.
+  def bind_native_prop_tile(tile, props, has_effects, map, table_tile_id)
+    autotile_name = props["autotile_name"]
+    if autotile_name
+      target_bmp = @autotiles[autotile_name]
+      unless target_bmp && !target_bmp.disposed?
+        register_extra_autotile_in_engine(autotile_name)
+        target_bmp = @autotiles[autotile_name]
+      end
+      if target_bmp && !target_bmp.disposed?
+        pattern = (props["autotile_pattern"] || 0).to_i
+        virtual_tile_id = 8 * MakerStudio::TILES_PER_AUTOTILE + pattern
+        priority = resolve_tile_priority(0, props, map)
+        tile.set_bitmap(autotile_name, virtual_tile_id, true, true, priority, target_bmp)
+        @autotiles.set_src_rect(tile, virtual_tile_id)
+        tile.ms_src_id = virtual_tile_id
+        # The Table holds 0 here; keeping the sprite's tile_id in sync with it
+        # stops the engine from re-refreshing this sprite every single frame.
+        tile.tile_id = table_tile_id
+        tile.visible = true
+      else
+        tile.visible = false
+      end
+      apply_native_visual_state(tile, props, has_effects, 0)
+      return
+    end
+
+    ts_id = props["tileset_id"]
+    if ts_id
+      ts = $data_tilesets[ts_id.to_i]
+      tile_id = tile.tile_id
+      if ts && setup_cross_tileset_sprite_bitmap(tile, tile_id, ts, props, map)
+        tile.visible = true
+      else
+        tile.visible = false
+      end
+      apply_native_visual_state(tile, props, has_effects, tile_id)
+      return
+    end
+
+    return unless tile.visible
+    pri = props["priority"]
+    tile.priority = pri.to_i if pri
+    apply_native_visual_state(tile, props, has_effects, tile.tile_id)
+  end
+
+  # A tile's lighting and the renderer's day/night filter are both a Tone, so they
+  # have to be COMBINED. Every bind path used to assign the day/night tone last,
+  # which silently erased the tile's lighting.
+  def ms_tone_with_light(light)
+    return @tone if light.nil? || light == 0
+    up = light > 0 ? light : 0
+    gray = light < 0 ? -light : 0
+    base = @tone
+    return Tone.new(up, up, up, gray) unless base
+    Tone.new(ms_clamp_tone(base.red + up), ms_clamp_tone(base.green + up),
+             ms_clamp_tone(base.blue + up), ms_clamp_tone(base.gray + gray))
+  end
+
+  def ms_clamp_tone(v)
+    return 255 if v > 255
+    return -255 if v < -255
+    v
+  end
+
+  # Reflection / bridge flags for a cross-tileset tile, from ITS tileset.
+  def apply_cross_tileset_terrain_flags(tile, props)
+    ts = $data_tilesets[props["tileset_id"].to_i]
+    return unless ts
+    data = GameData::TerrainTag.try_get(ts.terrain_tags[tile.tile_id] || 0)
+    tile.shows_reflection = data ? !!data.shows_reflections : false
+    tile.bridge = data ? !!data.bridge : false
+  end
+
+  # Ground-band z for a cell: shadow sources and impassable tiles sit ABOVE the
+  # map's shadows (z=2), passable ground below them (z=0).
+  def ground_band_z(map, idx, tile_id, props)
+    env = MakerStudio.shadow_env_for(map)
+    return 0 unless env[:has_shadows]
+    return 2 if env[:source_keys][idx] == tile_id
+    p = resolve_shadow_tile_passage(tile_id, props, map.passages)
+    (p && (p & 0x0F) == 0x0F) ? 2 : 0
+  end
+
+  # Map-cell offset of screen cell (0, 0) for one map. Recomputed only when that
+  # map's display position changes.
+  def ms_tile_offsets(map)
+    @ms_offsets ||= {}
+    cached = @ms_offsets[map.map_id]
+    dx_raw = map.display_x
+    dy_raw = map.display_y
+    return cached if cached && cached[2] == dx_raw && cached[3] == dy_raw
+    mdx = (dx_raw.to_f / Game_Map::X_SUBPIXELS).round
+    mdx = ((mdx + (Graphics.width / 2)) * ZOOM_X) - (Graphics.width / 2) if ZOOM_X != 1
+    mdy = (dy_raw.to_f / Game_Map::Y_SUBPIXELS).round
+    mdy = ((mdy + (Graphics.height / 2)) * ZOOM_Y) - (Graphics.height / 2) if ZOOM_Y != 1
+    offs = [mdx / DISPLAY_TILE_WIDTH, mdy / DISPLAY_TILE_HEIGHT, dx_raw, dy_raw, mdx, mdy]
+    @ms_offsets[map.map_id] = offs
+    offs
+  end
+
+  # Animated autotiles: an extra autotile addresses its frames through ms_src_id
+  # (the Table's tile_id is 0 and would pick the wrong pattern).
+  alias __mkst__refresh_tile_frame refresh_tile_frame unless method_defined?(:__mkst__refresh_tile_frame)
+  def refresh_tile_frame(tile, tile_id)
+    if MakerStudio::ENABLED && tile.ms_src_id
+      @autotiles.set_src_rect(tile, tile.ms_src_id)
+      return
+    end
+    __mkst__refresh_tile_frame(tile, tile_id)
+  end
+
+  # Rotated / vertically-flipped tiles are drawn from their centre (ox/oy), which
+  # shifts them by half a tile — compensate whenever the engine repositions them.
+  alias __mkst__refresh_tile_coordinates refresh_tile_coordinates unless method_defined?(:__mkst__refresh_tile_coordinates)
+  def refresh_tile_coordinates(tile, x, y)
+    __mkst__refresh_tile_coordinates(tile, x, y)
+    return unless MakerStudio::ENABLED
+    return if tile.ox == 0 && tile.oy == 0
+    tile.x += (tile.ox * tile.zoom_x.abs).round
+    tile.y += (tile.oy * tile.zoom_y.abs).round
+  end
+
+  # Cap-model z for native tiles (see @cell_band_cache). Reflection / bridge
+  # tiles keep the engine's own z.
+  alias __mkst__refresh_tile_z refresh_tile_z unless method_defined?(:__mkst__refresh_tile_z)
+  def refresh_tile_z(tile, map, y, layer, tile_id)
+    band = MakerStudio::ENABLED ? tile.cell_band : nil
+    return __mkst__refresh_tile_z(tile, map, y, layer, tile_id) if band.nil?
+    return __mkst__refresh_tile_z(tile, map, y, layer, tile_id) if tile.shows_reflection
+    return __mkst__refresh_tile_z(tile, map, y, layer, tile_id) if tile.bridge && $PokemonGlobal.bridge > 0
+    if band == 0
+      # Ground band: below the map's shadows (0) or above them (2).
+      tile.z = tile.ms_ground_z || 0
+    else
+      tile.z = (y * SOURCE_TILE_HEIGHT) + (band * SOURCE_TILE_HEIGHT) +
+               SOURCE_TILE_HEIGHT + 1 + (layer * 0.0001)
+    end
+  end
+
+  #---------------------------------------------------------------------------
+  # Load extended data for every map in the factory and build the sprites that
+  # are NOT pooled (shadows, fog). Runs once per data change, not per frame.
   #---------------------------------------------------------------------------
   def ensure_extended_sprites
     # Detect when the cache was cleared/rebuilt (size + map_id signature changes)
@@ -475,11 +849,11 @@ class TilemapRenderer
     cache_sig = cache.object_id ^ cache.size
     return if @extended_data_loaded && cache_sig == @last_extended_cache_sig
     return unless $map_factory
-    # Always dispose old sprites before recreating — refresh() can reset
-    # @extended_data_loaded without changing cache_sig, and failing to
-    # dispose would stack duplicate shadow sprites (causing progressive
-    # darkening on non-connected maps).
-    dispose_extended_sprites
+    # Shadows are map-sized bitmaps and few per map — still built up-front. Only
+    # the per-tile sprites are pooled. Dispose first: refresh() can reset
+    # @extended_data_loaded without changing cache_sig, and failing to dispose
+    # would stack duplicate shadow sprites (progressive darkening).
+    dispose_shadow_sprites
     # Per-map lazy loading: ensure each loaded map has its extended data cached.
     $map_factory.maps.each do |map|
       next unless map&.instance_variable_get(:@map)
@@ -490,13 +864,12 @@ class TilemapRenderer
     $map_factory.maps.each do |map|
       ext_data = MakerStudio.get_extended_data_for(map.map_id)
       next unless ext_data
-      create_extended_sprites_for_map(map, ext_data)
       create_shadow_sprites_for_map(map, ext_data)
       MakerStudio.create_fog_sprites_for_map(map.map_id, map)
     end
-    # Dispose fog sprites and extended sprites only for maps that left the
-    # factory entirely. Fog sprites persist for all factory maps (hidden via
-    # visible=false when not current) so scroll offsets survive transitions.
+    # Dispose fog sprites only for maps that left the factory entirely. Fog
+    # sprites persist for all factory maps (hidden via visible=false when not
+    # current) so scroll offsets survive transitions.
     factory_map_ids = $map_factory.maps.map { |m| m.map_id }
     fog_cache = MakerStudio.instance_variable_get(:@fog_sprites_cache)
     fog_cache.keys.each do |cached_map_id|
@@ -504,84 +877,151 @@ class TilemapRenderer
         MakerStudio.dispose_fog_sprites(cached_map_id)
       end
     end
-    # Dispose orphaned extended/shadow sprites whose map left the factory.
-    @extended_tile_sprites.reject! do |spr|
-      next false if factory_map_ids.include?(spr.map_id)
-      spr.dispose rescue nil
-      true
-    end
-    @tile_sprites_by_map_row.reject! { |mid, _| !factory_map_ids.include?(mid) }
-    # Drop already-disposed shadow sprite refs (sprite.disposed? was set above).
-    @shadow_sprites.reject!(&:disposed?) if @shadow_sprites
+    # New data: rebind the whole pool, and make the engine rebind its own native
+    # sprites (that is where Maker Studio's native-layer content is applied).
+    @ext_gen += 1
+    @need_refresh = true
+    @ms_offsets = nil
     @extended_data_loaded = true
-    @last_extended_cache_sig = cache_sig
+    # Signature taken AFTER the lazy load above, which is itself a cache change —
+    # reading it before would make the next frame think the data changed again.
+    @last_extended_cache_sig = cache.object_id ^ cache.size
   end
 
   #---------------------------------------------------------------------------
-  # Create sprites for one map's extended layers
+  # Extended layers: bind the screen-cell sprite pool to whatever the camera is
+  # currently over. Mirrors the engine's own tile loop — a sprite is rebound only
+  # when it starts showing a different cell; otherwise it is just repositioned.
   #---------------------------------------------------------------------------
-  def create_extended_sprites_for_map(map, ext_data)
-    visible_layers = (ext_data["layers"] || [])
-      .select { |l| l["visible"] }
-      .sort_by { |l| l["id"] }
-    return if visible_layers.empty?
-    # Create sprites for each extended layer
-    visible_layers.each_with_index do |layer, layer_order|
-      z_offset = (layer_order + 1) * EXT_LAYER_Z_OFFSET
-      (layer["tiles"] || {}).each do |key, tile_data|
-        next unless tile_data
-        tile_id = tile_data["tile_id"].to_i
-        # Skip completely empty tiles (no tile_id and no extra data)
-        next unless tile_id > 0 || tile_data["autotile_name"]
-        mx, my = key.split(",").map(&:to_i)
-        # Create sprite
-        sprite = TileSprite.new(@viewport)
-        sprite.zoom_x = ZOOM_X
-        sprite.zoom_y = ZOOM_Y
-        sprite.map_x = mx
-        sprite.map_y = my
-        sprite.map_id = map.map_id
-        setup_extended_sprite_bitmap(sprite, tile_id, map, tile_data)
-        # Apply per-tile visual effects (opacity, rotation, hue, etc.)
-        MakerStudio::TileEffects.apply_to_sprite(
-          sprite, tile_data, @tilesets, @autotiles
-        )
-        # Apply layer-level opacity (multiplicative with per-tile opacity)
-        layer_opacity = (layer["opacity"] || 255).to_i
-        if layer_opacity < 255
-          sprite.opacity = (sprite.opacity * layer_opacity / 255.0).round.clamp(0, 255)
+  def update_extended_pool
+    return unless $map_factory
+    ensure_ext_pool
+    # Day/night tone + screen colour reach pooled sprites only when they CHANGE
+    # (the engine does the same for its own tile sprites). Freshly bound sprites
+    # pick the current values up in bind_ext_pool_sprite.
+    if @tone && @ext_old_tone != @tone
+      @ext_old_tone = @tone.clone
+      each_ext_pool_sprite { |spr| spr.tone = ms_tone_with_light(spr.ms_light) }
+    end
+    if @color && @ext_old_color != @color
+      @ext_old_color = @color.clone
+      each_ext_pool_sprite { |spr| spr.color = @color }
+    end
+    @ext_visible.each { |spr| spr.visible = false unless spr.disposed? }
+    @ext_visible.clear
+    h_count = @tiles_horizontal_count + (EXT_POOL_MARGIN * 2)
+    v_count = @tiles_vertical_count + (EXT_POOL_MARGIN * 2)
+    $map_factory.maps.each do |map|
+      next unless map&.instance_variable_get(:@map)
+      layers = MakerStudio.ext_layers_index_for(map.map_id, map.width)
+      next if layers.empty?
+      offs = ms_tile_offsets(map)
+      dx_tile = offs[0]
+      dy_tile = offs[1]
+      pixel_off_x = offs[4] % DISPLAY_TILE_WIDTH
+      pixel_off_y = offs[5] % DISPLAY_TILE_HEIGHT
+      # Screen cells covered by this map, in pool coordinates (0 = margin edge).
+      start_x = [-dx_tile + EXT_POOL_MARGIN, 0].max
+      start_y = [-dy_tile + EXT_POOL_MARGIN, 0].max
+      end_x = [h_count - 1, map.width - 1 - dx_tile + EXT_POOL_MARGIN].min
+      end_y = [v_count - 1, map.height - 1 - dy_tile + EXT_POOL_MARGIN].min
+      next if start_x > end_x || start_y > end_y
+      (start_x..end_x).each do |i|
+        tile_x = i + dx_tile - EXT_POOL_MARGIN
+        col = @ext_pool[i]
+        (start_y..end_y).each do |j|
+          tile_y = j + dy_tile - EXT_POOL_MARGIN
+          idx = tile_y * map.width + tile_x
+          cell = col[j]
+          layers.each_with_index do |layer, slot|
+            td = layer[:tiles][idx]
+            sprite = cell[slot]
+            next if td.nil? && sprite.nil?
+            sprite = (cell[slot] = TileSprite.new(@viewport)) unless sprite
+            if sprite.map_x != tile_x || sprite.map_y != tile_y ||
+               sprite.map_id != map.map_id || sprite.ms_gen != @ext_gen
+              bind_ext_pool_sprite(sprite, map, layer, slot, td, tile_x, tile_y)
+            end
+            next unless sprite.bitmap
+            sprite.x = ((i - EXT_POOL_MARGIN) * DISPLAY_TILE_WIDTH) - pixel_off_x
+            sprite.y = ((j - EXT_POOL_MARGIN) * DISPLAY_TILE_HEIGHT) - pixel_off_y
+            if sprite.ox != 0 || sprite.oy != 0
+              sprite.x += (sprite.ox * sprite.zoom_x.abs).round
+              sprite.y += (sprite.oy * sprite.zoom_y.abs).round
+            end
+            band = sprite.cell_band
+            if band && band > 0
+              # Overhead tiles interleave with the player, so their z follows the
+              # sprite's SCREEN row, not its map row.
+              z = ((j - EXT_POOL_MARGIN) * SOURCE_TILE_HEIGHT) +
+                  (band * SOURCE_TILE_HEIGHT) + SOURCE_TILE_HEIGHT + 1 +
+                  (sprite.ext_z_offset || 0)
+              sprite.z = z if sprite.z != z
+            end
+            @autotiles.set_src_rect(sprite, sprite.ms_src_id || sprite.tile_id) if sprite.animated
+            sprite.visible = true
+            @ext_visible << sprite
+          end
         end
-        # Apply current renderer tone/color so day/night filters work
-        sprite.tone = @tone.clone if @tone
-        sprite.color = @color.clone if @color
-        # Z-ordering keeps this tile's OWN priority, but it only goes OVERHEAD
-        # (above the player) when its layer is above the cell's highest ground
-        # tile — a ground tile on a higher layer covers everything beneath it.
-        # The effective priority (0 = ground, else own priority) is stored on the
-        # sprite so Pass 2's per-frame z recompute uses it.
-        own_pri = MakerStudio.resolve_band_priority(map, tile_id, tile_data)
-        ul = MakerStudio.unified_layer(layer["id"])
-        eff = (own_pri >= 1 && ul > MakerStudio.cell_ground_cap(map, mx, my)) ? own_pri : 0
-        sprite.ext_z_offset = z_offset
-        sprite.cell_band = eff
-        if eff == 0
-          sprite.z = 2 + z_offset  # Ground band (above shadow z=1), layer order
-        else
-          # Overhead: refreshed each frame in Pass 2 using current screen-y so it
-          # tracks the player's z (whether the player passes above/below).
-          sprite.z = (my * SOURCE_TILE_HEIGHT) +
-                     (eff * SOURCE_TILE_HEIGHT) +
-                     SOURCE_TILE_HEIGHT + 1 + z_offset
-        end
-        # MUST be last — set_bitmap (called by setup_extended_sprite_bitmap)
-        # resets visible=true internally.  The update loop re-enables visibility
-        # only after computing the correct screen position.
-        sprite.visible = false
-        @extended_tile_sprites << sprite
-        (@tile_sprites_by_map_row[map.map_id] ||= {})[my] ||= []
-        @tile_sprites_by_map_row[map.map_id][my] << sprite
       end
     end
+  end
+
+  # Bind one pooled sprite to the tile (possibly none) at a map cell.
+  def bind_ext_pool_sprite(sprite, map, layer, slot, tile_data, tile_x, tile_y)
+    sprite.map_id = map.map_id
+    sprite.map_x = tile_x
+    sprite.map_y = tile_y
+    sprite.ms_gen = @ext_gen
+    sprite.ms_src_id = nil
+    sprite.cell_band = nil
+    # Cleared first: setup_extended_sprite_bitmap leaves the bitmap untouched when
+    # it cannot resolve the tile, which would keep the previous cell's graphic.
+    sprite.bitmap = nil
+    unless tile_data
+      sprite.visible = false
+      return
+    end
+    tile_id = tile_data["tile_id"].to_i
+    sprite.zoom_x = ZOOM_X
+    sprite.zoom_y = ZOOM_Y
+    setup_extended_sprite_bitmap(sprite, tile_id, map, tile_data)
+    unless sprite.bitmap
+      sprite.visible = false
+      return
+    end
+    sprite.ms_src_id = sprite.tile_id if tile_data["autotile_name"]
+    MakerStudio::TileEffects.apply_to_sprite(sprite, tile_data, @tilesets, @autotiles)
+    layer_opacity = layer["opacity"]
+    if layer_opacity < 255
+      sprite.opacity = (sprite.opacity * layer_opacity / 255.0).round.clamp(0, 255)
+    end
+    sprite.tone = ms_tone_with_light(sprite.ms_light)
+    sprite.color = @color.clone if @color
+    # A tile keeps its OWN priority but only renders OVERHEAD (above the player)
+    # when its layer sits above the cell's highest ground tile — a ground tile on
+    # a higher layer covers everything beneath it.
+    own_pri = MakerStudio.resolve_band_priority(map, tile_id, tile_data)
+    ul = MakerStudio.unified_layer(layer["id"])
+    eff = (own_pri >= 1 && ul > MakerStudio.cell_ground_cap(map, tile_x, tile_y)) ? own_pri : 0
+    z_offset = (slot + 1) * EXT_LAYER_Z_OFFSET
+    sprite.ext_z_offset = z_offset
+    sprite.cell_band = eff
+    sprite.z = 2 + z_offset if eff == 0   # ground band, above shadows (z=1)
+    sprite.visible = false                # positioned first, shown by the caller
+  end
+
+  # Build the (empty) pool grid once. Sprites inside it are created on demand, so
+  # a map with no extended tiles allocates nothing.
+  def ensure_ext_pool
+    return if @ext_pool_ready
+    h_count = @tiles_horizontal_count + (EXT_POOL_MARGIN * 2)
+    v_count = @tiles_vertical_count + (EXT_POOL_MARGIN * 2)
+    h_count.times do |i|
+      col = (@ext_pool[i] ||= [])
+      v_count.times { |j| col[j] ||= [] }
+    end
+    @ext_pool_ready = true
   end
 
   #---------------------------------------------------------------------------
@@ -678,20 +1118,14 @@ class TilemapRenderer
   # Returns true when the bitmap was set successfully.
   #---------------------------------------------------------------------------
   def setup_cross_tileset_sprite_bitmap(sprite, tile_id, ts, tile_data, map)
-    ts_bitmap = MakerStudio.get_extra_tileset(ts.tileset_name)
+    # Sprite-bindable (mega tilesets folded into columns) — NOT the raw bitmap.
+    ts_bitmap = MakerStudio.get_extra_tileset_for_sprite(ts.tileset_name)
     return false unless ts_bitmap && !ts_bitmap.disposed?
     priority = resolve_tile_priority(tile_id, tile_data, map)
     if tile_id >= MakerStudio::TILESET_START_ID
       sprite.set_bitmap(ts.tileset_name, tile_id, false, false, priority, ts_bitmap)
-      i = tile_id - MakerStudio::TILESET_START_ID
-      src_col = i % MakerStudio::TILESET_TILES_PER_ROW
-      src_row = i / MakerStudio::TILESET_TILES_PER_ROW
-      sprite.src_rect.set(
-        src_col * MakerStudio::TILE_WIDTH,
-        src_row * MakerStudio::TILE_HEIGHT,
-        MakerStudio::TILE_WIDTH,
-        MakerStudio::TILE_HEIGHT
-      )
+      r = MakerStudio.extra_tileset_src_rect(ts.tileset_name, tile_id)
+      sprite.src_rect.set(r.x, r.y, r.width, r.height)
     elsif tile_id > 0
       autotile_index = (tile_id / MakerStudio::TILES_PER_AUTOTILE) - 1
       return false if autotile_index < 0 || autotile_index >= ts.autotile_names.length
@@ -726,43 +1160,38 @@ class TilemapRenderer
   end
 
   #---------------------------------------------------------------------------
-  # Finalize a native-layer sprite after per-tile property overrides: visual
-  # state, screen coords, and z from the resolved priority (set_bitmap alone
-  # does not refresh z for cross-tileset / extra-autotile tiles).
-  #---------------------------------------------------------------------------
-  def finalize_native_prop_sprite(sprite, props, has_effects, map, screen_i, screen_j, tile_id, tone, color)
-    apply_native_visual_state(sprite, props, has_effects, tile_id, tone, color)
-    refresh_tile_coordinates(sprite, screen_i, screen_j)
-    refresh_tile_z(sprite, map, screen_j, 0, tile_id) if sprite.visible
-    if sprite.ox != 0 || sprite.oy != 0
-      sprite.x += (sprite.ox * sprite.zoom_x.abs).round
-      sprite.y += (sprite.oy * sprite.zoom_y.abs).round
-    end
-  end
-
-  #---------------------------------------------------------------------------
-  # Resolve priority for a tile, checking per-tile data first
+  # Resolve priority for a tile. LIVE-FIRST — mirrors the editor's
+  # resolveTilePriority: the autotile config / referenced tileset is
+  # authoritative so tileset property edits reach already-painted tiles
+  # in-game. The baked per-tile "priority" (embedded into TileData at paint
+  # time) is only a fallback when live data can't resolve the tile (e.g.
+  # Tilesets.rxdata never re-saved with the expanded_autotiles config).
   #---------------------------------------------------------------------------
   def resolve_tile_priority(tile_id, tile_data, map)
-    # Per-tile priority takes precedence
-    if tile_data && tile_data["priority"]
-      return tile_data["priority"].to_i
-    end
-    # Extra autotile: search tilesets for matching autotile name
+    # Extra autotile: resolve live from config / autotile slots
     if tile_data && tile_data["autotile_name"]
-      return resolve_autotile_priority(tile_data["autotile_name"], map)
+      pri = resolve_autotile_priority(tile_data["autotile_name"], map)
+      return pri if pri
+      return tile_data["priority"] ? tile_data["priority"].to_i : 0
     end
     # Cross-tileset: use referenced tileset
     if tile_data && tile_data["tileset_id"]
       ts = $data_tilesets[tile_data["tileset_id"].to_i]
-      return (ts && ts.priorities[tile_id]) ? ts.priorities[tile_id] : 0
+      return (ts.priorities[tile_id] || 0) if ts
+      return tile_data["priority"] ? tile_data["priority"].to_i : 0
+    end
+    # Per-tile override on a plain native tile
+    if tile_data && tile_data["priority"]
+      return tile_data["priority"].to_i
     end
     # Default: map tileset
     return map.priorities[tile_id] || 0
   end
 
   #---------------------------------------------------------------------------
-  # Look up priority for an extra autotile by searching all tilesets
+  # Look up priority for an extra autotile by searching all tilesets.
+  # Returns nil when the autotile is unknown everywhere, so the caller can
+  # fall back to the baked per-tile priority.
   #---------------------------------------------------------------------------
   def resolve_autotile_priority(autotile_name, map)
     # Check expanded_autotiles config first (named autotile priority override)
@@ -783,7 +1212,7 @@ class TilemapRenderer
         return ts.priorities[base] || 0
       end
     end
-    return 0
+    return nil
   end
 
   # Try to load a pre-baked shadow bitmap that the editor wrote to
@@ -940,8 +1369,7 @@ class TilemapRenderer
       # MUST be last — sprite.bitmap= above may reset visible=true internally.
       # The update loop re-enables visibility only after positioning.
       sprite.visible = false
-      @extended_tile_sprites << sprite
-      @shadow_sprites << sprite   # dedicated list so Pass 3 doesn't filter
+      @shadow_sprites << sprite
     end
   end
 
@@ -1423,17 +1851,23 @@ class TilemapRenderer
   end
 
   #---------------------------------------------------------------------------
-  # Dispose extended layer sprites
+  # Dispose Maker Studio sprites. Fog sprites are managed per-map in
+  # ensure_extended_sprites — do NOT dispose them here (it would drop their
+  # scroll offsets unnecessarily).
   #---------------------------------------------------------------------------
   def dispose_extended_sprites
-    @extended_tile_sprites.each { |spr| spr.dispose rescue nil }
-    @extended_tile_sprites.clear
-    @tile_sprites_by_map_row = {}
-    @shadow_sprites.clear if @shadow_sprites
-    @last_visible_extended_sprites.clear if @last_visible_extended_sprites
+    each_ext_pool_sprite { |spr| spr.dispose rescue nil }
+    @ext_pool = []
+    @ext_pool_ready = false
+    @ext_visible.clear
+    dispose_shadow_sprites
+  end
+
+  def dispose_shadow_sprites
+    @shadow_sprites.each { |spr| spr.dispose rescue nil }
+    @shadow_sprites.clear
+    @last_visible_shadows.clear
     @__shadow_anim_logged = false
-    # Fog sprites are managed per-map in ensure_extended_sprites — do NOT call
-    # dispose_all_fog_sprites here (it clears scroll offsets unnecessarily).
   end
 
   #---------------------------------------------------------------------------
@@ -1454,138 +1888,19 @@ class TilemapRenderer
   end
 
   #---------------------------------------------------------------------------
-  # Apply native layer per-tile properties to existing tile sprites.
-  # Called every frame after the native renderer updates @tiles.
-  # Uses the sparse nativeProperties map to only visit tiles with properties.
-  # Now supports extra autotiles and cross-tileset tiles on native layers.
-  #---------------------------------------------------------------------------
-  def apply_native_tile_properties
-    return unless $map_factory
-    scr_w = @tiles_horizontal_count
-    scr_h = @tiles_vertical_count
-    tone = @tone
-    color = @color
-    $map_factory.maps.each do |map|
-      ext_data = MakerStudio.get_extended_data_for(map.map_id)
-      if !ext_data
-        next unless map&.instance_variable_get(:@map)
-        ext_data = DataStore.get_extended_data(map.map_id, map.width, map.height, map)
-        MakerStudio.load_extended_layers_for_map(map.map_id, map) if ext_data
-      end
-      next unless ext_data
-      # Row-indexed view: skips all property entries on rows outside the viewport
-      # without iterating them. Huge win on maps with many native extra autotile
-      # / per-tile-property tiles spread across rows the camera doesn't see.
-      by_row = MakerStudio.native_props_by_row_for(map.map_id)
-      next unless by_row
-
-      # Calculate per-map display offset (same formula as the native update loop)
-      map_display_x = (map.display_x.to_f / Game_Map::X_SUBPIXELS).round
-      map_display_x = ((map_display_x + (Graphics.width / 2)) * ZOOM_X) - (Graphics.width / 2) if ZOOM_X != 1
-      map_display_y = (map.display_y.to_f / Game_Map::Y_SUBPIXELS).round
-      map_display_y = ((map_display_y + (Graphics.height / 2)) * ZOOM_Y) - (Graphics.height / 2) if ZOOM_Y != 1
-      map_dx_tile = map_display_x / DISPLAY_TILE_WIDTH
-      map_dy_tile = map_display_y / DISPLAY_TILE_HEIGHT
-      # Skip off-screen maps — avoid iterating native properties for maps
-      # whose display area is completely outside the viewport.
-      next unless map_screen_visible?(map, map_display_x, map_display_y)
-
-      min_row = map_dy_tile
-      max_row = map_dy_tile + scr_h - 1
-      min_col = map_dx_tile
-      max_col = map_dx_tile + scr_w - 1
-
-      MakerStudio::NATIVE_LAYERS.times do |layer|
-        rows = by_row[layer]
-        next unless rows
-        rows.each do |tile_y, entries|
-          next if tile_y < min_row || tile_y > max_row
-          screen_j = tile_y - map_dy_tile
-          # Entries are sorted by col, so we can stop iterating as soon as
-          # we pass max_col instead of scanning the whole row.
-          entries.each do |entry|
-            tile_x = entry[0]
-            next if tile_x < min_col
-            break if tile_x > max_col
-            screen_i = tile_x - map_dx_tile
-            props = entry[1]
-            has_effects = entry[2]
-            sprite = @tiles[screen_i][screen_j][layer]
-            next if sprite.disposed?
-            apply_native_tile_props_to_sprite(sprite, props, has_effects, map, screen_i, screen_j, tone, color)
-          end
-        end
-      end
-    end
-  end
-
-  #---------------------------------------------------------------------------
-  # Per-sprite hot path. Cheap when the binding + effects signatures match
-  # the previous frame (most frames, unless the base renderer reassigned
-  # the sprite by scrolling).
-  #---------------------------------------------------------------------------
-  def apply_native_tile_props_to_sprite(sprite, props, has_effects, map, screen_i, screen_j, tone, color)
-    # ---- Extra autotile on native layer -------------------------------------
-    autotile_name = props["autotile_name"]
-    if autotile_name
-      target_bmp = @autotiles[autotile_name]
-      unless target_bmp && !target_bmp.disposed?
-        register_extra_autotile_in_engine(autotile_name)
-        target_bmp = @autotiles[autotile_name]
-      end
-      if target_bmp && !target_bmp.disposed?
-        pattern = (props["autotile_pattern"] || 0).to_i
-        virtual_tile_id = 8 * MakerStudio::TILES_PER_AUTOTILE + pattern
-        priority = resolve_tile_priority(0, props, map)
-        sprite.set_bitmap(autotile_name, virtual_tile_id, true, true, priority, target_bmp)
-        @autotiles.set_src_rect(sprite, virtual_tile_id)
-        sprite.visible = true
-      else
-        sprite.visible = false
-      end
-      finalize_native_prop_sprite(sprite, props, has_effects, map, screen_i, screen_j, 0, tone, color)
-      return
-    end
-
-    # ---- Cross-tileset reference on native layer ----------------------------
-    ts_id = props["tileset_id"]
-    if ts_id
-      ts = $data_tilesets[ts_id.to_i]
-      tile_id = sprite.tile_id
-      if ts && setup_cross_tileset_sprite_bitmap(sprite, tile_id, ts, props, map)
-        sprite.visible = true
-      else
-        sprite.visible = false
-      end
-      finalize_native_prop_sprite(sprite, props, has_effects, map, screen_i, screen_j, tile_id, tone, color)
-      return
-    end
-
-    # ---- Standard native tile with per-tile properties only -----------------
-    return if !sprite.visible
-    pri = props["priority"]
-    if pri
-      pri = pri.to_i
-      sprite.priority = pri if sprite.priority != pri
-    end
-    finalize_native_prop_sprite(sprite, props, has_effects, map, screen_i, screen_j, sprite.tile_id, tone, color)
-  end
-
-  #---------------------------------------------------------------------------
   # Apply per-tile visual state (opacity / rotation / flip / hue / sat / etc).
   # When `has_effects` is false (the common case — props carries only
-  # collision/terrain overrides), skip the apply_to_sprite hot path and reset
-  # the sprite to defaults directly. Saves ~15 hash lookups + a hash alloc
-  # (no `props.merge`) per visible native-prop tile per frame.
+  # collision/terrain overrides), skip the apply_to_sprite path and reset the
+  # sprite to defaults directly (no `props.merge` allocation).
   #---------------------------------------------------------------------------
-  def apply_native_visual_state(sprite, props, has_effects, tile_id, tone, color)
+  def apply_native_visual_state(sprite, props, has_effects, tile_id)
     if has_effects
       sprite.zoom_y = ZOOM_Y if sprite.zoom_y < 0
       enriched = props.merge("tile_id" => tile_id)
       MakerStudio::TileEffects.apply_to_sprite(sprite, enriched, @tilesets, @autotiles)
     else
       # Trivial props — bring sprite back to defaults so any stale state from
-      # a previous frame's tile assignment is cleared.
+      # a previous tile assignment is cleared.
       sprite.opacity = 255
       sprite.angle = 0
       sprite.tone = MakerStudio::TileEffects::ZERO_TONE
@@ -1594,8 +1909,11 @@ class TilemapRenderer
       sprite.ox = 0
       sprite.oy = 0
     end
-    sprite.tone = tone if tone
-    sprite.color = color if color
+    # The engine only re-applies its tone/colour to tile sprites when they
+    # CHANGE, so a freshly bound sprite has to pick up the current values here
+    # or it would ignore the day/night filter until the next change.
+    sprite.tone = ms_tone_with_light(sprite.ms_light)
+    sprite.color = @color if @color
   end
 
   #---------------------------------------------------------------------------
@@ -1623,251 +1941,81 @@ class TilemapRenderer
     end
   end
 
-  #---------------------------------------------------------------------------
-  # Set native tile z. A native tile keeps its OWN priority, but only renders
-  # overhead (above the player) when its layer is above the cell's highest
-  # ground tile (cell_ground_cap) — a ground tile on a higher layer covers
-  # everything beneath it. Otherwise it's a ground tile:
-  #   ground:   passable z=0 → shadow z=1 → non-passable / source z=2
-  #             (shadow split; z=0 when no shadows)
-  #   overhead: z = screen-y based + own priority, above the player, + a tiny
-  #             per-native-layer offset (kept below the extended layers' z
-  #             offset so extended draws above native)
-  # Runs every frame because the engine reuses the screen-sized sprite grid and
-  # resets native z as the map scrolls. Extended tiles get their z in
-  # create_extended_sprites_for_map / Pass 2.
-  # ponytail: per-frame triple loop over visible native cells for every map;
-  # the cap lookup is O(1) (cached). Bake a screen-region buffer if it lags.
-  #---------------------------------------------------------------------------
-  def adjust_ground_z_for_shadows
-    return unless $map_factory
-    $map_factory.maps.each do |map|
-      next unless map
-      rpg_map = map.instance_variable_get(:@map)
-      next unless rpg_map
-      ext_data = MakerStudio.get_extended_data_for(map.map_id)
-      next unless ext_data
-      caps = MakerStudio.cell_caps_for(map)
-      map_w = map.width
+  alias __mkst__update update unless method_defined?(:__mkst__update)
+  def update
+    __mkst__update
+    return unless MakerStudio::ENABLED
+    ensure_extended_sprites
+    # The engine re-applies its day/night tone to EVERY native tile sprite when it
+    # changes, wiping the lighting composed into that tone — put it back.
+    if @tone && @ms_old_tone != @tone
+      @ms_old_tone = @tone.clone
+      refresh_native_lighting_tones
+    end
+    MakerStudio.update_fog_sprites
+    update_extended_pool
+    update_shadow_sprites
+  end
 
-      # Shadow-split data — only needed for GROUND cells when this map has
-      # visible shadows. Overhead cells render above shadows regardless.
-      shadows = ext_data["shadowLayers"] || []
-      shadows = [ext_data["shadowLayer"]].compact if shadows.empty?
-      has_shadows = !shadows.empty? && shadows.any? { |s| s["visible"] }
-      source_keys = nil
-      passages = nil
-      if has_shadows
-        tileset = $data_tilesets[rpg_map.tileset_id]
-        if tileset
-          passages = tileset.passages
-          # Cached per map: integer key (y*map_w+x) => tile_id, no per-frame strings.
-          cache = MakerStudio.instance_variable_get(:@shadow_source_tiles_cache)
-          source_entry = cache[map.map_id]
-          if !source_entry || source_entry[:map_w] != map_w
-            sk = {}
-            shadows.each do |shadow|
-              next unless shadow["visible"]
-              (shadow["sourceTiles"] || []).each do |st|
-                sk[st["y"].to_i * map_w + st["x"].to_i] = st["tileId"].to_i
-              end
-            end
-            source_entry = { map_w: map_w, keys: sk }
-            cache[map.map_id] = source_entry
-          end
-          source_keys = source_entry[:keys]
-        else
-          has_shadows = false
-        end
-      end
-
-      # Compute display offset: screen coords → map coords
-      mdx = (map.display_x.to_f / Game_Map::X_SUBPIXELS).round
-      mdx = ((mdx + (Graphics.width / 2)) * ZOOM_X) - (Graphics.width / 2) if ZOOM_X != 1
-      mdy = (map.display_y.to_f / Game_Map::Y_SUBPIXELS).round
-      mdy = ((mdy + (Graphics.height / 2)) * ZOOM_Y) - (Graphics.height / 2) if ZOOM_Y != 1
-      dx_tile = mdx / DISPLAY_TILE_WIDTH
-      dy_tile = mdy / DISPLAY_TILE_HEIGHT
-      # Skip off-screen maps whose display area is outside the viewport.
-      next unless map_screen_visible?(map, mdx, mdy)
-
-      # Native props loaded for both overhead own-priority resolution and the
-      # shadow-split passage lookup.
-      native_props = ext_data["nativeProperties"]
-      map_h = map.height
-      scr_w = @tiles_horizontal_count
-      scr_h = @tiles_vertical_count
-      MakerStudio::NATIVE_LAYERS.times do |layer|
-        layer_props = native_props ? native_props[layer] : nil
-        (0...scr_w).each do |i|
-          tile_x = i + dx_tile
-          next if tile_x < 0 || tile_x >= map_w
-          (0...scr_h).each do |j|
-            sprite = @tiles[i][j][layer]
-            next if !sprite || sprite.disposed? || !sprite.visible
-            tid = sprite.tile_id
-            next if tid <= 0
-            tile_y = j + dy_tile
-            # Skip tiles outside this map's bounds (belong to a connected map).
-            next if tile_y < 0 || tile_y >= map_h
-            idx = tile_y * map_w + tile_x
-            entry = layer_props ? layer_props["#{tile_x},#{tile_y}"] : nil
-            # Native layer index IS its unified layer (0-2). Overhead iff above
-            # the cell's highest ground tile (then the tile keeps its own priority).
-            if layer > (caps[idx] || -1)
-              own_pri = resolve_tile_priority(tid, entry, map)
-              sprite.z = (j * SOURCE_TILE_HEIGHT) +
-                         (own_pri * SOURCE_TILE_HEIGHT) +
-                         SOURCE_TILE_HEIGHT + 1 + (layer * 0.0001)
-            elsif has_shadows
-              p = resolve_shadow_tile_passage(tid, entry, passages)
-              if source_keys[idx] == tid || (p && (p & 0x0F) == 0x0F)
-                sprite.z = 2  # source / non-passable: above shadow
-              else
-                sprite.z = 0  # passable ground: below shadow
-              end
-            else
-              sprite.z = 0  # ground, no shadows
-            end
-          end
+  def refresh_native_lighting_tones
+    @tiles.each do |col|
+      col.each do |cell|
+        cell.each do |tile|
+          next if !tile || tile.disposed?
+          light = tile.ms_light
+          next if light.nil? || light == 0
+          tile.tone = ms_tone_with_light(light)
         end
       end
     end
   end
 
-  alias __mkst__update update unless method_defined?(:__mkst__update)
-  def update
-    __mkst__update
-    if MakerStudio::ENABLED
-      ensure_extended_sprites
-      MakerStudio.update_fog_sprites
-      # Build per-map display offset table and viewport visibility set
-      map_offsets = {}
-      visible_map_ids = {}
-      if $map_factory
-        $map_factory.maps.each do |map|
-          mdx = (map.display_x.to_f / Game_Map::X_SUBPIXELS).round
-          mdx = ((mdx + (Graphics.width / 2)) * ZOOM_X) - (Graphics.width / 2) if ZOOM_X != 1
-          mdy = (map.display_y.to_f / Game_Map::Y_SUBPIXELS).round
-          mdy = ((mdy + (Graphics.height / 2)) * ZOOM_Y) - (Graphics.height / 2) if ZOOM_Y != 1
-          map_offsets[map.map_id] = [mdx, mdy]
-          visible_map_ids[map.map_id] = map_screen_visible?(map, mdx, mdy)
-        end
+  #---------------------------------------------------------------------------
+  # Shadow sprites carry one map-sized bitmap each (not one per tile), so they
+  # are positioned directly rather than pooled — there are only a handful.
+  #---------------------------------------------------------------------------
+  def update_shadow_sprites
+    return if @shadow_sprites.empty?
+    @last_visible_shadows.each { |spr| spr.visible = false unless spr.disposed? }
+    @last_visible_shadows.clear
+    return unless $map_factory
+    scr_w = @tiles_horizontal_count
+    scr_h = @tiles_vertical_count
+    maps = {}
+    $map_factory.maps.each { |m| maps[m.map_id] = m if m }
+    @shadow_sprites.each do |sprite|
+      next if sprite.disposed?
+      map = maps[sprite.map_id]
+      next unless map
+      offs = ms_tile_offsets(map)
+      next unless map_screen_visible?(map, offs[4], offs[5])
+      i = sprite.map_x - offs[0]
+      j = sprite.map_y - offs[1]
+      bmp_tw = (sprite.shadow_frame_w || 32) / DISPLAY_TILE_WIDTH
+      bmp_th = (sprite.bitmap&.height || 32) / DISPLAY_TILE_HEIGHT
+      next if (i + bmp_tw) < -8 || (j + bmp_th) < -8 || i > scr_w + 8 || j > scr_h + 8
+      sprite.visible = true
+      @last_visible_shadows << sprite
+      sprite.tone = @tone if @tone
+      sprite.color = @color if @color
+      sprite.x = (i * DISPLAY_TILE_WIDTH) - (offs[4] % DISPLAY_TILE_WIDTH)
+      sprite.y = (j * DISPLAY_TILE_HEIGHT) - (offs[5] % DISPLAY_TILE_HEIGHT)
+      if sprite.ox != 0 || sprite.oy != 0
+        sprite.x += (sprite.ox * sprite.zoom_x.abs).round
+        sprite.y += (sprite.oy * sprite.zoom_y.abs).round
       end
-      # Pre-compute screen bounds for off-screen culling
-      scr_w = @tiles_horizontal_count
-      scr_h = @tiles_vertical_count
-      # --- Pass 1: Hide only sprites that were visible last frame ---
-      # Iterating @extended_tile_sprites in full meant 5000+ setter calls per
-      # frame on big maps. last_visible holds exactly the sprites Pass 2/3
-      # turned on previously — usually a small fraction of total.
-      last_visible = @last_visible_extended_sprites
-      last_visible.each do |sprite|
-        next if sprite.disposed?
-        sprite.visible = false
-      end
-      last_visible.clear
-      # --- Pass 2: Position tile sprites via spatial row index ---
-      # Only iterates sprites in rows overlapping the viewport. Skips the
-      # majority of sprites on large maps with many extended layers, extra
-      # autotiles, and cross-tileset tiles.
-      pass_tone = @tone
-      pass_color = @color
-      visible_map_ids.each do |map_id, is_visible|
-        next unless is_visible
-        rows = @tile_sprites_by_map_row[map_id]
-        next unless rows
-        offsets = map_offsets[map_id]
-        next unless offsets
-        mdx, mdy = offsets
-        # Hoist division/modulo out of inner loops — these are per-map constants.
-        dx_tile = mdx / DISPLAY_TILE_WIDTH
-        dy_tile = mdy / DISPLAY_TILE_HEIGHT
-        dx_rem = mdx % DISPLAY_TILE_WIDTH
-        dy_rem = mdy % DISPLAY_TILE_HEIGHT
-        min_row = dy_tile - 8
-        max_row = dy_tile + scr_h + 8
-        rows.each do |row, sprites|
-          next if row < min_row || row > max_row
-          sprites.each do |sprite|
-            next if sprite.disposed?
-            i = sprite.map_x - dx_tile
-            j = sprite.map_y - dy_tile
-            next if i < -8 || j < -8 || i > scr_w + 8 || j > scr_h + 8
-            sprite.visible = true
-            last_visible << sprite
-            sprite.tone = pass_tone if pass_tone
-            sprite.color = pass_color if pass_color
-            sprite.x = (i * DISPLAY_TILE_WIDTH) - dx_rem
-            sprite.y = (j * DISPLAY_TILE_HEIGHT) - dy_rem
-            if sprite.ox != 0 || sprite.oy != 0
-              sprite.x += (sprite.ox * sprite.zoom_x.abs).round
-              sprite.y += (sprite.oy * sprite.zoom_y.abs).round
-            end
-            # Recompute z for OVERHEAD-band sprites in screen-y space. The band
-            # (effective priority — own priority when above the cell's ground cap,
-            # else 0) is stored on the sprite at creation.
-            cb = sprite.cell_band
-            if cb && cb > 0
-              sprite.z = (j * SOURCE_TILE_HEIGHT) +
-                         (cb * SOURCE_TILE_HEIGHT) +
-                         SOURCE_TILE_HEIGHT + 1 + (sprite.ext_z_offset || 0)
-            end
-            if sprite.animated
-              @autotiles.set_src_rect(sprite, sprite.tile_id)
-            end
-          end
+      # Animated shadow: cycle src_rect.x through the bitmap's frame columns.
+      next unless sprite.shadow_frame_count > 1
+      fc = sprite.shadow_frame_count
+      src_frame =
+        if sprite.shadow_anim_source_name &&
+           (cf = @autotiles.current_frames[sprite.shadow_anim_source_name])
+          cf % fc
+        else
+          MakerStudio.shadow_current_frame(fc)
         end
-      end
-      # --- Pass 3: Shadow sprites via dedicated list ---
-      # Shadow sprites span multiple rows so the spatial row index doesn't
-      # apply. @shadow_sprites holds only shadows, skipping the per-iteration
-      # `next unless sprite.shadow_frame_count` filter the old flat scan paid.
-      @shadow_sprites.each do |sprite|
-        next if sprite.disposed?
-        next unless visible_map_ids[sprite.map_id]
-        offsets = map_offsets[sprite.map_id]
-        next unless offsets
-        mdx, mdy = offsets
-        dx_tile = mdx / DISPLAY_TILE_WIDTH
-        dy_tile = mdy / DISPLAY_TILE_HEIGHT
-        i = sprite.map_x - dx_tile
-        j = sprite.map_y - dy_tile
-        bmp_tw = (sprite.shadow_frame_w || 32) / DISPLAY_TILE_WIDTH
-        bmp_th = (sprite.bitmap&.height || 32) / DISPLAY_TILE_HEIGHT
-        next if (i + bmp_tw) < -8 || (j + bmp_th) < -8 || i > scr_w + 8 || j > scr_h + 8
-        sprite.visible = true
-        last_visible << sprite
-        sprite.tone = pass_tone if pass_tone
-        sprite.color = pass_color if pass_color
-        sprite.x = (i * DISPLAY_TILE_WIDTH) - (mdx % DISPLAY_TILE_WIDTH)
-        sprite.y = (j * DISPLAY_TILE_HEIGHT) - (mdy % DISPLAY_TILE_HEIGHT)
-        if sprite.ox != 0 || sprite.oy != 0
-          sprite.x += (sprite.ox * sprite.zoom_x.abs).round
-          sprite.y += (sprite.oy * sprite.zoom_y.abs).round
-        end
-        # Animated shadow sprites: cycle src_rect.x through frame columns.
-        if sprite.shadow_frame_count > 1
-          fc = sprite.shadow_frame_count
-          src_frame =
-            if sprite.shadow_anim_source_name &&
-               (cf = @autotiles.current_frames[sprite.shadow_anim_source_name])
-              cf % fc
-            else
-              MakerStudio.shadow_current_frame(fc)
-            end
-          frame = (fc - 1) - src_frame
-          sprite.src_rect.x = frame * sprite.shadow_frame_w
-          unless @__shadow_anim_logged
-            Console.echoln("MakerStudio Shadow anim: fc=#{fc} fw=#{sprite.shadow_frame_w} src=#{src_frame} shown=#{frame} sync=#{sprite.shadow_anim_source_name || 'timer'}") if defined?(Console)
-            @__shadow_anim_logged = true
-          end
-        end
-      end
-      # Apply native layer per-tile properties (rotation, flip, opacity, etc.)
-      apply_native_tile_properties
-      # Adjust native ground z-ordering for shadow pass splitting
-      adjust_ground_z_for_shadows
+      # The shadow strip is stored reversed relative to the source autotile.
+      sprite.src_rect.x = ((fc - 1) - src_frame) * sprite.shadow_frame_w
     end
   end
 end

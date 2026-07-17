@@ -1,0 +1,5 @@
+Name         = MakerStudio
+Version      = 1.0.0
+Essentials   = 20.1
+Website      = https://toskan4134.github.io
+Credits      = Toskan4134

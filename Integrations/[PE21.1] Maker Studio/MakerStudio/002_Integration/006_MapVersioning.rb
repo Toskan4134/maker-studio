@@ -297,12 +297,12 @@ end
 # slot that previously showed a ROTATED or FLIPPED per-tile-property tile is
 # reused for a plain tile (or a different version's tile after a swap), it keeps
 # the stale rotation/flip — tiles appear to "flip" / change properties when
-# scrolled off-screen and back. MakerStudio's apply_native_tile_properties only
-# resets sprites that currently HAVE props, so a plain tile inheriting stale
-# transform is never corrected.
+# scrolled off-screen and back. MakerStudio only binds properties onto sprites
+# whose cell HAS them (in its refresh_tile hook), so a plain tile inheriting a
+# stale transform is never corrected.
 #
-# Fix: reset those leftover transform fields inside set_bitmap. The MakerStudio
-# native-property pass runs AFTER the base update and re-applies real rotation/
+# Fix: reset those leftover transform fields inside set_bitmap. MakerStudio's
+# refresh_tile hook runs right after the base one and re-applies real rotation/
 # flip/opacity on top, so prop tiles are unaffected; only stale carry-over is
 # cleared. Pattern A (alias once guarded, def unconditional) for F12 survival.
 #-------------------------------------------------------------------------------

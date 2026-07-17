@@ -108,13 +108,23 @@ class Game_Map
   end
   private :ms_tile_priority
 
-  # Yield [tid, td] for every Maker Studio tile at (x,y): native-extra first
-  # (top layer down), then extended (top layer down). Uses THIS map's id (not
-  # $game_map) so collision works on connected maps too.
+  # Yield [tid, td, native_extra] for every Maker Studio tile at (x,y):
+  # extended FIRST (extended layers sit above every native layer), then
+  # native-extra (top layer down). Uses THIS map's id (not $game_map) so
+  # collision works on connected maps too. The native_extra flag lets the
+  # passability checks refuse to let a ground native-layer tile DECIDE the
+  # cell (see playerPassable?).
   def ms_each_tile_at(x, y)
     mid = map_id
-    MakerStudio.each_native_extra_tile_at(mid, x, y) { |tid, td| yield tid, td }
-    MakerStudio.each_extended_tile_at(mid, x, y) { |tid, td| yield tid, td }
+    MakerStudio.each_extended_tile_at(mid, x, y) { |tid, td| yield tid, td, false }
+    MakerStudio.each_native_extra_tile_at(mid, x, y) { |tid, td| yield tid, td, true }
+    # Plain native tiles blanked by the overlay renderer because an extra
+    # autotile sits below them (blank_covered_plain_tiles) — the Table reads 0
+    # there, so BES's native scan can't see them anymore. Keep honouring their
+    # passage here (block-only, like other native-layer extras).
+    if MakerStudio.respond_to?(:each_covered_plain_tile_at)
+      MakerStudio.each_covered_plain_tile_at(mid, x, y) { |tid, td| yield tid, td, true }
+    end
   end
   private :ms_each_tile_at
 
@@ -125,7 +135,7 @@ class Game_Map
   def playerPassable?(x, y, d, self_event = nil)
     return __mkst__playerPassable(x, y, d, self_event) unless MakerStudio::ENABLED
     bit = (1 << (d / 2 - 1)) & 0x0f
-    ms_each_tile_at(x, y) do |tid, td|
+    ms_each_tile_at(x, y) do |tid, td, native_extra|
       terrain = ms_tile_terrain(tid, td)
       if terrain != 0 && terrain != NEUTRAL_TT
         if PBTerrain.isBridge?(terrain)
@@ -145,8 +155,13 @@ class Game_Map
       end
       passage = ms_tile_passage(tid, td)
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
-      return true if ms_tile_priority(tid, td) == 0
-      # else: fall through to the next Maker Studio tile
+      # A ground extended tile decides the cell (extended sits above every
+      # native layer). A ground NATIVE-layer extra tile must NOT decide:
+      # plain native tiles on layers above it are only checked by the BES
+      # fallback (bitmap-composited CustomTilemap — no per-layer interleave
+      # here), so deciding would erase their impassability.
+      return true if ms_tile_priority(tid, td) == 0 && !native_extra
+      # else: fall through to the next Maker Studio tile / BES native logic
     end
     __mkst__playerPassable(x, y, d, self_event)
   end
@@ -161,10 +176,11 @@ class Game_Map
     return __mkst__passable(x, y, d, self_event) unless MakerStudio::ENABLED
     return playerPassable?(x, y, d, self_event) if self_event == $game_player
     bit = (1 << (d / 2 - 1)) & 0x0f
-    ms_each_tile_at(x, y) do |tid, td|
+    ms_each_tile_at(x, y) do |tid, td, native_extra|
       passage = ms_tile_passage(tid, td)
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
-      return true if ms_tile_priority(tid, td) == 0
+      # Ground native-layer extras must not decide — see playerPassable?.
+      return true if ms_tile_priority(tid, td) == 0 && !native_extra
     end
     __mkst__passable(x, y, d, self_event)
   end
@@ -175,10 +191,11 @@ class Game_Map
   alias __mkst__passableStrict passableStrict? unless method_defined?(:__mkst__passableStrict)
   def passableStrict?(x, y, d, self_event = nil)
     return __mkst__passableStrict(x, y, d, self_event) unless MakerStudio::ENABLED
-    ms_each_tile_at(x, y) do |tid, td|
+    ms_each_tile_at(x, y) do |tid, td, native_extra|
       passage = ms_tile_passage(tid, td)
       return false if passage & 0x0f != 0
-      return true if ms_tile_priority(tid, td) == 0
+      # Ground native-layer extras must not decide — see playerPassable?.
+      return true if ms_tile_priority(tid, td) == 0 && !native_extra
     end
     __mkst__passableStrict(x, y, d, self_event)
   end
