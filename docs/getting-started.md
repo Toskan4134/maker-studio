@@ -27,7 +27,7 @@ The installers are **not code-signed** yet, so your OS shows a one-time warning 
 
 - **Windows** — run the `.exe` and when SmartScreen says "Windows protected your PC", click **More info → Run anyway**, then follow the installer.
 - **macOS** — open the `.dmg` and drag Maker Studio into **Applications**. Gatekeeper blocks the first launch: right-click the app and choose **Open**, or on macOS 15+ go to **System Settings → Privacy & Security** and click **Open Anyway**.
-- **Linux** — make the AppImage executable (`chmod +x Maker.Studio_x86_64.AppImage`) and run it. It uses your system's WebKit: if it doesn't start, install `webkit2gtk-4.1` and `gtk3` (Arch) or `libwebkit2gtk-4.1-0` and `libgtk-3-0` (Debian/Ubuntu). The `.deb` installs with `sudo apt install ./Maker.Studio_amd64.deb`. On Linux the AppImage does not self-update — use [**Gear Lever**](https://flathub.org/apps/io.githubsemicolon.GearLever) to manage updates (it can auto-update AppImages from GitHub releases).
+- **Linux** — make the AppImage executable (`chmod +x Maker.Studio_x86_64.AppImage`) and run it. It uses your system's WebKit: if it doesn't start, install `webkit2gtk-4.1` and `gtk3` (Arch) or `libwebkit2gtk-4.1-0` and `libgtk-3-0` (Debian/Ubuntu). The `.deb` installs with `sudo apt install ./Maker.Studio_amd64.deb`. On Linux the AppImage does not self-update — use [**Gear Lever**](https://flathub.org/en/apps/it.mijorus.gearlever) to manage updates (it can auto-update AppImages from GitHub releases).
 
 ### Step 2 — Install the game-side plugin
 
