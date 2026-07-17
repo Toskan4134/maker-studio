@@ -27,7 +27,7 @@ Los instaladores **aún no están firmados digitalmente**, así que tu sistema m
 
 - **Windows** — ejecuta el `.exe` y, cuando SmartScreen diga "Windows protegió su PC", haz clic en **Más información → Ejecutar de todas formas** y sigue el instalador.
 - **macOS** — abre el `.dmg` y arrastra Maker Studio a **Aplicaciones**. Gatekeeper bloquea el primer arranque: haz clic derecho en la app y elige **Abrir**, o en macOS 15+ ve a **Ajustes del Sistema → Privacidad y seguridad** y pulsa **Abrir igualmente**.
-- **Linux** — haz ejecutable el AppImage (`chmod +x Maker.Studio_x86_64.AppImage`) y ejecútalo. Usa el WebKit de tu sistema: si no arranca, instala `webkit2gtk-4.1` y `gtk3` (Arch) o `libwebkit2gtk-4.1-0` y `libgtk-3-0` (Debian/Ubuntu). El `.deb` se instala con `sudo apt install ./Maker.Studio_amd64.deb`.
+- **Linux** — haz ejecutable el AppImage (`chmod +x Maker.Studio_x86_64.AppImage`) y ejecútalo. Usa el WebKit de tu sistema: si no arranca, instala `webkit2gtk-4.1` y `gtk3` (Arch) o `libwebkit2gtk-4.1-0` y `libgtk-3-0` (Debian/Ubuntu). El `.deb` se instala con `sudo apt install ./Maker.Studio_amd64.deb`. En Linux el AppImage no se actualiza solo — usa [**Gear Lever**](https://flathub.org/apps/io.githubsemicolon.GearLever) para gestionar actualizaciones (puede actualizar AppImages automáticamente desde GitHub releases).
 
 ### Paso 2 — Instala el plugin del lado del juego
 
