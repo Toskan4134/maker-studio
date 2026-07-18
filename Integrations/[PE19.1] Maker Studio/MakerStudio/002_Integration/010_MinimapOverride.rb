@@ -79,40 +79,64 @@ module MakerStudio
     exp_cache  = {}   # autotile name => expanded bitmap (v21 path)
     bes_cache  = {}   # autotile name => TileDrawingHelper (BES path)
     to_dispose = []   # fresh expanded bitmaps we own and must free
+    fx_cache   = {}   # [source, effects] key => baked 32x32 bitmap (owned; disposed below)
+
+    # Native per-tile props are uncommon; when none exist, skip the per-cell
+    # "x,y" key string + hash lookups entirely (they allocate w*h strings).
+    has_native_props = false
+    if native_props
+      NATIVE_LAYERS.times do |z|
+        p = native_props[z]
+        has_native_props = true if p && !p.empty?
+      end
+    end
 
     map.height.times do |y|
       map.width.times do |x|
         px = x * scale
         py = y * scale
-        key = "#{x},#{y}"
+        key = has_native_props ? "#{x},#{y}" : nil
         # --- native layers 0..2 (bottom to top) ---
         NATIVE_LAYERS.times do |z|
           tid = map.data[x, y, z] || 0
-          props = native_props && native_props[z] && native_props[z][key]
+          props = key && native_props[z] && native_props[z][key]
           if props.nil?
             # Plain native tile — fast path identical to stock createMinimap.
             map_helper.bltSmallTile(out, px, py, scale, scale, tid, 0) if tid > 0
           else
             minimap_paint(out, px, py, scale, map, tilesets, map_helper,
                           tdh_cache, exp_cache, bes_cache, to_dispose, tmp,
-                          tid, props, 255)
+                          tid, props, 255, fx_cache)
           end
-        end
-        # --- extended layers ---
-        ext_layers.each do |layer|
-          td = layer["tiles"] && layer["tiles"][key]
-          next unless td
-          tid = td["tile_id"].to_i
-          next unless tid > 0 || td["autotile_name"]
-          lop = (layer["opacity"] || 255).to_i
-          minimap_paint(out, px, py, scale, map, tilesets, map_helper,
-                        tdh_cache, exp_cache, bes_cache, to_dispose, tmp,
-                        tid, td, lop)
         end
       end
     end
 
+    # --- Extended layers. Sparse: iterate each layer's painted-tile hash
+    # instead of scanning the whole w*h grid per layer (extended layers are
+    # usually a few hundred tiles on a many-thousand-cell map). Layer-major
+    # order is per-cell identical to the old cell-major scan because every
+    # draw only touches its own 4px square. ---
+    ext_layers.each do |layer|
+      tiles = layer["tiles"]
+      next unless tiles && !tiles.empty?
+      lop = (layer["opacity"] || 255).to_i
+      tiles.each do |key, td|
+        next unless td
+        tid = td["tile_id"].to_i
+        next unless tid > 0 || td["autotile_name"]
+        x, y = key.split(",")
+        x = x.to_i
+        y = y ? y.to_i : -1
+        next if x < 0 || y < 0 || x >= map.width || y >= map.height
+        minimap_paint(out, x * scale, y * scale, scale, map, tilesets, map_helper,
+                      tdh_cache, exp_cache, bes_cache, to_dispose, tmp,
+                      tid, td, lop, fx_cache)
+      end
+    end
+
     tmp.dispose rescue nil
+    fx_cache.each_value { |b| b.dispose rescue nil }
     to_dispose.each { |b| b.dispose rescue nil }
     minimap_border(out)
     out
@@ -126,9 +150,15 @@ module MakerStudio
   #---------------------------------------------------------------------------
   # Paint one tile (native-with-properties or extended) into the output cell,
   # applying cross-tileset / extra-autotile resolution and per-tile effects.
+  #
+  # The color filters and the transform are per-pixel Ruby loops (~1k
+  # get/set_pixel each), so running them per OCCURRENCE froze the debug map
+  # previews on maps with many effect tiles. Each unique (source, effects)
+  # combo now bakes ONCE into fx_cache and repeats are a plain stretch_blt.
+  # Opacity stays outside the key (applied at blit time).
   #---------------------------------------------------------------------------
   def minimap_paint(out, px, py, scale, map, tilesets, map_helper,
-                    tdh_cache, exp_cache, bes_cache, to_dispose, tmp, tid, td, layer_opacity)
+                    tdh_cache, exp_cache, bes_cache, to_dispose, tmp, tid, td, layer_opacity, fx_cache)
     name  = td && td["autotile_name"]
     ts_id = td && td["tileset_id"]
 
@@ -155,22 +185,33 @@ module MakerStudio
       return
     end
 
-    tmp.clear
-    return unless minimap_blit_base(tmp, name, ts_id, tid, td, map, tilesets,
-                                    map_helper, tdh_cache, exp_cache, bes_cache, to_dispose)
+    ck = [name, ts_id, tid, name ? (td["autotile_pattern"] || 0).to_i : 0,
+          hue, sat, lig, flipH ? 1 : 0, flipV ? 1 : 0, rot]
+    baked = fx_cache[ck]
+    if !baked
+      tmp.clear
+      return unless minimap_blit_base(tmp, name, ts_id, tid, td, map, tilesets,
+                                      map_helper, tdh_cache, exp_cache, bes_cache, to_dispose)
 
-    minimap_color_filters(tmp, hue, sat, lig) if has_color
+      minimap_color_filters(tmp, hue, sat, lig) if has_color
 
-    src = tmp
-    created = nil
-    if has_xform
-      created = minimap_transform(tmp, flipH, flipV, rot)
-      src = created
+      if has_xform
+        baked = minimap_transform(tmp, flipH, flipV, rot)
+      else
+        baked = Bitmap.new(tmp.width, tmp.height)
+        baked.blt(0, 0, tmp, Rect.new(0, 0, tmp.width, tmp.height))
+      end
+      # Pathological maps (thousands of distinct effect combos) could balloon
+      # the cache: drop everything and rebuild rather than track LRU order.
+      if fx_cache.size >= 512
+        fx_cache.each_value { |b| b.dispose rescue nil }
+        fx_cache.clear
+      end
+      fx_cache[ck] = baked
     end
 
-    out.stretch_blt(Rect.new(px, py, scale, scale), src,
-                    Rect.new(0, 0, src.width, src.height), opacity)
-    created.dispose if created
+    out.stretch_blt(Rect.new(px, py, scale, scale), baked,
+                    Rect.new(0, 0, baked.width, baked.height), opacity)
   end
 
   #---------------------------------------------------------------------------

@@ -35,12 +35,12 @@ Descarga la integración que corresponde a tu proyecto:
 
 | Tu proyecto | Descarga directa |
 |-------------|------------------|
-| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/PE21.1.Maker.Studio.v1.1.0.zip) |
-| Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/PE20.1.Maker.Studio.v1.1.0.zip) |
-| Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/PE19.1.Maker.Studio.v1.1.0.zip) |
-| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/LBDS1.1.0.Maker.Studio.v1.1.0.zip) |
-| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/LBDS1.2.0.Maker.Studio.v1.1.0.zip) |
-| Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.0/BES5.Maker.Studio.v1.1.0.zip) |
+| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE21.1.Maker.Studio.v1.1.1.zip) |
+| Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE20.1.Maker.Studio.v1.1.1.zip) |
+| Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE19.1.Maker.Studio.v1.1.1.zip) |
+| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/LBDS1.1.0.Maker.Studio.v1.1.1.zip) |
+| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/LBDS1.2.0.Maker.Studio.v1.1.1.zip) |
+| Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/BES5.Maker.Studio.v1.1.1.zip) |
 
 > **Nota sobre v19.1:** el renderizado de tiles más antiguo de este motor hace que las sustituciones de paso/prioridad/terreno por tile en un tile normal (no de capa extendida) no afecten a la colisión dentro del juego. Las capas extendidas, los autotiles extra y los tiles cross-tileset funcionan con normalidad.
 
