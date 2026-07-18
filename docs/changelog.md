@@ -2,6 +2,17 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.1.1
+
+Small update: a faster way to open projects, plus editor and in-game preview performance fixes.
+
+### Additions
+- 📂 **Open a project by double-clicking it** — create a `.makerstudio` file for your project (**File → Create Project File…**) and double-click it in your file manager to launch Maker Studio straight into that project, just like RPG Maker XP's project file. (On the Linux AppImage, register it once with **Help → Install Linux File Association…**.)
+
+### Fixes
+- ⚡ **Editor performance** — the map canvas no longer lags when painting lots of tiles, tiles with color or rotation properties, or autotiles, or when working on very large maps.
+- 🗺️ **Faster in-game map previews** — the debug "jump to map" and map-connection editor screens no longer freeze on maps with many styled tiles.
+
 ## v1.1.0
 
 Update focused on stability: several in-game and editor bugs fixed, plus broader engine support.
