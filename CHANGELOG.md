@@ -3,6 +3,20 @@
 User-facing changes to the Maker Studio app and its game-side plugin. Older
 releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/releases).
 
+## v1.1.1
+
+Small update: a faster way to open projects, plus editor and in-game preview performance fixes.
+
+### Additions
+- 📂 **Open a project by double-clicking it** — create a `.makerstudio` file for your project (**File → Create Project File…**) and double-click it in your file manager to launch Maker Studio straight into that project, just like RPG Maker XP's project file. (On the Linux AppImage, register it once with **Help → Install Linux File Association…**.)
+
+### Fixes
+- ⚡ **Editor performance** — the map canvas no longer lags when painting lots of tiles, tiles with color or rotation properties, or autotiles, or when working on very large maps.
+- 🗺️ **Faster in-game map previews** — the debug "jump to map" and map-connection editor screens no longer freeze on maps with many styled tiles.
+
+### Documentation
+User guides and mod API reference: https://makerstudio.toskan.es/
+
 ## v1.1.0
 
 Update focused on stability: several in-game and editor bugs fixed, plus broader engine support.
@@ -37,6 +51,20 @@ User guides and mod API reference: https://makerstudio.toskan.es/
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
+
+## v1.1.1
+
+Actualización pequeña: una forma más rápida de abrir proyectos, más correcciones de rendimiento en el editor y las previsualizaciones dentro del juego.
+
+### Novedades
+- 📂 **Abrir un proyecto con doble clic** — crea un archivo `.makerstudio` para tu proyecto (**Archivo → Crear archivo de proyecto…**) y haz doble clic sobre él en tu explorador de archivos para abrir Maker Studio directamente en ese proyecto, igual que el archivo de proyecto de RPG Maker XP. (En el AppImage de Linux, regístralo una vez con **Ayuda → Instalar asociación de archivo en Linux…**.)
+
+### Correcciones
+- ⚡ **Rendimiento del editor** — el lienzo del mapa ya no va lento al pintar muchos tiles, tiles con propiedades de color o rotación, o autotiles, ni al trabajar en mapas muy grandes.
+- 🗺️ **Previsualizaciones de mapa más rápidas en el juego** — las pantallas de depuración "saltar a mapa" y el editor de conexiones de mapa ya no se congelan en mapas con muchos tiles con efectos.
+
+### Documentación
+Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
 
 ## v1.1.0
 
