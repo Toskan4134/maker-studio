@@ -124,6 +124,8 @@ En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X actúan sobre el evento sele
 | Ctrl+C | Copiar comando |
 | Ctrl+V | Pegar comando |
 | Ctrl+X | Cortar comando |
+| Ctrl+A | Seleccionar todos los comandos de la lista (la fila End final de la página queda fuera) |
+| Escape | Cancelar el Command Picker o el formulario de parámetros abierto — desde un formulario vuelve al selector, en la página desde la que elegiste |
 | Alt + ↑ | Mover comando arriba |
 | Alt + ↓ | Mover comando abajo |
 | ↑ | Comando anterior (salta las líneas extra de un Show Text / Comment / Script multilínea) |

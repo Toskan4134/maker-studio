@@ -99,15 +99,29 @@ La lista de comandos es donde construyes la lógica del evento. Puedes añadir, 
 
 ### Añadir comandos
 
-Haz clic en Insert (o pulsa Insert / Enter) para abrir el Command Picker. El selector organiza los comandos en tres categorías:
+Haz clic en Insert (o pulsa Insert / Enter) para abrir el Command Picker. El selector ordena los comandos en varias categorías con nombre específicas, cada una con una descripción de una línea bajo la pestaña activa:
 
-1. Message / Flow Control
-2. Scene Control
-3. Actor / Party
+- **Messages** — mostrar texto, opciones y demás comandos de mensaje.
+- **Logic** — condiciones, switches, variables, bucles, etiquetas y control de flujo.
+- **Party & Items** — oro, items, armas, armaduras y miembros del party.
+- **Movement** — trasladar al jugador, fijar/desplazar y rutas de movimiento.
+- **Screen & Pictures** — tonos de pantalla, destellos, temblores, clima e imágenes.
+- **Audio** — música de fondo, efectos de sonido y demás audio.
+- **Actors** — stats, habilidades, equipo, nombre, clase y gráficos de actor.
+- **Battle** — procesamiento de batalla, tienda y comandos de enemigo.
+- **System** — windowskin, acceso a menú/guardado/encuentros, scripts y ajustes de sistema.
 
-Un cuadro de búsqueda en la parte superior filtra entre todas las categorías.
+Un cuadro de búsqueda en la parte superior filtra entre todas las categorías. La lista de comandos mantiene una **altura fija** —la mayor que necesita cualquier categoría—, así que el diálogo ya no crece ni se encoge al cambiar de pestaña; una pestaña con más comandos (como Favoritos) se desplaza arriba y abajo dentro de esa área fija. Si tienes suficientes categorías o mods como para que no quepan todas las pestañas, aparecen botones de flecha en los extremos de la barra para desplazarte entre ellas — también puedes desplazarla con la rueda del ratón, y la pestaña activa siempre se mantiene a la vista.
 
-Si tienes mods instalados que añaden sus propios comandos de evento, aparecen pestañas extra marcadas con un icono de puzle (**🧩1**, **🧩2**, etc.) tras las pestañas de categoría numeradas. Cada una alberga hasta 24 comandos de mod. Elige uno igual que un comando integrado; se edita con su propio formulario (o un cuadro de script si el mod no definió campos). Por debajo, el formulario simplemente escribe un comando Script normal, así que corre en el juego como cualquier otro script de evento. Los comandos de mod se pueden añadir a Favoritos igual que los integrados.
+El selector **recuerda la última pestaña en la que estuviste**, así que si estabas mirando Battle (o una pestaña de mod), ahí es donde se abre la próxima vez.
+
+### Favoritos
+
+Haz clic en la estrella junto a cualquier comando para añadirlo a tu pestaña **Favoritos**, que aparece antes de las pestañas de categoría en cuanto tienes al menos uno. Para reordenarlos, abre la pestaña Favoritos y haz clic en el **lápiz** de la franja de descripción para entrar en modo de reordenación: arrastra un comando y los demás se apartan para mostrar dónde va a caer; suéltalo y haz clic en la marca de verificación para terminar. Mientras la reordenación está activa, hacer clic en un comando lo mueve en vez de insertarlo; desactívala para elegir comandos con normalidad de nuevo. Tu orden se recuerda entre sesiones.
+
+Pulsa **Escape** en cualquier momento para retroceder un paso: desde el formulario de parámetros de un comando cancela la inserción y te devuelve al Command Picker — **en la página desde la que elegiste el comando** — y desde el selector cierra el selector. Escape ya no cierra el editor de eventos entero desde dentro de estos formularios, así que equivocarte al elegir cuesta una pulsación en vez de tus cambios sin guardar.
+
+Si tienes mods instalados que añaden sus propios comandos de evento, aparecen pestañas extra marcadas con un icono de puzle tras las pestañas de categoría. Cada mod nombra su propia pestaña (y puede darle su propia descripción), de modo que los comandos de mod relacionados se agrupan juntos. Elige uno igual que un comando integrado; se edita con su propio formulario (o un cuadro de script si el mod no definió campos). Por debajo, el formulario simplemente escribe un comando Script normal, así que corre en el juego como cualquier otro script de evento. Los comandos de mod se pueden añadir a Favoritos igual que los integrados.
 
 ### Editar comandos
 
@@ -122,6 +136,8 @@ Haz doble clic en un comando para editar sus parámetros. Muchos comandos tienen
 :       "Hoy hace buen tiempo."
 :       "¿Vas al gimnasio?"
 ```
+
+Cada línea extra se indenta para quedar justo debajo de la primera, así que un mensaje largo se lee como un bloque alineado en vez de una escalera irregular. La indentación se mide a partir del nombre del propio comando, por lo que sigue siendo correcta para cualquier comando y en cualquier idioma de la interfaz.
 
 Esas filas extra son *líneas del comando*, no comandos propios:
 
@@ -211,6 +227,8 @@ Para poner comandos *dentro* de un bloque, selecciona la línea de apertura del 
 | Delete / Backspace | Borrar el comando seleccionado |
 | Insert / Enter | Abrir el Command Picker |
 | Ctrl+C / Ctrl+V / Ctrl+X | Copiar, Pegar o Cortar comandos |
+| Ctrl+A | Seleccionar todos los comandos de la lista (la fila End final de la página queda fuera de la selección). Útil antes de copiar o borrar en bloque |
+| Escape | Cancelar el Command Picker o el formulario de parámetros abierto (ver [Añadir comandos](#añadir-comandos)) |
 | Flechas arriba / abajo | Mover la selección |
 | Alt + Arriba / Abajo | Reordenar el comando seleccionado (o bloque entero) en uno, manteniéndose en su nivel actual. Para mover un comando *dentro* o *fuera* de una rama, arrástralo (ver abajo) o corta y pega. Un bloque entero (Conditional, Loop, Show Choices, Set Move Route) se mueve como una unidad. |
 

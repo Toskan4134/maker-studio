@@ -124,6 +124,8 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 | Ctrl+C | Copy command |
 | Ctrl+V | Paste command |
 | Ctrl+X | Cut command |
+| Ctrl+A | Select every command in the list (the page's final End row is left out) |
+| Escape | Cancel the open Command Picker or parameter form — from a parameter form this returns to the picker, on the page you picked from |
 | Alt + ↑ | Move command up |
 | Alt + ↓ | Move command down |
 | ↑ | Previous command (steps over the extra lines of a multi-line Show Text / Comment / Script) |

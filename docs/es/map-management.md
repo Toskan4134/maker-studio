@@ -83,6 +83,24 @@ El **battleback no se muestra en el lienzo del mapa** — solo aparece en las ba
 
 > Los mapas guardados con una build antigua de Maker Studio pueden aún contener una sustitución base por mapa; el editor ahora la ignora (el mapa base siempre muestra los ajustes del tileset) y la quita la próxima vez que guardes ese mapa. El mismo plugin en el juego también impide que el propio fog del tileset se dibuje dos veces cuando un mapa usa capas de fog de Maker Studio.
 
+## Audio del mapa (Auto-Change BGM / BGS)
+
+Cada mapa puede llevar su propia música y sonido de fondo, que suenan automáticamente al entrar el jugador — los mismos campos **Auto-Change BGM / BGS** que RPG Maker XP pone en Map Properties. Abre el diálogo desde:
+
+- **Barra de menú → Map → Map Audio…**, o
+- **Clic derecho en un mapa** del árbol → **Map Audio…**
+
+El diálogo tiene una fila por pista:
+
+- Marca **Auto-Change BGM** (o **Auto-Change BGS**) para activar esa pista en este mapa. Mientras la casilla está desmarcada el selector aparece atenuado y el mapa sigue reproduciendo lo que ya sonaba.
+- Haz clic en el botón **…** para elegir el archivo de la carpeta `Audio/BGM/` (o `Audio/BGS/`) de tu proyecto, con los habituales deslizadores de volumen y tono y un botón de reproducción para escucharlo.
+
+Haz clic en **OK** para escribir el cambio **directamente en el archivo del mapa** — no hay un paso de guardado aparte ni marca de cambios sin guardar, así que **no hace falta Ctrl+S** (funciona igual que cambiar el battleback de un mapa base). **Cancel** lo descarta.
+
+Estos son **campos nativos de RPG Maker XP**, así que la música suena en cualquier juego sin plugin instalado — por eso los elementos de menú no llevan insignia MS.
+
+> **Un ajuste por mapa, compartido por todas las versiones.** El audio del mapa se guarda en el archivo del mapa base, así que todas las [versiones](map-versions.md) de un mapa reproducen el mismo BGM/BGS — no hay sustitución por versión (la misma limitación que Change Tileset). Para cambiar la música en una situación concreta, usa los comandos de evento **Play BGM** / **Play BGS**.
+
 ## Borrar un mapa
 
 Haz clic derecho en un mapa del árbol y elige Delete Map, luego confirma el borrado. Cualquier mapa hijo se mueve al padre del mapa borrado para que no se pierdan. El archivo `.rxdata` del mapa se quita del disco.

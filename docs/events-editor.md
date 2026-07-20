@@ -99,15 +99,29 @@ The command list is where you build the event's logic. You can add, edit, delete
 
 ### Adding Commands
 
-Click Insert (or press Insert / Enter) to open the Command Picker. The picker organizes commands into three categories:
+Click Insert (or press Insert / Enter) to open the Command Picker. The picker sorts commands into several specific named categories, each with a one-line description under the active tab:
 
-1. Message / Flow Control
-2. Scene Control
-3. Actor / Party
+- **Messages** — show text, choices, and other message commands.
+- **Logic** — conditions, switches, variables, loops, labels, and flow control.
+- **Party & Items** — gold, items, weapons, armor, and party members.
+- **Movement** — transfer player, set/scroll, and move routes.
+- **Screen & Pictures** — screen tones, flashes, shakes, weather, and pictures.
+- **Audio** — background music, sound effects, and other audio.
+- **Actors** — actor stats, skills, equipment, name, class, and graphics.
+- **Battle** — battle processing, shop, and enemy commands.
+- **System** — windowskin, menu/save/encounter access, scripts, and system settings.
 
-A search box at the top filters across all categories.
+A search box at the top filters across all categories. The command list keeps a **fixed height** — the tallest a category ever needs — so the dialog no longer grows and shrinks as you switch between tabs; a tab with more commands (such as Favourites) scrolls up and down inside that fixed area. If you have enough categories or mods that the tabs don't all fit, arrow buttons appear at the ends of the tab bar to page through them — you can also scroll it with the mouse wheel, and the active tab is always kept in view.
 
-If you have mods installed that add their own event commands, extra tabs marked with a puzzle icon (**🧩1**, **🧩2**, and so on) appear after the numbered category tabs. Each holds up to 24 mod commands. Pick one just like a built-in command; it edits through its own form (or a script box if the mod didn't define fields). Under the hood the form just writes a normal Script command, so it runs in-game like any other event script. Mod commands can be added to Favourites just like built-in ones.
+The picker **remembers the tab you were last on**, so if you were browsing Battle (or a mod tab), that's where it opens next time.
+
+### Favourites
+
+Click the star next to any command to add it to your **Favourites** tab, which appears before the category tabs once you have at least one. To rearrange them, open the Favourites tab and click the **pencil** in the description strip to enter reorder mode: drag a command and the others shift aside to show where it will land, then drop it and click the check mark to finish. While reordering is on, clicking a command moves it instead of inserting it; turn it off to pick commands normally again. Your order is remembered across sessions.
+
+Press **Escape** at any point to back out one step: from a command's parameter form it cancels the insert and returns you to the Command Picker — **on the page you picked the command from** — and from the picker it closes the picker. Escape no longer closes the whole Event Editor from inside these forms, so a mis-pick costs you one keypress instead of your unsaved page edits.
+
+If you have mods installed that add their own event commands, extra tabs marked with a puzzle icon appear after the category tabs. Each mod names its own tab (and can give it a description of its own), so related mod commands are grouped together. Pick one just like a built-in command; it edits through its own form (or a script box if the mod didn't define fields). Under the hood the form just writes a normal Script command, so it runs in-game like any other event script. Mod commands can be added to Favourites just like built-in ones.
 
 ### Editing Commands
 
@@ -122,6 +136,8 @@ Double-click a command to edit its parameters. Many commands have dedicated type
 :       "Nice weather today."
 :       "Are you heading to the gym?"
 ```
+
+Each extra line is indented to sit exactly under the first one, so a long message reads as a single aligned block instead of a ragged staircase. The indent is measured from the command's own name, so it stays correct for every command and in every interface language.
 
 Those extra rows are *lines of the command*, not commands of their own:
 
@@ -211,6 +227,8 @@ To put commands *inside* a block, select the block's opening line (e.g. the Cond
 | Delete / Backspace | Delete the selected command |
 | Insert / Enter | Open the Command Picker |
 | Ctrl+C / Ctrl+V / Ctrl+X | Copy, Paste, or Cut commands |
+| Ctrl+A | Select every command in the list (the page's final End row stays out of the selection). Handy before a bulk copy or delete |
+| Escape | Cancel the open picker or parameter form (see [Adding Commands](#adding-commands)) |
 | Up / Down arrows | Move the selection |
 | Alt + Up / Down | Reorder the selected command (or whole block) by one, staying at its current level. To move a command *into* or *out of* a branch, drag it (see below) or cut and paste. A whole block (Conditional, Loop, Show Choices, Set Move Route) moves as one unit. |
 

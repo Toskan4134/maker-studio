@@ -83,6 +83,24 @@ The **battleback is not shown on the map canvas** — it only appears in battles
 
 > Maps saved with an older Maker Studio build may still contain a per-map base override; the editor now ignores it (the base map always shows the tileset's settings) and removes it the next time you save that map. The same in-game plugin also stops the tileset's own fog from drawing twice when a map uses Maker Studio fog layers.
 
+## Map Audio (Auto-Change BGM / BGS)
+
+Each map can carry its own background music and background sound, played automatically when the player enters it — the same **Auto-Change BGM / BGS** fields RPG Maker XP puts in Map Properties. Open the dialog from:
+
+- **Menu bar → Map → Map Audio…**, or
+- **Right-click a map** in the Map Tree → **Map Audio…**
+
+The dialog has one row per track:
+
+- Tick **Auto-Change BGM** (or **Auto-Change BGS**) to turn that track on for this map. While the box is unticked the picker is greyed out and the map plays whatever was already playing.
+- Click the **…** button to choose the file from your project's `Audio/BGM/` (or `Audio/BGS/`) folder, with the usual volume and pitch sliders and a play button to preview it.
+
+Click **OK** to write the change **straight to the map file** — there is no separate save step and no unsaved-changes marker, so **Ctrl+S is not needed** (this works like changing a base map's battleback). **Cancel** discards it.
+
+These are **native RPG Maker XP fields**, so the music plays in any game with no plugin installed — that's why the menu items carry no MS badge.
+
+> **One setting per map, shared by every version.** Map audio is stored on the base map file, so all of a map's [versions](map-versions.md) play the same BGM/BGS — there is no per-version override (the same limitation as Change Tileset). To change the music for a specific situation, use the **Play BGM** / **Play BGS** event commands instead.
+
 ## Deleting a Map
 
 Right-click a map in the Map Tree and choose Delete Map, then confirm the deletion. Any child maps are moved up to the deleted map's parent so they are not lost. The map's `.rxdata` file is removed from disk.
