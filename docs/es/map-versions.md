@@ -59,4 +59,4 @@ El estado vive en la variable/switch, así que se guarda con el archivo de guard
 
 ## Requisitos
 
-Las versiones de mapa necesitan el **plugin de juego de Maker Studio** instalado (viene con la integración). El cambio en tiempo de ejecución está soportado en las builds de la familia v21.1 (LBDS 1.1/1.2 y Pokémon Essentials vanilla v21.1). Editar versiones en el editor funciona independientemente de qué build distribuyas.
+Las versiones de mapa necesitan el **plugin de juego de Maker Studio** instalado (viene con la integración). El cambio en tiempo de ejecución está soportado en todas las builds salvo las de pegado directo para los motores más antiguos — Pokémon Essentials BES v5 y v17.1 (es decir: LBDS 1.1/1.2 y Pokémon Essentials vanilla v21.1, v20.1 y v19.1). Editar versiones en el editor funciona independientemente de qué build distribuyas.

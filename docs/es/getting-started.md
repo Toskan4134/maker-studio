@@ -38,17 +38,18 @@ Descarga la integración que corresponde a tu proyecto:
 | Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE21.1.Maker.Studio.v1.1.1.zip) |
 | Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE20.1.Maker.Studio.v1.1.1.zip) |
 | Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE19.1.Maker.Studio.v1.1.1.zip) |
+| Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases) — se publica con la próxima release de integraciones |
 | La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/LBDS1.1.0.Maker.Studio.v1.1.1.zip) |
 | La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/LBDS1.2.0.Maker.Studio.v1.1.1.zip) |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/BES5.Maker.Studio.v1.1.1.zip) |
 
-> **Nota sobre v19.1:** el renderizado de tiles más antiguo de este motor hace que las sustituciones de paso/prioridad/terreno por tile en un tile normal (no de capa extendida) no afecten a la colisión dentro del juego. Las capas extendidas, los autotiles extra y los tiles cross-tileset funcionan con normalidad.
+> **Nota sobre v19.1, v17.1 y BES v5:** el renderizado de tiles más antiguo de estos motores hace que las sustituciones de paso/prioridad/terreno por tile en un tile normal (no de capa extendida) no afecten a la colisión dentro del juego. Las capas extendidas, los autotiles extra y los tiles cross-tileset funcionan con normalidad.
 
 Después:
 
 1. Descomprime el zip.
 2. Copia la carpeta **`MakerStudio`** de su interior a la carpeta **`Plugins/`** de tu juego, de modo que la ruta final sea `<tu juego>/Plugins/MakerStudio/`. No renombres la carpeta — el editor lee los mods de proyecto, la configuración y las estadísticas desde `Plugins/MakerStudio/003_Editor/`.
-3. **Solo BES v5:** ese motor no tiene autocarga de `Plugins/`, así que en vez de copiar una carpeta se pega un único `.rb` combinado en el Editor de Scripts — sigue el `README.md` que va dentro del zip.
+3. **Solo BES v5 y Essentials v17.1:** esos motores no tienen autocarga de `Plugins/`, así que en vez de copiar una carpeta se pega un único `.rb` combinado en el Editor de Scripts de RPG Maker XP (en el hueco encima de `Main`) — sigue el `README.md` que va dentro del zip.
 
 Cada zip incluye además su propio `README.md` con notas específicas del motor, por si algo difiere en tu instalación.
 

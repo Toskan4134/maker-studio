@@ -88,5 +88,6 @@ save that was in the "destroyed" version and the map comes back destroyed.
 ## Requirements
 
 Map Versions need the **Maker Studio game plugin** installed (it ships with the integration). The
-runtime swap is supported on the v21.1‑family builds (LBDS 1.1/1.2 and vanilla Pokémon Essentials
-v21.1). Editing versions in the editor works regardless of which build you ship.
+runtime swap is supported on every build except the paste-in ones for the oldest engines — Pokémon
+Essentials BES v5 and v17.1 (so: LBDS 1.1/1.2 and vanilla Pokémon Essentials v21.1, v20.1 and
+v19.1). Editing versions in the editor works regardless of which build you ship.

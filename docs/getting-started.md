@@ -38,17 +38,18 @@ Download the integration that matches your project:
 | Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE21.1.Maker.Studio.v1.1.1.zip) |
 | Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE20.1.Maker.Studio.v1.1.1.zip) |
 | Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/PE19.1.Maker.Studio.v1.1.1.zip) |
+| Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases) — ships with the next integrations release |
 | La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/LBDS1.1.0.Maker.Studio.v1.1.1.zip) |
 | La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/LBDS1.2.0.Maker.Studio.v1.1.1.zip) |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.1.1/BES5.Maker.Studio.v1.1.1.zip) |
 
-> **Note on v19.1:** this engine's older tile renderer means per-tile passage/priority/terrain overrides on a plain (non-extended) tile don't affect in-game collision. Extended layers, extra autotiles, and cross-tileset tiles all work normally.
+> **Note on v19.1, v17.1 and BES v5:** these engines' older tile renderers mean per-tile passage/priority/terrain overrides on a plain (non-extended) tile don't affect in-game collision. Extended layers, extra autotiles, and cross-tileset tiles all work normally.
 
 Then:
 
 1. Unzip the download.
 2. Copy the **`MakerStudio`** folder from inside it into your game's **`Plugins/`** directory, so the final path is `<your game>/Plugins/MakerStudio/`. Don't rename the folder — the editor reads project mods, config, and stats from `Plugins/MakerStudio/003_Editor/`.
-3. **BES v5 only:** that engine has no `Plugins/` auto-loader, so instead of copying a folder you paste a single merged `.rb` into the Script Editor — follow the `README.md` inside the zip.
+3. **BES v5 and Essentials v17.1 only:** those engines have no `Plugins/` auto-loader, so instead of copying a folder you paste a single merged `.rb` into the RPG Maker XP Script Editor (in the slot above `Main`) — follow the `README.md` inside the zip.
 
 Each zip also ships its own `README.md` with engine-specific notes, in case anything differs on your setup.
 
