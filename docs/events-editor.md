@@ -147,6 +147,22 @@ Those extra rows are *lines of the command*, not commands of their own:
 
 To break a message into separate text boxes in-game, insert a *second* Show Text command rather than adding more lines to the first one.
 
+### Script Snippets
+
+Any script box in the Event Editor has a **Snippets…** button next to its **Script** title — use it to keep a library of Ruby code you reuse instead of retyping (or hunting for) the same lines every time.
+
+Click **Snippets…** and the snippet manager opens: type a name into **Save current as new** at the bottom and click **Save** to store whatever is currently in the box, then pick a saved snippet later and click **Apply** (or double-click it) to drop the code back in. The list shows the highlighted snippet's code in a scrollable preview, so you can check you picked the right one before applying. Rename, overwrite with the current box contents, and delete all work from the same dialog, and **Export…** / **Import…** write and read snippet files so you can back them up or share them with someone else.
+
+Three places share **one** snippet library, so anything you save in one shows up in the others:
+
+- the **Script** command,
+- the **Script** action inside Set Move Route,
+- the script box of a mod command that doesn't define its own fields.
+
+Applying a snippet **replaces the whole box**, it does not insert at the cursor. If the box already has code in it, a confirmation appears first telling you how many lines you are about to lose — so paste your snippet into an empty command, or copy out what you want to keep before applying. If the box is empty the snippet is applied straight away.
+
+Snippets are stored per-install (shared across all your projects) and remembered across sessions.
+
 ### Choosing a Graphic (Favourites)
 
 Every graphic picker has a live preview and favourites: the event page **Graphic** (character sheet), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), the Move Route **Change Graphic** action, the map Battleback picker, and the fog / panorama / custom layer edit popup in the Layer panel.

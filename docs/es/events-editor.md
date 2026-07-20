@@ -147,6 +147,22 @@ Esas filas extra son *líneas del comando*, no comandos propios:
 
 Para partir un mensaje en varios cuadros de texto en el juego, inserta un *segundo* comando Show Text en vez de añadir más líneas al primero.
 
+### Fragmentos de script
+
+Todo cuadro de script del editor de eventos tiene un botón **Fragmentos…** junto a su título **Script** — úsalo para mantener una biblioteca del código Ruby que reutilizas, en vez de reescribir (o buscar) las mismas líneas cada vez.
+
+Haz clic en **Fragmentos…** y se abre el gestor de fragmentos: escribe un nombre en **Guardar el actual como nuevo** abajo y pulsa **Guardar** para guardar lo que haya ahora en el cuadro; después elige un fragmento guardado y pulsa **Aplicar** (o haz doble clic en él) para volcar el código de vuelta. La lista muestra el código del fragmento resaltado en una vista previa con scroll, así que puedes comprobar que has elegido el correcto antes de aplicarlo. Renombrar, sobrescribir con el contenido actual del cuadro y borrar funcionan desde el mismo diálogo, y **Exportar…** / **Importar…** escriben y leen archivos de fragmentos para hacer copias de seguridad o compartirlos con otra persona.
+
+Tres sitios comparten **una misma** biblioteca de fragmentos, así que lo que guardes en uno aparece en los demás:
+
+- el comando **Script**,
+- la acción **Script** dentro de Set Move Route,
+- el cuadro de script de un comando de mod que no define sus propios campos.
+
+Aplicar un fragmento **reemplaza el cuadro entero**, no lo inserta en la posición del cursor. Si el cuadro ya tiene código, primero aparece una confirmación que te indica cuántas líneas vas a perder — así que pega tu fragmento en un comando vacío, o copia antes lo que quieras conservar. Si el cuadro está vacío, el fragmento se aplica directamente.
+
+Los fragmentos se guardan por instalación (compartidos entre todos tus proyectos) y se recuerdan entre sesiones.
+
 ### Elegir un gráfico (Favoritos)
 
 Cada selector de gráficos tiene vista previa en vivo y favoritos: el **Graphic** de la página de evento (hoja de personaje), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), la acción **Change Graphic** de la ruta de movimiento, el selector de Battleback del mapa y el popup de edición de capa de fog / panorama / personalizada del panel de capas.
