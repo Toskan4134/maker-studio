@@ -42,7 +42,7 @@ Both shortcuts are rebindable under **Help → Keyboard Shortcuts...** (the "Scr
 
 ## Saving
 
-Click **Save** to write everything back to `Data/Scripts.rxdata`. Your previous file is backed up to
+Click **Save** (or press `Ctrl+S`) to write everything back to `Data/Scripts.rxdata`. Your previous file is backed up to
 `Data/Scripts.rxdata.bak` first, so you can always roll back. Closing the window with unsaved changes
 asks you to confirm.
 

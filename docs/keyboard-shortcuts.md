@@ -151,6 +151,7 @@ The move-action list in **Set Move Route** supports the same editing keys as the
 |-------------|--------|
 | Ctrl+F | Find (and replace) in the current script |
 | Ctrl+Shift+F | Search across all scripts |
+| Ctrl+S | Save all scripts back to Scripts.rxdata |
 
 See the [Scripts editor guide](scripts.md#finding-things) for details.
 

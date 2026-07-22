@@ -151,6 +151,7 @@ La lista de acciones de movimiento en **Set Move Route** admite las mismas tecla
 |-------------|--------|
 | Ctrl+F | Buscar (y reemplazar) en el script actual |
 | Ctrl+Shift+F | Buscar en todos los scripts |
+| Ctrl+S | Guardar todos los scripts en Scripts.rxdata |
 
 Consulta la [guía del editor de scripts](scripts.md#finding-things) para más detalles.
 

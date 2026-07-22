@@ -30,7 +30,7 @@ Ambos atajos son reasignables en **Help → Keyboard Shortcuts...** (la sección
 
 ## Guardar
 
-Haz clic en **Save** para escribir todo de vuelta en `Data/Scripts.rxdata`. Tu archivo anterior se respalda primero en `Data/Scripts.rxdata.bak`, así que siempre puedes revertir. Cerrar la ventana con cambios sin guardar te pide confirmar.
+Haz clic en **Save** (o pulsa `Ctrl+S`) para escribir todo de vuelta en `Data/Scripts.rxdata`. Tu archivo anterior se respalda primero en `Data/Scripts.rxdata.bak`, así que siempre puedes revertir. Cerrar la ventana con cambios sin guardar te pide confirmar.
 
 > **Consejo:** tras guardar, ejecuta tu juego para asegurarte de que tus ediciones compilan — un error de sintaxis en un script impedirá que el juego arranque, igual que en RPG Maker XP.
 
