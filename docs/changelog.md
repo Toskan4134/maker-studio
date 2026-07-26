@@ -2,6 +2,19 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.2.0
+
+Update focused on the game-side plugin: the editor now keeps it up to date for you, plus a reusable script library and a long-standing rendering fix.
+
+### Additions
+- 🔌 **The editor keeps your Integration up to date** — open a project and Maker Studio checks the plugin installed in your game. If it's older than the editor, it offers to download and install the right one for you (**Update Now**), point you at the download page, or remind you later. It works out which Integration your project uses on its own, keeps your project's mods and settings untouched, and handles the paste-in builds (BES v5, v17.1) by replacing just their script. You can run the check any time from **Help → Check Game Integration…**.
+- ✂️ **Script snippets** — every script box in the event editor now has a **Snippets…** button: save the bits of code you retype, then drop them in with one click. One shared library across your whole project, with rename, overwrite, delete, and import/export to a file.
+- 🧩 **One more supported engine** — vanilla Pokémon Essentials v17.1 now has its own Integration to install.
+
+### Fixes
+- 🧱 **Fixed tiles flickering in-game while walking** — a tile stacked on two extended layers could show one layer or the other depending on where you were standing, so parts of a map appeared and disappeared as you moved.
+- 💾 Fixed Ctrl+S not saving while the Scripts window was open.
+
 ## v1.1.1
 
 Small update: a faster way to open projects, plus editor and in-game preview performance fixes.
