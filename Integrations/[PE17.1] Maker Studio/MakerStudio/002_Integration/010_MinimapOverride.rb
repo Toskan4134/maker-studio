@@ -19,7 +19,7 @@
 # and lays maps out at width*4), so the preview matches what the player sees.
 #
 # Cross-engine: it relies only on primitives present in every supported engine
-# (v21.1 / LBDS / BES): the native TileDrawingHelper for tile/autotile assembly
+# (v21.1 / LBDS / BES / v17.1): the native TileDrawingHelper for tile/autotile assembly
 # (handles mega tilesets where the engine does), DataStore for the embedded
 # extended-layer JSON, and the shared MakerStudio constants. The two places the
 # engines genuinely diverge are picked at runtime:
@@ -70,8 +70,8 @@ module MakerStudio
     native_props = ext && ext["nativeProperties"]
     ext_layers = []
     if ext && ext["layers"]
-      ext_layers = ext["layers"].select { |l| l && l["visible"] }
-                                .sort_by { |l| l["id"].to_i }   # ascending = bottom -> top
+      ext_layers = ext["layers"].select { |l| l && l["visible"] }.
+                                sort_by { |l| l["id"].to_i }   # ascending = bottom -> top
     end
 
     # Scratch bitmaps + caches reused across every cell.
@@ -91,12 +91,17 @@ module MakerStudio
       end
     end
 
+    # Three passes so the z-order matches the in-game renderer: native ground
+    # first, then shadows (z=1, on the ground but under objects), then extended
+    # layers + objects on top. Each cell only writes its own 4px square, so a
+    # per-cell native/extended order would equal the global order EXCEPT for
+    # shadows, which span many cells — hence the split.
+    # --- Pass 1: native layers 0..2 (bottom to top) ---
     map.height.times do |y|
       map.width.times do |x|
         px = x * scale
         py = y * scale
         key = has_native_props ? "#{x},#{y}" : nil
-        # --- native layers 0..2 (bottom to top) ---
         NATIVE_LAYERS.times do |z|
           tid = map.data[x, y, z] || 0
           props = key && native_props[z] && native_props[z][key]
@@ -112,11 +117,14 @@ module MakerStudio
       end
     end
 
-    # --- Extended layers. Sparse: iterate each layer's painted-tile hash
-    # instead of scanning the whole w*h grid per layer (extended layers are
-    # usually a few hundred tiles on a many-thousand-cell map). Layer-major
-    # order is per-cell identical to the old cell-major scan because every
-    # draw only touches its own 4px square. ---
+    # --- Pass 2: shadow layers (editor-baked PNGs) ---
+    minimap_draw_shadows(out, map, ext, scale) if ext
+
+    # --- Pass 3: extended layers. Sparse: iterate each layer's painted-tile
+    # hash instead of scanning the whole w*h grid per layer (extended layers
+    # are usually a few hundred tiles on a many-thousand-cell map). Layer-major
+    # order is per-cell identical to the old cell-major scan because every draw
+    # only touches its own 4px square. ---
     ext_layers.each do |layer|
       tiles = layer["tiles"]
       next unless tiles && !tiles.empty?
@@ -141,7 +149,9 @@ module MakerStudio
     minimap_border(out)
     out
   rescue => e
-    Console.echo_error("MakerStudio: build_minimap failed: #{e.message}") if defined?(Console)
+    # v17.1 defines module Console but NOT Console.echo_error — a defined?(Console)
+    # guard would still crash inside this rescue. Kernel#echoln is always there.
+    echoln("MakerStudio: build_minimap failed: #{e.message}")
     (out.dispose rescue nil) if out
     nil
   end
@@ -400,6 +410,112 @@ module MakerStudio
         bmp.set_pixel(x, y, Color.new(r.round, g.round, b.round, col.alpha))
       end
     end
+  end
+
+  #---------------------------------------------------------------------------
+  # Draw shadow layers from their editor-baked PNGs (Graphics/Shadows/<map>_<id>).
+  # Positioned with the SAME layout anchor math the in-game renderer uses for the
+  # baked-PNG fast path, then scaled to the 4px grid with the shadow's opacity.
+  # Runtime-generated shadows (no baked PNG) are skipped — generating the
+  # silhouette here would need the live TilemapRenderer's tileset/autotile pool.
+  #---------------------------------------------------------------------------
+  def minimap_draw_shadows(out, map, ext, scale)
+    shadows = ext["shadowLayers"]
+    if !shadows || shadows.empty?
+      single = ext["shadowLayer"]
+      shadows = single ? [single] : []
+    end
+    return if shadows.empty?
+    tw = TILE_WIDTH
+    th = TILE_HEIGHT
+    f = scale.to_f / tw   # full-res pixel -> minimap pixel
+    shadows.each_with_index do |shadow, idx|
+      next unless shadow && shadow["visible"]
+      config = shadow["config"]
+      source_tiles = shadow["sourceTiles"]
+      next unless config && source_tiles && !source_tiles.empty?
+      next if config["height"].nil? || config["direction"].nil?   # legacy config
+      shadow_id = shadow["id"] || idx
+      bmp = (Bitmap.new(sprintf("Graphics/Shadows/%03d_%d", map.map_id, shadow_id)) rescue nil)
+      next unless bmp && !bmp.disposed?
+      begin
+        xs = source_tiles.map { |t| t["x"].to_i }
+        ys = source_tiles.map { |t| t["y"].to_i }
+        min_x = xs.min
+        min_y = ys.min
+        bh = ys.max - min_y + 1
+        bw = xs.max - min_x + 1
+        layout = minimap_shadow_layout(config, bw * tw, bh * th, tw, th)
+        if layout
+          frame_w = (shadow["frameWidth"] || bmp.width).to_i
+          frame_w = bmp.width if frame_w <= 0 || frame_w > bmp.width
+          origin_x = min_x * tw - layout[:anchor_x]
+          origin_y = (min_y + bh) * th - layout[:anchor_y]
+          op = ((config["shadowOpacity"] || 51).to_i * (shadow["opacity"] || 255).to_i / 255.0).round
+          op = 0 if op < 0
+          op = 255 if op > 255
+          if op > 0
+            dest = Rect.new((origin_x * f).round, (origin_y * f).round,
+                            [(frame_w * f).round, 1].max, [(bmp.height * f).round, 1].max)
+            out.stretch_blt(dest, bmp, Rect.new(0, 0, frame_w, bmp.height), op)
+          end
+        end
+      ensure
+        bmp.dispose rescue nil   # baked PNG is freshly loaded; we own it
+      end
+    end
+  end
+
+  #---------------------------------------------------------------------------
+  # Shadow bitmap anchor (top-left of the baked PNG in map-pixel space). Ports
+  # the in-game renderer's compute_shadow_layout / drop_geometry / placed_extents
+  # (pure math, identical across engines). Only the anchor is needed here — the
+  # baked PNG already carries its own width/height.
+  #---------------------------------------------------------------------------
+  def minimap_shadow_layout(config, src_w, src_h, tw, th)
+    drop = minimap_drop_geometry((config["direction"] || 180).to_f,
+                                 (config["height"] || 0.6).to_f.abs, src_w, src_h)
+    return nil unless drop
+    placements = []
+    placements << { :gx => 0, :gy => 0,
+                    :ox => ((config["offsetX"] || 0).to_f * tw).round,
+                    :oy => ((config["offsetY"] || 0).to_f * th).round }
+    if config["threeDShadow"]
+      placements << { :gx => 0, :gy => -src_h,
+                      :ox => ((config["secondOffsetX"] || 0).to_f * tw).round,
+                      :oy => ((config["secondOffsetY"] || 0).to_f * th).round }
+    end
+    left_max = above_max = 0
+    placements.each do |p|
+      ext = minimap_placed_extents(drop, p[:gx], p[:gy], p[:ox], p[:oy])
+      left_max  = ext[:left]  if ext[:left]  > left_max
+      above_max = ext[:above] if ext[:above] > above_max
+    end
+    pad = 4 * tw
+    { :anchor_x => pad + ((left_max + tw - 1) / tw) * tw,
+      :anchor_y => pad + ((above_max + th - 1) / th) * th }
+  end
+
+  def minimap_drop_geometry(direction, height_val, src_w, src_h)
+    rad = direction * Math::PI / 180.0
+    dir_x = Math.sin(rad)
+    dir_y = -Math.cos(rad)
+    l = height_val * src_h
+    skew_x = (l * dir_x).round
+    abs_skew = skew_x.abs
+    flat_h = [1, [4, abs_skew].min, (l * dir_y.abs).round].max
+    downward = dir_y > 0
+    {
+      :flat_h => flat_h, :inner_w => src_w + abs_skew,
+      :slab_anchor_x => (skew_x < 0 ? abs_skew : 0),
+      :slab_anchor_y => (downward ? 0 : [0, flat_h - 1].max)
+    }
+  end
+
+  def minimap_placed_extents(g, group_x, group_y, off_x, off_y)
+    tl_x = group_x - g[:slab_anchor_x] + off_x
+    tl_y = group_y - g[:slab_anchor_y] + off_y
+    { :left => [0, -tl_x].max, :above => [0, -tl_y].max }
   end
 
   #---------------------------------------------------------------------------

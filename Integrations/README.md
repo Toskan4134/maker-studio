@@ -21,6 +21,7 @@ integration's own `README.md`.
 | [`[PE21.1] Maker Studio`](<[PE21.1] Maker Studio>) | Vanilla Pokémon Essentials v21.1 | Essentials v21.1 |
 | [`[PE20.1] Maker Studio`](<[PE20.1] Maker Studio>) | Vanilla Pokémon Essentials v20.1 | Essentials v20.1 |
 | [`[PE19.1] Maker Studio`](<[PE19.1] Maker Studio>) | Vanilla Pokémon Essentials v19.1 | Essentials v19.1 |
+| [`[PE17.1] Maker Studio`](<[PE17.1] Maker Studio>) | Vanilla Pokémon Essentials v17.1 | Essentials v17.1 (RGSS `Game.exe`); paste-in install |
 | [`[BES5] Maker Studio`](<[BES5] Maker Studio>) | Pokémon Essentials BES v5 (fork of Essentials v16.2) | BES v5 (runs on RGSS `Game.exe` or mkxp); paste-in install |
 
 ## Adding a new integration

@@ -1,9 +1,9 @@
-# NOTE: Essentials BES v5 has no Plugins/ auto-loader, so it does NOT read this
+# NOTE: Essentials v17.1 has no Plugins/ auto-loader, so it does NOT read this
 # meta.txt. It is kept only for parity with the other integrations and for the
-# editor's reference. Install the BES build by pasting MakerStudio_BES.rb into
+# editor's reference. Install this build by pasting MakerStudio_PE17.rb into
 # the RMXP Script Editor (see this integration's README.md).
 Name         = MakerStudio
 Version      = 1.2.0
-Essentials   = 16.2 (BES v5)
+Essentials   = 17.1
 Website      = https://toskan4134.github.io
 Credits      = Toskan4134

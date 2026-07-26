@@ -1,19 +1,18 @@
 ###############################################################################
-# Maker Studio ? Essentials BES v5 (v16.2) ? SINGLE-FILE BUILD
+# Maker Studio - Essentials v17.1 - SINGLE-FILE BUILD
 #
-# Paste as ONE section in the RMXP Script Editor, just ABOVE "Main". Works on
-# both RGSS (Game.exe, Ruby 1.8) and mkxp (Game_Vanilla.exe). Ruby-1.8-safe,
-# bundles its own JSON parser. Split MakerStudio/ folder is maintenance source.
+# Paste as ONE section in the RMXP Script Editor, just ABOVE "Main". Runs on
+# the stock RGSS runtime (Game.exe, Ruby 1.8). Ruby-1.8-safe, bundles its own
+# JSON parser. The split MakerStudio/ folder is the maintenance source.
 #
 # Identity read back by the editor (Help -> Check Game Integration). This build
 # installs as a pasted script, not a Plugins/ folder, so there is no meta.txt or
 # BUILD file to read - these two comment lines ARE the version stamp. Keep the
 # exact 'MakerStudio-Build:' / 'MakerStudio-Version:' prefixes; the release
 # workflow rewrites the version line.
-# MakerStudio-Build: BES5
+# MakerStudio-Build: PE17.1
 # MakerStudio-Version: 1.2.0
 ###############################################################################
-
 
 ###############################################################################
 # >>> 000_Settings.rb
@@ -71,14 +70,14 @@ end
 # >>> 001_Core/001_DataStore.rb
 ###############################################################################
 #===============================================================================
-# MakerStudio - Data Store (Essentials BES v5 / v16.2)
+# MakerStudio - Data Store (Essentials v17.1)
 #
 # Maker Studio embeds extended-layer data as a JSON string inside the .rxdata.
-# BES targets the original RGSS runtime (Ruby 1.8.1), which has no `json`
-# library and lacks several modern syntax features. So this file:
+# v17.1 runs on the original RGSS runtime (Game.exe, Ruby 1.8.1), which has no
+# `json` library and lacks several modern syntax features. So this file:
 #   * bundles a small pure-Ruby, 1.8-safe JSON parser (MakerStudio::JSON), and
 #   * avoids 1.9+ syntax (symbol-key hashes, &., String#each_char, byte vs char
-#     indexing) so it loads on both RGSS (Ruby 1.8) and mkxp (Ruby 3).
+#     indexing) so the same code also loads on modern Ruby (mkxp ports).
 #===============================================================================
 module MakerStudio
   #---------------------------------------------------------------------------
@@ -267,11 +266,26 @@ module MakerStudio
       nil
     end
 
-    # Load + parse the embedded @extended_layers JSON.
+    # Read @extended_layers straight from the map file on disk.
+    #
+    # Needed because v17.1 Marshals the ENTIRE $MapFactory into the save file
+    # (156_PScreen_Save.rb) and restores it wholesale (155_PScreen_Load.rb) — so
+    # a Continue-d game carries the RPG::Map exactly as it was when the player
+    # saved, and Game_Map#setup (where the plugin hooks the load) never runs for
+    # that map. Any map painted AFTER that save then shows nothing at all.
+    # The editor writes to the .rxdata, so disk is the authority.
+    def disk_extended_layers(map_id)
+      fresh = (load_data(sprintf("Data/Map%03d.rxdata", map_id)) rescue nil)
+      fresh ? fresh.instance_variable_get(:@extended_layers) : nil
+    end
+
+    # Load + parse the embedded @extended_layers JSON. Prefers the in-memory
+    # RPG::Map (no I/O on the normal path) and falls back to disk when it has no
+    # Maker Studio data — see disk_extended_layers for why that happens.
     def load_extended_data(map_id, game_map = nil)
       rpg_map = resolve_rpg_map(game_map)
-      return nil unless rpg_map
-      embedded = rpg_map.instance_variable_get(:@extended_layers)
+      embedded = rpg_map ? rpg_map.instance_variable_get(:@extended_layers) : nil
+      embedded = disk_extended_layers(map_id) if embedded.nil? || embedded.empty?
       return nil unless embedded && !embedded.empty?
       begin
         return MakerStudio::JSON.parse(embedded)
@@ -519,15 +533,78 @@ module MakerStudio
         # Autotile - blit current src_rect
         return nil # Autotile bitmap effects are complex, skip for now
       end
-      # Match the editor's CSS filter chain — Bitmap#hue_change is a true HSV
-      # rotation and reads far more saturated than CSS hue-rotate's linear
-      # approximation. Lighting stays Tone-based in this variant, so hue/sat only.
-      MakerStudio.apply_css_color_filters(bmp, hue, saturation, 0)
+      # Lighting stays Tone-based in this variant, so bake hue/sat only.
+      apply_css_color_filters(bmp, hue, saturation, 0)
       return bmp
     rescue => e
       echoln("MakerStudio ERROR: bitmap effect error: #{e.message}")
       bmp.dispose if bmp
       return nil
+    end
+
+    #---------------------------------------------------------------------------
+    # Replicate the editor's CSS filter chain on a bitmap, in CSS order:
+    #   hue-rotate(deg) -> saturate(pct/100) -> brightness(1 + lighting/255)
+    # Uses the W3C feColorMatrix matrices (Rec.709 luma) so in-game matches the
+    # editor canvas exactly. Bitmap#hue_change is a true HSV rotation and reads
+    # far more saturated than CSS hue-rotate's linear approximation — never use
+    # it here. Same math as this integration's OverlayRenderer copy. 1.8-safe.
+    #---------------------------------------------------------------------------
+    def apply_css_color_filters(bmp, hue_deg, sat_pct, lighting)
+      w = bmp.width
+      h = bmp.height
+      do_hue = (hue_deg % 360) != 0
+      do_sat = sat_pct != 100
+      do_bri = lighting != 0
+      if do_hue
+        a = hue_deg * Math::PI / 180.0
+        c = Math.cos(a)
+        s = Math.sin(a)
+        hrr = 0.213 + c * 0.787 - s * 0.213; hrg = 0.715 - c * 0.715 - s * 0.715; hrb = 0.072 - c * 0.072 + s * 0.928
+        hgr = 0.213 - c * 0.213 + s * 0.143; hgg = 0.715 + c * 0.285 + s * 0.140; hgb = 0.072 - c * 0.072 - s * 0.283
+        hbr = 0.213 - c * 0.213 - s * 0.787; hbg = 0.715 - c * 0.715 + s * 0.715; hbb = 0.072 + c * 0.928 + s * 0.072
+      end
+      if do_sat
+        sv = sat_pct / 100.0
+        srr = 0.213 + 0.787 * sv; srg = 0.715 - 0.715 * sv; srb = 0.072 - 0.072 * sv
+        sgr = 0.213 - 0.213 * sv; sgg = 0.715 + 0.285 * sv; sgb = 0.072 - 0.072 * sv
+        sbr = 0.213 - 0.213 * sv; sbg = 0.715 - 0.715 * sv; sbb = 0.072 + 0.928 * sv
+      end
+      bri = do_bri ? (1.0 + lighting / 255.0) : 1.0
+      # Chromium renders each filter function to an intermediate surface that
+      # clamps to [0,255] BETWEEN stages; without these clamps chained
+      # hue+saturate reads visibly brighter in-game (verified vs headless
+      # Chromium: unclamped drifts up to 42/channel, clamped matches within 1).
+      (0...h).each do |y|
+        (0...w).each do |x|
+          col = bmp.get_pixel(x, y)
+          next if col.alpha == 0
+          r = col.red.to_f; g = col.green.to_f; b = col.blue.to_f
+          if do_hue
+            nr = r * hrr + g * hrg + b * hrb
+            ng = r * hgr + g * hgg + b * hgb
+            nb = r * hbr + g * hbg + b * hbb
+            r = nr < 0 ? 0.0 : (nr > 255 ? 255.0 : nr)
+            g = ng < 0 ? 0.0 : (ng > 255 ? 255.0 : ng)
+            b = nb < 0 ? 0.0 : (nb > 255 ? 255.0 : nb)
+          end
+          if do_sat
+            nr = r * srr + g * srg + b * srb
+            ng = r * sgr + g * sgg + b * sgb
+            nb = r * sbr + g * sbg + b * sbb
+            r = nr < 0 ? 0.0 : (nr > 255 ? 255.0 : nr)
+            g = ng < 0 ? 0.0 : (ng > 255 ? 255.0 : ng)
+            b = nb < 0 ? 0.0 : (nb > 255 ? 255.0 : nb)
+          end
+          if do_bri
+            r *= bri; g *= bri; b *= bri
+          end
+          r = 0 if r < 0; r = 255 if r > 255
+          g = 0 if g < 0; g = 255 if g > 255
+          b = 0 if b < 0; b = 255 if b > 255
+          bmp.set_pixel(x, y, Color.new(r.round, g.round, b.round, col.alpha))
+        end
+      end
     end
 
     #---------------------------------------------------------------------------
@@ -545,18 +622,20 @@ end
 # >>> 002_Integration/001_Hooks.rb
 ###############################################################################
 #===============================================================================
-# MakerStudio - Hooks & Menu Integration (Essentials BES v5 / v16.2)
+# MakerStudio - Hooks & Menu Integration (Essentials v17.1)
 #
-# BES differences from the v21.1 build handled here:
-#   * No MenuHandlers-driven debug menu — the F9 menu (pbDebugMenu) is a hardcoded
-#     CommandList with an inline case dispatch, so we can't inject a command into
-#     it. Instead pbDebugMenu is aliased to offer a top-level chooser whose
-#     DEFAULT is the normal debug menu (so just pressing C behaves as before),
-#     with "Maker Studio..." as the second entry.
+# v17.1 differences from the v21.1 build handled here:
+#   * No MenuHandlers-driven debug menu — the F9 menu (pbDebugMenu) builds a
+#     CommandMenuList inline and dispatches via pbDebugMenuActions, so we can't
+#     inject a command into it. Instead pbDebugMenu is aliased to offer a
+#     top-level chooser whose DEFAULT is the normal debug menu (so just pressing
+#     C behaves as before), with "Maker Studio..." as the second entry.
 #   * No :on_new_game / :on_game_map_setup triggers — Game_Map#setup is aliased to
 #     load extended layers (covers new game, transfer and connected-map loads).
 #   * No Game.load_map — Continue/transfer reload .rxdata via Game_Map#setup, and
 #     the overlay rebuilds in Events.onSpritesetCreate, so no save hook is needed.
+#   * pbMessage / pbShowCommands exist only as Kernel singleton methods on
+#     v17.1 (def Kernel.pbMessage), so every call here must be Kernel-qualified.
 #===============================================================================
 
 #---------------------------------------------------------------------------
@@ -601,7 +680,7 @@ def pbOpenMakerStudio
   root_path = File.expand_path(Dir.pwd)
   editor = MakerStudio.find_editor_executable
   unless editor
-    pbMessage(_INTL("Maker Studio is not installed.\nDownload it from:\n{1}", MakerStudio::DOWNLOAD_URL))
+    Kernel.pbMessage(_INTL("Maker Studio is not installed.\nDownload it from:\n{1}", MakerStudio::DOWNLOAD_URL))
     return
   end
   case MakerStudio.host_os
@@ -636,6 +715,15 @@ def pbRefreshLiveMapData(map_id)
       $game_map.instance_variable_set(:@priorities, ts.priorities)
       $game_map.instance_variable_set(:@terrain_tags, ts.terrain_tags)
     end
+    # Rebuild events from the fresh map so new/edited/deleted events
+    # appear without a full game restart.
+    if fresh_map.events
+      new_events = {}
+      fresh_map.events.each do |key, rpg_event|
+        new_events[key] = Game_Event.new(map_id, rpg_event, $game_map)
+      end
+      $game_map.instance_variable_set(:@events, new_events)
+    end
   end
   MakerStudio.load_extended_layers_for_map(map_id, $game_map)
   # Re-apply per-map panorama / battleback + native-fog suppression after reload.
@@ -644,6 +732,11 @@ def pbRefreshLiveMapData(map_id)
   end
   ov = MakerStudio.current_overlay
   ov.rebuild if ov && !ov.disposed?
+  # Rebuild spriteset so character sprites match the refreshed events
+  if $scene.respond_to?(:disposeSpritesets) && $scene.respond_to?(:createSpritesets)
+    $scene.disposeSpritesets
+    $scene.createSpritesets
+  end
   # Re-point the native CustomTilemap at the (freshly blanked) map data.
   sp = MakerStudio.instance_variable_get(:@current_spriteset)
   if sp
@@ -667,7 +760,7 @@ def pbReloadCurrentMapData
   map_id = $game_map.map_id
   MakerStudio.clear_all_caches
   pbRefreshLiveMapData(map_id)
-  pbMessage(_INTL("Map data reloaded"))
+  Kernel.pbMessage(_INTL("Map data reloaded"))
 end
 
 #---------------------------------------------------------------------------
@@ -677,7 +770,7 @@ module MakerStudio
   def self.pbMakerStudioMenu
     loop do
       cmds = [_INTL("Open Maker Studio"), _INTL("Reload Map Data"), _INTL("Cancel")]
-      c = pbShowCommands(nil, cmds, -1)
+      c = Kernel.pbShowCommands(nil, cmds, -1)
       case c
       when 0 then pbOpenMakerStudio
       when 1 then pbReloadCurrentMapData
@@ -693,15 +786,15 @@ end
 if !defined?($__mkst_pbdebug_aliased) || !$__mkst_pbdebug_aliased
   $__mkst_pbdebug_aliased = true
   alias __mkst__pbDebugMenu pbDebugMenu
-  def pbDebugMenu
+  def pbDebugMenu(showall = true)
     if MakerStudio::ENABLED
-      c = pbShowCommands(nil, [_INTL("Debug Menu"), _INTL("Maker Studio...")], -1, 0)
+      c = Kernel.pbShowCommands(nil, [_INTL("Debug Menu"), _INTL("Maker Studio...")], -1, 0)
       if c == 1
         MakerStudio.pbMakerStudioMenu
         return
       end
     end
-    __mkst__pbDebugMenu
+    __mkst__pbDebugMenu(showall)
   end
 end
 
@@ -739,31 +832,32 @@ end
 # >>> 002_Integration/002_OverlayRenderer.rb
 ###############################################################################
 #===============================================================================
-# MakerStudio - Overlay Renderer (Essentials BES v5 / v16.2)
+# MakerStudio - Overlay Renderer (Essentials v17.1)
 #
-# BES renders the map with the classic Ruby CustomTilemap (Tilemap_XP), which
-# composites the three native layers into a few shared layer bitmaps — there are
-# NO per-tile sprites to manipulate (unlike v21.1's TilemapRenderer, which the
-# original integration patches directly).
+# v17.1 renders the map through TilemapLoader, which wraps either the classic
+# Ruby CustomTilemap (Tilemap_XP) or the hardware SynchronizedTilemap depending
+# on $PokemonSystem.tilemap. Both composite the three native layers into shared
+# surfaces — there are NO per-tile sprites to manipulate (unlike v21.1's
+# TilemapRenderer, which the original integration patches directly).
 #
 # So this build draws everything Maker Studio adds — extended layers, per-tile
 # effects, native-layer "extra" tiles, and shadows — as an INDEPENDENT set of
-# Sprites attached to the map's viewport (Spriteset_Map@viewport1). They are
+# Sprites attached to the map's viewport (Spriteset_Map @@viewport1). They are
 # positioned every frame from $game_map.display_x/y using the exact same screen
-# math BES uses for events/player, so overlay tiles stay glued to the map and to
-# characters in every tilemap view mode.
+# math v17.1 uses for events/player, so overlay tiles stay glued to the map and
+# to characters in every tilemap view mode.
 #
-# Injection points (all old-style BES Events, since EventHandlers is defined but
-# never triggered on BES):
+# Injection points (all old-style Events — v17.1 has no v19+ EventHandlers):
 #   Events.onSpritesetCreate  -> build the overlay in the new viewport
 #   Spriteset_Map#update      -> (aliased) drive per-frame overlay update
 #   Spriteset_Map#dispose     -> (aliased) tear the overlay down
 #
-# Tile bitmaps are composed with BES's TileDrawingHelper (handles RMXP autotile
-# assembly + animation), so AutotileExpander/AutotileBitmaps are not needed.
+# Tile bitmaps are composed with the engine's TileDrawingHelper (handles RMXP
+# autotile assembly + animation), so AutotileExpander/AutotileBitmaps are not
+# needed.
 #===============================================================================
 
-# BES Game_Map exposes tileset_name but NOT tileset_id (only the RPG::Map it
+# v17.1's Game_Map exposes tileset_name but NOT tileset_id (only the RPG::Map it
 # wraps does). The renderer/shadow code needs the id to look up tilesets, so add
 # a reader that delegates to the wrapped RPG::Map. Modern engines already define
 # tileset_id, so only add it when missing.
@@ -802,8 +896,8 @@ module MakerStudio
 
   # Frames per autotile animation step — same constant the native CustomTilemap
   # uses, so overlay autotiles/shadows stay in lockstep with the map's autotiles.
-  # NOTE: BES defines it as CustomTilemap::Animated_Autotiles_Frames (= 15), NOT
-  # a top-level constant — referencing the bare name fell back to 5, making
+  # NOTE: v17.1 defines it as CustomTilemap::Animated_Autotiles_Frames (= 15),
+  # NOT a top-level constant — referencing the bare name fell back to 5, making
   # autotiles ~3x too fast.
   def anim_step
     if defined?(CustomTilemap) && defined?(CustomTilemap::Animated_Autotiles_Frames)
@@ -818,7 +912,43 @@ module MakerStudio
   #---------------------------------------------------------------------------
   # Extended data load / lookup (reuses DataStore — engine-agnostic JSON)
   #---------------------------------------------------------------------------
+  #---------------------------------------------------------------------------
+  # v17.1 Marshals the whole $MapFactory into Game.rxdata (156_PScreen_Save.rb)
+  # and restores it wholesale (155_PScreen_Load.rb), so a Continue-d game holds
+  # the RPG::Map exactly as it was when the player saved — Game_Map#setup, where
+  # this plugin hooks the load, never runs for it. DataStore re-reads the
+  # extended-layer JSON from disk, but NATIVE-layer Maker Studio tiles resolve
+  # their tile id from the map's Table (rpg.data, see collect_native_extra_cells:
+  # `next if base_tid <= 0`), so a Table predating the editing draws *nothing*
+  # for them. Re-point the map at the on-disk tile data in that case.
+  # Only @data is swapped — events keep their runtime state.
+  #---------------------------------------------------------------------------
+  def resync_saved_map(map_id, map)
+    return false unless map
+    rpg = map.instance_variable_get(:@map)
+    return false unless rpg
+    # Present => this map came through Game_Map#setup, so it is already current.
+    raw = rpg.instance_variable_get(:@extended_layers)
+    return false unless raw.nil? || raw.empty?
+    fresh = (load_data(sprintf("Data/Map%03d.rxdata", map_id)) rescue nil)
+    return false unless fresh
+    fresh_raw = fresh.instance_variable_get(:@extended_layers)
+    return false if fresh_raw.nil? || fresh_raw.empty?
+    # Swap the tile data only when the map was NOT resized since the save — a
+    # different Table size would desync the player/camera coordinates.
+    if fresh.instance_variable_get(:@width)  == rpg.instance_variable_get(:@width) &&
+       fresh.instance_variable_get(:@height) == rpg.instance_variable_get(:@height)
+      rpg.instance_variable_set(:@data, fresh.instance_variable_get(:@data))
+      # Blanking records point at the OLD Table's ids — drop them.
+      @blanked_cells.delete(map_id)       if @blanked_cells
+      @covered_plain_cells.delete(map_id) if @covered_plain_cells
+    end
+    rpg.instance_variable_set(:@extended_layers, fresh_raw)
+    true
+  end
+
   def load_extended_layers_for_map(map_id, map)
+    resync_saved_map(map_id, map)
     @extended_data_cache[map_id] = DataStore.get_extended_data(map_id, map.width, map.height, map)
     @cell_band_cache.delete(map_id) if @cell_band_cache
   end
@@ -931,8 +1061,11 @@ module MakerStudio
     hue = (tile_data["hue"] || 0).to_i
     sat = (tile_data["saturation"] || 100).to_i
     lighting = (tile_data["lighting"] || 0).to_i
+    # flipV is baked into the strip (see below): RGSS1's Game.exe does not render
+    # a negative zoom_y, so it must be part of the bitmap, hence part of the sig.
+    flip_v = tile_data["flipV"] ? 1 : 0
     sig = "#{base_tile_id}|#{tile_data['autotile_name']}|#{tile_data['tileset_id']}|" \
-          "#{tile_data['autotile_pattern']}|m#{map.tileset_id}|h#{hue}|s#{sat}|L#{lighting}"
+          "#{tile_data['autotile_pattern']}|m#{map.tileset_id}|h#{hue}|s#{sat}|L#{lighting}|v#{flip_v}"
     cached = @tile_strip_cache[sig]
     return cached if cached && cached[0] && !cached[0].disposed?
 
@@ -984,10 +1117,30 @@ module MakerStudio
     # hue_change / Rec.601 desaturation / additive tone do NOT match those, so
     # we replicate the exact CSS color matrices per pixel here.
     apply_css_color_filters(strip, hue, sat, lighting) if hue != 0 || sat != 100 || lighting != 0
+    # Bake the vertical flip. RGSS1 (v17.1's Game.exe) does NOT render a sprite
+    # with negative zoom_y — it drops the sprite entirely — so flipV cannot be a
+    # sprite transform here (flipH still can: sprite.mirror is native). Flip each
+    # frame in place; the strip is th tall, so one vertical mirror flips them all.
+    if flip_v == 1
+      flipped = flip_strip_vertically(strip, th)
+      strip.dispose
+      strip = flipped
+    end
 
     result = [strip, frames]
     @tile_strip_cache[sig] = result
     result
+  end
+
+  # Return a vertically-mirrored copy of a strip (width unchanged, th tall).
+  def flip_strip_vertically(strip, th)
+    out = Bitmap.new(strip.width, strip.height)
+    y = 0
+    while y < th
+      out.blt(0, th - 1 - y, strip, Rect.new(0, y, strip.width, 1))
+      y += 1
+    end
+    out
   end
 
   #---------------------------------------------------------------------------
@@ -1164,14 +1317,27 @@ module MakerStudio
   # already, so they need no blanking. The original tile id is recorded so the
   # Game_Map collision patch (each_native_extra_tile_at) can still resolve it.
   #---------------------------------------------------------------------------
-  # Only cross-tileset native tiles MUST be blanked: the CustomTilemap would
-  # otherwise draw their tile id from the map's own tileset (wrong graphic).
-  # Effect-only and extra-autotile native tiles are NOT blanked — the original
-  # tile stays drawn (keeping its native collision) and we overlay the effect
-  # copy on top. (Extra-autotile native cells are stored as 0 in the Table, so
-  # the CustomTilemap already draws nothing there.)
+  # Which native cells must be zeroed in the Table so the engine stops drawing
+  # the original underneath our overlay copy.
+  #
+  #  * cross-tileset  -> ALWAYS: the CustomTilemap would draw that tile id from
+  #    the MAP's tileset, i.e. a completely unrelated graphic.
+  #  * extra autotile -> never: those cells are already stored as 0.
+  #  * same tileset   -> only when our copy cannot cover every pixel the original
+  #    painted. Colour-only effects (hue/saturation/lighting) keep the exact same
+  #    silhouette, so the opaque copy hides the original perfectly and we can
+  #    leave it drawn (which preserves its native collision for free). But flip,
+  #    rotation and opacity < 255 MOVE or thin the pixels, so on any tile with
+  #    transparency the untouched original ghosts through next to the effect —
+  #    that has to be blanked and redrawn. Collision for those cells is kept by
+  #    each_native_extra_tile_at, which yields their recorded original tile id.
   def needs_blank?(tile_data)
-    !tile_data["autotile_name"] && !tile_data["tileset_id"].nil?
+    return false if tile_data["autotile_name"]
+    return true unless tile_data["tileset_id"].nil?
+    return true if tile_data["flipH"] || tile_data["flipV"]
+    v = tile_data["rotation"]; return true if v && (v.to_i % 360) != 0
+    v = tile_data["opacity"];  return true if v && v.to_i != 255
+    false
   end
 
   def props_has_visual_effects?(props)
@@ -1357,6 +1523,13 @@ module MakerStudio
       elsif td["tileset_id"]
         tid = original_native_tile_id(map_id, x, y, layer, 0)
         yield tid, td
+      else
+        # Same-tileset effect cell. Only the ones needs_blank? zeroed have a
+        # recorded id — those are invisible to the engine's own scan now, so we
+        # must answer for them. Cells left drawn record nothing (tid 0 here) and
+        # keep being resolved by the untouched native logic, exactly as before.
+        tid = original_native_tile_id(map_id, x, y, layer, 0)
+        yield tid, td if tid > 0
       end
     end
   end
@@ -1379,7 +1552,7 @@ end
 # Overlay — owns all Maker Studio sprites for one Spriteset_Map's viewport.
 #===============================================================================
 module MakerStudio
-# One Overlay per Spriteset_Map. BES (Scene_Map#createSpritesets) builds a
+# One Overlay per Spriteset_Map. v17.1 (Scene_Map#createSpritesets) builds a
 # separate Spriteset_Map for EACH map in $MapFactory, so each overlay renders
 # ONLY its own spriteset's map — never the whole factory (doing the latter
 # created N² sprites across N connected maps: lag + overlapping z).
@@ -1420,8 +1593,12 @@ class Overlay
     MakerStudio.dispose_fog_sprites(@map_id) if @map_id && MakerStudio.respond_to?(:dispose_fog_sprites)
   end
 
+  # RGSS1 has NO Viewport#disposed? (Sprite/Plane/Bitmap do have it) — the base
+  # hits the same gap in pbSetResizeFactor2 and works around it with a
+  # `rescue RGSSError` on its Viewport pass. Ask before calling: Spriteset_Map
+  # #initialize ends with update, so the very first frame crashed on load.
   def disposed?
-    @viewport.nil? || @viewport.disposed?
+    @viewport.nil? || (@viewport.respond_to?(:disposed?) && @viewport.disposed?)
   end
 
   def each_pool_sprite
@@ -1588,7 +1765,8 @@ class Overlay
     strip, frames = composed
     spr.bitmap = strip
     # Reset transform state before re-applying effects: this sprite may still
-    # carry a previous cell's flip (negative zoom_y) or rotation.
+    # carry a previous cell's rotation. (flipV is baked into the strip, not a
+    # zoom, because RGSS1 does not render a negative zoom_y — see compose_tile_strip.)
     spr.zoom_x = 1.0
     spr.zoom_y = 1.0
     spr.src_rect.set(0, 0, MakerStudio::TILE_WIDTH, MakerStudio::TILE_HEIGHT)
@@ -1616,11 +1794,13 @@ class Overlay
     angle = (td["rotation"] || 0).to_i
     spr.angle = -angle
     spr.mirror = td["flipH"] ? true : false
-    spr.zoom_y = -spr.zoom_y if td["flipV"]
+    # flipV is NOT a sprite transform here — RGSS1 drops a sprite with negative
+    # zoom_y, so it is baked into the strip in compose_tile_strip. Only rotation
+    # needs the centre origin (the update loop compensates the offset).
     # NOTE: hue/saturation/lighting are baked into the tile bitmap (CSS-filter
     # match) — do NOT set sprite.tone here, so the ambient/day-night tone the
     # update loop copies from the tilemap is the only tone on the sprite.
-    needs_center = angle != 0 || td["flipV"]
+    needs_center = angle != 0
     spr.ox = needs_center ? MakerStudio::TILE_WIDTH / 2 : 0
     spr.oy = needs_center ? MakerStudio::TILE_HEIGHT / 2 : 0
   end
@@ -1732,10 +1912,13 @@ class Overlay
     frame = Graphics.frame_count / MakerStudio.anim_step
     dx = @map.display_x
     dy = @map.display_y
-    # Day/night ("ambient") tone: BES tints native tiles via the tilemap's tone
-    # (PBDayNight, applied per-tile — NOT via the viewport). We mirror it onto our
-    # sprites so they darken/brighten with time exactly like native tiles. The
-    # viewport's $game_screen.tone (weather/tint events) still applies on top.
+    # Day/night ("ambient") tone: in tilemap modes 1/2 v17.1 tints native tiles
+    # via the tilemap's tone (pbDayNightTint(@tilemap) — NOT via the viewport);
+    # we mirror it onto our sprites so they darken/brighten with time exactly
+    # like native tiles. In mode 0 (SynchronizedTilemap) the engine instead
+    # tints @@viewport3 as a screen-wide post-effect — tilemap.tone stays zero,
+    # so this mirror is a harmless no-op and the viewport3 effect already covers
+    # our sprites. The $game_screen.tone (weather/tint events) applies on top.
     dn_tone = (@tilemap ? (@tilemap.tone rescue nil) : nil)
     tone_changed = dn_tone && (dn_tone.red != @tr || dn_tone.green != @tg ||
                                dn_tone.blue != @tb || dn_tone.gray != @tgr)
@@ -1860,7 +2043,7 @@ end
 
 #===============================================================================
 # Shadow generation (ported from the v21 build — pure RGSS bitmap math, with
-# tile blitting routed through BES TileDrawingHelper).
+# tile blitting routed through the engine's TileDrawingHelper).
 #===============================================================================
 module MakerStudio
   module_function
@@ -2134,7 +2317,8 @@ end
 
 #===============================================================================
 # Spriteset hooks — attach the overlay on creation, drive + dispose with the
-# spriteset. BES fires Events.onSpritesetCreate from Spriteset_Map#initialize.
+# spriteset. v17.1 fires Events.onSpritesetCreate from Spriteset_Map#initialize
+# (via Kernel.pbOnSpritesetCreate).
 #===============================================================================
 Events.onSpritesetCreate += proc { |_sender, e|
   if MakerStudio::ENABLED
@@ -2188,14 +2372,14 @@ end
 # >>> 002_Integration/003_GameMapOverride.rb
 ###############################################################################
 #===============================================================================
-# MakerStudio - Game Map Override (Essentials BES v5 / v16.2)
+# MakerStudio - Game Map Override (Essentials v17.1)
 #
 # Patches Game_Map collision + terrain so they account for Maker Studio's
 # extended layers and native-layer "extra" tiles (extra autotiles, cross-tileset
-# tiles). Each Maker Studio tile is checked BEFORE deferring to BES's own native
+# tiles). Each Maker Studio tile is checked BEFORE deferring to the engine's own native
 # logic (which still handles plain native tiles, events, surf/ice/ledge, etc.).
 #
-# BES has NO GameData::TerrainTag — terrain is the integer PBTerrain system, and
+# v17.1 has NO GameData::TerrainTag — terrain is the integer PBTerrain system, and
 # Game_Map#terrain_tag returns an Integer. So this is a full reimplementation of
 # the v21.1 override against PBTerrain predicates:
 #
@@ -2205,7 +2389,7 @@ end
 #   terrain.waterfall              ->  PBTerrain.isWaterfall?(tag)
 #   terrain.must_walk(_or_run)     ->  PBTerrain.onlyWalk?(tag)   (TallGrass/Ice)
 #   terrain.deep_bush              ->  tag == PBTerrain::TallGrass
-#   terrain.ignore_passability     ->  (no equivalent on BES — dropped)
+#   terrain.ignore_passability     ->  (no equivalent on v17.1 — dropped)
 #   terrain.id != :None            ->  tag != 0 && tag != PBTerrain::Neutral
 #
 # Cross-tileset native cells are blanked in the Table by the renderer; their
@@ -2214,7 +2398,7 @@ end
 #
 # NOTE (documented limitation): pure per-tile passage/priority/terrain OVERRIDES
 # painted on the NATIVE layers (without an autotile_name or tileset_id) are not
-# applied here — BES's untouched native logic is used for those cells. Overrides
+# applied here — the engine's untouched native logic is used for those cells. Overrides
 # on extended layers, extra autotiles and cross-tileset tiles work fully.
 #===============================================================================
 class Game_Map
@@ -2233,7 +2417,7 @@ class Game_Map
     return nil unless name
     entry = MakerStudio::DataStore.get_expanded_autotile(name)
     return [entry["passage"].to_i, entry["priority"].to_i, entry["terrain_tag"].to_i] if entry
-    # Game_Map (self) carries autotile_names on BES; the RPG::Map (@map) does not.
+    # Game_Map (self) carries autotile_names on v17.1; the RPG::Map (@map) does not.
     if autotile_names
       idx = autotile_names.index(name)
       if idx
@@ -2309,7 +2493,7 @@ class Game_Map
     MakerStudio.each_native_extra_tile_at(mid, x, y) { |tid, td| yield tid, td, true }
     # Plain native tiles blanked by the overlay renderer because an extra
     # autotile sits below them (blank_covered_plain_tiles) — the Table reads 0
-    # there, so BES's native scan can't see them anymore. Keep honouring their
+    # there, so the engine's native scan can't see them anymore. Keep honouring their
     # passage here (block-only, like other native-layer extras).
     if MakerStudio.respond_to?(:each_covered_plain_tile_at)
       MakerStudio.each_covered_plain_tile_at(mid, x, y) { |tid, td| yield tid, td, true }
@@ -2318,7 +2502,7 @@ class Game_Map
   private :ms_each_tile_at
 
   #---------------------------------------------------------------------------
-  # playerPassable? — terrain-aware (bridge / surf / cycling), mirrors BES.
+  # playerPassable? — terrain-aware (bridge / surf / cycling), mirrors the engine.
   #---------------------------------------------------------------------------
   alias __mkst__playerPassable playerPassable? unless method_defined?(:__mkst__playerPassable)
   def playerPassable?(x, y, d, self_event = nil)
@@ -2346,19 +2530,19 @@ class Game_Map
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
       # A ground extended tile decides the cell (extended sits above every
       # native layer). A ground NATIVE-layer extra tile must NOT decide:
-      # plain native tiles on layers above it are only checked by the BES
+      # plain native tiles on layers above it are only checked by the engine
       # fallback (bitmap-composited CustomTilemap — no per-layer interleave
       # here), so deciding would erase their impassability.
       return true if ms_tile_priority(tid, td) == 0 && !native_extra
-      # else: fall through to the next Maker Studio tile / BES native logic
+      # else: fall through to the next Maker Studio tile / engine native logic
     end
     __mkst__playerPassable(x, y, d, self_event)
   end
 
   #---------------------------------------------------------------------------
-  # passable? — for the player defer to playerPassable? (BES does too); for
+  # passable? — for the player defer to playerPassable? (v17.1 does too); for
   # other events do a basic passage/priority check on Maker Studio tiles, then
-  # fall back to BES's native event logic.
+  # fall back to the engine's native event logic.
   #---------------------------------------------------------------------------
   alias __mkst__passable passable? unless method_defined?(:__mkst__passable)
   def passable?(x, y, d, self_event = nil)
@@ -2390,8 +2574,8 @@ class Game_Map
   end
 
   #---------------------------------------------------------------------------
-  # terrain_tag — returns an Integer (BES convention). Extended/native-extra
-  # tiles take priority; fall back to BES's native terrain_tag.
+  # terrain_tag — returns an Integer (v17.1 convention). Extended/native-extra
+  # tiles take priority; fall back to the engine's native terrain_tag.
   #---------------------------------------------------------------------------
   alias __mkst__terrain_tag terrain_tag unless method_defined?(:__mkst__terrain_tag)
   def terrain_tag(x, y, countBridge = false)
@@ -2837,9 +3021,10 @@ end
 # Patch Sprite_Character to use custom grid dimensions
 #===============================================================================
 class Sprite_Character
-  # BES/RGSS Sprite_Character has no #update_bitmap (that split exists only on
-  # newer Essentials). Cell size (@cw/@ch) and the frame src_rect are computed
-  # inline in #update, so hook #update and re-derive them for custom grids.
+  # v17.1's Sprite_Character has no #update_bitmap (that split exists only on
+  # newer Essentials). Cell size (@cw/@ch) is computed on graphic change
+  # assuming the 4×4 layout (and self.ox with it), and the frame src_rect is
+  # set inline in #update — so hook #update and re-derive them for custom grids.
   unless method_defined?(:__mkst__update)
     alias __mkst__update update
   end
@@ -2856,7 +3041,9 @@ class Sprite_Character
       sx = @character.pattern * @cw
       sy = (@character.direction - 2) / 2 * @ch
       self.src_rect.set(sx, sy, @cw, @ch)
+      self.ox = @cw / 2   # the base set it from width/4 on graphic change
       self.oy = (@character_name[/offset/]) ? @ch - 16 : @ch
+      self.oy -= @character.bob_height
     end
   end
 end
@@ -2892,7 +3079,7 @@ end
 # aliased below to advance in-progress tone/opacity fades each frame).
 #
 # Written to stay Ruby 1.8-compatible so the SAME file works in every framework
-# build (BES5 / LBDS / PE21).
+# build (BES5 / PE17 / LBDS / PE21).
 #===============================================================================
 module MakerStudio
   module_function
@@ -3332,7 +3519,7 @@ end
 # and lays maps out at width*4), so the preview matches what the player sees.
 #
 # Cross-engine: it relies only on primitives present in every supported engine
-# (v21.1 / LBDS / BES): the native TileDrawingHelper for tile/autotile assembly
+# (v21.1 / LBDS / BES / v17.1): the native TileDrawingHelper for tile/autotile assembly
 # (handles mega tilesets where the engine does), DataStore for the embedded
 # extended-layer JSON, and the shared MakerStudio constants. The two places the
 # engines genuinely diverge are picked at runtime:
@@ -3462,7 +3649,9 @@ module MakerStudio
     minimap_border(out)
     out
   rescue => e
-    Console.echo_error("MakerStudio: build_minimap failed: #{e.message}") if defined?(Console)
+    # v17.1 defines module Console but NOT Console.echo_error — a defined?(Console)
+    # guard would still crash inside this rescue. Kernel#echoln is always there.
+    echoln("MakerStudio: build_minimap failed: #{e.message}")
     (out.dispose rescue nil) if out
     nil
   end

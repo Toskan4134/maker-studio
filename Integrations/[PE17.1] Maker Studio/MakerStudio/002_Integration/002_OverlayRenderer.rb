@@ -1,29 +1,30 @@
 #===============================================================================
-# MakerStudio - Overlay Renderer (Essentials BES v5 / v16.2)
+# MakerStudio - Overlay Renderer (Essentials v17.1)
 #
-# BES renders the map with the classic Ruby CustomTilemap (Tilemap_XP), which
-# composites the three native layers into a few shared layer bitmaps — there are
-# NO per-tile sprites to manipulate (unlike v21.1's TilemapRenderer, which the
-# original integration patches directly).
+# v17.1 renders the map through TilemapLoader, which wraps either the classic
+# Ruby CustomTilemap (Tilemap_XP) or the hardware SynchronizedTilemap depending
+# on $PokemonSystem.tilemap. Both composite the three native layers into shared
+# surfaces — there are NO per-tile sprites to manipulate (unlike v21.1's
+# TilemapRenderer, which the original integration patches directly).
 #
 # So this build draws everything Maker Studio adds — extended layers, per-tile
 # effects, native-layer "extra" tiles, and shadows — as an INDEPENDENT set of
-# Sprites attached to the map's viewport (Spriteset_Map@viewport1). They are
+# Sprites attached to the map's viewport (Spriteset_Map @@viewport1). They are
 # positioned every frame from $game_map.display_x/y using the exact same screen
-# math BES uses for events/player, so overlay tiles stay glued to the map and to
-# characters in every tilemap view mode.
+# math v17.1 uses for events/player, so overlay tiles stay glued to the map and
+# to characters in every tilemap view mode.
 #
-# Injection points (all old-style BES Events, since EventHandlers is defined but
-# never triggered on BES):
+# Injection points (all old-style Events — v17.1 has no v19+ EventHandlers):
 #   Events.onSpritesetCreate  -> build the overlay in the new viewport
 #   Spriteset_Map#update      -> (aliased) drive per-frame overlay update
 #   Spriteset_Map#dispose     -> (aliased) tear the overlay down
 #
-# Tile bitmaps are composed with BES's TileDrawingHelper (handles RMXP autotile
-# assembly + animation), so AutotileExpander/AutotileBitmaps are not needed.
+# Tile bitmaps are composed with the engine's TileDrawingHelper (handles RMXP
+# autotile assembly + animation), so AutotileExpander/AutotileBitmaps are not
+# needed.
 #===============================================================================
 
-# BES Game_Map exposes tileset_name but NOT tileset_id (only the RPG::Map it
+# v17.1's Game_Map exposes tileset_name but NOT tileset_id (only the RPG::Map it
 # wraps does). The renderer/shadow code needs the id to look up tilesets, so add
 # a reader that delegates to the wrapped RPG::Map. Modern engines already define
 # tileset_id, so only add it when missing.
@@ -62,8 +63,8 @@ module MakerStudio
 
   # Frames per autotile animation step — same constant the native CustomTilemap
   # uses, so overlay autotiles/shadows stay in lockstep with the map's autotiles.
-  # NOTE: BES defines it as CustomTilemap::Animated_Autotiles_Frames (= 15), NOT
-  # a top-level constant — referencing the bare name fell back to 5, making
+  # NOTE: v17.1 defines it as CustomTilemap::Animated_Autotiles_Frames (= 15),
+  # NOT a top-level constant — referencing the bare name fell back to 5, making
   # autotiles ~3x too fast.
   def anim_step
     if defined?(CustomTilemap) && defined?(CustomTilemap::Animated_Autotiles_Frames)
@@ -78,7 +79,43 @@ module MakerStudio
   #---------------------------------------------------------------------------
   # Extended data load / lookup (reuses DataStore — engine-agnostic JSON)
   #---------------------------------------------------------------------------
+  #---------------------------------------------------------------------------
+  # v17.1 Marshals the whole $MapFactory into Game.rxdata (156_PScreen_Save.rb)
+  # and restores it wholesale (155_PScreen_Load.rb), so a Continue-d game holds
+  # the RPG::Map exactly as it was when the player saved — Game_Map#setup, where
+  # this plugin hooks the load, never runs for it. DataStore re-reads the
+  # extended-layer JSON from disk, but NATIVE-layer Maker Studio tiles resolve
+  # their tile id from the map's Table (rpg.data, see collect_native_extra_cells:
+  # `next if base_tid <= 0`), so a Table predating the editing draws *nothing*
+  # for them. Re-point the map at the on-disk tile data in that case.
+  # Only @data is swapped — events keep their runtime state.
+  #---------------------------------------------------------------------------
+  def resync_saved_map(map_id, map)
+    return false unless map
+    rpg = map.instance_variable_get(:@map)
+    return false unless rpg
+    # Present => this map came through Game_Map#setup, so it is already current.
+    raw = rpg.instance_variable_get(:@extended_layers)
+    return false unless raw.nil? || raw.empty?
+    fresh = (load_data(sprintf("Data/Map%03d.rxdata", map_id)) rescue nil)
+    return false unless fresh
+    fresh_raw = fresh.instance_variable_get(:@extended_layers)
+    return false if fresh_raw.nil? || fresh_raw.empty?
+    # Swap the tile data only when the map was NOT resized since the save — a
+    # different Table size would desync the player/camera coordinates.
+    if fresh.instance_variable_get(:@width)  == rpg.instance_variable_get(:@width) &&
+       fresh.instance_variable_get(:@height) == rpg.instance_variable_get(:@height)
+      rpg.instance_variable_set(:@data, fresh.instance_variable_get(:@data))
+      # Blanking records point at the OLD Table's ids — drop them.
+      @blanked_cells.delete(map_id)       if @blanked_cells
+      @covered_plain_cells.delete(map_id) if @covered_plain_cells
+    end
+    rpg.instance_variable_set(:@extended_layers, fresh_raw)
+    true
+  end
+
   def load_extended_layers_for_map(map_id, map)
+    resync_saved_map(map_id, map)
     @extended_data_cache[map_id] = DataStore.get_extended_data(map_id, map.width, map.height, map)
     @cell_band_cache.delete(map_id) if @cell_band_cache
   end
@@ -162,11 +199,8 @@ module MakerStudio
       return nil
     end
     return nil unless bmp && !bmp.disposed?
-    # autotiles[0] = bmp; the regular-tile path is never used for extra autotiles, so
-    # the tileset slot only has to exist. BES accepts nil there, but v19.1's
-    # TileDrawingHelper#initialize calls `tileset.mega?` unguarded -> NoMethodError on
-    # nil. A 1x1 scratch bitmap answers mega? (false) and is never blitted from.
-    h = TileDrawingHelper.new(Bitmap.new(1, 1), [bmp])
+    # @tileset nil (extra autotiles never use the regular-tile path); autotiles[0] = bmp
+    h = TileDrawingHelper.new(nil, [bmp])
     @extra_autotile_tdh[name] = h
     h
   end
@@ -194,8 +228,11 @@ module MakerStudio
     hue = (tile_data["hue"] || 0).to_i
     sat = (tile_data["saturation"] || 100).to_i
     lighting = (tile_data["lighting"] || 0).to_i
+    # flipV is baked into the strip (see below): RGSS1's Game.exe does not render
+    # a negative zoom_y, so it must be part of the bitmap, hence part of the sig.
+    flip_v = tile_data["flipV"] ? 1 : 0
     sig = "#{base_tile_id}|#{tile_data['autotile_name']}|#{tile_data['tileset_id']}|" \
-          "#{tile_data['autotile_pattern']}|m#{map.tileset_id}|h#{hue}|s#{sat}|L#{lighting}"
+          "#{tile_data['autotile_pattern']}|m#{map.tileset_id}|h#{hue}|s#{sat}|L#{lighting}|v#{flip_v}"
     cached = @tile_strip_cache[sig]
     return cached if cached && cached[0] && !cached[0].disposed?
 
@@ -247,10 +284,30 @@ module MakerStudio
     # hue_change / Rec.601 desaturation / additive tone do NOT match those, so
     # we replicate the exact CSS color matrices per pixel here.
     apply_css_color_filters(strip, hue, sat, lighting) if hue != 0 || sat != 100 || lighting != 0
+    # Bake the vertical flip. RGSS1 (v17.1's Game.exe) does NOT render a sprite
+    # with negative zoom_y — it drops the sprite entirely — so flipV cannot be a
+    # sprite transform here (flipH still can: sprite.mirror is native). Flip each
+    # frame in place; the strip is th tall, so one vertical mirror flips them all.
+    if flip_v == 1
+      flipped = flip_strip_vertically(strip, th)
+      strip.dispose
+      strip = flipped
+    end
 
     result = [strip, frames]
     @tile_strip_cache[sig] = result
     result
+  end
+
+  # Return a vertically-mirrored copy of a strip (width unchanged, th tall).
+  def flip_strip_vertically(strip, th)
+    out = Bitmap.new(strip.width, strip.height)
+    y = 0
+    while y < th
+      out.blt(0, th - 1 - y, strip, Rect.new(0, y, strip.width, 1))
+      y += 1
+    end
+    out
   end
 
   #---------------------------------------------------------------------------
@@ -427,14 +484,27 @@ module MakerStudio
   # already, so they need no blanking. The original tile id is recorded so the
   # Game_Map collision patch (each_native_extra_tile_at) can still resolve it.
   #---------------------------------------------------------------------------
-  # Only cross-tileset native tiles MUST be blanked: the CustomTilemap would
-  # otherwise draw their tile id from the map's own tileset (wrong graphic).
-  # Effect-only and extra-autotile native tiles are NOT blanked — the original
-  # tile stays drawn (keeping its native collision) and we overlay the effect
-  # copy on top. (Extra-autotile native cells are stored as 0 in the Table, so
-  # the CustomTilemap already draws nothing there.)
+  # Which native cells must be zeroed in the Table so the engine stops drawing
+  # the original underneath our overlay copy.
+  #
+  #  * cross-tileset  -> ALWAYS: the CustomTilemap would draw that tile id from
+  #    the MAP's tileset, i.e. a completely unrelated graphic.
+  #  * extra autotile -> never: those cells are already stored as 0.
+  #  * same tileset   -> only when our copy cannot cover every pixel the original
+  #    painted. Colour-only effects (hue/saturation/lighting) keep the exact same
+  #    silhouette, so the opaque copy hides the original perfectly and we can
+  #    leave it drawn (which preserves its native collision for free). But flip,
+  #    rotation and opacity < 255 MOVE or thin the pixels, so on any tile with
+  #    transparency the untouched original ghosts through next to the effect —
+  #    that has to be blanked and redrawn. Collision for those cells is kept by
+  #    each_native_extra_tile_at, which yields their recorded original tile id.
   def needs_blank?(tile_data)
-    !tile_data["autotile_name"] && !tile_data["tileset_id"].nil?
+    return false if tile_data["autotile_name"]
+    return true unless tile_data["tileset_id"].nil?
+    return true if tile_data["flipH"] || tile_data["flipV"]
+    v = tile_data["rotation"]; return true if v && (v.to_i % 360) != 0
+    v = tile_data["opacity"];  return true if v && v.to_i != 255
+    false
   end
 
   def props_has_visual_effects?(props)
@@ -620,6 +690,13 @@ module MakerStudio
       elsif td["tileset_id"]
         tid = original_native_tile_id(map_id, x, y, layer, 0)
         yield tid, td
+      else
+        # Same-tileset effect cell. Only the ones needs_blank? zeroed have a
+        # recorded id — those are invisible to the engine's own scan now, so we
+        # must answer for them. Cells left drawn record nothing (tid 0 here) and
+        # keep being resolved by the untouched native logic, exactly as before.
+        tid = original_native_tile_id(map_id, x, y, layer, 0)
+        yield tid, td if tid > 0
       end
     end
   end
@@ -642,7 +719,7 @@ end
 # Overlay — owns all Maker Studio sprites for one Spriteset_Map's viewport.
 #===============================================================================
 module MakerStudio
-# One Overlay per Spriteset_Map. BES (Scene_Map#createSpritesets) builds a
+# One Overlay per Spriteset_Map. v17.1 (Scene_Map#createSpritesets) builds a
 # separate Spriteset_Map for EACH map in $MapFactory, so each overlay renders
 # ONLY its own spriteset's map — never the whole factory (doing the latter
 # created N² sprites across N connected maps: lag + overlapping z).
@@ -683,8 +760,12 @@ class Overlay
     MakerStudio.dispose_fog_sprites(@map_id) if @map_id && MakerStudio.respond_to?(:dispose_fog_sprites)
   end
 
+  # RGSS1 has NO Viewport#disposed? (Sprite/Plane/Bitmap do have it) — the base
+  # hits the same gap in pbSetResizeFactor2 and works around it with a
+  # `rescue RGSSError` on its Viewport pass. Ask before calling: Spriteset_Map
+  # #initialize ends with update, so the very first frame crashed on load.
   def disposed?
-    @viewport.nil? || @viewport.disposed?
+    @viewport.nil? || (@viewport.respond_to?(:disposed?) && @viewport.disposed?)
   end
 
   def each_pool_sprite
@@ -851,7 +932,8 @@ class Overlay
     strip, frames = composed
     spr.bitmap = strip
     # Reset transform state before re-applying effects: this sprite may still
-    # carry a previous cell's flip (negative zoom_y) or rotation.
+    # carry a previous cell's rotation. (flipV is baked into the strip, not a
+    # zoom, because RGSS1 does not render a negative zoom_y — see compose_tile_strip.)
     spr.zoom_x = 1.0
     spr.zoom_y = 1.0
     spr.src_rect.set(0, 0, MakerStudio::TILE_WIDTH, MakerStudio::TILE_HEIGHT)
@@ -879,11 +961,13 @@ class Overlay
     angle = (td["rotation"] || 0).to_i
     spr.angle = -angle
     spr.mirror = td["flipH"] ? true : false
-    spr.zoom_y = -spr.zoom_y if td["flipV"]
+    # flipV is NOT a sprite transform here — RGSS1 drops a sprite with negative
+    # zoom_y, so it is baked into the strip in compose_tile_strip. Only rotation
+    # needs the centre origin (the update loop compensates the offset).
     # NOTE: hue/saturation/lighting are baked into the tile bitmap (CSS-filter
     # match) — do NOT set sprite.tone here, so the ambient/day-night tone the
     # update loop copies from the tilemap is the only tone on the sprite.
-    needs_center = angle != 0 || td["flipV"]
+    needs_center = angle != 0
     spr.ox = needs_center ? MakerStudio::TILE_WIDTH / 2 : 0
     spr.oy = needs_center ? MakerStudio::TILE_HEIGHT / 2 : 0
   end
@@ -995,10 +1079,13 @@ class Overlay
     frame = Graphics.frame_count / MakerStudio.anim_step
     dx = @map.display_x
     dy = @map.display_y
-    # Day/night ("ambient") tone: BES tints native tiles via the tilemap's tone
-    # (PBDayNight, applied per-tile — NOT via the viewport). We mirror it onto our
-    # sprites so they darken/brighten with time exactly like native tiles. The
-    # viewport's $game_screen.tone (weather/tint events) still applies on top.
+    # Day/night ("ambient") tone: in tilemap modes 1/2 v17.1 tints native tiles
+    # via the tilemap's tone (pbDayNightTint(@tilemap) — NOT via the viewport);
+    # we mirror it onto our sprites so they darken/brighten with time exactly
+    # like native tiles. In mode 0 (SynchronizedTilemap) the engine instead
+    # tints @@viewport3 as a screen-wide post-effect — tilemap.tone stays zero,
+    # so this mirror is a harmless no-op and the viewport3 effect already covers
+    # our sprites. The $game_screen.tone (weather/tint events) applies on top.
     dn_tone = (@tilemap ? (@tilemap.tone rescue nil) : nil)
     tone_changed = dn_tone && (dn_tone.red != @tr || dn_tone.green != @tg ||
                                dn_tone.blue != @tb || dn_tone.gray != @tgr)
@@ -1021,10 +1108,8 @@ class Overlay
 
     tw = MakerStudio::TILE_WIDTH
     th = MakerStudio::TILE_HEIGHT
-    # v19.1 exposes the scroll resolution as constants (REAL_RES_X/Y = TILE * 4),
-    # not the class methods BES had. Same value (128) -> same screen-px math.
-    realx = Game_Map::REAL_RES_X
-    realy = Game_Map::REAL_RES_Y
+    realx = Game_Map.realResX
+    realy = Game_Map.realResY
     gw = Graphics.width
     gh = Graphics.height
 
@@ -1125,7 +1210,7 @@ end
 
 #===============================================================================
 # Shadow generation (ported from the v21 build — pure RGSS bitmap math, with
-# tile blitting routed through BES TileDrawingHelper).
+# tile blitting routed through the engine's TileDrawingHelper).
 #===============================================================================
 module MakerStudio
   module_function
@@ -1399,7 +1484,8 @@ end
 
 #===============================================================================
 # Spriteset hooks — attach the overlay on creation, drive + dispose with the
-# spriteset. BES fires Events.onSpritesetCreate from Spriteset_Map#initialize.
+# spriteset. v17.1 fires Events.onSpritesetCreate from Spriteset_Map#initialize
+# (via Kernel.pbOnSpritesetCreate).
 #===============================================================================
 Events.onSpritesetCreate += proc { |_sender, e|
   if MakerStudio::ENABLED

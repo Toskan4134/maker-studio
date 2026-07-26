@@ -23,7 +23,13 @@ module MakerStudio
       # Rotation — negate angle to match editor's clockwise convention
       # (RGSS sprite.angle is clockwise, but we store CCW in the rotation value
       #  to keep the editor's Canvas 2D clockwise display correct)
-      angle = (tile_data["rotation"] || EFFECT_RANGES[:rotation][:default]).to_i
+      # Autotiles are POSITIONAL: the pattern a cell shows is chosen from its
+      # neighbours, so rotating or mirroring one breaks the edge it was picked to
+      # match. The editor refuses to transform them (render-tile-effects.ts) and
+      # its UI won't even offer it, so honouring a stale transform here would
+      # render the tile differently in-game than on the map the maker drew.
+      is_autotile = autotile_tile?(tile_data)
+      angle = is_autotile ? 0 : (tile_data["rotation"] || EFFECT_RANGES[:rotation][:default]).to_i
       sprite.angle = -angle
       # Lighting via Tone
       lighting = (tile_data["lighting"] || EFFECT_RANGES[:lighting][:default]).to_i
@@ -42,17 +48,27 @@ module MakerStudio
       if hue != 0 || saturation != 100
         apply_bitmap_effects(sprite, tile_data, tileset_bitmap, autotile_bitmaps)
       end
+      flip_h = !is_autotile && tile_data["flipH"]
+      flip_v = !is_autotile && tile_data["flipV"]
       # Horizontal flip (uses RPG Maker's built-in mirror property)
-      sprite.mirror = tile_data["flipH"] ? true : false
+      sprite.mirror = flip_h ? true : false
       # Vertical flip (achieved via negative zoom_y)
-      if tile_data["flipV"]
+      if flip_v
         sprite.zoom_y = -sprite.zoom_y
       end
       # Set center origin when rotation or flipV is active to prevent displacement.
       # The update loop compensates by adding ox*|zoom_x|, oy*|zoom_y| to position.
-      needs_center = angle != 0 || tile_data["flipV"]
+      needs_center = angle != 0 || flip_v
       sprite.ox = needs_center ? TILE_WIDTH / 2 : 0
       sprite.oy = needs_center ? TILE_HEIGHT / 2 : 0
+    end
+
+    # An autotile cell: painted by name (tile_id is 0 on native layers) or an id
+    # in the autotile range.
+    def autotile_tile?(tile_data)
+      return true if tile_data["autotile_name"]
+      id = tile_data["tile_id"].to_i
+      id > 0 && id < TILESET_START_ID
     end
 
     #---------------------------------------------------------------------------
@@ -142,12 +158,8 @@ module MakerStudio
         # Autotile - blit current src_rect
         return nil # Autotile bitmap effects are complex, skip for now
       end
-      # Apply hue shift
-      bmp.hue_change(hue) if hue != 0
-      # Apply saturation (desaturate by blending with grayscale)
-      if saturation != 100
-        apply_saturation(bmp, saturation)
-      end
+      # Lighting stays Tone-based in this variant, so bake hue/sat only.
+      apply_css_color_filters(bmp, hue, saturation, 0)
       return bmp
     rescue => e
       # v19.1's Console has no echo_error (it lives on Kernel) — see 001_DataStore.rb.
@@ -157,22 +169,66 @@ module MakerStudio
     end
 
     #---------------------------------------------------------------------------
-    # Apply saturation adjustment to a bitmap
+    # Replicate the editor's CSS filter chain on a bitmap, in CSS order:
+    #   hue-rotate(deg) -> saturate(pct/100) -> brightness(1 + lighting/255)
+    # Uses the W3C feColorMatrix matrices (Rec.709 luma) so in-game matches the
+    # editor canvas exactly. Bitmap#hue_change is a true HSV rotation and reads
+    # far more saturated than CSS hue-rotate's linear approximation — never use
+    # it here. Same math as this integration's OverlayRenderer copy.
     #---------------------------------------------------------------------------
-    def apply_saturation(bitmap, saturation_pct)
-      return if saturation_pct == 100
-      w = bitmap.width
-      h = bitmap.height
-      factor = saturation_pct / 100.0
+    def apply_css_color_filters(bmp, hue_deg, sat_pct, lighting)
+      w = bmp.width
+      h = bmp.height
+      do_hue = (hue_deg % 360) != 0
+      do_sat = sat_pct != 100
+      do_bri = lighting != 0
+      if do_hue
+        a = hue_deg * Math::PI / 180.0
+        c = Math.cos(a)
+        s = Math.sin(a)
+        hrr = 0.213 + c * 0.787 - s * 0.213; hrg = 0.715 - c * 0.715 - s * 0.715; hrb = 0.072 - c * 0.072 + s * 0.928
+        hgr = 0.213 - c * 0.213 + s * 0.143; hgg = 0.715 + c * 0.285 + s * 0.140; hgb = 0.072 - c * 0.072 - s * 0.283
+        hbr = 0.213 - c * 0.213 - s * 0.787; hbg = 0.715 - c * 0.715 + s * 0.715; hbb = 0.072 + c * 0.928 + s * 0.072
+      end
+      if do_sat
+        sv = sat_pct / 100.0
+        srr = 0.213 + 0.787 * sv; srg = 0.715 - 0.715 * sv; srb = 0.072 - 0.072 * sv
+        sgr = 0.213 - 0.213 * sv; sgg = 0.715 + 0.285 * sv; sgb = 0.072 - 0.072 * sv
+        sbr = 0.213 - 0.213 * sv; sbg = 0.715 - 0.715 * sv; sbb = 0.072 + 0.928 * sv
+      end
+      bri = do_bri ? (1.0 + lighting / 255.0) : 1.0
+      # Chromium renders each filter function to an intermediate surface that
+      # clamps to [0,255] BETWEEN stages; without these clamps chained
+      # hue+saturate reads visibly brighter in-game (verified vs headless
+      # Chromium: unclamped drifts up to 42/channel, clamped matches within 1).
       (0...h).each do |y|
         (0...w).each do |x|
-          color = bitmap.get_pixel(x, y)
-          next if color.alpha == 0
-          gray = (color.red * 0.299 + color.green * 0.587 + color.blue * 0.114).round
-          r = (gray + (color.red - gray) * factor).clamp(0, 255).round
-          g = (gray + (color.green - gray) * factor).clamp(0, 255).round
-          b = (gray + (color.blue - gray) * factor).clamp(0, 255).round
-          bitmap.set_pixel(x, y, Color.new(r, g, b, color.alpha))
+          col = bmp.get_pixel(x, y)
+          next if col.alpha == 0
+          r = col.red.to_f; g = col.green.to_f; b = col.blue.to_f
+          if do_hue
+            nr = r * hrr + g * hrg + b * hrb
+            ng = r * hgr + g * hgg + b * hgb
+            nb = r * hbr + g * hbg + b * hbb
+            r = nr < 0 ? 0.0 : (nr > 255 ? 255.0 : nr)
+            g = ng < 0 ? 0.0 : (ng > 255 ? 255.0 : ng)
+            b = nb < 0 ? 0.0 : (nb > 255 ? 255.0 : nb)
+          end
+          if do_sat
+            nr = r * srr + g * srg + b * srb
+            ng = r * sgr + g * sgg + b * sgb
+            nb = r * sbr + g * sbg + b * sbb
+            r = nr < 0 ? 0.0 : (nr > 255 ? 255.0 : nr)
+            g = ng < 0 ? 0.0 : (ng > 255 ? 255.0 : ng)
+            b = nb < 0 ? 0.0 : (nb > 255 ? 255.0 : nb)
+          end
+          if do_bri
+            r *= bri; g *= bri; b *= bri
+          end
+          r = 0 if r < 0; r = 255 if r > 255
+          g = 0 if g < 0; g = 255 if g > 255
+          b = 0 if b < 0; b = 255 if b > 255
+          bmp.set_pixel(x, y, Color.new(r.round, g.round, b.round, col.alpha))
         end
       end
     end

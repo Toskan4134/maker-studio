@@ -277,6 +277,10 @@ module MakerStudio
       sbr = 0.213 - 0.213 * sv; sbg = 0.715 - 0.715 * sv; sbb = 0.072 + 0.928 * sv
     end
     bri = do_bri ? (1.0 + lighting / 255.0) : 1.0
+    # Chromium renders each filter function to an intermediate surface that
+    # clamps to [0,255] BETWEEN stages; without these clamps chained
+    # hue+saturate reads visibly brighter in-game (verified vs headless
+    # Chromium: unclamped drifts up to 42/channel, clamped matches within 1).
     (0...h).each do |y|
       (0...w).each do |x|
         col = bmp.get_pixel(x, y)
@@ -286,13 +290,17 @@ module MakerStudio
           nr = r * hrr + g * hrg + b * hrb
           ng = r * hgr + g * hgg + b * hgb
           nb = r * hbr + g * hbg + b * hbb
-          r = nr; g = ng; b = nb
+          r = nr < 0 ? 0.0 : (nr > 255 ? 255.0 : nr)
+          g = ng < 0 ? 0.0 : (ng > 255 ? 255.0 : ng)
+          b = nb < 0 ? 0.0 : (nb > 255 ? 255.0 : nb)
         end
         if do_sat
           nr = r * srr + g * srg + b * srb
           ng = r * sgr + g * sgg + b * sgb
           nb = r * sbr + g * sbg + b * sbb
-          r = nr; g = ng; b = nb
+          r = nr < 0 ? 0.0 : (nr > 255 ? 255.0 : nr)
+          g = ng < 0 ? 0.0 : (ng > 255 ? 255.0 : ng)
+          b = nb < 0 ? 0.0 : (nb > 255 ? 255.0 : nb)
         end
         if do_bri
           r *= bri; g *= bri; b *= bri

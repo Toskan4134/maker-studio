@@ -1,5 +1,6 @@
-Name         = MakerStudio
-Version      = 1.0.0
-Essentials   = 20.1
-Website      = https://toskan4134.github.io
-Credits      = Toskan4134
+Name          = MakerStudio
+Version       = 1.2.0
+Essentials    = 20.1
+Website       = https://toskan4134.github.io
+Credits       = Toskan4134
+MSIntegration = PE20.1

@@ -19,7 +19,7 @@
 # map-connection transitions.
 #
 # Written to stay Ruby 1.8-compatible so the SAME file works in every
-# framework build (BES5 / LBDS / PE21).
+# framework build (BES5 / PE17 / LBDS / PE21).
 #===============================================================================
 module MakerStudio
   FOG_DIR = File.join("Graphics", "Fogs")
@@ -36,8 +36,16 @@ module MakerStudio
 
   module_function
 
+  # RGSS1 (Essentials v17.x) has NO Viewport#disposed? — Sprite/Plane/Bitmap all
+  # define it, Viewport does not, and the v17 base hits the same gap in
+  # pbSetResizeFactor2 (it guards its Viewport pass with `rescue RGSSError`).
+  # Newer RGSS builds and mkxp do define it, so ask before calling.
+  def viewport_disposed?(vp)
+    vp.nil? || (vp.respond_to?(:disposed?) && vp.disposed?)
+  end
+
   # The engine's map factory ($map_factory in Essentials v19+/LBDS,
-  # $MapFactory in BES/v16). Nil when no factory is alive.
+  # $MapFactory in BES/v16/v17). Nil when no factory is alive.
   def ms_map_factory
     return $map_factory if defined?($map_factory) && $map_factory
     return $MapFactory if defined?($MapFactory) && $MapFactory
@@ -213,7 +221,7 @@ module MakerStudio
       vps = @fog_viewports_cache[map_id]
       if vps
         vps.each do |group_key, vp|
-          next if vp.nil? || vp.disposed?
+          next if viewport_disposed?(vp)
           if on_screen
             vp.rect.set(cx, cy, cw, ch)
             # Apply screen shake so layers wobble with the map. viewport1
@@ -286,7 +294,7 @@ module MakerStudio
     vps = @fog_viewports_cache.delete(map_id)
     if vps
       vps.each do |group_key, vp|
-        vp.dispose if vp && !vp.disposed?
+        vp.dispose unless viewport_disposed?(vp)
       end
     end
   end

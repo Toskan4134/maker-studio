@@ -582,9 +582,13 @@ class TilemapRenderer::TileSprite
   # index — looked up in @autotiles.current_frames each tick so shadow stays
   # in lockstep with the source tile (instead of drifting on its own timer).
   attr_accessor :shadow_anim_source_name
-  # Per-extended-layer fractional z bias applied on top of the priority-based
-  # z formula. Recorded at creation so the per-frame z recompute (which uses
-  # screen-y instead of map-y) can preserve layer stacking order.
+  # Per-extended-layer z bias applied on top of the priority-based z formula.
+  # Recorded at creation so the per-frame z recompute (which uses screen-y
+  # instead of map-y) can preserve layer stacking order. MUST be a whole
+  # number: Sprite#z is an Integer, so a fractional bias truncates to 0 and
+  # leaves stacked extended layers sharing one z, where the draw order falls
+  # back to sprite creation order — which the lazily-filled pool varies with
+  # the camera, so the tiles flicker as the player walks.
   attr_accessor :ext_z_offset
   # Effective render priority: 0 = ground (below player), else this tile's own
   # priority when it sits OVERHEAD (above the player) — i.e. above the cell's
@@ -596,8 +600,8 @@ end
 # Monkey-patch TilemapRenderer to support extended layers + native properties
 #===============================================================================
 class TilemapRenderer
-  # Small z-offset per extended layer to guarantee layer stacking order
-  EXT_LAYER_Z_OFFSET = 0.001
+  # z step per extended layer, above the ground band (see #ext_z_offset).
+  EXT_LAYER_Z_OFFSET = 1
 
   # Extra ring of pooled cells kept around the screen, so a tile that rotates or
   # scales past its own cell (and a hard camera cut) still has a sprite ready.
@@ -840,7 +844,7 @@ class TilemapRenderer
       tile.z = tile.ms_ground_z || 0
     else
       tile.z = (y * SOURCE_TILE_HEIGHT) + (band * SOURCE_TILE_HEIGHT) +
-               SOURCE_TILE_HEIGHT + 1 + (layer * 0.0001)
+               SOURCE_TILE_HEIGHT + 1
     end
   end
 
