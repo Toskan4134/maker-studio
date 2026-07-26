@@ -101,19 +101,19 @@ La lista de comandos es donde construyes la lógica del evento. Puedes añadir, 
 
 Haz clic en Insert (o pulsa Insert / Enter) para abrir el Command Picker. El selector ordena los comandos en varias categorías con nombre específicas, cada una con una descripción de una línea bajo la pestaña activa:
 
-- **Messages** — mostrar texto, opciones y demás comandos de mensaje.
-- **Logic** — condiciones, switches, variables, bucles, etiquetas y control de flujo.
-- **Party & Items** — oro, items, armas, armaduras y miembros del party.
-- **Movement** — trasladar al jugador, fijar/desplazar y rutas de movimiento.
-- **Screen & Pictures** — tonos de pantalla, destellos, temblores, clima e imágenes.
+- **Mensajes** — mostrar texto, opciones y demás comandos de mensaje.
+- **Lógica** — condiciones, switches, variables, bucles, etiquetas y control de flujo.
+- **Grupo y objetos** — oro, items, armas, armaduras y miembros del party.
+- **Movimiento** — trasladar al jugador, fijar/desplazar y rutas de movimiento.
+- **Pantalla e imágenes** — tonos de pantalla, destellos, temblores, clima e imágenes.
 - **Audio** — música de fondo, efectos de sonido y demás audio.
-- **Actors** — stats, habilidades, equipo, nombre, clase y gráficos de actor.
-- **Battle** — procesamiento de batalla, tienda y comandos de enemigo.
-- **System** — windowskin, acceso a menú/guardado/encuentros, scripts y ajustes de sistema.
+- **Héroes** — stats, habilidades, equipo, nombre, clase y gráficos de actor.
+- **Combate** — procesamiento de batalla, tienda y comandos de enemigo.
+- **Sistema** — windowskin, acceso a menú/guardado/encuentros, scripts y ajustes de sistema.
 
 Un cuadro de búsqueda en la parte superior filtra entre todas las categorías. La lista de comandos mantiene una **altura fija** —la mayor que necesita cualquier categoría—, así que el diálogo ya no crece ni se encoge al cambiar de pestaña; una pestaña con más comandos (como Favoritos) se desplaza arriba y abajo dentro de esa área fija. Si tienes suficientes categorías o mods como para que no quepan todas las pestañas, aparecen botones de flecha en los extremos de la barra para desplazarte entre ellas — también puedes desplazarla con la rueda del ratón, y la pestaña activa siempre se mantiene a la vista.
 
-El selector **recuerda la última pestaña en la que estuviste**, así que si estabas mirando Battle (o una pestaña de mod), ahí es donde se abre la próxima vez.
+El selector **recuerda la última pestaña en la que estuviste**, así que si estabas mirando Combate (o una pestaña de mod), ahí es donde se abre la próxima vez.
 
 ### Favoritos
 
