@@ -27,6 +27,8 @@ Cuando una herramienta está activa puedes ajustar propiedades por tile antes de
 - **Lighting**: -255 a 255 (brillo).
 - **Flip H / Flip V**: voltea el tile horizontal o verticalmente.
 
+La rotación y el volteo no se aplican a los autotiles: un autotile elige su patrón según los tiles de alrededor, así que uno rotado o reflejado ya no encajaría con el borde para el que se eligió. Mientras hay un autotile seleccionado, los cuatro controles de transformación aparecen atenuados ("Los autotiles no se pueden rotar ni voltear — su patrón depende de los tiles de alrededor"), y las opciones del menú Edit y las teclas Q / W no hacen nada.
+
 ### Bloqueo (Lock)
 
 El botón de bloqueo en la cabecera del panel Tile Properties (un icono de candado abierto o cerrado) controla qué ocurre al elegir un tile distinto.
@@ -88,7 +90,7 @@ El editor tiene tres secciones:
   - También puedes añadir **grupos multi-tile** — una pequeña cuadrícula de tiles que siempre se pintan juntos, alineados a la cuadrícula del mapa. Los grupos se mantienen coherentes dentro de un trazo (sin tiles sueltos que los rompan a mitad de grupo), mientras que los tiles individuales se dispersan independientemente por celda.
   - Cada entrada tiene un **peso**; el porcentaje mostrado junto a ella es la probabilidad de que esa entrada se elija, normalizada frente a las demás. Quita una entrada con su **✕**.
   - Deja el grupo vacío para simplemente pintar el tile seleccionado actualmente.
-- **Shared Properties** — las propiedades visuales horneadas en los tiles pintados: **Hue**, **Saturation**, **Lighting**, **Opacity** y un grupo **Transform** (rotar 90° en cualquier sentido, voltear horizontal/vertical). Se aplican a todo el pincel. Para dar a un tile concreto del grupo sus propios valores, selecciónalo y edítalo — entonces lleva una sustitución. Haz clic en **Clear (follow shared)** en un tile para descartar su sustitución y volver a usar el conjunto compartido. (La prioridad, el terrain tag y el paso no se configuran aquí — los tiles pintados los heredan del tileset.)
+- **Shared Properties** — las propiedades visuales horneadas en los tiles pintados: **Hue**, **Saturation**, **Lighting**, **Opacity** y un grupo **Transform** (rotar 90° en cualquier sentido, voltear horizontal/vertical — se ignora en autotiles). Se aplican a todo el pincel. Para dar a un tile concreto del grupo sus propios valores, selecciónalo y edítalo — entonces lleva una sustitución. Haz clic en **Clear (follow shared)** en un tile para descartar su sustitución y volver a usar el conjunto compartido. (La prioridad, el terrain tag y el paso no se configuran aquí — los tiles pintados los heredan del tileset.)
 
 Una **vista previa en vivo** en el editor muestra la forma del pincel rellena con una muestra representativa de su grupo de tiles y propiedades, para que veas el resultado antes de pintar.
 
@@ -107,7 +109,7 @@ Haz clic en **Presets…** en el editor para guardar el pincel actual como un pr
 
 ## Estampas multi-tile
 
-Para pintar más de un tile a la vez, haz clic y arrastra en la Paleta de tiles para seleccionar un grupo rectangular de tiles. Toda la estampa sigue al cursor mientras pintas. Pulsa Q o W para rotar la estampa en sentido antihorario u horario. Arrastrar cerca del borde superior o inferior de la paleta autodesplaza para seleccionar tiles fuera del área visible.
+Para pintar más de un tile a la vez, haz clic y arrastra en la Paleta de tiles para seleccionar un grupo rectangular de tiles. Toda la estampa sigue al cursor mientras pintas. Pulsa Q o W para rotar la estampa en sentido antihorario u horario — una estampa que contenga algún autotile se queda como está, ya que los autotiles no se pueden rotar. Arrastrar cerca del borde superior o inferior de la paleta autodesplaza para seleccionar tiles fuera del área visible.
 
 ## Cambiar de tileset en la paleta
 

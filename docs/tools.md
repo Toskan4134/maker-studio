@@ -27,6 +27,8 @@ When a tool is active you can adjust per-tile properties before painting. These 
 - **Lighting**: -255 to 255 (brightness).
 - **Flip H / Flip V**: Flip the tile horizontally or vertically.
 
+Rotation and flipping do not apply to autotiles: an autotile picks its pattern from the tiles around it, so a rotated or mirrored one would no longer match the edge it was chosen for. While an autotile is selected the four transform controls are greyed out ("Autotiles cannot be rotated or flipped — their pattern depends on the surrounding tiles"), and the Edit menu items and Q / W keys do nothing.
+
 ### Lock
 
 The lock button in the Tile Properties panel header (an open or closed padlock icon) controls what happens when you pick a different tile.
@@ -88,7 +90,7 @@ The editor has three sections:
   - You can also add **multi-tile groups** — a small grid of tiles that always paint together, aligned to the map grid. Groups stay coherent within a stroke (no stray tiles breaking them up mid-group), while single tiles scatter independently per cell.
   - Each entry has a **weight**; the percentage shown next to it is the chance that entry is picked, normalized against the others. Remove an entry with its **✕**.
   - Leave the pool empty to simply paint the currently selected tile.
-- **Shared Properties** — the visual properties baked into painted tiles: **Hue**, **Saturation**, **Lighting**, **Opacity**, and a **Transform** group (rotate 90° either way, flip horizontal/vertical). These apply to the whole brush. To give a specific tile in the pool its own values, select it and edit — it then carries an override. Click **Clear (follow shared)** on a tile to drop its override and go back to using the shared set. (Priority, terrain tag, and passage are not set here — painted tiles inherit those from the tileset.)
+- **Shared Properties** — the visual properties baked into painted tiles: **Hue**, **Saturation**, **Lighting**, **Opacity**, and a **Transform** group (rotate 90° either way, flip horizontal/vertical — ignored for autotiles). These apply to the whole brush. To give a specific tile in the pool its own values, select it and edit — it then carries an override. Click **Clear (follow shared)** on a tile to drop its override and go back to using the shared set. (Priority, terrain tag, and passage are not set here — painted tiles inherit those from the tileset.)
 
 A **live preview** in the editor shows the brush's shape filled with a representative sample of its tile pool and properties, so you can see the result before painting.
 
@@ -107,7 +109,7 @@ Click **Presets…** in the editor to save the current brush as a named preset, 
 
 ## Multi-Tile Stamps
 
-To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. The entire stamp follows your cursor while painting. Press Q or W to rotate the stamp counter-clockwise or clockwise. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
+To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. The entire stamp follows your cursor while painting. Press Q or W to rotate the stamp counter-clockwise or clockwise — a stamp that contains any autotile is left as-is, since autotiles cannot be rotated. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
 
 ## Switching Tilesets in the Palette
 
