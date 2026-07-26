@@ -55,6 +55,24 @@ Each zip also ships its own `README.md` with engine-specific notes, in case anyt
 
 To check it worked: start your game in **Debug mode**, open the Debug menu (F9), and look for **Maker Studio…** — from there you can launch the editor directly (if the app isn't installed yet, that menu shows the download link).
 
+### Keeping the plugin up to date
+
+The plugin ships alongside the editor, so a project can end up running an older one than the app — usually after you update the editor and forget to re-copy the folder. Symptoms are subtle: the game renders something differently from the editor, or a fix you read about in the changelog doesn't apply in-game.
+
+The editor checks for you. When you open a project whose `Plugins/MakerStudio` is older than the app, it offers three choices:
+
+- **Update Now** — downloads the matching integration and replaces the plugin files for you. Your `003_Editor/` folder (project mods, config, stats, and the portable editor if you keep one there) is left untouched. Restart the game afterwards.
+- **Download Manually** — opens the release page so you can copy the folder in yourself.
+- **Later** — dismisses it for this project until the next editor update.
+
+You can run the check any time from **Help → Check Game Integration…**, which also tells you which build the project has (`PE21.1`, `LBDS1.2.0`, …) and its version.
+
+**BES v5 and v17.1 projects are covered too.** Those builds are one pasted script rather than a folder, so they carry their version as a comment in the script itself. The editor finds it in `Data/Scripts/` or `Scripts.rxdata` and, on **Update Now**, replaces that single script in place — no other script is touched, and the script bank is backed up first.
+
+If the editor finds no integration at all, it says so once per project and points you at the downloads — the editor works fine without one, but your game will ignore extended layers, shadows, extra autotiles and per-tile effects.
+
+One caveat for existing projects: integrations installed before this check existed carry no version marker. A folder plugin is still recognised — the editor works out which build it is from the plugin's own files and shows it as *(detected)* — but a *pasted* script reads as "not installed" until you paste the current one over it once.
+
 ## Launching
 
 Run the editor executable. On first launch you will see a welcome screen prompting you to select a game folder. Click **Browse** and navigate to your RPG Maker XP project root (the folder containing `Game.exe`).

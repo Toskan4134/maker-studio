@@ -55,6 +55,24 @@ Cada zip incluye además su propio `README.md` con notas específicas del motor,
 
 Para comprobar que funcionó: arranca tu juego en **modo Debug**, abre el menú Debug (F9) y busca **Maker Studio…** — desde ahí puedes lanzar el editor directamente (si la app aún no está instalada, ese menú muestra el enlace de descarga).
 
+### Mantener el plugin actualizado
+
+El plugin se publica junto al editor, así que un proyecto puede acabar con uno más antiguo que la app — normalmente al actualizar el editor y olvidarte de volver a copiar la carpeta. Los síntomas son sutiles: el juego dibuja algo distinto que el editor, o una corrección que leíste en el registro de cambios no se aplica dentro del juego.
+
+El editor lo comprueba por ti. Cuando abres un proyecto cuyo `Plugins/MakerStudio` es más antiguo que la app, te ofrece tres opciones:
+
+- **Actualizar ahora** — descarga la integración correspondiente y reemplaza los archivos del plugin. Tu carpeta `003_Editor/` (mods del proyecto, configuración, estadísticas y el editor portable si lo guardas ahí) se conserva intacta. Reinicia el juego después.
+- **Descargar manualmente** — abre la página de la publicación para que copies la carpeta tú mismo.
+- **Más tarde** — lo descarta para este proyecto hasta la próxima actualización del editor.
+
+Puedes lanzar la comprobación cuando quieras desde **Ayuda → Comprobar integración del juego…**, que además te dice qué versión de integración tiene el proyecto (`PE21.1`, `LBDS1.2.0`, …) y su número de versión.
+
+**Los proyectos de BES v5 y v17.1 también entran.** Esas versiones son un único script pegado en lugar de una carpeta, así que llevan su versión como comentario dentro del propio script. El editor lo encuentra en `Data/Scripts` o en `Scripts.rxdata` y, al pulsar **Actualizar ahora**, reemplaza solo ese script en su sitio: no toca ningún otro y antes hace copia de seguridad del banco de scripts.
+
+Si el editor no encuentra ninguna integración, te lo dice una vez por proyecto y te lleva a las descargas: el editor funciona igual sin ella, pero tu juego ignorará las capas extendidas, las sombras, los autotiles extra y los efectos por tile.
+
+Una advertencia para proyectos ya existentes: las integraciones instaladas antes de que existiera esta comprobación no llevan marca de versión. Un plugin de carpeta se sigue reconociendo — el editor deduce cuál es a partir de los propios archivos del plugin y lo muestra como *(detectada)* — pero un script *pegado* aparecerá como «no instalada» hasta que pegues encima el actual una vez.
+
 ## Arranque
 
 Ejecuta el programa del editor. En el primer arranque verás una pantalla de bienvenida que te pide elegir una carpeta de juego. Haz clic en **Examinar** y navega hasta la raíz de tu proyecto de RPG Maker XP (la carpeta que contiene `Game.exe`).
