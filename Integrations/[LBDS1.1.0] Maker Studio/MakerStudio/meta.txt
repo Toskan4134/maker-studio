@@ -1,6 +1,9 @@
+# NOTE: "MSIntegration" is COMMENTED OUT on purpose. PluginManager.register raises on any
+# meta key it does not know ("Invalid plugin registry key" / "Clave de registro de plugin no
+# valida") and the game will not boot. The editor reads the key straight through the comment.
 Name          = MakerStudio
-Version       = 1.2.0
+Version       = 1.2.1
 Essentials    = 21.1
 Website       = https://toskan4134.github.io
 Credits       = Toskan4134
-MSIntegration = LBDS1.1.0
+# MSIntegration = LBDS1.1.0   <- do not uncomment: see the NOTE above
