@@ -140,6 +140,14 @@ If you edit a tileset's graphic file in `Graphics/Tilesets/` while the project i
 
 Selections can be non-rectangular when using Ctrl/Shift. The highlight overlay makes selected cells visible with a gold fill and cell borders.
 
+### Painting Inside a Selection
+
+A selection now **stays** when you switch to another tool and start painting, and it acts as a stencil:
+Brush, Eraser, Fill and Rectangle only write inside the selected cells, so you can paint freely over the
+edges without touching anything outside. Fill stops at the selection border too — it fills the part of
+the matching region that falls inside it. Press **Esc** (or Edit → Deselect) when you want to paint
+outside again.
+
 ### Dragging Off the Map
 
 For the Rectangle and Select tools, you can start or finish a drag in the empty area beside the map — the selection / rectangle clamps to the nearest border tile instead of being cancelled. The drag also keeps going if your cursor leaves the canvas entirely (e.g. wanders into another panel); release the mouse button anywhere to finish. Moving a selection is unaffected: clicking outside the map always begins a fresh selection rather than triggering a move, even if the clamped border tile happens to fall inside your current selection.

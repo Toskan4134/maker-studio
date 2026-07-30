@@ -54,3 +54,15 @@ Las propiedades de autotile son **por gráfico**: la cuadrícula muestra los val
 Haz clic en **Save** para escribir tus cambios en `Tilesets.rxdata`. Se crea una copia de seguridad del archivo original automáticamente en el primer guardado. El editor permanece abierto tras guardar, así que puedes seguir ajustando propiedades — pulsa **Ctrl+S** (o **Cmd+S** en macOS) para guardar de nuevo sin cerrar, o usa **Close** cuando termines. Si cierras con cambios sin guardar, se te preguntará si guardar, descartar o cancelar.
 
 Tras guardar, los overlays de colisión y prioridad se actualizan al instante en todos los mapas abiertos que usan el tileset — incluidos los tiles que colocaste antes. Esto se aplica a cada tile colocado: tiles normales, tiles pintados desde otro tileset, autotiles extra (con nombre) y tiles que rotaste o volteaste. Los tiles rotados y volteados reaplican automáticamente el nuevo paso en la orientación correcta, en el editor y en el juego.
+
+## Cómo lee el overlay de colisión una pila de tiles
+
+**Show Collision** (menú View, o el botón **Col** de la barra) ahora responde cada tile igual que el juego.
+Recorre la celda desde la capa superior hacia abajo y se detiene en el primer tile que o bloquea del todo
+o es un tile de **suelo** (priority 0) — ese tile decide. Un tile que es transitable pero tiene priority
+**1 o más** (una franja, la copa de un árbol, el borde de un tejado) es *transparente* para la colisión,
+así que el overlay sigue leyendo hacia abajo y muestra la colisión del tile de debajo. Pon encima un tile
+transitable de **priority 0** y la celda se lee como abierta, porque es lo que pasa en el juego.
+
+Los marcadores de bush, counter y terrain-tag no se cortan en ese tile de suelo: se muestran si **algún**
+tile de la pila los lleva, igual que los responde el juego.

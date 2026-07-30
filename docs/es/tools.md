@@ -140,6 +140,14 @@ Si editas el archivo gráfico de un tileset en `Graphics/Tilesets/` mientras el 
 
 Las selecciones pueden no ser rectangulares usando Ctrl/Shift. El overlay de resaltado hace visibles las celdas seleccionadas con un relleno dorado y bordes de celda.
 
+### Pintar dentro de una selección
+
+La selección ahora **se mantiene** al cambiar de herramienta y empezar a pintar, y actúa como plantilla:
+Brush, Eraser, Fill y Rectangle solo escriben dentro de las celdas seleccionadas, así que puedes pintar
+sin cuidado sobre los bordes sin tocar nada de fuera. El Fill también se detiene en el borde de la
+selección — rellena la parte de la región coincidente que cae dentro. Pulsa **Esc** (o Edit → Deselect)
+cuando quieras volver a pintar fuera.
+
 ### Arrastrar fuera del mapa
 
 Para las herramientas Rectangle y Select, puedes empezar o terminar un arrastre en el área vacía junto al mapa — la selección / rectángulo se ajusta al tile de borde más cercano en lugar de cancelarse. El arrastre también continúa si tu cursor sale del lienzo por completo (p. ej. entra en otro panel); suelta el botón del ratón en cualquier sitio para terminar. Mover una selección no se ve afectado: hacer clic fuera del mapa siempre inicia una selección nueva en lugar de provocar un movimiento, aunque el tile de borde ajustado caiga dentro de tu selección actual.
