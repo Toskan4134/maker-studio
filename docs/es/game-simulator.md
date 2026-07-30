@@ -130,3 +130,4 @@ Haz clic en ⚙ Settings para configurar:
 - **Player Start Position**: coordenadas X/Y del spawn del jugador.
 - **Player Character**: qué sprite de personaje usar.
 - **Canvas Size**: tamaño del viewport del simulador (presets: Default 512×384, Amplified 640×440).
+- **FPS máximos**: la tasa de frames de tu propio juego — 60 por defecto, que es a lo que corren Essentials v20/v21. El simulador hace tick a ese ritmo y todo lo anclado a tiempo real (velocidad de movimiento, Wait, Screen Shake) escala con él, así que si tu proyecto corre el motor a otra tasa, indicarla aquí mantiene la temporización de la vista previa igual a la del juego. Se guarda por proyecto.

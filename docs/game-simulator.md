@@ -130,3 +130,4 @@ Click ⚙ Settings to configure:
 - **Player Start Position**: X/Y coordinates for player spawn
 - **Player Character**: Which character sprite to use
 - **Canvas Size**: Simulator viewport size (presets: Default 512×384, Amplified 640×440)
+- **Max FPS**: your game's own frame rate — 60 by default, which is what Essentials v20/v21 run at. The simulator ticks at this rate, and everything anchored to real time (walking speed, Wait, Screen Shake) scales with it, so if your project runs the engine at another frame rate, setting it here keeps the preview's timing matched to the game. Saved per project.
