@@ -127,6 +127,10 @@ If you have mods installed that add their own event commands, extra tabs marked 
 
 Double-click a command to edit its parameters. Many commands have dedicated typed forms (Show Text, Control Switches, Conditional Branch, and so on). Commands that do not yet have a typed form show a raw JSON editor instead.
 
+**Selecting several commands from the keyboard**: hold **Shift** and press ↑ / ↓ to
+grow or shrink the selection from where you started, the same as Shift+clicking. Copy,
+cut, paste, delete and Alt+↑/↓ reorder then act on the whole run.
+
 ### Multi-Line Commands (Show Text, Comment, Script)
 
 **Show Text**, **Comment**, and **Script** can hold as many lines as you need — just type them in the command's text box, one per line. In the command list, **each line gets its own row**, exactly like RPG Maker XP: the command row shows the first line, and every extra line appears below it on a row starting with `:`.
@@ -198,6 +202,11 @@ The move-action list edits just like the main command list:
 - **Edit** the selected action with `Space` or `Enter` (opens its parameter form), **Delete** removes it, the **arrow keys** move the selection, and `Alt+↑` / `Alt+↓` reorder.
 - **Drag and drop** one action — or a whole multi-selection — to reorder; a line shows where it will land.
 
+The route editor is fully translated now, so with the editor in Spanish the action
+buttons, the route options and the rows read in Spanish too. Each row is drawn with
+an indent guide, so at a glance the actions read as belonging to the route rather
+than as commands of their own.
+
 Actions that take parameters open their own form, using the same pickers as the rest of the editor instead of raw text:
 
 - **Change Graphic** — character graphic file picker (with preview + hue) plus Direction and Pattern.
@@ -218,6 +227,11 @@ Below the standard actions is a **Frame** group that steps or sets which cell of
 These let you drive a sprite's animation by hand — e.g. a stepped torch flicker, a portrait that cycles expressions, or a wide pose sheet. Because the frame is set manually, turn the target's **Move Animation** and **Stop Animation** off (Move Animation OFF / Stop Animation OFF actions) so the engine's automatic walk cycle doesn't overwrite the frame you set.
 
 > The in-editor **Test Move Route** simulator previews these approximately — only the first four rows render distinctly there. In-game, all rows of the sheet are reachable.
+
+**Test Move Route** starts with **Loop** already on when the route has **Repeat
+Action** ticked, so a looping route previews the way it will actually behave in-game
+instead of stopping after one pass. Turning Loop off in the simulator still wins from
+then on.
 
 Each move action also appears as its own colored row beneath the Set Move Route command in the main list. To re-edit one, double-click it — or select it and use Edit (Edit button / Space / right-click → Edit). Either jumps straight to that action's form.
 

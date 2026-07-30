@@ -111,6 +111,16 @@ Click **Presets…** in the editor to save the current brush as a named preset, 
 
 To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. The entire stamp follows your cursor while painting. Press Q or W to rotate the stamp counter-clockwise or clockwise — a stamp that contains any autotile is left as-is, since autotiles cannot be rotated. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
 
+A stamp does not have to be rectangular: **Ctrl+click** a tile to add it to the current
+stamp and **Shift+click** one to take it out, exactly like building a selection on the
+map. Tiles you leave out become gaps — painting skips them instead of writing anything
+there, so you can stamp an L, a ring, or scattered detail in one stroke. The palette
+outlines each chosen tile individually once a stamp has gaps.
+
+The magnifier button in the **Tile Palette** header scrolls the palette to your
+selected tile and centres it — handy in tall tilesets after picking a tile with the
+eyedropper.
+
 ## Switching Tilesets in the Palette
 
 The search box at the top of the Tile Palette filters every tileset by name, graphic file, or id. Type to filter, use the arrow keys and Enter (or click) to pick one, and the palette switches to show that tileset's tiles. Picking a tileset closes the dropdown and removes focus from the search box, so the next keypress goes to your map rather than the search field.
@@ -123,6 +133,7 @@ Below the tileset grid, the **Autotiles** section lists every named autotile fro
 - **Names on hover**: hover over any autotile in the grid and a small tooltip shows its name.
 - **Select to paint**: click an autotile to select it for the Brush, Fill, and Rectangle tools.
 - **Open detail**: double-click an autotile (or right-click it and choose **Open Autotile**) to open its detail panel, where you can pick an individual piece of the autotile to stamp as a fixed part.
+- **Resize the list**: drag the bottom edge of the autotiles grid to make the section taller or shorter. The height you pick is remembered, like your panel layout.
 
 If your filter matches nothing, the section shows **"No autotiles match."**; if the project has no autotiles at all, it shows **"No autotiles found."**
 

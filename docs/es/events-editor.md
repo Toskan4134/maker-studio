@@ -127,6 +127,10 @@ Si tienes mods instalados que añaden sus propios comandos de evento, aparecen p
 
 Haz doble clic en un comando para editar sus parámetros. Muchos comandos tienen formularios tipados dedicados (Show Text, Control Switches, Conditional Branch, etc.). Los comandos que aún no tienen un formulario tipado muestran un editor JSON en bruto en su lugar.
 
+**Seleccionar varios comandos con el teclado**: mantén **Shift** y pulsa ↑ / ↓ para
+ampliar o reducir la selección desde donde empezaste, igual que con Shift+clic. Copiar,
+cortar, pegar, borrar y reordenar con Alt+↑/↓ actúan entonces sobre todo el bloque.
+
 ### Comandos multilínea (Show Text, Comment, Script)
 
 **Show Text**, **Comment** y **Script** pueden contener tantas líneas como necesites — escríbelas en el cuadro de texto del comando, una por línea. En la lista de comandos, **cada línea tiene su propia fila**, igual que en RPG Maker XP: la fila del comando muestra la primera línea, y cada línea extra aparece debajo en una fila que empieza por `:`.
@@ -198,6 +202,11 @@ La lista de acciones de movimiento se edita igual que la lista de comandos princ
 - **Edita** la acción seleccionada con `Space` o `Enter` (abre su formulario de parámetros), **Supr** la quita, las **flechas** mueven la selección, y `Alt+↑` / `Alt+↓` reordenan.
 - **Arrastra y suelta** una acción — o toda una multiselección — para reordenar; una línea muestra dónde caerá.
 
+El editor de rutas ya está traducido por completo, así que con el editor en español los
+botones de acción, las opciones de la ruta y las filas también se leen en español. Cada
+fila se dibuja con una guía de sangría, así que de un vistazo las acciones se leen como
+parte de la ruta y no como comandos propios.
+
 Las acciones que toman parámetros abren su propio formulario, usando los mismos selectores que el resto del editor en vez de texto en bruto:
 
 - **Change Graphic** — selector de archivo de gráfico de personaje (con vista previa + hue) más Direction y Pattern.
@@ -218,6 +227,11 @@ Debajo de las acciones estándar hay un grupo **Frame** que avanza o establece q
 Estas te dejan controlar la animación de un sprite a mano — p. ej. el parpadeo escalonado de una antorcha, un retrato que cicla expresiones o una hoja de poses ancha. Como el frame se establece manualmente, desactiva la **Move Animation** y la **Stop Animation** del objetivo (acciones Move Animation OFF / Stop Animation OFF) para que el ciclo de caminar automático del motor no sobrescriba el frame que estableciste.
 
 > El simulador **Test Move Route** del editor previsualiza esto de forma aproximada — solo las primeras cuatro filas se dibujan de forma distinta ahí. En el juego, todas las filas de la hoja son alcanzables.
+
+**Test Move Route** arranca con **Loop** ya activado cuando la ruta tiene **Repeat
+Action** marcado, así una ruta en bucle se previsualiza como se comportará realmente en
+el juego en vez de pararse tras una pasada. Desactivar Loop en el simulador sigue
+mandando a partir de ese momento.
 
 Cada acción de movimiento también aparece como su propia fila de color bajo el comando Set Move Route en la lista principal. Para reeditar una, haz doble clic — o selecciónala y usa Edit (botón Edit / Space / clic derecho → Edit). Cualquiera salta directo al formulario de esa acción.
 

@@ -7,7 +7,8 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **File**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), Save, Save All, Run Game, **Clear Proton Preference** (Linux only — forgets your remembered Proton/Wine/native launch choice so the picker dialog shows again next time you press Run)
 - **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, **Cross-Project Clipboard** toggle — see below), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - **Cross-Project Clipboard** is off by default. When ticked, copying tiles, events, or event commands also places them on your system clipboard so a **second open Maker Studio window** can paste them. Turn it on in *each* window you want to share between. (Deleting a tile selection still works with the **Delete** key; only the old menu entry was replaced by this toggle.)
-- **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — clicking an entry **focuses** that panel, bringing it to the front or reopening it as a floating window if closed; it never closes a panel, and the checkmark still shows which panels are open), Show Grid, Show Collision, Show Events, **Show Event Cells** (see below), Dim Inactive Layers, **Show MS-Exclusive Indicators** (see below), Zoom In/Out/100%, Dark Mode, **Language** submenu (see below), **Layout** submenu (Refresh Layout, Import/Export Configuration)
+- **View**: **Panels** submenu (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — clicking an entry **focuses** that panel, bringing it to the front or reopening it as a floating window if closed; it never closes a panel, and the checkmark still shows which panels are open), Show Grid, Show Collision, Show Events, **Show Event Cells** (see below), **Create Events on Double-Click** (see below), Dim Inactive Layers, **Show MS-Exclusive Indicators** (see below), Zoom In/Out/100%, Dark Mode, **Language** submenu (see below), **Layout** submenu (Refresh Layout, Import/Export Configuration)
+  - **Create Events on Double-Click** is on by default, matching RPG Maker: with the Brush on the Events layer, clicking an empty tile selects it and a **double-click** creates the event there. Turn it off if you would rather have a single click create the event straight away.
   - **Show Event Cells** is off by default. Events with no graphic always show a marker box on their tile; with this on, events that *do* have a graphic are outlined too — a thin border around their cell plus a small corner square — so you can tell exactly which tile every event sits on without hiding its sprite. It is greyed out while Show Events is off.
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
@@ -87,6 +88,15 @@ Every panel in the editor can be dragged, floated as a separate window, and rear
 - **Floating windows stay on-screen**: if a floating panel is dragged or resized past the editor bounds, it auto-snaps back inside on release.
 - **Reattach**: drag the floating window's tab back onto a dock zone, or close the panel.
 - **Focus from the menu**: **View → Panels** brings a panel to the front (or reopens it floating if you closed it) — it never closes panels.
+
+### Resizing dialogs
+
+Every dialog window — Event Editor, Database, Tileset Editor, the pickers, all of
+them — can be resized by dragging **any edge or corner**, and moved by dragging its
+title bar. Clicking the dimmed area outside a dialog closes it, but a click that
+just misses an edge counts as a resize grab, not a dismiss. **Esc** closes the
+top-most dialog only, so closing a picker opened on top of the Event Editor no
+longer closes the editor underneath it.
 
 ### Mod panels and layouts
 

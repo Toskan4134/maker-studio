@@ -4,6 +4,14 @@
 
 Abre el **Tileset Manager** desde la pestaña **Tilesets** de la Database (**Tools → Database…**, o el botón **Database** de la barra de herramientas). El gestor lista cada tileset (con una lista con búsqueda); selecciona uno y haz clic en **Edit Properties...** para abrir el editor de tilesets para él.
 
+El panel de detalle del gestor muestra además una **miniatura del gráfico del tileset
+seleccionado**, así de un vistazo sabes qué tileset vas a editar.
+
+Una vía más rápida para un tile que ya tienes a la vista: **clic derecho en ese tile en la
+Paleta de tiles → Edit Properties…**. El editor se abre desplazado hasta ese tile exacto y
+con él ya seleccionado, en vez de al principio de una hoja larga. Pulsa **Esc** para cerrar
+el editor (sigue preguntando por los cambios sin guardar).
+
 (El comando aparte **Map → Change Tileset...** es distinto — intercambia qué tileset usa un *mapa* para sus capas nativas; consulta [Gestión de mapas](map-management.md). No edita las propiedades de los tiles.)
 
 ## Resumen
@@ -27,7 +35,7 @@ Haz clic para recorrer los niveles de prioridad 0 a 5:
 - **0** = Suelo. El jugador camina por delante del tile.
 - **1–5** = Por encima. El jugador camina por detrás del tile (p. ej. copas de árboles), en el juego y en el Simulador.
 
-La prioridad controla la **oclusión del jugador en el juego**, no el orden de dibujo del editor — en el lienzo del editor los tiles siempre se dibujan en orden de capa (ver [Capas](layers.md)). En el juego, la prioridad que se aplica en una casilla viene del tile superior colocado ahí.
+La prioridad controla la **oclusión del jugador en el juego**, no el orden de dibujo del editor — en el lienzo del editor los tiles siempre se dibujan en orden de capa (ver [Capas](layers.md)). En el juego y en el Simulador la oclusión se decide **por tile** según su propia prioridad, salvo que un tile de suelo en una capa superior tapa a los que hay debajo en esa casilla. Ver [Capas](layers.md#priority-and-layer-order).
 
 ### Bush Flag
 

@@ -111,6 +111,17 @@ Haz clic en **Presets…** en el editor para guardar el pincel actual como un pr
 
 Para pintar más de un tile a la vez, haz clic y arrastra en la Paleta de tiles para seleccionar un grupo rectangular de tiles. Toda la estampa sigue al cursor mientras pintas. Pulsa Q o W para rotar la estampa en sentido antihorario u horario — una estampa que contenga algún autotile se queda como está, ya que los autotiles no se pueden rotar. Arrastrar cerca del borde superior o inferior de la paleta autodesplaza para seleccionar tiles fuera del área visible.
 
+Una estampa no tiene que ser rectangular: **Ctrl+clic** en un tile lo añade a la
+estampa actual y **Shift+clic** lo saca, igual que al construir una selección en el
+mapa. Los tiles que dejes fuera quedan como huecos — al pintar se saltan en vez de
+escribir nada ahí, así que puedes estampar una L, un anillo o detalles sueltos en una
+sola pasada. La paleta perfila cada tile elegido por separado cuando la estampa tiene
+huecos.
+
+El botón de la lupa en la cabecera de la **Paleta de tiles** desplaza la paleta hasta
+tu tile seleccionado y lo centra — útil en tilesets altos después de coger un tile con
+el cuentagotas.
+
 ## Cambiar de tileset en la paleta
 
 El cuadro de búsqueda en la parte superior de la Paleta de tiles filtra todos los tilesets por nombre, archivo gráfico o id. Escribe para filtrar, usa las flechas y Enter (o haz clic) para elegir uno, y la paleta cambia para mostrar los tiles de ese tileset. Elegir un tileset cierra el desplegable y quita el foco del cuadro de búsqueda, así que la siguiente tecla va a tu mapa en lugar de al campo de búsqueda.
@@ -123,6 +134,7 @@ Debajo de la cuadrícula del tileset, la sección **Autotiles** lista cada autot
 - **Nombres al pasar el ratón**: pasa sobre cualquier autotile de la cuadrícula y un pequeño tooltip muestra su nombre.
 - **Seleccionar para pintar**: haz clic en un autotile para seleccionarlo para las herramientas Brush, Fill y Rectangle.
 - **Abrir detalle**: haz doble clic en un autotile (o clic derecho y elige **Open Autotile**) para abrir su panel de detalle, donde puedes elegir una pieza individual del autotile para estampar como parte fija.
+- **Redimensionar la lista**: arrastra el borde inferior de la cuadrícula de autotiles para hacer la sección más alta o más baja. La altura que elijas se recuerda, como tu disposición de paneles.
 
 Si tu filtro no coincide con nada, la sección muestra **"No autotiles match."**; si el proyecto no tiene autotiles en absoluto, muestra **"No autotiles found."**
 

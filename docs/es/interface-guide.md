@@ -7,7 +7,8 @@ Cada elemento de menú muestra ahora un pequeño icono junto a su etiqueta para 
 - **File**: Open Project, **Open Recent** (proyectos abiertos recientemente, más Clear Recent Projects), Save, Save All, Run Game, **Clear Proton Preference** (solo Linux — olvida tu elección recordada de lanzamiento Proton/Wine/nativo para que el diálogo de selección vuelva a aparecer la próxima vez que pulses Run)
 - **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, conmutador **Cross-Project Clipboard** — ver abajo), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - El **Cross-Project Clipboard** está desactivado por defecto. Cuando está marcado, copiar tiles, eventos o comandos de evento también los coloca en el portapapeles del sistema para que una **segunda ventana de Maker Studio abierta** pueda pegarlos. Actívalo en *cada* ventana entre las que quieras compartir. (Borrar una selección de tiles sigue funcionando con la tecla **Supr**; solo se reemplazó la antigua entrada de menú por este conmutador.)
-- **View**: submenú **Panels** (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — al hacer clic en una entrada se **enfoca** ese panel, trayéndolo al frente o reabriéndolo como ventana flotante si estaba cerrado; nunca cierra un panel, y la marca de verificación sigue indicando qué paneles están abiertos), Show Grid, Show Collision, Show Events, **Mostrar casilla de los eventos** (ver abajo), Dim Inactive Layers, **Show MS-Exclusive Indicators** (ver abajo), Zoom In/Out/100%, Dark Mode, submenú **Language** (ver abajo), submenú **Layout** (Refresh Layout, Import/Export Configuration)
+- **View**: submenú **Panels** (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — al hacer clic en una entrada se **enfoca** ese panel, trayéndolo al frente o reabriéndolo como ventana flotante si estaba cerrado; nunca cierra un panel, y la marca de verificación sigue indicando qué paneles están abiertos), Show Grid, Show Collision, Show Events, **Mostrar casilla de los eventos** (ver abajo), **Crear eventos con doble clic** (ver abajo), Dim Inactive Layers, **Show MS-Exclusive Indicators** (ver abajo), Zoom In/Out/100%, Dark Mode, submenú **Language** (ver abajo), submenú **Layout** (Refresh Layout, Import/Export Configuration)
+  - **Crear eventos con doble clic** está activado por defecto, igual que en RPG Maker: con el Brush en la capa de eventos, un clic en un tile vacío lo selecciona y el **doble clic** crea ahí el evento. Desactívalo si prefieres que un solo clic cree el evento directamente.
   - **Mostrar casilla de los eventos** está desactivado por defecto. Los eventos sin gráfico siempre muestran un recuadro en su tile; con esto activado, los eventos que **sí** tienen gráfico también se marcan — un borde fino alrededor de su casilla más un cuadradito en la esquina —, así se ve exactamente en qué tile está cada evento sin tapar su sprite. Se deshabilita mientras Show Events esté apagado.
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, submenú **Export Map** (Export as JSON / PNG / GIF / WebP)
 - **Tools**: selección de herramienta (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
@@ -87,6 +88,15 @@ Cada panel del editor se puede arrastrar, flotar como ventana aparte y reorganiz
 - **Las ventanas flotantes se quedan en pantalla**: si una ventana flotante se arrastra o redimensiona más allá de los límites del editor, vuelve a encajar dentro al soltarla.
 - **Reacoplar**: arrastra la pestaña de la ventana flotante de vuelta a una zona de acople, o cierra el panel.
 - **Enfocar desde el menú**: **View → Panels** trae un panel al frente (o lo reabre flotando si lo cerraste) — nunca cierra paneles.
+
+### Redimensionar diálogos
+
+Todas las ventanas de diálogo — Event Editor, Database, Tileset Editor, los
+selectores, todas — se pueden redimensionar arrastrando **cualquier borde o
+esquina**, y mover arrastrando su barra de título. Hacer clic en la zona atenuada
+de fuera cierra el diálogo, pero un clic que roza un borde cuenta como agarre de
+redimensionado, no como cierre. **Esc** cierra solo el diálogo de encima, así que
+cerrar un selector abierto sobre el Event Editor ya no cierra el editor de debajo.
 
 ### Paneles y disposiciones de mods
 
