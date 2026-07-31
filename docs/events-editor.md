@@ -49,6 +49,8 @@ Double-click an existing event (or select it and click Edit) to open the Event E
 
 The dialog window is resizable — drag its bottom-right corner to make it bigger, which helps when an event has many pages or a long command list.
 
+At the bottom: **OK** saves your changes and closes the editor, **Apply** saves them and leaves it open (handy for testing a long event in steps), and **Cancel** discards them — if there is anything unsaved, you are asked first.
+
 ### General
 
 - **Name**: The event's display name.

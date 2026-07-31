@@ -49,6 +49,8 @@ Haz doble clic en un evento existente (o selecciónalo y haz clic en Edit) para 
 
 La ventana del diálogo se puede redimensionar — arrastra su esquina inferior derecha para agrandarla, lo que ayuda cuando un evento tiene muchas páginas o una lista de comandos larga.
 
+Abajo del todo: **Aceptar** guarda los cambios y cierra el editor, **Aplicar** los guarda y lo deja abierto (útil para probar un evento largo por partes), y **Cancelar** los descarta — si hay algo sin guardar, se te pregunta antes.
+
 ### General
 
 - **Name**: el nombre visible del evento.
