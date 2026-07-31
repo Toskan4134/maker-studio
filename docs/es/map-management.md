@@ -164,6 +164,11 @@ editor deja una marca en la carpeta del plugin, y el juego en marcha la detecta 
 segundo y vuelve a aplicar el mapa en el que estés. Tiles, eventos, colisiones y las capas extendidas
 se recargan.
 
+**Los gráficos también cuentan.** Repinta un tileset, un autotile o una hoja de personaje en Photoshop
+(o donde dibujes) y guárdalo sobre el archivo: la paleta y el editor de mapas se actualizan solos, y el
+juego en marcha recarga esos bitmaps en su siguiente comprobación — sin reiniciar ni volver a entrar al
+mapa.
+
 Solo puede ocurrir con el editor abierto en ese proyecto (es el editor quien escribe la marca), y
 puedes desactivarlo por proyecto con `LIVE_RELOAD = false` en
 `Plugins/MakerStudio/000_Settings.rb` — o, sin salir del juego, desde el menú de depuración en

@@ -163,6 +163,10 @@ save anything — map tiles, layers, events, tilesets, the database, the map tre
 small marker in the plugin folder, and the running game notices it within a second and re-applies the
 map you're standing on. Tiles, events, passability and the extended layers all come back fresh.
 
+**Graphics count too.** Repaint a tileset, an autotile or a character sheet in Photoshop (or whatever
+you draw in) and save it over the file: the palette and the map editor refresh on their own, and the
+running game reloads those bitmaps on its next check — no restart, no re-entering the map.
+
 It only ever fires while the editor is open on that project (the editor is what writes the marker),
 and you can turn it off per project with `LIVE_RELOAD = false` in
 `Plugins/MakerStudio/000_Settings.rb` — or, without leaving the game, from the debug menu under
