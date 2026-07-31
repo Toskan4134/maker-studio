@@ -13,7 +13,15 @@ Switch to **Marketplace** to browse.
 
 ## Browsing
 
-The Marketplace shows a card for each available mod with an icon, name, author, star count, short description, and tags. Use the search box to filter by name, author, or description. Click any tag chip to filter to that tag; click it again to clear.
+The Marketplace shows a card for each available mod with an icon, name, author, star count, short description, and tags.
+
+- **Search** matches name, author, description, mod id and tags. Press Escape (or the ✕) to clear it.
+- **All / Installed / Updates** switches which mods are listed, each with its own count — the quickest way to see what you already have or what has a new version waiting.
+- **Tags** opens a searchable list of every tag with the number of mods carrying it. Tick as many as you like and choose whether a mod has to match **any** of them or **all**. The tags you picked stay visible next to the button; click one to drop it. A tag on a card also filters by it.
+- The count on the right (`12 of 340`) tells you how much the filters are hiding, and **Clear filters** puts everything back.
+- The two small buttons next to the sort order switch between **cards** and a **compact list** that fits many more mods on screen. Your choice and the sort order are remembered.
+
+Long lists load in batches — click **Show N more** at the bottom to reveal the next ones.
 
 Click **Changelog** on a card to open the release notes for that mod's latest version in a dialog. The notes are shown as formatted Markdown (headings, lists, links, and code render the way they do on GitHub).
 

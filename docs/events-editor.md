@@ -304,3 +304,32 @@ Colors follow the active editor theme — the same hue family in dark and light 
 
 - Removing a choice from the *middle* of a Show Choices list can shift the commands in the When branches below it (branches are matched by position). Renaming choices or adding new ones at the end is safe.
 - Some commands currently use a raw JSON editor because a typed form is not yet available.
+
+## Waiting for a Move Route to Finish
+
+**Wait for Move's Completion** pauses the event until a forced move route has finished. RPG Maker
+waits for *every* character on the map, which means an unrelated event's route can hold yours up.
+Maker Studio lets you narrow it:
+
+| Option | Waits for |
+|--------|-----------|
+| **Any Event (RPG Maker default)** | Every character — the original behaviour. Chosen for new commands, and what happens without the plugin |
+| **This Event** | The Set Move Routes *this event* ran, whoever they moved — including one it set on the player |
+| A specific event | Just the route this event set on that one |
+
+"This Event" is the one you want after moving the player through a door: the event itself is standing
+still, so what matters is the route it started, not its own movement.
+
+Anything other than *Any Event* needs the **Maker Studio plugin** in your game (the badge on the
+form says so). Without it the game falls back to waiting for every character — never a crash, just
+the original behaviour.
+
+One catch worth knowing: a move route started by a **script** (Essentials' `Followers.follow_into_door`,
+for instance) was not started by the event, so only *Any Event* waits for it.
+
+## Autonomous Movement · Custom
+
+With **Type: Custom** in the Autonomous Movement box, a **Set Move Route…** button appears. It opens
+the same route editor the event command uses, and the route is stored on the page itself — the route
+the event walks on its own, with no command needed. There is no target picker: a page route always
+moves its own event.

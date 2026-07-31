@@ -13,7 +13,15 @@ Cambia a **Marketplace** para explorar.
 
 ## Explorar
 
-El Marketplace muestra una tarjeta por cada mod disponible con un icono, nombre, autor, número de estrellas, descripción corta y etiquetas. Usa el cuadro de búsqueda para filtrar por nombre, autor o descripción. Haz clic en cualquier chip de etiqueta para filtrar por esa etiqueta; haz clic de nuevo para limpiarlo.
+El Marketplace muestra una tarjeta por cada mod disponible con un icono, nombre, autor, número de estrellas, descripción corta y tags.
+
+- La **búsqueda** encuentra por nombre, autor, descripción, id del mod y tags. Pulsa Escape (o la ✕) para limpiarla.
+- **All / Installed / Updates** cambia qué mods se listan, cada uno con su contador — la forma más rápida de ver qué tienes ya instalado o qué tiene versión nueva esperando.
+- **Tags** abre una lista buscable con todos los tags y cuántos mods lleva cada uno. Marca los que quieras y elige si un mod debe coincidir con **cualquiera** de ellos o con **todos**. Los tags elegidos se quedan a la vista junto al botón; haz clic en uno para quitarlo. Un tag de una tarjeta también filtra por él.
+- El contador de la derecha (`12 de 340`) dice cuánto están ocultando los filtros, y **Limpiar filtros** lo devuelve todo.
+- Los dos botones pequeños junto al orden cambian entre **tarjetas** y una **lista compacta** que muestra muchos más mods de golpe. Tu elección y el criterio de orden se recuerdan.
+
+Las listas largas se cargan por tandas: pulsa **Mostrar N más** al final para ver las siguientes.
 
 Haz clic en **Changelog** en una tarjeta para abrir las notas de la versión más reciente de ese mod en un diálogo. Las notas se muestran como Markdown formateado (encabezados, listas, enlaces y código se renderizan como en GitHub).
 

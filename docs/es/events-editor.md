@@ -304,3 +304,33 @@ Los colores siguen el tema activo del editor — la misma familia de tonos en mo
 
 - Quitar una elección del *centro* de una lista Show Choices puede desplazar los comandos de las ramas When de debajo (las ramas se emparejan por posición). Renombrar elecciones o añadir nuevas al final es seguro.
 - Algunos comandos usan actualmente un editor JSON en bruto porque aún no hay un formulario tipado disponible.
+
+## Esperar a que termine una ruta de movimiento
+
+**Esperar fin del movimiento** pausa el evento hasta que una ruta forzada haya terminado. RPG Maker
+espera a *todos* los personajes del mapa, así que la ruta de un evento que no tiene nada que ver
+puede retener al tuyo. Maker Studio permite acotarlo:
+
+| Opción | Espera a |
+|--------|----------|
+| **Cualquier evento (por defecto en RPG Maker)** | Todos los personajes — el comportamiento original. Es lo que se elige en comandos nuevos y lo que ocurre sin el plugin |
+| **Este evento** | Las rutas que ha lanzado *este evento*, muevan a quien muevan — incluida una que le haya puesto al jugador |
+| Un evento concreto | Solo la ruta que este evento le puso a ese |
+
+"Este evento" es lo que quieres tras mover al jugador por una puerta: el propio evento está parado,
+así que lo que importa es la ruta que lanzó, no su movimiento.
+
+Cualquier opción distinta de *Cualquier evento* necesita el **plugin de Maker Studio** en tu juego
+(el distintivo del formulario lo indica). Sin él, el juego vuelve a esperar a todos los personajes —
+nunca falla, simplemente hace lo de siempre.
+
+Un detalle que conviene saber: una ruta lanzada por un **script** (por ejemplo
+`Followers.follow_into_door` de Essentials) no la ha lanzado el evento, así que solo *Cualquier
+evento* la espera.
+
+## Movimiento autónomo · Personalizado
+
+Con **Tipo: Personalizado** en el recuadro de movimiento autónomo aparece un botón **Fijar ruta de
+movimiento…**. Abre el mismo editor de rutas que el comando, y la ruta se guarda en la propia página
+— la ruta que el evento recorre por su cuenta, sin necesidad de ningún comando. No hay selector de
+objetivo: la ruta de una página siempre mueve a su propio evento.

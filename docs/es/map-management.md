@@ -156,6 +156,18 @@ Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego 
 
 Tu elección se recuerda por proyecto, así que las ejecuciones posteriores lanzan directo sin volver a preguntar. Para que el diálogo vuelva a aparecer más adelante — por ejemplo, para cambiar entre Proton y la build nativa — usa **File → Clear Proton Preference**.
 
+### Recarga en caliente con el juego abierto
+
+Con el plugin de Maker Studio instalado no hace falta reiniciar el juego para ver un cambio. Al
+guardar cualquier cosa — tiles, capas, eventos, tilesets, la base de datos, el árbol de mapas — el
+editor deja una marca en la carpeta del plugin, y el juego en marcha la detecta en menos de un
+segundo y vuelve a aplicar el mapa en el que estés. Tiles, eventos, colisiones y las capas extendidas
+se recargan.
+
+Solo puede ocurrir con el editor abierto en ese proyecto (es el editor quien escribe la marca), y
+puedes desactivarlo por proyecto con `LIVE_RELOAD = false` en
+`Plugins/MakerStudio/000_Settings.rb`.
+
 ### Botón Saves
 
 Tras tu primer Run, aparece un botón **Saves** en la barra que abre la carpeta donde el juego escribe sus archivos de guardado:

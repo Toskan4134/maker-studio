@@ -52,6 +52,8 @@ Haz clic en **Presets…** en la cabecera del panel Tile Properties para abrir e
 
 Un lienzo de vista previa muestra cómo quedaría el preset resaltado aplicado al tile seleccionado actualmente. Los presets se guardan por instalación (compartidos entre todos tus proyectos) y se recuerdan entre sesiones.
 
+**Carpetas.** El botón **+** ofrece *Nuevo preset…* y *Nueva carpeta…*. Una carpeta puede estar vacía: se queda hasta que la borres. Los presets entran y salen de las carpetas **arrastrando**: suelta uno sobre una carpeta (o sobre cualquier preset de dentro) para archivarlo ahí, y suéltalo en la zona suelta de debajo de las carpetas para sacarlo. Soltar sobre otro preset además reordena. Haz clic derecho en una carpeta para renombrarla o borrarla; al borrarla te pregunta si los presets de dentro se van con ella o simplemente salen.
+
 ## Tamaño de pincel y borrador
 
 Usa las teclas `[` y `]` para reducir o aumentar el tamaño del pincel mientras la herramienta Brush está activa, o el tamaño del borrador mientras la herramienta Eraser está activa. Alt + rueda también ajusta el tamaño de la herramienta activa.
@@ -183,3 +185,10 @@ Cuando mueves una selección con la herramienta Select, el marco de selección a
 - Clic derecho abre un menú contextual.
 - Q y W rotan el pincel o la estampa en sentido antihorario y horario.
 - Ctrl + arrastrar con Brush o Eraser bloquea el pintado a un solo eje.
+
+## Explorador de audio
+
+**Herramientas → Explorador de audio…**, o el botón **Audio** de la barra de herramientas, abre las
+carpetas de audio de tu proyecto para escucharlas, sin necesidad de ningún evento. Cambia entre BGM,
+BGS, ME y SE, busca por nombre y reproduce / pausa / detén con volumen y pitch. El pitch resamplea
+igual que el juego: subirlo suena más agudo *y* más rápido.

@@ -156,6 +156,17 @@ Click the green Run button in the toolbar (or use File then Run Game). The edito
 
 Your choice is remembered per project, so later runs launch straight away without asking again. To make the dialog reappear later — for example to switch between Proton and the native build — use **File → Clear Proton Preference**.
 
+### Live Reload While the Game Is Running
+
+With the Maker Studio plugin installed, you don't have to restart the game to see an edit. When you
+save anything — map tiles, layers, events, tilesets, the database, the map tree — the editor leaves a
+small marker in the plugin folder, and the running game notices it within a second and re-applies the
+map you're standing on. Tiles, events, passability and the extended layers all come back fresh.
+
+It only ever fires while the editor is open on that project (the editor is what writes the marker),
+and you can turn it off per project with `LIVE_RELOAD = false` in
+`Plugins/MakerStudio/000_Settings.rb`.
+
 ### Saves Button
 
 After your first Run, a **Saves** button appears in the toolbar that opens the folder where the game writes its save files:

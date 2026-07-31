@@ -93,6 +93,8 @@ Los siguientes comandos se registran pero no se ejecutan (requieren Game.rxdata 
 - **Menu/Save/Game Over/Title** (351-354) — requiere scripts del sistema.
 - **Script** (355/655) — el simulador no puede ejecutar Ruby, así que los scripts se registran en vez de ejecutarse — pero **ahora se muestra el texto completo del script en el log** (la primera línea en la fila del comando, cada línea restante como una fila `↳` indentada).
 
+  Por eso un script que lanza una ruta de movimiento (por ejemplo `Followers.follow_into_door` de Essentials) no mueve a nadie en el simulador, y un **Esperar fin del movimiento** que contaba con ello no tiene nada que esperar. Cuando esa espera está acotada a *Este evento*, el log ahora lo dice en una línea propia en vez de pasar de largo en silencio.
+
 ## Opciones de la barra de herramientas
 
 - **Speed**: velocidad de reproducción 0,25×, 0,5×, 1×, 2× o 4×. Se conserva tras Restart para que los reinicios no te devuelvan a 1×.

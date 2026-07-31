@@ -93,6 +93,8 @@ The following commands are logged but not executed (require Game.rxdata or Plugi
 - **Menu/Save/Game Over/Title** (351-354) - Requires system scripts
 - **Script** (355/655) - The simulator can't run Ruby, so scripts are logged rather than executed — but the **full script text is now shown in the log** (first line on the command row, each remaining line as an indented `↳` row).
 
+  A script that starts a move route (Essentials' `Followers.follow_into_door`, say) therefore moves nobody in the simulator, and a **Wait for Move's Completion** that was counting on it has nothing to wait for. When that wait is scoped to *This Event*, the log now says so on its own line rather than passing silently.
+
 ## Toolbar Options
 
 - **Speed**: 0.25×, 0.5×, 1×, 2×, or 4× playback speed. Preserved across Restart so resets don't bounce you back to 1×.

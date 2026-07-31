@@ -52,6 +52,8 @@ Click **Presets…** in the Tile Properties panel header to open the preset mana
 
 A preview canvas shows what the highlighted preset would look like applied to the currently selected tile. Presets are stored per-install (shared across all your projects) and remembered across sessions.
 
+**Folders.** The **+** button offers *New Preset…* and *New Folder…*. A folder can be empty — it stays until you delete it. Presets go in and out of folders by **dragging**: drop one on a folder (or on any preset inside it) to file it there, and drop it in the loose area below the folders to take it back out. Dropping on another preset also reorders. Right-click a folder to rename it or delete it; deleting asks whether the presets inside should go with it or simply move out.
+
 ## Brush & Eraser Size
 
 Use the `[` and `]` keys to decrease or increase the brush size while the brush tool is active, or the eraser size while the eraser tool is active. Alt + scroll also adjusts the active tool's size.
@@ -182,3 +184,10 @@ When you move a selection with the Select tool, the selection marquee now follow
 - Right-click opens a context menu.
 - Q and W rotate the brush or stamp counter-clockwise and clockwise.
 - Ctrl + drag with the Brush or Eraser locks painting to a single axis.
+
+## Audio Browser
+
+**Tools → Audio Browser…**, or the **Audio** button on the toolbar, opens your project's audio
+folders for listening — no event needed. Switch between BGM, BGS, ME and SE, search by name, and
+play / pause / stop with volume and pitch. Pitch resamples like the game does: raising it plays the
+clip higher *and* faster.
