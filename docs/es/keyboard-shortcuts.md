@@ -53,6 +53,20 @@ Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A co
 | Alt+1–9 | Alternar visibilidad de capa |
 | Alt+V | Alternar visibilidad de la capa de eventos |
 
+## Editor de tilesets
+
+Solo mientras el editor de tilesets (Database → Tilesets) está abierto, y solo en los modos
+**Priority** y **Terrain Tag**.
+
+| Tecla por defecto | Acción |
+|-------------|--------|
+| 1–9, 0 | Elegir el 1.º–10.º valor de la lista — **1** es la prioridad / terrain tag **0**, **2** es el 1, y así hasta **0**, que es el décimo |
+
+Comparten las teclas con los atajos de capas a propósito: nunca están activos a la vez, y manda la
+pantalla que esté abierta. Un dígito más allá del final de la lista (un tileset tiene como mucho seis
+prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda → Atajos de teclado, en
+*Editor de tilesets*.
+
 ## Zoom
 
 | Tecla por defecto | Acción |

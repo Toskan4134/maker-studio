@@ -107,3 +107,17 @@ Los paneles añadidos por [mods](marketplace.md) mantienen su lugar en tu dispos
 Panel inferior derecho. Muestra una vista a escala de todo el mapa (todas las capas nativas + extendidas + sombras) con un rectángulo amarillo de viewport. Haz clic o arrastra para recentrar el lienzo principal.
 
 - **Visualización de eventos**: cuando **View → Events** está activado, los eventos se dibujan en el minimapa con el gráfico de su página activa (personaje o tile). Los eventos sin gráfico en ninguna página se ocultan para que el minimapa quede limpio.
+
+## Ajustes (Ayuda → Ajustes…)
+
+Preferencias del editor, aparte de todo lo que se guarda en tu proyecto.
+
+**Tamaño de la ventana al arrancar** — déjalo en el valor por defecto (1400 × 900, centrada), recuerda
+el tamaño y la posición de la última vez, ábrela siempre maximizada o en pantalla completa, o dale un
+tamaño exacto.
+
+**En qué pantalla** — en la que se lance Maker Studio, en la última en la que se cerró, o siempre en
+una concreta. Las pantallas se recuerdan por nombre, así que si esa no está conectada la ventana se
+abre en la que se lance, en vez de aparecer en una pantalla que no existe.
+
+Ambos se aplican la próxima vez que arranque Maker Studio.

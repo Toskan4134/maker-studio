@@ -107,3 +107,16 @@ Panels added by [mods](marketplace.md) keep their place in your layout. If a mod
 Bottom-right panel. Shows a scaled view of the entire map (all native + extended layers + shadows) with a yellow viewport rectangle. Click or drag to recenter the main canvas.
 
 - **Events display**: when **View → Events** is on, events render on the minimap with their active-page graphic (character or tile). Events with no graphic on any page are hidden so the minimap stays clean.
+
+## Settings (Help → Settings…)
+
+Editor-wide preferences, separate from anything stored in your project.
+
+**Window size at startup** — leave it at the default (1400 × 900, centred), remember the size and
+position from last time, always open maximized or fullscreen, or give it an exact size.
+
+**Which monitor** — the one Maker Studio is launched from, the one it was closed on last time, or
+always a specific one. Monitors are remembered by name, so if that screen isn't connected the window
+falls back to the one it was launched from instead of opening off in the dark.
+
+Both apply the next time Maker Studio starts.

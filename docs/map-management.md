@@ -165,7 +165,8 @@ map you're standing on. Tiles, events, passability and the extended layers all c
 
 It only ever fires while the editor is open on that project (the editor is what writes the marker),
 and you can turn it off per project with `LIVE_RELOAD = false` in
-`Plugins/MakerStudio/000_Settings.rb`.
+`Plugins/MakerStudio/000_Settings.rb` — or, without leaving the game, from the debug menu under
+**Maker Studio… → Live Reload (on save)**, which flips it for that session.
 
 ### Saves Button
 

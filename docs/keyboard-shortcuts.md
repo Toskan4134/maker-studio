@@ -53,6 +53,20 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 | Alt+1--9 | Toggle layer visibility |
 | Alt+V | Toggle Events layer visibility |
 
+## Tileset Editor
+
+Only while the Tileset Editor (Database → Tilesets) is open, and only in the **Priority** and
+**Terrain Tag** modes.
+
+| Default Key | Action |
+|-------------|--------|
+| 1--9, 0 | Pick the 1st–10th value in the list — **1** is priority / terrain tag **0**, **2** is 1, and so on, with **0** as the tenth |
+
+These share the digits with the layer shortcuts on purpose: the two are never active at the same
+time, and whichever surface is open owns them. A digit past the end of the list (a tileset has at
+most six priorities) simply does nothing. All ten are rebindable in Help → Keyboard Shortcuts under
+*Tileset Editor*.
+
 ## Zoom
 
 | Default Key | Action |

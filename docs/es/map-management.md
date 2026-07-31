@@ -166,7 +166,8 @@ se recargan.
 
 Solo puede ocurrir con el editor abierto en ese proyecto (es el editor quien escribe la marca), y
 puedes desactivarlo por proyecto con `LIVE_RELOAD = false` en
-`Plugins/MakerStudio/000_Settings.rb`.
+`Plugins/MakerStudio/000_Settings.rb` — o, sin salir del juego, desde el menú de depuración en
+**Maker Studio… → Live Reload (on save)**, que lo cambia para esa sesión.
 
 ### Botón Saves
 
