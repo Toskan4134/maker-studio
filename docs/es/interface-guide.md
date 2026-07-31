@@ -116,8 +116,11 @@ Preferencias del editor, aparte de todo lo que se guarda en tu proyecto.
 el tamaño y la posición de la última vez, ábrela siempre maximizada o en pantalla completa, o dale un
 tamaño exacto.
 
-**En qué pantalla** — en la que se lance Maker Studio, en la última en la que se cerró, o siempre en
-una concreta. Las pantallas se recuerdan por nombre, así que si esa no está conectada la ventana se
-abre en la que se lance, en vez de aparecer en una pantalla que no existe.
+**En qué pantalla** — en la que se lance Maker Studio (en la práctica, la pantalla donde está el
+puntero), en la última en la que se cerró, o siempre en una concreta. Las pantallas se listan por
+número y resolución, y se recuerdan por nombre: si esa no está conectada, la ventana se abre en la
+que se lance en vez de aparecer en una pantalla que no existe.
+
+Un tamaño concreto no puede bajar de **1280 × 720**, que es lo mínimo que mide la ventana.
 
 Ambos se aplican la próxima vez que arranque Maker Studio.

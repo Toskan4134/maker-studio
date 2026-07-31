@@ -115,8 +115,11 @@ Editor-wide preferences, separate from anything stored in your project.
 **Window size at startup** — leave it at the default (1400 × 900, centred), remember the size and
 position from last time, always open maximized or fullscreen, or give it an exact size.
 
-**Which monitor** — the one Maker Studio is launched from, the one it was closed on last time, or
-always a specific one. Monitors are remembered by name, so if that screen isn't connected the window
-falls back to the one it was launched from instead of opening off in the dark.
+**Which monitor** — the one Maker Studio is launched from (in practice, the screen your pointer is
+on), the one it was closed on last time, or always a specific one. Screens are listed by number and
+resolution, and remembered by name: if that screen isn't connected the window falls back to the one
+it was launched from instead of opening off in the dark.
+
+A specific size can't go below **1280 × 720** — that's the smallest the window can be.
 
 Both apply the next time Maker Studio starts.
