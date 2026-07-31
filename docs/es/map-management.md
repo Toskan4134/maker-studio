@@ -178,7 +178,8 @@ puedes desactivarlo por proyecto con `LIVE_RELOAD = false` en
 
 Tras tu primer Run, aparece un botón **Saves** en la barra que abre la carpeta donde el juego escribe sus archivos de guardado:
 
-- **Windows / macOS**: abre la carpeta de guardado nativa (en Windows, `%AppData%\<Game>`).
+- **Windows**: abre la carpeta de guardado nativa, `%AppData%\<Game>`.
+- **macOS**: abre la carpeta de guardado dentro del prefijo Wine en el que se ejecutó el juego — macOS ejecuta `Game.exe` a través de Wine, así que el juego escribe en el `AppData\Roaming` de Wine, no en `~/Library/Application Support`.
 - **Linux, Proton/Wine**: abre la carpeta correspondiente dentro del prefijo Proton/Wine en el que se ejecutó el juego.
 - **Linux, build nativa**: abre `~/.local/share/<GameTitle>/`, donde las builds nativas de Linux guardan sus datos de guardado.
 

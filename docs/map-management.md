@@ -176,7 +176,8 @@ and you can turn it off per project with `LIVE_RELOAD = false` in
 
 After your first Run, a **Saves** button appears in the toolbar that opens the folder where the game writes its save files:
 
-- **Windows / macOS**: opens the native saves folder (on Windows, `%AppData%\<Game>`).
+- **Windows**: opens the native saves folder, `%AppData%\<Game>`.
+- **macOS**: opens the saves folder inside the Wine prefix the game ran in — macOS runs `Game.exe` through Wine, so the game writes to Wine's `AppData\Roaming`, not to `~/Library/Application Support`.
 - **Linux, Proton/Wine**: opens the relevant folder inside the Proton/Wine prefix the game ran in.
 - **Linux, native build**: opens `~/.local/share/<GameTitle>/`, where native Linux builds keep their save data.
 
