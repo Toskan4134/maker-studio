@@ -411,13 +411,13 @@ starlight-menu-button[aria-expanded="true"] button {
   padding: 0.45rem 0.95rem;
   border-radius: 0.6rem;
   background-color: var(--sl-color-accent);
-  color: #fff;
+  color: var(--accent-text, #fff);
   font-weight: 600;
   text-decoration: none;
   transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 .ms-download:hover {
-  background-color: #959fff;
+  background-color: var(--accent-hover, #959fff);
   transform: translateY(-1px);
   box-shadow: var(--sl-shadow-md);
 }
@@ -553,7 +553,7 @@ starlight-menu-button[aria-expanded="true"] button {
 .hero .actions .sl-link-button.primary {
   background: var(--sl-color-accent);
   border: 1px solid var(--sl-color-accent);
-  color: #fff;
+  color: var(--accent-text, #fff);
 }
 .hero .actions .sl-link-button.primary:hover {
   opacity: 0.9;
@@ -605,7 +605,7 @@ starlight-menu-button[aria-expanded="true"] button {
   border-radius: 0.6rem;
   background: var(--sl-color-accent);
   border: 1px solid var(--sl-color-accent);
-  color: #fff;
+  color: var(--accent-text, #fff);
   font-size: var(--sl-text-sm);
   font-weight: 500;
   text-decoration: none;

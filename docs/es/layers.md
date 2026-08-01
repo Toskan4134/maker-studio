@@ -20,7 +20,7 @@ Los datos de capa extendida se incrustan dentro del archivo `.rxdata` del mapa. 
 El panel de capas lista cada capa — nativas, extendidas y de sombra por igual, más los grupos de capa de fog / panorama / personalizados descritos abajo.
 
 - **Insignia MS**: las filas de capa extendida, las filas de grupo de fog/panorama (y cualquier grupo añadido por mods) y la fila de grupo de sombras llevan una pequeña insignia **MS** — estas funciones requieren el plugin MakerStudio en el juego (consulta [Indicadores de funciones exclusivas de MS](interface-guide.md#ms-exclusive-feature-indicators)). Las filas de capa nativa no llevan insignia porque funcionan en RMXP estándar. Oculta las insignias con **View → Show MS-Exclusive Indicators**.
-- **Icono de ojo**: activa y desactiva la visibilidad de la capa.
+- **Icono de ojo**: activa y desactiva la visibilidad de la capa. **Alt+Clic** en un ojo deja *solo* esa capa: se oculta todo lo demás para que puedas verla aislada. Alt+Clic otra vez en el mismo ojo devuelve las demás exactamente como estaban, incluida cualquier capa que hubieras ocultado a propósito. (La fila de eventos tiene su propio conmutador de visibilidad y el solo no la toca.)
 - **Deslizador de opacidad**: ajusta la transparencia general de la capa. Arrastrar el deslizador ajusta solo la opacidad — ya no reordena la capa.
 - **Arrastrar una fila de capa**: arrastra una capa extendida por su nombre para reordenarla. (Arrastrar desde el icono de ojo, el deslizador de opacidad o el botón de borrar no hace nada, así que puedes usar esos controles libremente.)
 - **Clic derecho**: renombra una capa.

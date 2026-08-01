@@ -9,7 +9,7 @@ Pestañas:
 - **Animations** — animaciones de batalla/mapa (ver abajo).
 - Las pestañas restantes de RPG Maker XP (Actors, Items, …) se muestran pero están desactivadas por ahora.
 
-> Cada editor tiene su propio botón **Apply**. Cambiar de pestaña o cerrar la ventana con cambios sin guardar te pide confirmar primero. Cada guardado respalda el `.rxdata` original en una carpeta `map-backups` junto a él.
+> Cada editor tiene su propio botón **Aplicar**. Cambiar de pestaña o cerrar la ventana con cambios sin guardar te pide confirmar primero — y en la pestaña Tilesets, cambiar de tileset también. Cada guardado respalda el `.rxdata` original en una carpeta `map-backups` junto a él.
 
 ## Common Events
 
@@ -23,7 +23,7 @@ Los common events son listas de comandos que puedes llamar desde cualquier sitio
    - **Parallel** — se ejecuta en segundo plano junto con el juego.
 4. Para Autorun/Parallel, elige un **Condition Switch** — el evento solo corre mientras ese switch esté ON.
 5. Construye la **lista de comandos** con el mismo editor que los eventos de mapa (Insert / Edit / Delete / arrastrar para reordenar, copiar y pegar, deshacer/rehacer).
-6. Haz clic en **Apply** para guardar.
+6. Haz clic en **Aplicar** para guardar.
 
 ## Animations
 
@@ -62,4 +62,4 @@ En la lista **SE and Flash Timing** (derecha), pulsa **Add** para una temporizac
 - **Flash** — None / Target / Screen / Hide Target, más color, alpha y duración.
 - **Condition** — None / Hit / Miss (cuándo se aplica la temporización).
 
-Haz clic en **Apply** para guardar. Tus cambios se escriben directamente de vuelta en `Animations.rxdata`, así que aparecen en el juego.
+Haz clic en **Aplicar** para guardar. Tus cambios se escriben directamente de vuelta en `Animations.rxdata`, así que aparecen en el juego.

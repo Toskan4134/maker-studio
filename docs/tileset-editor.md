@@ -35,6 +35,8 @@ Click to cycle through priority levels 0 through 5:
 - **0** = Ground. The player walks in front of the tile.
 - **1--5** = Overhead. The player walks behind the tile (e.g. treetops), in-game and in the Game Simulator.
 
+**Each level has its own colour.** Priority 1 is yellow, 2 orange, 3 pink, 4 purple and 5 blue; the star and number drawn on every tile use that colour, and the priority dropdown shows a matching colour chip next to each value. Priority 0 stays plain white. So you can now tell a level-1 fringe from a level-3 roof at a glance instead of counting numbers. (Levels added by [mods](marketplace.md) reuse the same five colours in order, unless the mod gives its level a colour of its own. A mod can also restyle the markers wholesale — the passage, bush, counter and terrain colours as well as the priority ones.)
+
 Priority controls **player occlusion in-game**, not editor draw order — on the editor canvas tiles are always drawn in layer order (see [Layers](layers.md)). In-game and in the Game Simulator, occlusion is decided **per tile** by its own priority, except that a ground tile on a higher layer covers the tiles beneath it on that square. See [Layers](layers.md#priority-and-layer-order) for details.
 
 ### Bush Flag
@@ -59,7 +61,16 @@ Autotile properties are **per graphic**: the grid shows each autotile's current 
 
 ## Saving
 
-Click **Save** to write your changes to `Tilesets.rxdata`. A backup of the original file is created automatically on first save. The editor stays open after saving, so you can keep adjusting properties — press **Ctrl+S** (or **Cmd+S** on macOS) to save again without closing, or use **Close** when you're done. If you close with unsaved changes, you'll be asked whether to save, discard, or cancel.
+The editor has two buttons:
+
+- **Apply** — writes your changes to `Tilesets.rxdata` and **stays open**, so you can keep adjusting properties. It's greyed out when there is nothing to save. **Ctrl+S** (or **Cmd+S** on macOS) does the same thing.
+- **Save** — writes your changes and **closes** the Database window, the way OK works in the Event Editor.
+
+A backup of the original file is created automatically on first save. If you close with unsaved changes, you'll be asked whether to save, discard, or cancel.
+
+### Switching to Another Tileset with Unsaved Changes
+
+Picking a different tileset — from the list, from the Tile Palette's right-click **Edit Properties…**, or from the tileset picker — starts editing that tileset instead. If the one you're leaving has unsaved changes, the editor now asks first: **Discard** throws the changes away and switches, **Keep editing** stays where you are. Use **Apply** before switching if you want to keep them.
 
 After saving, collision and priority overlays update immediately on all open maps that use the tileset — including tiles you placed earlier. This applies to every placed tile: normal tiles, tiles painted from another tileset, extra (named) autotiles, and tiles you rotated or flipped. Rotated and flipped tiles automatically re-apply the new passage in the correct orientation, in the editor and in-game.
 

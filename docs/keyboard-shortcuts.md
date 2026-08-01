@@ -52,6 +52,7 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 | ↓ | Next layer (skips shadows) |
 | Alt+1--9 | Toggle layer visibility |
 | Alt+V | Toggle Events layer visibility |
+| Alt + click a layer's eye icon | Show only that layer; Alt+click again restores the others (see [Layers](layers.md#layer-panel)) |
 
 ## Tileset Editor
 

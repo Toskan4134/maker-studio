@@ -15,6 +15,8 @@ Haz clic en Create para añadir el mapa a tu proyecto.
 
 Haz doble clic en cualquier mapa del árbol de mapas para abrirlo en una pestaña nueva del editor.
 
+Al volver a abrir un proyecto, Maker Studio recupera el **último mapa en el que estabas trabajando** en vez del primero de la lista. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue teniendo prioridad.) Las carpetas plegadas del árbol de mapas también vuelven tal y como las dejaste. Ambas cosas se recuerdan por proyecto y solo en este ordenador: no se escribe nada dentro del proyecto.
+
 ## Duplicar un mapa
 
 Para hacer una copia completa de un mapa como un **mapa totalmente nuevo** (un `map_id` separado, no una versión):
@@ -142,6 +144,20 @@ Un marcador verde **Start** aparece en ese tile, y la posición se guarda en tu 
 
 Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego Run Game). El editor guarda todos los mapas abiertos con cambios sin guardar, luego lanza `Game.exe` en modo depuración desde la carpeta de tu proyecto.
 
+### Si el juego ya está abierto
+
+Si pulsas Run mientras sigue abierto un juego que lanzó el editor, te pregunta qué quieres hacer, con tres opciones:
+
+- **Cancelar** — deja las cosas como están.
+- **Cerrar y volver a abrir** — cierra el juego en marcha y arranca uno nuevo. Útil cuando has cambiado algo que un juego ya iniciado no va a recoger (solo cierra el juego que lanzó *el editor*, nunca uno que hayas abierto tú).
+- **Abrir igualmente** — arranca una segunda copia junto a la primera.
+
+La pregunta aparece siempre. Las dos respuestas hacen algo que no se puede deshacer — una cierra el juego que estás jugando y la otra deja dos copias escribiendo sobre los mismos archivos de guardado —, así que no hay ningún «no volver a avisar».
+
+### Elegir en qué pantalla se abre el juego
+
+En **Windows**, la pestaña **Juego** de **Help → Settings…** tiene la opción **En qué pantalla se abre el juego**. Por defecto, **La misma que el editor** abre el juego en la pantalla en la que estés trabajando; sin esto RPG Maker centra siempre el juego en la pantalla principal. También puedes fijarlo a una pantalla concreta con **Siempre en esta pantalla**. Se aplica en el siguiente Run, y la ventana puede dar uno o dos saltos mientras el juego arranca antes de asentarse. En macOS y Linux la opción está, pero deshabilitada — la ventana del juego la controla Wine/Proton. Ver [Ajustes](interface-guide.md#ajustes-ayuda--ajustes).
+
 ### Ejecutar en macOS (Wine)
 
 `Game.exe` es un ejecutable de Windows, así que en macOS el editor lo lanza a través de **Wine**. Necesitas una instalación de Wine que funcione: Wine normal en Macs con Intel, o **Game Porting Toolkit / Whisky** en Apple Silicon (ambos exponen el comando `wine`/`wine64` que el editor busca). El editor crea su propio prefijo de Wine dedicado la primera vez que pulsas Run, separado del `~/.wine` por defecto, y suprime los avisos habituales de instalación de Mono/Gecko del primer arranque. Si Wine no está instalado, Run se detiene con un error pidiéndote que lo instales y reintentes.
@@ -154,7 +170,7 @@ Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego 
 - **Wine**: lanza a través del Wine de tu sistema en su lugar.
 - **Build nativa de Linux** (cuando está disponible): ejecuta `Game_Linux` directamente, sin Proton ni Wine de por medio. Si ya se está ejecutando, el editor simplemente enfoca su ventana en vez de abrir una segunda copia; si no, abre tu emulador de terminal y lo lanza ahí en modo depuración.
 
-Tu elección se recuerda por proyecto, así que las ejecuciones posteriores lanzan directo sin volver a preguntar. Para que el diálogo vuelva a aparecer más adelante — por ejemplo, para cambiar entre Proton y la build nativa — usa **File → Clear Proton Preference**.
+Tu elección se recuerda por proyecto, así que las ejecuciones posteriores lanzan directo sin volver a preguntar. Para que el diálogo vuelva a aparecer más adelante — por ejemplo, para cambiar entre Proton y la build nativa — usa **File → Clear Proton Preference**. Esa entrada solo aparece cuando hay realmente una elección de Proton/Wine que olvidar: en Linux, con un proyecto abierto y solo si lo lanzaste con Proton o Wine (un proyecto que ejecutas con la build nativa de Linux no tiene nada que limpiar).
 
 ### Recarga en caliente con el juego abierto
 
@@ -174,9 +190,9 @@ puedes desactivarlo por proyecto con `LIVE_RELOAD = false` en
 `Plugins/MakerStudio/000_Settings.rb` — o, sin salir del juego, desde el menú de depuración en
 **Maker Studio… → Live Reload (on save)**, que lo cambia para esa sesión.
 
-### Botón Saves
+### Abrir la carpeta de guardados
 
-Tras tu primer Run, aparece un botón **Saves** en la barra que abre la carpeta donde el juego escribe sus archivos de guardado:
+**File → Abrir carpeta de partidas guardadas** abre la carpeta donde el juego escribe sus archivos de guardado. Tras tu primer Run, el botón **Saves** de la barra hace lo mismo. En ambos casos, la carpeta depende de cómo se lanzó el juego:
 
 - **Windows**: abre la carpeta de guardado nativa, `%AppData%\<Game>`.
 - **macOS**: abre la carpeta de guardado dentro del prefijo Wine en el que se ejecutó el juego — macOS ejecuta `Game.exe` a través de Wine, así que el juego escribe en el `AppData\Roaming` de Wine, no en `~/Library/Application Support`.

@@ -20,7 +20,7 @@ Extended layer data is embedded inside the map's `.rxdata` file. It is invisible
 The Layer Panel lists every layer -- native, extended, and shadow layers alike, plus the fog / panorama / custom layer groups described below.
 
 - **MS badge**: Extended layer rows, the fog/panorama (and any mod-added) group rows, and the shadow group row carry a small **MS** badge — these features require the MakerStudio plugin in-game (see [MS-Exclusive Feature Indicators](interface-guide.md#ms-exclusive-feature-indicators)). Native layer rows have no badge because they work in stock RMXP. Hide the badges via **View → Show MS-Exclusive Indicators**.
-- **Eye icon**: Toggle layer visibility on and off.
+- **Eye icon**: Toggle layer visibility on and off. **Alt+click** an eye to *solo* that layer — everything else is hidden so you can see it on its own. Alt+click the same eye again to bring the others back exactly as they were, including any layer you had hidden on purpose. (The Events row has its own visibility toggle and is left alone by solo.)
 - **Opacity slider**: Adjust the overall transparency of the layer. Dragging the slider adjusts opacity only — it no longer reorders the layer.
 - **Drag a layer row**: Drag an extended layer by its name to reorder it. (Dragging from the eye icon, opacity slider, or delete button does nothing, so you can use those controls freely.)
 - **Right-click**: Rename a layer.

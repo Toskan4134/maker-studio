@@ -9,7 +9,7 @@ Tabs:
 - **Animations** — battle/overworld animations (see below).
 - The remaining RPG Maker XP tabs (Actors, Items, …) are shown but disabled for now.
 
-> Each editor has its own **Apply** button. Switching tabs or closing the window while you have unsaved changes asks you to confirm first. Every save backs up the original `.rxdata` to a `map-backups` folder beside it.
+> Each editor has its own **Apply** button. Switching tabs or closing the window while you have unsaved changes asks you to confirm first — and in the Tilesets tab, so does switching to a different tileset. Every save backs up the original `.rxdata` to a `map-backups` folder beside it.
 
 ## Common Events
 

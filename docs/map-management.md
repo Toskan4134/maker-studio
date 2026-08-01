@@ -15,6 +15,8 @@ Click Create to add the map to your project.
 
 Double-click any map in the Map Tree to open it in a new editor tab.
 
+When you reopen a project, Maker Studio goes back to the **map you were last working on** instead of the first map in the list. (Opening a map file directly — by double-clicking it in your file manager — still wins over this.) Your folded map-tree folders come back the way you left them too. Both are remembered per project, on this computer only, and nothing is written into the project itself.
+
 ## Duplicating a Map
 
 To make a full copy of a map as a **brand-new map** (a separate `map_id`, not a version):
@@ -142,6 +144,20 @@ A green **Start** marker appears on that tile, and the position is saved to your
 
 Click the green Run button in the toolbar (or use File then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
 
+### If the Game Is Already Open
+
+Press Run while a game the editor launched is still running and it asks what you want to do, with three choices:
+
+- **Cancel** — leave things as they are.
+- **Close and Reopen** — closes the running game and starts a fresh one. Use this after changing something a running game won't pick up (it only ever closes the game *the editor* started, never one you launched yourself).
+- **Open Anyway** — starts a second copy alongside the first.
+
+The question is asked every time. Both answers do something you can't take back — one closes the game you're playing, the other leaves two copies running against the same save files — so there is no "don't warn me again".
+
+### Choosing Which Screen the Game Opens On
+
+On **Windows**, the **Game** tab of **Help → Settings…** has a **Which monitor the game opens on** option. The default, **The same one as the editor**, opens the game on whichever screen you are working on — without it RPG Maker always centres the game on your primary screen. Or pin it to a specific screen with **Always this monitor**. It applies at your next Run, and the window may jump once or twice while the game boots before it settles. On macOS and Linux the option is there but greyed out — Wine/Proton owns the game window. See [Settings](interface-guide.md#settings-help--settings).
+
 ### Running on macOS (Wine)
 
 `Game.exe` is a Windows executable, so on macOS the editor launches it through **Wine**. You need a working Wine install: plain Wine on Intel Macs, or **Game Porting Toolkit / Whisky** on Apple Silicon (both expose the `wine`/`wine64` command the editor looks for). The editor creates its own dedicated Wine prefix the first time you press Run, separate from any default `~/.wine`, and suppresses the usual first-run Mono/Gecko install prompts. If Wine isn't installed, Run stops with an error asking you to install it and try again.
@@ -154,7 +170,7 @@ Click the green Run button in the toolbar (or use File then Run Game). The edito
 - **Wine**: launch through your system Wine instead.
 - **Native Linux build** (when available): runs `Game_Linux` directly, with no Proton/Wine involved. If it's already running, the editor just focuses its window instead of starting a second copy; otherwise it opens your terminal emulator and launches it there in debug mode.
 
-Your choice is remembered per project, so later runs launch straight away without asking again. To make the dialog reappear later — for example to switch between Proton and the native build — use **File → Clear Proton Preference**.
+Your choice is remembered per project, so later runs launch straight away without asking again. To make the dialog reappear later — for example to switch between Proton and the native build — use **File → Clear Proton Preference**. That item only appears when there is actually a Proton/Wine choice to forget: on Linux, with a project open, and only if you launched it through Proton or Wine (a project you run with the native Linux build has nothing to clear).
 
 ### Live Reload While the Game Is Running
 
@@ -172,9 +188,9 @@ and you can turn it off per project with `LIVE_RELOAD = false` in
 `Plugins/MakerStudio/000_Settings.rb` — or, without leaving the game, from the debug menu under
 **Maker Studio… → Live Reload (on save)**, which flips it for that session.
 
-### Saves Button
+### Opening the Saves Folder
 
-After your first Run, a **Saves** button appears in the toolbar that opens the folder where the game writes its save files:
+**File → Open Saves Folder** opens the folder where the game writes its save files. After your first Run, a **Saves** button in the toolbar does the same thing. Either way, where it lands depends on how the game was launched:
 
 - **Windows**: opens the native saves folder, `%AppData%\<Game>`.
 - **macOS**: opens the saves folder inside the Wine prefix the game ran in — macOS runs `Game.exe` through Wine, so the game writes to Wine's `AppData\Roaming`, not to `~/Library/Application Support`.

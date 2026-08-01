@@ -52,6 +52,7 @@ Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A co
 | ↓ | Capa siguiente (salta las sombras) |
 | Alt+1–9 | Alternar visibilidad de capa |
 | Alt+V | Alternar visibilidad de la capa de eventos |
+| Alt + Clic en el icono de ojo de una capa | Mostrar solo esa capa; Alt+Clic otra vez restaura las demás (ver [Capas](layers.md#panel-de-capas)) |
 
 ## Editor de tilesets
 

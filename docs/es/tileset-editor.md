@@ -35,6 +35,8 @@ Haz clic para recorrer los niveles de prioridad 0 a 5:
 - **0** = Suelo. El jugador camina por delante del tile.
 - **1–5** = Por encima. El jugador camina por detrás del tile (p. ej. copas de árboles), en el juego y en el Simulador.
 
+**Cada nivel tiene su propio color.** La prioridad 1 es amarilla, la 2 naranja, la 3 rosa, la 4 morada y la 5 azul; la estrella y el número dibujados sobre cada tile usan ese color, y el desplegable de prioridad muestra un cuadrito del color junto a cada valor. La prioridad 0 se queda en blanco neutro. Así distingues de un vistazo una franja de nivel 1 de un tejado de nivel 3 en vez de tener que leer números. (Los niveles añadidos por [mods](marketplace.md) reutilizan esos cinco colores en orden, salvo que el mod le dé a su nivel un color propio. Un mod también puede recolorear todas las marcas — las de passage, bush, counter y terrain-tag además de las de prioridad.)
+
 La prioridad controla la **oclusión del jugador en el juego**, no el orden de dibujo del editor — en el lienzo del editor los tiles siempre se dibujan en orden de capa (ver [Capas](layers.md)). En el juego y en el Simulador la oclusión se decide **por tile** según su propia prioridad, salvo que un tile de suelo en una capa superior tapa a los que hay debajo en esa casilla. Ver [Capas](layers.md#priority-and-layer-order).
 
 ### Bush Flag
@@ -59,7 +61,16 @@ Las propiedades de autotile son **por gráfico**: la cuadrícula muestra los val
 
 ## Guardar
 
-Haz clic en **Save** para escribir tus cambios en `Tilesets.rxdata`. Se crea una copia de seguridad del archivo original automáticamente en el primer guardado. El editor permanece abierto tras guardar, así que puedes seguir ajustando propiedades — pulsa **Ctrl+S** (o **Cmd+S** en macOS) para guardar de nuevo sin cerrar, o usa **Close** cuando termines. Si cierras con cambios sin guardar, se te preguntará si guardar, descartar o cancelar.
+El editor tiene dos botones:
+
+- **Aplicar** — escribe tus cambios en `Tilesets.rxdata` y **deja el editor abierto**, así puedes seguir ajustando propiedades. Está gris cuando no hay nada que guardar. **Ctrl+S** (o **Cmd+S** en macOS) hace lo mismo.
+- **Guardar** — escribe tus cambios y **cierra** la ventana de la Database, igual que el OK del Editor de eventos.
+
+Se crea una copia de seguridad del archivo original automáticamente en el primer guardado. Si cierras con cambios sin guardar, se te preguntará si guardar, descartar o cancelar.
+
+### Cambiar a otro tileset con cambios sin guardar
+
+Elegir otro tileset — desde la lista, desde **Edit Properties…** del clic derecho en la Paleta de tiles, o desde el selector de tilesets — pasa a editar ese tileset. Si el que dejas tiene cambios sin guardar, ahora el editor pregunta primero: **Descartar** tira los cambios y cambia, **Seguir editando** te deja donde estabas. Usa **Aplicar** antes de cambiar si quieres conservarlos.
 
 Tras guardar, los overlays de colisión y prioridad se actualizan al instante en todos los mapas abiertos que usan el tileset — incluidos los tiles que colocaste antes. Esto se aplica a cada tile colocado: tiles normales, tiles pintados desde otro tileset, autotiles extra (con nombre) y tiles que rotaste o volteaste. Los tiles rotados y volteados reaplican automáticamente el nuevo paso en la orientación correcta, en el editor y en el juego.
 

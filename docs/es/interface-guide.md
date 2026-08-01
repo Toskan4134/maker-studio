@@ -4,7 +4,7 @@
 
 Cada elemento de menú muestra ahora un pequeño icono junto a su etiqueta para localizar comandos más rápido. Los menús, de izquierda a derecha, son **File, Edit, View, Map, Tools, Mods, Help**.
 
-- **File**: Open Project, **Open Recent** (proyectos abiertos recientemente, más Clear Recent Projects), Save, Save All, Run Game, **Clear Proton Preference** (solo Linux — olvida tu elección recordada de lanzamiento Proton/Wine/nativo para que el diálogo de selección vuelva a aparecer la próxima vez que pulses Run)
+- **File**: Open Project, **Open Recent** (proyectos abiertos recientemente, más Clear Recent Projects), **Abrir carpeta del juego** (abre la carpeta de tu proyecto en el Explorador de Windows / Finder / tu gestor de archivos — práctico para meter gráficos o comprobar qué ha escrito el editor), **Abrir carpeta de partidas guardadas** (abre la carpeta donde el juego escribe sus archivos de guardado — ver [Gestión de mapas](map-management.md#abrir-la-carpeta-de-guardados)), Save, Save All, Run Game, **Clear Proton Preference** (solo Linux — olvida tu elección recordada de lanzamiento Proton/Wine para que el diálogo de selección vuelva a aparecer la próxima vez que pulses Run; solo se muestra cuando hay una elección así que olvidar)
 - **Edit**: Undo, Redo, Cut, Copy, Paste, **Advanced Clipboard** (Copy All Layers, Cut All Layers, Paste to Original Layers, conmutador **Cross-Project Clipboard** — ver abajo), Select All, Deselect, **Shadows** (Generate from Selection, Delete All Shadows)
   - El **Cross-Project Clipboard** está desactivado por defecto. Cuando está marcado, copiar tiles, eventos o comandos de evento también los coloca en el portapapeles del sistema para que una **segunda ventana de Maker Studio abierta** pueda pegarlos. Actívalo en *cada* ventana entre las que quieras compartir. (Borrar una selección de tiles sigue funcionando con la tecla **Supr**; solo se reemplazó la antigua entrada de menú por este conmutador.)
 - **View**: submenú **Panels** (Maps, Tile Palette, Layers, Tile Properties, Tile Info, Events, Minimap — al hacer clic en una entrada se **enfoca** ese panel, trayéndolo al frente o reabriéndolo como ventana flotante si estaba cerrado; nunca cierra un panel, y la marca de verificación sigue indicando qué paneles están abiertos), Show Grid, Show Collision, Show Events, **Mostrar casilla de los eventos** (ver abajo), **Crear eventos con doble clic** (ver abajo), Dim Inactive Layers, **Show MS-Exclusive Indicators** (ver abajo), Zoom In/Out/100%, Dark Mode, submenú **Language** (ver abajo), submenú **Layout** (Refresh Layout, Import/Export Configuration)
@@ -52,7 +52,7 @@ De izquierda a derecha, los grupos de la barra son:
 - **Database / Scripts** — abren la ventana de [Database](database.md) y el [editor de Scripts](scripts.md). (También disponibles en el menú **Tools**.) Switches, Variables y Tilesets ya no tienen sus propios botones en la barra — ahora son pestañas **dentro de la Database** (donde aún puedes renombrar entradas en línea, añadir más ranuras y editar tilesets).
 - **Versions** — muestra la [versión de mapa](map-versions.md) actual como una insignia (p. ej. `V2/3`) y abre el Version Manager. Relevante cuando un mapa tiene versiones extra.
 - **Grid / Col / Dim** — botones conmutadores con icono + texto para Show Grid, Show Collision y Dim Inactive Layers.
-- **Theme** — interruptor sol/luna. Pulgar a la izquierda = modo claro (☀ visible a la derecha); pulgar a la derecha = modo oscuro (☾ visible a la izquierda). Tu elección se recuerda entre sesiones.
+- **Theme** — interruptor sol/luna. Pulgar a la izquierda = modo claro (☀ visible a la derecha); pulgar a la derecha = modo oscuro (☾ visible a la izquierda). Tu elección se recuerda entre sesiones. (Los temas y los colores individuales están en **Ayuda → Ajustes… → Apariencia**, más abajo.)
 - **Refresh Layout** — disponible en View y luego Layout (restaura la disposición de paneles por defecto).
 
 Si la ventana es demasiado estrecha para mostrar todos los grupos de la barra a la vez, los grupos que no caben se pliegan en un botón **"…" (More)** en el extremo derecho de la barra. Haz clic para revelar los grupos ocultos en un desplegable. Ensanchar la ventana los devuelve a la barra automáticamente.
@@ -64,6 +64,7 @@ El Árbol de mapas muestra una vista jerárquica de todos los mapas de tu proyec
 - Hacer doble clic en el nombre de un mapa para renombrarlo.
 - Clic derecho para un menú contextual: Open, Rename, Change Tileset, Resize/Shift, Delete.
 - Arrastrar y soltar mapas para reorganizar la jerarquía.
+- Hacer clic en la flecha de un mapa con hijos para plegarlo. **Las carpetas plegadas siguen plegadas** la próxima vez que abras el proyecto, y el mapa que estabas editando se vuelve a abrir con él — consulta [Abrir mapas](map-management.md#abrir-mapas).
 
 ## Barra de pestañas
 
@@ -98,6 +99,14 @@ de fuera cierra el diálogo, pero un clic que roza un borde cuenta como agarre d
 redimensionado, no como cierre. **Esc** cierra solo el diálogo de encima, así que
 cerrar un selector abierto sobre el Event Editor ya no cierra el editor de debajo.
 
+### Campos numéricos
+
+Todos los campos numéricos del editor — tamaños de mapa, valores de pincel, frames de animación,
+ajustes del simulador — se pueden **dejar vacíos mientras escribes**. Selecciona el contenido,
+bórralo, escribe el número que quieras y se aplica al salir del campo (o al pulsar Tab/Enter). Los
+mínimos y máximos también se aplican en ese momento, así que escribir "160" en un campo cuyo mínimo
+es 160 ya no te pelea desde el primer dígito. Un campo que se deja vacío cae al mínimo de ese campo.
+
 ### Paneles y disposiciones de mods
 
 Los paneles añadidos por [mods](marketplace.md) mantienen su lugar en tu disposición. Si un mod está desactivado, desinstalado o recargándose, su hueco de panel se queda donde lo acoplaste y muestra un marcador de posición ("Panel provided by mod … — not loaded") hasta que el mod vuelva; cierra el marcador si no quieres conservar el hueco. Las configuraciones de disposición exportadas (**View → Layout → Export Configuration**) también registran qué mods aportaron qué paneles — importar una disposición que usa paneles de mods que no tienes instalados te avisa con la lista de mods que faltan y mantiene esos paneles como marcadores. Las configuraciones exportadas antiguas siguen importándose bien.
@@ -110,7 +119,16 @@ Panel inferior derecho. Muestra una vista a escala de todo el mapa (todas las ca
 
 ## Ajustes (Ayuda → Ajustes…)
 
-Preferencias del editor, aparte de todo lo que se guarda en tu proyecto.
+Preferencias del editor, aparte de todo lo que se guarda en tu proyecto. Están repartidas en tres
+pestañas: **Editor** (cómo se abre la ventana de Maker Studio), **Apariencia** (tema y colores) y
+**Juego** (dónde se abre la ventana del juego).
+
+Los cambios solo se conservan si pulsas **Guardar**. Si cierras el diálogo con cambios sin guardar
+—Cancelar, la ×, Esc o un clic fuera— Maker Studio te pregunta antes y te ofrece **Descartar** o
+**Guardar y cerrar**. Al descartar también se restauran el tema y el modo oscuro tal y como estaban,
+así que probar un tema y cambiar de idea no cuesta nada.
+
+### Pestaña Editor
 
 **Tamaño de la ventana al arrancar** — déjalo en el valor por defecto (1400 × 900, centrada), recuerda
 el tamaño y la posición de la última vez, ábrela siempre maximizada o en pantalla completa, o dale un
@@ -124,3 +142,34 @@ que se lance en vez de aparecer en una pantalla que no existe.
 Un tamaño concreto no puede bajar de **1280 × 720**, que es lo mínimo que mide la ventana.
 
 Ambos se aplican la próxima vez que arranque Maker Studio.
+
+### Pestaña Apariencia
+
+**Tema** — **Por defecto** (el aspecto propio de Maker Studio) o cualquier tema añadido por un [mod](marketplace.md) instalado. La misma lista está en **Vista → Tema**; esta pestaña solo la pone al lado de los colores.
+
+**Modo oscuro** — el mismo interruptor que el sol/luna de la barra de herramientas. Un tema que solo existe en un tono lo bloquea, y la pestaña te lo indica.
+
+**Colores** — todos los colores que usa el editor, agrupados por lo que pintan: **Superficies** (fondos, paneles, bordes), **Texto**, **Acento**, **Estado** (peligro/aviso/éxito), **Lienzo del mapa**, **Comandos de evento** (el código de colores de la lista de comandos del editor de eventos) y **Editor de scripts** (resaltado de sintaxis Ruby).
+
+- Haz clic en una muestra para elegir un color, o escribe un valor en el campo de al lado: acepta cualquier cosa que entienda CSS, incluido `rgba(...)` si lo quieres semitransparente. (El selector de la muestra no tiene control de transparencia, y por eso está el campo de texto.)
+- La flecha circular al final de una fila devuelve ese color al del tema; **Restablecer N cambios**, arriba, los devuelve todos. El campo de filtro acorta la lista cuando ya sabes más o menos qué buscas.
+- **Los colores se guardan por tema y por modo claro/oscuro.** Retocar el tema oscuro no toca el claro, y cada tema de mod conserva los suyos: cambia de tema y vuelve, y tus colores siguen ahí. La cabecera sobre la lista te dice qué combinación estás editando.
+- Tus colores se guardan en este ordenador, no en el proyecto, así que te acompañan entre proyectos y nunca acaban dentro de tu juego.
+
+### Pestaña Juego
+
+**En qué pantalla se abre el juego** (solo Windows) — **La misma que el editor** (por defecto) abre
+el juego en la pantalla en la que esté la ventana de Maker Studio al pulsar Run. Por su cuenta, RPG
+Maker centra siempre el juego en la pantalla *principal*, trabajes donde trabajes: justo lo que esta
+opción viene a arreglar. Elige **Siempre en esta pantalla** para fijarlo a una pantalla concreta
+independientemente de dónde esté el editor. A diferencia de las dos opciones anteriores, esta se
+aplica en tu **próximo Run Game**, no al siguiente arranque. Si la pantalla que elegiste no está
+conectada, el juego se queda donde se haya abierto.
+
+RPG Maker devuelve su propia ventana a la pantalla principal mientras el juego arranca, así que Maker
+Studio la vuelve a colocar durante los primeros ~20 segundos. En un proyecto que tarde en cargar
+puede que veas la ventana saltar de pantalla una o dos veces antes de asentarse: son los dos
+peleándose, y gana Maker Studio mientras el juego termine de arrancar dentro de ese margen.
+
+En macOS y en Linux la opción se muestra deshabilitada, y lo explica: ahí el juego se ejecuta a
+través de Wine o Proton, que es quien controla su ventana, así que el editor no puede colocarla.
