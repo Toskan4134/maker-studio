@@ -2,6 +2,48 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.3.0
+
+The interface is yours now: pick a theme, recolour anything, and keep your place between sessions. Graphics you repaint in another program reload into the editor **and** into the game you already have running. The tileset editor moved into the Database and got a lot faster on big sheets.
+
+### Additions
+- 🎨 **Make the editor look how you want** — a new **Appearance** tab in **Help → Settings…** lets you pick a theme, switch dark/light, and recolour anything the editor draws: backgrounds, text, accents, the event command list, the Ruby syntax colours. Every colour is saved **per theme and per light/dark mode**, so your dark palette and your light one stay separate, and edits to a mod's theme are kept for the next time you turn it on. Colours update as you pick them and are stored when you press Save.
+- 🖌️ **Themes from mods** — a mod can ship a full theme, including a wallpaper painted behind your map. A theme can offer both a light and a dark look and follow the Dark Mode toggle, or pin the editor to the one it was designed for. Pick one under **View → Theme** or in the new Appearance tab.
+- ♻️ **Graphics reload into the running game** — repaint a tileset, autotile or character sheet in another program and it refreshes in the editor and in the playtest you already have open, without restarting either. Character sheets filed in subfolders are watched too. You can turn it off per project, or for one session from the game's debug menu.
+- 🧱 **The tileset editor lives in the Database** — it is now the **Tilesets** tab: the list, the name, the graphic and the property grid on one screen. Each priority level has its **own colour** so a sheet mixing several can be read at a glance, and **Apply** saves without closing while **Save** saves and closes. Right-clicking a tile in the palette and choosing **Edit Properties…** opens it scrolled to that exact tile.
+- 🎵 **Audio Browser** — a listening-only audio picker under **Tools** and in the toolbar, with a pitch slider that resamples the way the game does.
+- ⚙️ **Editor settings** — a new **Help → Settings…** window: choose the size the editor opens at (default, remember the last one, maximized, fullscreen, or an exact size) and which monitor it opens on, picked by name so it survives unplugging a screen. On Windows you can also choose **which monitor the game opens on**; by default it follows whichever screen you are working on.
+- 🪟 **Dialogs can be resized** — drag any edge or corner of a dialog to resize it, and when dialogs are stacked, Escape closes only the one on top.
+- 🚶 **Autonomous Movement → Custom** now edits the event page's own route instead of a blank one, and **Wait for Move's Completion** can wait for one character instead of every character on the map.
+- 👁️ **Alt+click a layer's eye** to show only that layer; Alt+click again puts back exactly what was visible before.
+- 🗂️ **The editor remembers where you were** — reopening a project restores the map you were last editing and the map-tree folders you had folded.
+- 📂 **File → Open Project Folder** and **Open Saves Folder** open those folders in your file manager.
+- 🖊️ **Syntax highlighting in event script boxes**, and a **Snippets** library for the code you retype.
+- 🌍 **Set Move Route is fully translated** — the route options, all 45 move actions and the Frame section.
+- ⌨️ **Digit shortcuts in the tileset editor** — in Priority and Terrain Tag mode, 1–9 and 0 pick the value to paint. Rebindable.
+- 🔍 **A Marketplace built for many mods** — tags in a searchable popover, All/Installed/Updates filters, a result count, and card or list views.
+- 🎯 **Multi-tile stamps** — Ctrl+click adds a tile to the stamp and Shift+click removes it, on the palette and on the map.
+- 🎮 **The simulator's Max FPS** is configurable, so it can match your game's own frame rate.
+- 🔁 **Close and Reopen** — when the game is already running, Run can close it and start a fresh one.
+
+### Fixes
+- 🍎 **Fixed the Saves button doing nothing on macOS** — it pointed at a folder the game never writes to, and failed silently. It now opens the saves folder inside the Wine prefix the game actually ran in.
+- 🎨 **Fixed parts of the interface ignoring the theme** — around 130 places were pinned to a fixed colour and never followed the theme you had chosen.
+- ⌨️ **Fixed number fields you could not clear** — selecting the number and pressing Backspace snapped it straight back to the minimum. You can now empty a field; it fills in the minimum when you click away.
+- 🧊 **Fixed the editor freezing when opening a very large tileset** — a 500-row sheet is no longer drawn all at once.
+- ⏱️ **Fixed the simulator running every Wait 1.65× too fast**, and a move route re-issued while still running skipping its Waits.
+- 🧍 **Fixed tall events flickering** over tiles set to priority 1.
+- ↩️ **Fixed undoing a map resize leaving the events moved** in the saved file.
+- ⌨️ **Fixed keyboard shortcuts firing while you were typing** in the event editor.
+- 🖍️ **Fixed unreadable text selection** in the Scripts editor's dark theme.
+
+### Changes
+- 🖱️ **Events are created with a double-click** by default, matching RPG Maker — a single click selects the tile. Switch it back under **View → Create Events on Double-Click**.
+- 🎚️ **Scrollbars are thicker and easier to grab**, and checkboxes, radios and sliders follow the theme instead of the system blue.
+- 🗑️ **Deleting a layer asks first.**
+- ⚠️ **"Don't warn me again" is gone from the already-running prompt** — launching a second copy of the game, or closing the one that is running, is worth confirming every time.
+- 🐧 **Clear Proton Preference is only listed when there is a choice to forget.**
+
 ## v1.2.1
 
 Hotfix for v1.2.0: the Integration stopped games from starting.
