@@ -103,6 +103,30 @@ end
 # direction-derived row. The column is left to vanilla (driven by @pattern, which
 # ms_frame_apply keeps in sync), so this only rewrites the src_rect's y.
 #===============================================================================
+#===============================================================================
+# A Parallel Process / Autorun page that holds a Set Move Route re-runs that
+# command every cycle, and force_move_route restarts the route from index 0 AND
+# clears @wait_count. A route like "ms_frame_next -> Wait 7" therefore never gets
+# past its first command: the Wait looks ignored and the animation runs at full
+# speed. RMXP hands the interpreter's SAME RPG::MoveRoute object each time, so an
+# identity check tells "the page re-issued the route it already gave me" apart
+# from "a different route replaces this one" — the first is ignored while the
+# route is still in flight, the second behaves exactly as before.
+#===============================================================================
+class Game_Character
+  unless method_defined?(:__mkst_fc_force_move_route)
+    alias __mkst_fc_force_move_route force_move_route
+  end
+
+  def force_move_route(move_route)
+    if @move_route_forcing && @move_route.equal?(move_route) &&
+       @move_route && @move_route.list && @move_route.list.size > 1
+      return
+    end
+    __mkst_fc_force_move_route(move_route)
+  end
+end
+
 class Sprite_Character
   unless method_defined?(:__mkst_fc_update)
     alias __mkst_fc_update update

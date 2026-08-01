@@ -11,7 +11,7 @@
 # exact 'MakerStudio-Build:' / 'MakerStudio-Version:' prefixes; the release
 # workflow rewrites the version line.
 # MakerStudio-Build: BES5
-# MakerStudio-Version: 1.2.1
+# MakerStudio-Version: 1.3.0
 ###############################################################################
 
 
@@ -24,6 +24,13 @@
 module MakerStudio
   # Enable/disable the plugin
   ENABLED = true
+
+  # Re-apply the map in place when Maker Studio saves it, while the game is
+  # running. Costs one File.file? per second and can only ever fire while the
+  # editor is open on this project — it is the editor that writes the sentinel
+  # the check looks for. Not gated on $DEBUG: older engines leave it false for
+  # a normal Game.exe run, which is exactly when playtesting happens.
+  LIVE_RELOAD = true
 
   # Gate verbose Console.echoln diagnostics (shadow bitmap sizes,
   # extra-autotile loads, etc). Keep off in normal play — on map transfer
@@ -636,6 +643,15 @@ def pbRefreshLiveMapData(map_id)
       $game_map.instance_variable_set(:@priorities, ts.priorities)
       $game_map.instance_variable_set(:@terrain_tags, ts.terrain_tags)
     end
+    # Rebuild events from the fresh map so new/edited/deleted events
+    # appear without a full game restart.
+    if fresh_map.events
+      new_events = {}
+      fresh_map.events.each do |key, rpg_event|
+        new_events[key] = Game_Event.new(map_id, rpg_event, $game_map)
+      end
+      $game_map.instance_variable_set(:@events, new_events)
+    end
   end
   MakerStudio.load_extended_layers_for_map(map_id, $game_map)
   # Re-apply per-map panorama / battleback + native-fog suppression after reload.
@@ -644,6 +660,11 @@ def pbRefreshLiveMapData(map_id)
   end
   ov = MakerStudio.current_overlay
   ov.rebuild if ov && !ov.disposed?
+  # Rebuild spriteset so character sprites match the refreshed events
+  if $scene.respond_to?(:disposeSpritesets) && $scene.respond_to?(:createSpritesets)
+    $scene.disposeSpritesets
+    $scene.createSpritesets
+  end
   # Re-point the native CustomTilemap at the (freshly blanked) map data.
   sp = MakerStudio.instance_variable_get(:@current_spriteset)
   if sp
@@ -676,11 +697,15 @@ end
 module MakerStudio
   def self.pbMakerStudioMenu
     loop do
-      cmds = [_INTL("Open Maker Studio"), _INTL("Reload Map Data"), _INTL("Cancel")]
+      cmds = [_INTL("Open Maker Studio"), _INTL("Reload Map Data"),
+              _INTL("Live Reload: {1}", MakerStudio.live_reload_state_text), _INTL("Cancel")]
       c = pbShowCommands(nil, cmds, -1)
       case c
       when 0 then pbOpenMakerStudio
       when 1 then pbReloadCurrentMapData
+      when 2
+        on = MakerStudio.live_reload_toggle
+        pbMessage(on ? _INTL("Live reload ON.") : _INTL("Live reload OFF."))
       else        break
       end
     end
@@ -3288,6 +3313,30 @@ end
 # direction-derived row. The column is left to vanilla (driven by @pattern, which
 # ms_frame_apply keeps in sync), so this only rewrites the src_rect's y.
 #===============================================================================
+#===============================================================================
+# A Parallel Process / Autorun page that holds a Set Move Route re-runs that
+# command every cycle, and force_move_route restarts the route from index 0 AND
+# clears @wait_count. A route like "ms_frame_next -> Wait 7" therefore never gets
+# past its first command: the Wait looks ignored and the animation runs at full
+# speed. RMXP hands the interpreter's SAME RPG::MoveRoute object each time, so an
+# identity check tells "the page re-issued the route it already gave me" apart
+# from "a different route replaces this one" — the first is ignored while the
+# route is still in flight, the second behaves exactly as before.
+#===============================================================================
+class Game_Character
+  unless method_defined?(:__mkst_fc_force_move_route)
+    alias __mkst_fc_force_move_route force_move_route
+  end
+
+  def force_move_route(move_route)
+    if @move_route_forcing && @move_route.equal?(move_route) &&
+       @move_route && @move_route.list && @move_route.list.size > 1
+      return
+    end
+    __mkst_fc_force_move_route(move_route)
+  end
+end
+
 class Sprite_Character
   unless method_defined?(:__mkst_fc_update)
     alias __mkst_fc_update update
@@ -3878,5 +3927,195 @@ class Object
     end
     # No stock implementation to fall back to (shouldn't happen).
     MakerStudio.build_minimap(mapid) || Bitmap.new(32, 32)
+  end
+end
+
+###############################################################################
+# >>> 002_Integration/011_LiveReload.rb
+###############################################################################
+#===============================================================================
+# MakerStudio - Live map reload
+#
+# The editor drops a sentinel file after every successful map save. While
+# playtesting in debug, the running game notices it and re-applies the map in
+# place — the same reload the "Reload Map Data" debug command performs, minus
+# the confirmation message — so an edit is visible without leaving the map.
+#
+# Cost is one File.mtime per second, and only in $DEBUG: the file is stat'ed,
+# never read, until its timestamp actually moves.
+#===============================================================================
+
+module MakerStudio
+  # Written by the editor: "<map_id> <epoch_millis>".
+  LIVE_RELOAD_FILE = "Plugins/MakerStudio/003_Editor/.live-reload"
+
+  @live_reload_next_frame = 0
+  @live_reload_seen = nil
+
+  # Session override set from the debug menu; nil = follow the setting.
+  @live_reload_override = nil
+
+  def self.live_reload_enabled?
+    return false unless defined?(ENABLED) && ENABLED
+    return @live_reload_override unless @live_reload_override.nil?
+    # Deliberately not $DEBUG: RGSS leaves it false for a plain Game.exe run on
+    # the older engines, which is where playtesting actually happens. The
+    # LIVE_RELOAD setting is the switch; a build without it stays on.
+    return LIVE_RELOAD if defined?(LIVE_RELOAD)
+    true
+  end
+
+  # Flip it for this session only — the setting still decides the next launch.
+  # Returns the new state.
+  def self.live_reload_toggle
+    @live_reload_override = !live_reload_enabled?
+    # A reload queued while it was off is not news; start from what is on disk.
+    @live_reload_seen = nil unless @live_reload_override
+    @live_reload_override
+  end
+
+  def self.live_reload_state_text
+    live_reload_enabled? ? "ON" : "OFF"
+  end
+
+  # Polled from Scene_Map#update. Returns true when a reload was applied.
+  def self.check_live_reload
+    return false unless live_reload_enabled?
+    return false if Graphics.frame_count < @live_reload_next_frame
+    # One check a second, whatever the frame rate the build runs at.
+    rate = (Graphics.frame_rate rescue 40)
+    rate = 40 if !rate.is_a?(Integer) || rate <= 0
+    @live_reload_next_frame = Graphics.frame_count + rate
+
+    return false unless File.file?(LIVE_RELOAD_FILE)
+    stamp = (File.mtime(LIVE_RELOAD_FILE).to_f rescue nil)
+    return false if stamp.nil? || stamp == @live_reload_seen
+
+    first_sighting = @live_reload_seen.nil?
+    @live_reload_seen = stamp
+    # A sentinel written before this session started describes a save already on
+    # disk — the map was loaded from it. Nothing to re-apply.
+    return false if first_sighting
+
+    # 0 means "whatever map is loaded": a tileset, database or map-tree edit
+    # is not tied to one map, so it applies wherever the player is standing.
+    map_id = (File.read(LIVE_RELOAD_FILE).to_s.split(" ").first.to_i rescue 0)
+    return false unless $game_map
+    return false unless map_id == 0 || map_id == $game_map.map_id
+    map_id = $game_map.map_id
+
+    clear_all_caches if respond_to?(:clear_all_caches)
+    MakerStudio::TileEffects.clear_cache if defined?(MakerStudio::TileEffects)
+    pbRefreshLiveMapData(map_id)
+    true
+  end
+end
+
+#-------------------------------------------------------------------------------
+# Poll at the top of the frame, the same safe point map versioning swaps at:
+# before the interpreter, the player and the map update. Pattern A (alias once,
+# def unconditionally so an mkxp soft-reset re-applies the override).
+#-------------------------------------------------------------------------------
+class Scene_Map
+  unless method_defined?(:__mkst_live__update) || private_method_defined?(:__mkst_live__update)
+    alias_method :__mkst_live__update, :update
+  end
+  def update(*args)
+    MakerStudio.check_live_reload
+    __mkst_live__update(*args)
+  end
+end
+
+
+###############################################################################
+# >>> 002_Integration/012_WaitForMove.rb
+###############################################################################
+#===============================================================================
+# MakerStudio - Wait for Move's Completion, scoped to this event
+#
+# Stock command 210 takes no parameters and sets @move_route_waiting, which the
+# interpreter clears only once NO character on the map is forcing a move route.
+# Two events running their own routes therefore wait for each other: an event
+# that just wants to wait for what it started stalls until every other route on
+# the map has finished.
+#
+# Maker Studio optionally stores a target in @parameters[0]:
+#
+#   absent / -2 (WAIT_TARGET_ANY)  every character — RPG Maker's own behaviour,
+#                                  and the default
+#             0                    the move routes THIS event set, whoever they
+#                                  moved (its own movement is not the point: an
+#                                  event that sends the player somewhere is
+#                                  standing still itself)
+#             N                    the route this event set on event N
+#
+# -3 was a separate "routes this event set" option before it merged into 0, and
+# -1 (the player) was selectable; both are still accepted so older maps behave.
+#
+# A map saved with a target still runs without this plugin: RMXP ignores the
+# extra parameter and waits for everyone, which is the old behaviour.
+#
+# Returning false from a command handler is the engine's own "not yet" idiom
+# (command_101 does it while a message is up): @index is left alone, so the same
+# command runs again next frame.
+#===============================================================================
+
+module MakerStudio
+  WAIT_TARGET_ANY = -2
+  WAIT_TARGET_THIS_EVENT = 0
+end
+
+class Interpreter
+  # Characters this interpreter has sent on a forced route since its last wait.
+  def ms_forced_route_targets
+    @ms_forced_route_targets ||= []
+  end
+
+  def ms_character_by_id(id)
+    return $game_player if id == -1
+    return nil if id.nil? || id <= 0
+    return nil unless $game_map && $game_map.events
+    $game_map.events[id]
+  end
+
+  # Is anything this event sent moving still moving? `only` narrows it to one id.
+  def ms_own_routes_moving?(only = nil)
+    ms_forced_route_targets.each do |id|
+      next if only && id != only
+      character = ms_character_by_id(id)
+      return true if character && character.move_route_forcing
+    end
+    false
+  end
+
+  unless method_defined?(:__mkst_wait__command_209) || private_method_defined?(:__mkst_wait__command_209)
+    alias_method :__mkst_wait__command_209, :command_209
+  end
+  def command_209(*args)
+    result = __mkst_wait__command_209(*args)
+    target = @parameters[0]
+    ms_forced_route_targets << ((target == 0) ? @event_id : target) if target.is_a?(Integer)
+    result
+  end
+
+  def command_210
+    return true if $game_temp.in_battle
+
+    target = @parameters[0]
+    unless target.is_a?(Integer) && target != MakerStudio::WAIT_TARGET_ANY
+      @move_route_waiting = true
+      return true
+    end
+
+    target = MakerStudio::WAIT_TARGET_THIS_EVENT if target == -3
+    if target == MakerStudio::WAIT_TARGET_THIS_EVENT
+      return false if ms_own_routes_moving?
+      ms_forced_route_targets.clear
+      return true
+    end
+
+    return false if ms_own_routes_moving?(target)
+    ms_forced_route_targets.delete(target)
+    true
   end
 end

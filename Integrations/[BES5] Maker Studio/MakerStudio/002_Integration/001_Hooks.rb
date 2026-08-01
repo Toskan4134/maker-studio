@@ -144,11 +144,15 @@ end
 module MakerStudio
   def self.pbMakerStudioMenu
     loop do
-      cmds = [_INTL("Open Maker Studio"), _INTL("Reload Map Data"), _INTL("Cancel")]
+      cmds = [_INTL("Open Maker Studio"), _INTL("Reload Map Data"),
+              _INTL("Live Reload: {1}", MakerStudio.live_reload_state_text), _INTL("Cancel")]
       c = pbShowCommands(nil, cmds, -1)
       case c
       when 0 then pbOpenMakerStudio
       when 1 then pbReloadCurrentMapData
+      when 2
+        on = MakerStudio.live_reload_toggle
+        pbMessage(on ? _INTL("Live reload ON.") : _INTL("Live reload OFF."))
       else        break
       end
     end

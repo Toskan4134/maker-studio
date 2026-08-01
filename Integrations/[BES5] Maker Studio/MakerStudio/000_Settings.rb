@@ -5,6 +5,13 @@ module MakerStudio
   # Enable/disable the plugin
   ENABLED = true
 
+  # Re-apply the map in place when Maker Studio saves it, while the game is
+  # running. Costs one File.file? per second and can only ever fire while the
+  # editor is open on this project — it is the editor that writes the sentinel
+  # the check looks for. Not gated on $DEBUG: older engines leave it false for
+  # a normal Game.exe run, which is exactly when playtesting happens.
+  LIVE_RELOAD = true
+
   # Gate verbose Console.echoln diagnostics (shadow bitmap sizes,
   # extra-autotile loads, etc). Keep off in normal play — on map transfer
   # through connected maps this spams the log.

@@ -35,6 +35,17 @@ if $DEBUG
       pbReloadCurrentMapData
     }
   })
+
+  # Command: Live Reload on/off
+  MenuHandlers.add(:debug_menu, :ms_live_reload, {
+    "name"        => _INTL("Live Reload (on save)"),
+    "parent"      => :maker_studio_menu,
+    "description" => _INTL("Turn the editor's save-triggered map reload on or off for this session."),
+    "effect"      => proc {
+      on = MakerStudio.live_reload_toggle
+      pbMessage(on ? _INTL("Live reload ON.") : _INTL("Live reload OFF."))
+    }
+  })
 end
 
 #---------------------------------------------------------------------------

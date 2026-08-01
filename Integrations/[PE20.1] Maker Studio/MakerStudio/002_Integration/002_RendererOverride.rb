@@ -848,9 +848,32 @@ class TilemapRenderer
       # Ground band: below the map's shadows (0) or above them (2).
       tile.z = tile.ms_ground_z || 0
     else
-      tile.z = (y * SOURCE_TILE_HEIGHT) + (band * SOURCE_TILE_HEIGHT) +
-               SOURCE_TILE_HEIGHT
+      tile.z = ms_overhead_tile_z(y, band)
     end
+  end
+
+  # z of an overhead (priority >= 1) tile at SCREEN row `y`.
+  #
+  # The engine's own formula is a whole-row value while Game_Character#screen_z is
+  # measured in screen PIXELS and so includes the sub-tile scroll offset. Over the
+  # last pixels of every row of camera scroll that difference inverts the pair,
+  # which is why a taller-than-one-tile event under a priority-1 tile flickered
+  # between in-front and behind while the player walked. Subtracting the same
+  # offset the tile's own y uses puts both in one space, so the gap is constant
+  # and the order can't flip mid-scroll.
+  #
+  # The `+ 1` is v21.1's — v20.1's engine formula ends at `+ 32`, which makes a
+  # ONE-tile-tall sprite tie exactly with the overhead tile on the row above it,
+  # and RGSS resolves an equal z arbitrarily (the same flicker, for short sprites).
+  # Carried here so the ordering is deterministic; it only breaks that tie.
+  #
+  # @pixel_offset_y counts DISPLAY pixels while screen_z counts SOURCE ones, so
+  # un-zoom it (ZOOM_Y is 1 on every shipping base — TILE_HEIGHT 32 — but a
+  # scaled base must not shift the z by the zoom factor).
+  def ms_overhead_tile_z(y, band)
+    off = @pixel_offset_y || 0
+    off = (off / ZOOM_Y).round if ZOOM_Y && ZOOM_Y > 0 && ZOOM_Y != 1
+    (y * SOURCE_TILE_HEIGHT) + (band * SOURCE_TILE_HEIGHT) + SOURCE_TILE_HEIGHT + 1 - off
   end
 
   #---------------------------------------------------------------------------
@@ -966,10 +989,9 @@ class TilemapRenderer
             band = sprite.cell_band
             if band && band > 0
               # Overhead tiles interleave with the player, so their z follows the
-              # sprite's SCREEN row, not its map row.
-              z = ((j - EXT_POOL_MARGIN) * SOURCE_TILE_HEIGHT) +
-                  (band * SOURCE_TILE_HEIGHT) + SOURCE_TILE_HEIGHT +
-                  (sprite.ext_z_offset || 0)
+              # sprite's SCREEN row, not its map row — pixel-aligned like the
+              # native path (see ms_overhead_tile_z).
+              z = ms_overhead_tile_z(j - EXT_POOL_MARGIN, band) + (sprite.ext_z_offset || 0)
               sprite.z = z if sprite.z != z
             end
             @autotiles.set_src_rect(sprite, sprite.ms_src_id || sprite.tile_id) if sprite.animated
