@@ -89,7 +89,9 @@ La vista previa funciona como el mapa: **Ctrl+rueda** para hacer zoom hacia el c
 
 ### Options
 
-Activa banderas individuales: Walk Animation, Step Animation, Direction Fix, Through (atravesar paredes) y Always on Top.
+Activa banderas individuales: Animación al moverse, Animación al parar, Fijar dirección, Atravesar (atravesar paredes), Siempre encima y Siempre debajo.
+
+**Siempre debajo** es el reflejo de Siempre encima: el evento se dibuja *por debajo* de todos los personajes, así que el jugador le pasa por encima en vez de por detrás — útil para calcomanías de suelo, alfombras, charcos o sombras hechas con eventos. Aun así se dibuja por encima de los tiles de suelo del mapa. Si marcas ambas banderas, gana Siempre encima. Lleva la insignia **MS**: la bandera solo surte efecto en el juego con el plugin MakerStudio instalado (consulta [Indicadores de funciones exclusivas de MS](interface-guide.md#indicadores-de-funciones-exclusivas-de-ms)). Sin el plugin el evento simplemente se apila por su posición, como antes.
 
 ### Trigger
 

@@ -89,7 +89,9 @@ The preview works like the map: **Ctrl+scroll** to zoom toward the cursor, **scr
 
 ### Options
 
-Toggle individual flags: Walk Animation, Step Animation, Direction Fix, Through (walk through walls), and Always on Top.
+Toggle individual flags: Move Animation, Stop Animation, Direction Fix, Through (walk through walls), Always on Top, and Always on Bottom.
+
+**Always on Bottom** is the mirror of Always on Top: the event is drawn *underneath* every character, so the player walks over it instead of behind it — useful for floor decals, rugs, puddles, or shadows built as events. It still draws above the map's ground tiles. If both flags are checked, Always on Top wins. It carries the **MS** badge: the flag only takes effect in-game with the MakerStudio plugin installed (see [MS-Exclusive Feature Indicators](interface-guide.md#ms-exclusive-feature-indicators)). Without the plugin the event simply stacks by its position, as it did before.
 
 ### Trigger
 
