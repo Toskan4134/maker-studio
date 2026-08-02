@@ -6,7 +6,7 @@
 |------|-----|-------------|
 | Brush | B | Pinta tiles. Una vista previa translúcida del/los tile(s) que vas a colocar sigue al cursor. Admite estampas multi-tile y tamaño de pincel ajustable. Shift+clic dibuja una línea desde la última posición pintada. Ctrl+arrastrar bloquea el pintado a un solo eje. |
 | Eraser | E | Borra tiles dejándolos vacíos. Tiene su propio tamaño de borrador ajustable. Shift+clic dibuja una línea desde la última posición borrada. Ctrl+arrastrar bloquea el borrado a un solo eje. |
-| Fill | F | Rellena por inundación un área contigua con el tile seleccionado. |
+| Fill | F | Rellena por inundación un área contigua con el tile seleccionado — o con el patrón multi-tile seleccionado, repetido por toda el área. |
 | Rectangle | R | Haz clic y arrastra para rellenar un área rectangular. Se muestra una vista previa del patrón de tiles mientras arrastras. |
 | Eyedropper | I | Toma un tile y sus propiedades desde el lienzo. |
 | Select | S | Haz clic y arrastra para seleccionar un área. Arrastra la selección para mover tiles. Ctrl+arrastrar para añadir tiles, Shift+arrastrar para quitar tiles de la selección. |
@@ -111,7 +111,11 @@ Haz clic en **Presets…** en el editor para guardar el pincel actual como un pr
 
 ## Estampas multi-tile
 
-Para pintar más de un tile a la vez, haz clic y arrastra en la Paleta de tiles para seleccionar un grupo rectangular de tiles. Toda la estampa sigue al cursor mientras pintas. Pulsa Q o W para rotar la estampa en sentido antihorario u horario — una estampa que contenga algún autotile se queda como está, ya que los autotiles no se pueden rotar. Arrastrar cerca del borde superior o inferior de la paleta autodesplaza para seleccionar tiles fuera del área visible.
+Para pintar más de un tile a la vez, haz clic y arrastra en la Paleta de tiles para seleccionar un grupo rectangular de tiles. Pulsa Q o W para rotar la estampa en sentido antihorario u horario — una estampa que contenga algún autotile se queda como está, ya que los autotiles no se pueden rotar. Arrastrar cerca del borde superior o inferior de la paleta autodesplaza para seleccionar tiles fuera del área visible.
+
+La estampa entera sigue al cursor, tal como la muestra la vista previa. **Un clic la coloca de una sola vez** — una casa, un árbol o una puerta. **Manteniendo el botón y arrastrando el patrón se sigue pintando conforme mueves el ratón**: el patrón continúa repitiéndose desde donde hiciste el primer clic, así que moverte un tile a la derecha añade una columna más en vez de saltar el ancho entero de la estampa. Un suelo, una valla o un camino a rayas se rellenan de forma continua. Shift+clic dibuja una línea de la misma manera.
+
+**Fill** también usa el patrón: rellena un área con una selección multi-tile y el patrón se repite por toda ella, anclado en el tile donde hiciste clic. Los huecos de la estampa se dejan intactos.
 
 Una estampa no tiene que ser rectangular: **Ctrl+clic** en un tile lo añade a la
 estampa actual y **Shift+clic** lo saca, igual que al construir una selección en el
@@ -155,6 +159,23 @@ Si editas el archivo gráfico de un tileset en `Graphics/Tilesets/` mientras el 
 
 Las selecciones pueden no ser rectangulares usando Ctrl/Shift. El overlay de resaltado hace visibles las celdas seleccionadas con un relleno dorado y bordes de celda.
 
+### Convertir una selección en tu pincel
+
+Cualquier cosa que ya esté en el mapa puede convertirse en tu pincel. Selecciónala con la herramienta
+de selección y usa **clic derecho → Usar selección como pincel** (también **Edit → Usar selección como
+pincel**, o **Ctrl+B**). Los tiles seleccionados pasan a ser la estampa actual y el pincel se activa,
+así que puedes pintar copias de ese trozo donde quieras — sin buscar cada tile en la paleta.
+
+- Las selecciones no rectangulares mantienen su forma: las celdas que dejaste fuera quedan como huecos que el pincel se salta.
+- Los tiles de otro tileset siguen pintándose desde ese tileset.
+- Los autotiles con nombre no se pueden llevar a una estampa, así que esas celdas salen como huecos. Los autotiles normales del tileset sí funcionan — se vuelven a bordear solos al pintarlos.
+- La selección del mapa se suelta en cuanto se crea el pincel, así que puedes pintar directamente en vez de quedarte encerrado en la zona de la que copiaste.
+- La Paleta de tiles no marca nada cuando el pincel viene del mapa — esos tiles están repartidos por el tileset y señalarlos ahí apuntaría a celdas que nunca elegiste.
+
+Para volver a no tener nada seleccionado en la paleta, usa **Ctrl+Shift+D** (**Edit → Quitar selección
+de tiles**). Eso quita la estampa y cualquier autotile seleccionado; no toca la selección del mapa, que
+sigue siendo **Ctrl+D**.
+
 ### Pintar dentro de una selección
 
 La selección ahora **se mantiene** al cambiar de herramienta y empezar a pintar, y actúa como plantilla:
@@ -184,6 +205,7 @@ Cuando mueves una selección con la herramienta Select, el marco de selección a
 
 - Alt + clic actúa como cuentagotas sin abandonar tu herramienta actual.
 - Clic derecho abre un menú contextual.
+- Ctrl + B convierte la selección actual del mapa en tu pincel.
 - Q y W rotan el pincel o la estampa en sentido antihorario y horario.
 - Ctrl + arrastrar con Brush o Eraser bloquea el pintado a un solo eje.
 

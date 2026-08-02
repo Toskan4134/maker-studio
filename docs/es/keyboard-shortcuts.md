@@ -32,6 +32,7 @@ Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A co
 | Q | Rotar pincel en sentido antihorario |
 | W | Rotar pincel en sentido horario |
 | A | Alternar pincel personalizado — cambia entre tu último [pincel personalizado](tools.md#custom-shape-brush) usado y el pincel cuadrado por defecto |
+| Ctrl + B | [Usar la selección del mapa como pincel](tools.md#convertir-una-selección-en-tu-pincel) |
 | Shift + clic | Dibujar línea desde la última posición pintada |
 
 ## Eraser
@@ -94,6 +95,7 @@ prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda →
 |-------------|--------|
 | Ctrl+A | Seleccionar todo |
 | Ctrl+D | Deseleccionar (tiles, cualquier sombra seleccionada y evento[s] seleccionado[s]) |
+| Ctrl+Shift+D | Quitar la selección de la Paleta de tiles — descarta la estampa y el autotile actuales, dejando nada elegido. No toca la selección del mapa. |
 | Ctrl+C | Copiar selección (capa activa) |
 | Ctrl+V | Pegar (modo vista previa — clic para confirmar) |
 | Ctrl+X | Cortar selección |

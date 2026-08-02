@@ -32,6 +32,7 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 | Q | Rotate brush counter-clockwise |
 | W | Rotate brush clockwise |
 | A | Toggle custom brush — switch between your last-used [custom brush](tools.md#custom-shape-brush) and the default square brush |
+| Ctrl + B | [Use the map selection as your brush](tools.md#turning-a-selection-into-your-brush) |
 | Shift + click | Draw line from last painted position |
 
 ## Eraser
@@ -94,6 +95,7 @@ most six priorities) simply does nothing. All ten are rebindable in Help → Key
 |-------------|--------|
 | Ctrl+A | Select all |
 | Ctrl+D | Deselect (tiles, any selected shadow, and selected event[s]) |
+| Ctrl+Shift+D | Clear the Tile Palette selection — drops the current stamp and autotile, leaving nothing picked. Does not touch a selection on the map. |
 | Ctrl+C | Copy selection (active layer) |
 | Ctrl+V | Paste (preview mode -- click to commit) |
 | Ctrl+X | Cut selection |

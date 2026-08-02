@@ -6,7 +6,7 @@
 |------|-----|-------------|
 | Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
 | Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Shift+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
-| Fill | F | Flood-fill a contiguous area with the selected tile. |
+| Fill | F | Flood-fill a contiguous area with the selected tile — or with the selected multi-tile pattern, repeated across the filled area. |
 | Rectangle | R | Click and drag to fill a rectangular area. Tile pattern preview shown while dragging. |
 | Eyedropper | I | Pick a tile and its properties from the canvas. |
 | Select | S | Click and drag to select an area. Drag the selection to move tiles. Ctrl+drag to add tiles, Shift+drag to remove tiles from selection. |
@@ -111,7 +111,11 @@ Click **Presets…** in the editor to save the current brush as a named preset, 
 
 ## Multi-Tile Stamps
 
-To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. The entire stamp follows your cursor while painting. Press Q or W to rotate the stamp counter-clockwise or clockwise — a stamp that contains any autotile is left as-is, since autotiles cannot be rotated. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
+To paint more than one tile at a time, click and drag in the Tile Palette to select a rectangular group of tiles. Press Q or W to rotate the stamp counter-clockwise or clockwise — a stamp that contains any autotile is left as-is, since autotiles cannot be rotated. Dragging near the top or bottom edge of the palette auto-scrolls so you can select tiles outside the visible area.
+
+The whole stamp follows your cursor, exactly as the preview shows it. **Clicking places it in one go** — a house, a tree or a doorway. **Holding the button and dragging keeps painting the pattern as you move**: the pattern goes on repeating from where you first clicked, so moving one tile to the right adds one more column of it rather than jumping a whole stamp-width at a time. A floor, a fence or a striped path fills in continuously. Shift+click draws a line the same way.
+
+**Fill** uses the pattern too: flood-fill an area with a multi-tile selection and the pattern repeats across it, anchored on the tile you clicked. Gaps in the stamp are left untouched.
 
 A stamp does not have to be rectangular: **Ctrl+click** a tile to add it to the current
 stamp and **Shift+click** one to take it out, exactly like building a selection on the
@@ -154,6 +158,26 @@ If you edit a tileset's graphic file in `Graphics/Tilesets/` while the project i
 
 Selections can be non-rectangular when using Ctrl/Shift. The highlight overlay makes selected cells visible with a gold fill and cell borders.
 
+### Turning a Selection Into Your Brush
+
+Anything already on the map can become your brush. Select it with the Select tool, then **right-click →
+Use Selection as Brush** (also **Edit → Use Selection as Brush**, or **Ctrl+B**). The selected tiles
+become the current stamp and the Brush tool takes over, so you can immediately paint copies of that
+patch anywhere — no hunting for each tile in the palette.
+
+- Non-rectangular selections keep their shape: the cells you left out become gaps the brush skips.
+- Tiles from another tileset keep painting from that tileset.
+- Named autotiles cannot be carried into a stamp, so those cells come through as gaps. Ordinary
+  tileset autotiles are fine — they re-border themselves when you paint them.
+- The map selection is released as soon as the brush is made, so you can paint straight away instead
+  of being stencilled into the area you copied from.
+- The Tile Palette shows no highlight for a brush taken from the map — the tiles are scattered around
+  the tileset, and marking them there would point at cells you never chose.
+
+To go back to nothing selected in the palette, use **Ctrl+Shift+D** (**Edit → Clear Tile Selection**).
+That drops the stamp and any selected autotile; it does not touch a selection on the map, which is
+still **Ctrl+D**.
+
 ### Painting Inside a Selection
 
 A selection now **stays** when you switch to another tool and start painting, and it acts as a stencil:
@@ -183,6 +207,7 @@ When you move a selection with the Select tool, the selection marquee now follow
 
 - Alt + click acts as an eyedropper without switching away from your current tool.
 - Right-click opens a context menu.
+- Ctrl + B turns the current map selection into your brush.
 - Q and W rotate the brush or stamp counter-clockwise and clockwise.
 - Ctrl + drag with the Brush or Eraser locks painting to a single axis.
 
