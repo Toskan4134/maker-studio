@@ -5,7 +5,9 @@
 Open the **Tileset Manager** from the **Tilesets** tab of the Database (**Tools → Database…**, or the toolbar **Database** button). The manager lists every tileset (with a searchable list); select one and click **Edit Properties...** to open the Tileset Editor for it.
 
 The manager's detail pane also shows a **thumbnail of the selected tileset's graphic**, so
-you can tell at a glance which tileset you are about to edit.
+you can tell at a glance which tileset you are about to edit. The **…** button beside the
+graphic name opens the normal graphic picker, so you see the image you are switching to —
+with zoom, pan and favourites — instead of picking blind from a list of filenames.
 
 A faster route for a tile you can already see: **right-click that tile in the Tile
 Palette → Edit Properties…**. The editor opens scrolled to that exact tile with it
@@ -58,6 +60,12 @@ Pick a terrain tag from the searchable dropdown, then click a tile (or drag-sele
 Autotile passage/priority/terrain are edited separately from regular tilesets. In the Tileset Manager, choose the **Autotiles** entry (shown as `000: Autotiles` at the top of the list) and click **Edit Properties...**. This opens a dedicated grid of every autotile (native slots + named extra autotiles). Editing a property for an autotile applies it to all 48 pattern tiles of that autotile at once.
 
 Autotile properties are **per graphic**: the grid shows each autotile's current values from whichever tileset natively contains it, and saving applies those values to every tileset that uses that graphic (matched by its file name). Tilesets that don't contain the graphic are left untouched, so each tileset's other autotile settings are preserved.
+
+Two conveniences in this view: hovering an autotile shows its **file name** (in the Tile Info
+panel and as a tooltip) — the grid is sorted by name, not by slot, so the name is what
+identifies it — and **Open Autotiles Folder** in the sidebar opens `Graphics/Autotiles` in your
+file manager, for dropping in or editing graphics. Files you add or change there are picked up
+automatically; there is no need to reopen the editor.
 
 ## Saving
 

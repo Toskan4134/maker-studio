@@ -82,6 +82,31 @@ Define la apariencia visual del evento:
 
 La vista previa funciona como el mapa: **Ctrl+rueda** para hacer zoom hacia el cursor, **rueda / Shift+rueda** para desplazar arriba-abajo / izquierda-derecha, y **arrastrar con botón central** o **Espacio+arrastrar** para desplazar (la imagen siempre queda a la vista). Haz clic en una celda para elegir su Row/Col; el botón **Fit** restablece la vista. Útil para alinear celdas en hojas grandes o densas.
 
+#### Usar tiles de un tileset como gráfico
+
+Elige un gráfico que esté en `Graphics/Tilesets` y el selector lo detecta: la vista previa muestra
+una cuadrícula de tiles y eliges tiles en vez de una imagen entera. **Clic** en un tile para usar
+solo ese, o **arrastra** sobre varios para usar un bloque. Todo lo que queda fuera de tu selección
+se atenúa, y el indicador **Tiles** muestra qué tiles has cogido (`columna, fila · ancho×alto`).
+**Usar la imagen completa** lo quita.
+
+Usa **…** (Browse) para llegar a `Graphics/Tilesets` desde el campo Graphic de un evento: puedes
+elegir cualquier gráfico dentro de la carpeta `Graphics/` de tu proyecto, sea cual sea el campo
+que estés rellenando.
+
+**Sheet Cols / Sheet Rows siguen a tu selección**, así que no tienes que pensar en ellos: un tile
+pasa a ser una hoja 1x1 (un sprite fijo) y un bloque 3x4 pasa a ser una hoja 3x4 que se anima.
+Puedes cambiarlos después si quieres otra lectura de los mismos tiles.
+
+La misma selección de tiles está en la acción **Change Graphic** de la ruta de movimiento y en
+**Show Picture**, donde además determina el origen y el zoom de la imagen.
+
+Las hojas de personaje normales no cambian: la cuadrícula de tiles solo aparece para tilesets.
+
+> Usar tiles como gráfico necesita el **plugin MakerStudio** instalado en tu juego
+> (Tools -> Integration). Sin él, el juego dibuja la imagen completa del tileset: el mapa sigue
+> abriendo y funcionando, simplemente ignora la selección.
+
 ### Movimiento autónomo
 
 - **Type**: Fixed, Random, Approach o ruta Custom.
@@ -213,7 +238,7 @@ parte de la ruta y no como comandos propios.
 
 Las acciones que toman parámetros abren su propio formulario, usando los mismos selectores que el resto del editor en vez de texto en bruto:
 
-- **Change Graphic** — selector de archivo de gráfico de personaje (con vista previa + hue) más Direction y Pattern.
+- **Change Graphic** — selector de archivo de gráfico de personaje (con vista previa + hue) más Direction y Pattern, y la misma **selección de tiles** que el gráfico de la página de evento cuando eliges un tileset.
 - **Play SE** — selector de archivo de SE con volumen/pitch y un botón de prueba.
 - **Script** — cuadro de código Ruby multilínea.
 - **Change Speed / Change Freq** — desplegables etiquetados (Slowest…Fastest, Lowest…Highest), igual que RPG Maker XP.

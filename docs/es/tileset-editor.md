@@ -5,7 +5,9 @@
 Abre el **Tileset Manager** desde la pestaña **Tilesets** de la Database (**Tools → Database…**, o el botón **Database** de la barra de herramientas). El gestor lista cada tileset (con una lista con búsqueda); selecciona uno y haz clic en **Edit Properties...** para abrir el editor de tilesets para él.
 
 El panel de detalle del gestor muestra además una **miniatura del gráfico del tileset
-seleccionado**, así de un vistazo sabes qué tileset vas a editar.
+seleccionado**, así de un vistazo sabes qué tileset vas a editar. El botón **…** junto al nombre
+del gráfico abre el selector de gráficos normal, así ves la imagen a la que vas a cambiar —con
+zoom, desplazamiento y favoritos— en lugar de elegir a ciegas de una lista de nombres.
 
 Una vía más rápida para un tile que ya tienes a la vista: **clic derecho en ese tile en la
 Paleta de tiles → Edit Properties…**. El editor se abre desplazado hasta ese tile exacto y
@@ -58,6 +60,12 @@ Elige un terrain tag del desplegable con búsqueda, luego haz clic en un tile (o
 El paso/prioridad/terreno de los autotiles se edita por separado de los tilesets normales. En el Tileset Manager, elige la entrada **Autotiles** (mostrada como `000: Autotiles` en lo alto de la lista) y haz clic en **Edit Properties...**. Esto abre una cuadrícula dedicada de cada autotile (ranuras nativas + autotiles extra con nombre). Editar una propiedad para un autotile la aplica a los 48 tiles de patrón de ese autotile a la vez.
 
 Las propiedades de autotile son **por gráfico**: la cuadrícula muestra los valores actuales de cada autotile leídos del tileset que lo contiene de forma nativa, y al guardar esos valores se aplican a todos los tilesets que usan ese gráfico (emparejado por su nombre de archivo). Los tilesets que no contienen el gráfico no se tocan, así que el resto de ajustes de autotiles de cada tileset se conservan.
+
+Dos comodidades en esta vista: al pasar el cursor por un autotile se muestra su **nombre de
+archivo** (en el panel Tile Info y como tooltip) —la cuadrícula está ordenada por nombre, no por
+slot, así que el nombre es lo que lo identifica— y **Abrir carpeta de autotiles** en la barra
+lateral abre `Graphics/Autotiles` en tu explorador de archivos, para meter o editar gráficos. Los
+archivos que añadas o cambies ahí se detectan automáticamente; no hace falta reabrir el editor.
 
 ## Guardar
 

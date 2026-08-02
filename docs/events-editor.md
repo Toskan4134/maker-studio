@@ -82,6 +82,29 @@ Set the event's visual appearance:
 
 The preview works like the map: **Ctrl+scroll** to zoom toward the cursor, **scroll / Shift+scroll** to pan up-down / left-right, and **middle-drag** or **Space+drag** to pan (the image always stays in view). Click a cell to pick its Row/Col; the **Fit** button resets the view. Handy for lining up cells on large or dense sheets.
 
+#### Using tiles from a tileset as the graphic
+
+Pick a graphic that lives in `Graphics/Tilesets` and the picker notices: the preview gets a tile
+grid, and you choose tiles instead of a whole image. **Click** a tile to use just that one, or
+**drag** across several to use a block. Everything outside your selection dims, and the **Tiles**
+read-out shows which tiles you took (`column, row · width×height`). **Use whole image** clears it.
+
+Use **…** (Browse) to reach `Graphics/Tilesets` from an event's Graphic field — any graphic under
+your project's `Graphics/` folder can be picked, whichever field you're filling.
+
+**Sheet Cols / Sheet Rows follow your selection**, so you don't have to think about them: one tile
+becomes a 1x1 sheet (a still sprite), a 3x4 block becomes a 3x4 sheet that animates. You can still
+change them afterwards if you want a different reading of the same tiles.
+
+The same tile picking is on the Move Route **Change Graphic** action and on **Show Picture**, where
+your selection also drives the picture's origin and zoom.
+
+Ordinary character sheets are unaffected — the tile grid only appears for tilesets.
+
+> Tiles-as-graphics need the **MakerStudio plugin** installed in your game (Tools -> Integration).
+> Without it the game draws the whole tileset image — the map still opens and runs, it just ignores
+> the selection.
+
 ### Autonomous Movement
 
 - **Type**: Fixed, Random, Approach, or Custom route.
@@ -213,7 +236,7 @@ than as commands of their own.
 
 Actions that take parameters open their own form, using the same pickers as the rest of the editor instead of raw text:
 
-- **Change Graphic** — character graphic file picker (with preview + hue) plus Direction and Pattern.
+- **Change Graphic** — character graphic file picker (with preview + hue) plus Direction and Pattern, and the same **tile picking** as the event page graphic when you choose a tileset.
 - **Play SE** — SE file picker with volume/pitch and a play-test button.
 - **Script** — multi-line Ruby code box.
 - **Change Speed / Change Freq** — labelled dropdowns (Slowest…Fastest, Lowest…Highest), matching RPG Maker XP.
