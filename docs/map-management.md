@@ -7,9 +7,13 @@ Choose Map then New Map from the menu, or click the **+** button in the **Maps p
 - **Name**: The map's display name.
 - **Width / Height**: Dimensions in tiles.
 - **Tileset**: Which tileset the map uses for its native layers.
-- **Parent map**: Where the map sits in the hierarchy tree.
+- **Parent**: Where the map sits in the hierarchy tree. The list is ordered and indented exactly like the Map Tree, and you can filter it by **name or ID** — type `cave` or `042`. Pick **(root)** for a top-level map.
 
 Click Create to add the map to your project.
+
+### Creating a map inside another map
+
+To nest the new map under an existing one, **right-click that map** in the Map Tree and choose **New Map Here…**. The New Map dialog opens with that map already filled in as the **Parent**, and the new map is created as its child. (You can still change the parent before clicking Create.)
 
 ## Opening Maps
 

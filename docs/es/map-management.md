@@ -2,14 +2,18 @@
 
 ## Crear un mapa nuevo
 
-Elige Map y luego New Map en el menú, o haz clic en el botón **+** de la **cabecera del panel Maps** (junto a la lista de mapas, reflejando el **+** de añadir capa del panel Layers). Rellena los datos:
+Elige Mapa y luego Nuevo mapa en el menú, o haz clic en el botón **+** de la **cabecera del panel Mapas** (junto a la lista de mapas, reflejando el **+** de añadir capa del panel Capas). Rellena los datos:
 
-- **Name**: el nombre visible del mapa.
-- **Width / Height**: dimensiones en tiles.
+- **Nombre**: el nombre visible del mapa.
+- **Ancho / Alto**: dimensiones en tiles.
 - **Tileset**: qué tileset usa el mapa para sus capas nativas.
-- **Parent map**: dónde se sitúa el mapa en el árbol de jerarquía.
+- **Padre**: dónde se sitúa el mapa en el árbol de jerarquía. La lista está ordenada y sangrada igual que el árbol de mapas, y puedes filtrarla por **nombre o ID**: escribe `cueva` o `042`. Elige **(raíz)** para un mapa de primer nivel.
 
-Haz clic en Create para añadir el mapa a tu proyecto.
+Haz clic en Crear para añadir el mapa a tu proyecto.
+
+### Crear un mapa dentro de otro
+
+Para anidar el mapa nuevo bajo uno existente, **haz clic derecho en ese mapa** en el árbol de mapas y elige **Nuevo mapa aquí…**. El diálogo de nuevo mapa se abre con ese mapa ya puesto como **Padre**, y el mapa nuevo se crea como hijo suyo. (Puedes cambiar el padre antes de pulsar Crear.)
 
 ## Abrir mapas
 
