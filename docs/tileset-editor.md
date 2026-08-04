@@ -55,6 +55,16 @@ Pick a terrain tag from the searchable dropdown, then click a tile (or drag-sele
 
 **Grass rustle sound.** When the player steps onto a tile whose terrain tag rustles (such as **Grass**), the engine — not Maker Studio — plays **animation 1** ("Grass rustle") from your project's Animations database. In a vanilla Pokemon Essentials project that animation has no SE timing, so the rustle plays silently; some kits (La Base de Sky, for one) ship a sound in it. To add the sound, give animation 1 an SE timing in the **Animations** tab of the [Database](database.md). The terrain tag itself is working correctly — the sound lives in the animation.
 
+## Custom terrain tags & priorities
+
+The Terrain Tag and Priority dropdowns are not limited to the built-in values. The editor does three extra things for you:
+
+- **Names read from your game.** The Terrain Tag dropdown reads the names your base actually defines — `PBS/terrain_tags.txt`, `GameData::TerrainTag` registrations, `module PBTerrain` constants, and any custom registration helper your project uses (e.g. `ChronoverseManager.register_terrain_tag`) — scanning the core scripts, the loose `Data/Scripts/` tree, and `Plugins/`. A tag your base or a plugin defines (Grass, Ledge, Water, a custom Mirror tag…) shows its real name instead of a bare number. If none are found, the list falls back to the hardcoded 0–17 Pokemon Essentials defaults. Priority has no equivalent in-game registry (RMXP priorities are the positional 0–5 z-levels), so it always starts from the standard 0–5 names.
+- **Auto-detected values.** If your game already uses a terrain tag or priority level beyond the built-in list — for example a value a script or an older tool wrote to a tile — the editor scans every tileset and autotile, finds the highest value in use, and raises the dropdown maximum so every value the game actually uses is selectable.
+- **Your own labels, and you can rename anything.** In the sidebar's Terrain Tag or Priority mode, click **Add new…** at the bottom of the list to open an inline form — pick an id, type a name, and (for both terrain tags and priorities) choose a marker colour that tints the on-canvas marker and the dropdown chip. Every row is editable: the pencil icon on any row renames it, including built-in defaults and names a [mod](marketplace.md) added — and your label wins. The trash icon appears only on rows you've overridden or added; on a default it reverts to the original name, on a tag you added it removes it. (The right-click context-menu picker stays a plain selector.) The controls are icons, not text characters. Custom labels are saved per-project in `.maker-studio/tile-labels.json` inside your game folder, so they travel with the game.
+
+So you can translate a default name (for example rename "Grass" to "Hierba"), give a colour to a terrain tag the way priorities already have one, and put a name on any auto-detected id.
+
 ## Editing Autotile Properties
 
 Autotile passage/priority/terrain are edited separately from regular tilesets. In the Tileset Manager, choose the **Autotiles** entry (shown as `000: Autotiles` at the top of the list) and click **Edit Properties...**. This opens a dedicated grid of every autotile (native slots + named extra autotiles). Editing a property for an autotile applies it to all 48 pattern tiles of that autotile at once.
