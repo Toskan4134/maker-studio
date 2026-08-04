@@ -20,4 +20,4 @@ instead — no installation needed.
 This folder
 -----------
   Mods/        Project-level JS mods bundled with this integration.
-  (the editor also writes tile-editor-config.json and .project-stats.json here)
+  (the editor also writes ms-editor-config.json and .project-stats.json here)
