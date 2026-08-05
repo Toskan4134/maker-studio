@@ -80,9 +80,9 @@ There are three ways to change the battleback, all opening the same image picker
 - **Right-click a map** in the Map Tree → **Change Battleback…**.
 - When you're editing a [map version](map-versions.md), the version's right-click submenu has **Change Battleback (this version)…**.
 
-Pick an image from `Graphics/Battlebacks/` (no hue slider). Leave the name blank to clear it. What the change does depends on what you're editing:
+Pick a battleback from `Graphics/Battlebacks/`. Pokémon Essentials / LBDS battlebacks come in families of files sharing a prefix (`<prefix>_bg`, `<prefix>_base0`, `<prefix>_base1`, `<prefix>_message`), so the picker lists one entry per prefix and stores the **prefix** — not an individual file. Leave it blank to clear it. What the change does depends on what you're editing:
 
-- **On the base map, you are editing the tileset** — exactly like RPG Maker XP. The new battleback is written to the tileset immediately and applies to **every map that uses that tileset** (other open maps update on the spot). This works in any game, with no plugin needed, so the menu item shows no MS badge while you're on the base map.
+- **On the base map, you are editing the tileset** — exactly like RPG Maker XP. The new battleback is written to the tileset immediately and applies to **every map that uses that tileset** (other open maps update on the spot). In a stock RPG Maker XP game that's all it takes; Pokémon Essentials / LBDS games ignore the tileset field and read the backdrop from map metadata instead, so the MakerStudio plugin bridges the value onto that field in-game. The base-map item carries no MS badge because the editor write itself is plain RMXP.
 - **On a map version, you set a per-version override**, stored in the map file (press **Ctrl+S** to keep it) and applied in-game by the MakerStudio plugin — so those items carry the MS badge.
 
 The **battleback is not shown on the map canvas** — it only appears in battles in-game — but it is stored and editable here.

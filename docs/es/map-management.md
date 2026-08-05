@@ -80,9 +80,9 @@ Hay tres formas de cambiar el battleback, todas abriendo el mismo selector de im
 - **Clic derecho en un mapa** del árbol → **Change Battleback…**.
 - Cuando editas una [versión de mapa](map-versions.md), el submenú de clic derecho de la versión tiene **Change Battleback (this version)…**.
 
-Elige una imagen de `Graphics/Battlebacks/` (sin deslizador de hue). Deja el nombre en blanco para quitarlo. Lo que hace el cambio depende de qué estés editando:
+Elige un battleback de `Graphics/Battlebacks/`. Los battlebacks de Pokémon Essentials / LBDS vienen en familias de archivos que comparten un prefijo (`<prefix>_bg`, `<prefix>_base0`, `<prefix>_base1`, `<prefix>_message`), así que el selector lista una entrada por prefijo y guarda el **prefijo** — no un archivo individual. Déjalo en blanco para quitarlo. Lo que hace el cambio depende de qué estés editando:
 
-- **En el mapa base, estás editando el tileset** — exactamente como RPG Maker XP. El nuevo battleback se escribe en el tileset al momento y se aplica a **todos los mapas que usan ese tileset** (otros mapas abiertos se actualizan al instante). Esto funciona en cualquier juego, sin necesidad de plugin, así que el elemento de menú no muestra insignia MS mientras estás en el mapa base.
+- **En el mapa base, estás editando el tileset** — exactamente como RPG Maker XP. El nuevo battleback se escribe en el tileset al momento y se aplica a **todos los mapas que usan ese tileset** (otros mapas abiertos se actualizan al instante). En un juego RPG Maker XP estándar eso es todo lo que hace falta; los juegos Pokémon Essentials / LBDS ignoran el campo del tileset y leen el fondo desde los metadatos del mapa, así que el plugin de MakerStudio puentea el valor a ese campo en el juego. El elemento del mapa base no lleva insignia MS porque la propia escritura del editor es RPG Maker XP plano.
 - **En una versión de mapa, estableces una sustitución por versión**, guardada en el archivo del mapa (pulsa **Ctrl+S** para conservarla) y aplicada en el juego por el plugin MakerStudio — así que esos elementos llevan la insignia MS.
 
 El **battleback no se muestra en el lienzo del mapa** — solo aparece en las batallas en el juego — pero se guarda y se puede editar aquí.
