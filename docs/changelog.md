@@ -2,6 +2,40 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.4.0
+
+Event pages stopped being a straitjacket: conditions can now be a tree of ANDs and ORs, a switch can be required OFF, and an event can block the tile it stands on. Graphics can be a slice of an image — pick tiles straight off a tileset and give them to an event. The tileset editor lets you write your own terrain tags, and battlebacks finally work in Pokémon Essentials, bases included.
+
+### Additions
+- 🌳 **Advanced Conditions on event pages** — a condition *tree* instead of the vanilla four checks: as many switches, variables and self switches as you want, mixed **AND / OR**, nested in groups, each one negatable. "Boss defeated **or** cheat switch on", "any one of five NPCs talked to", "rival beaten **and** not (badge 3 **or** debug mode)". Needs the MakerStudio plugin in-game; the built-in Game Simulator always honours it.
+- 🔀 **Switch conditions can ask for OFF** — Switch 1, Switch 2 and Self Switch each get an ON / OFF dropdown, so a page can turn on precisely when a switch turns off.
+- 🧱 **Block** — a new page option that makes the event impassable whatever the tile underneath allows. Made for events drawn with a walkable floor tile, which the player used to walk straight through.
+- 🔻 **Always on Bottom** — the mirror of Always on Top: the event is drawn underneath every character, for floor decals, rugs, puddles and shadows built as events.
+- 🖼️ **Use part of an image as a graphic** — pick a rectangle, or click and drag **tiles straight off a tileset**, and that slice becomes the event's graphic (also available for pictures and move routes). Everything downstream treats the slice as the whole image, so the sheet grid and the animation frames keep working.
+- 🏷️ **Custom terrain tags and priorities in the Tileset Editor** — name your own terrain tags instead of living with 0–7, and extract the ones your game already defines from its own data.
+- 🖌️ **Multi-tile stamps** — fill an area with a repeating pattern, drag to stamp continuously, and turn any map selection into a brush.
+- 🗺️ **New Map, where you meant it** — the New Map dialog now lets you pick the parent map, and the map tree has **New Map Here**.
+- ↩️ **Adding and deleting extended layers can be undone.**
+- 👁️ **The event-cells view stays how you left it** between sessions, and a double-click confirms your pick in the graphic picker.
+- 🐧 **Linux gets the already-running prompt too** — launching a second copy of the game asks first, as it does on Windows.
+- 🧩 **For mod developers**: floating panels can set their own size, mods can read and react to events, toasts can carry up to two action buttons, and a mod can open the Keyboard Shortcuts dialog scrolled to a specific action.
+
+### Fixes
+- ⚔️ **Fixed the battleback being ignored in Pokémon Essentials and La Base de Sky** — those games read the backdrop from the map's metadata and never looked at the field the editor was writing. It now applies on every supported base (Essentials 17.1, 19.1, 20.1, 21.1, LBDS and BES), each of which keeps that metadata somewhere different.
+- 🪨 **Fixed the bases not following the battleback** — picking `cave1` changed the background but left the battlers standing on grass, because Essentials names the bases after the environment. Your battleback now leads, and the environment only narrows it (`cave1_water_base0` on water, `cave1_ice_base0` on ice).
+- 💥 **Fixed the plugin refusing to load on Essentials 17.1 and BES** — one line used Ruby syntax those engines are too old to parse, which took the whole plugin down at boot.
+- 💾 **Fixed a crash on loading a save in Essentials 17.1 and BES** — the single-file version of the plugin had fallen behind the rest and still called a method those engines don't have.
+- 🔄 **Fixed reordering extended layers not showing in the running game.**
+- 🧭 **Fixed the location picker opening blank** and made its panning smooth, with a tile grid.
+- 🖼️ **Fixed panoramas and battlebacks not hot-reloading** into the game you already had open.
+- 👀 **Event indicators are clearer** on the map.
+- 🌍 **Fixed untranslated text** in export, map versions, the tile right-click menu, and the ON/OFF labels.
+
+### Changes
+- 📄 **The per-project editor settings file is now `ms-editor-config.json`.** Existing projects are unaffected — it is created again on the next save.
+- 📐 **The event editor's left panel can be resized**, and the window opens at a more sensible size.
+- 🔍 **The tile info section moved to the bottom of the tileset editor's sidebar.**
+
 ## v1.3.0
 
 The interface is yours now: pick a theme, recolour anything, and keep your place between sessions. Graphics you repaint in another program reload into the editor **and** into the game you already have running. The tileset editor moved into the Database and got a lot faster on big sheets.

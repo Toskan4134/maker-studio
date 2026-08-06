@@ -2,6 +2,40 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.4.0
+
+Las páginas de evento dejan de ser una camisa de fuerza: las condiciones pueden ser un árbol de Y y O, un switch puede exigirse en OFF, y un evento puede bloquear el tile en el que está. Un gráfico puede ser un trozo de una imagen — elige tiles directamente de un tileset y dáselos a un evento. El editor de tilesets te deja escribir tus propios terrain tags, y los battlebacks por fin funcionan en Pokémon Essentials, bases incluidas.
+
+### Novedades
+- 🌳 **Condiciones avanzadas en las páginas de evento** — un *árbol* de condiciones en vez de las cuatro de siempre: tantos switches, variables y self switches como quieras, mezclando **Y / O**, anidados en grupos y cada uno negable. "Jefe derrotado **o** switch de trucos activo", "hablado con cualquiera de cinco NPC", "rival derrotado **y** no (medalla 3 **o** modo debug)". Necesita el plugin de MakerStudio en el juego; el simulador integrado siempre lo respeta.
+- 🔀 **Las condiciones de switch pueden pedir OFF** — Switch 1, Switch 2 y Self Switch tienen ahora un desplegable ON / OFF, así que una página puede activarse justo cuando un switch se apaga.
+- 🧱 **Bloquear** — una nueva opción de página que hace el evento infranqueable permita lo que permita el tile de debajo. Pensada para eventos dibujados con un tile de suelo transitable, que antes se atravesaban sin más.
+- 🔻 **Siempre debajo** — el reflejo de Siempre encima: el evento se dibuja por debajo de todos los personajes, para calcomanías de suelo, alfombras, charcos y sombras hechas con eventos.
+- 🖼️ **Usa parte de una imagen como gráfico** — elige un rectángulo, o haz clic y arrastra sobre **los tiles de un tileset**, y ese trozo pasa a ser el gráfico del evento (también sirve para imágenes y rutas de movimiento). Todo lo demás trata el trozo como si fuera la imagen entera, así que la rejilla de la hoja y los fotogramas de animación siguen funcionando.
+- 🏷️ **Terrain tags y prioridades propios en el editor de tilesets** — ponle nombre a tus terrain tags en vez de apañarte con 0–7, y extrae los que tu juego ya define desde sus propios datos.
+- 🖌️ **Sellos de varios tiles** — rellena un área con un patrón repetido, arrastra para sellar en continuo y convierte cualquier selección del mapa en un pincel.
+- 🗺️ **Nuevo mapa, donde querías** — el diálogo de nuevo mapa te deja elegir el mapa padre, y el árbol de mapas tiene **Nuevo mapa aquí**.
+- ↩️ **Añadir y borrar capas extendidas se puede deshacer.**
+- 👁️ **La vista de celdas de evento se queda como la dejaste** entre sesiones, y un doble clic confirma tu elección en el selector de gráficos.
+- 🐧 **Linux también tiene el aviso de juego en ejecución** — lanzar una segunda copia del juego pregunta antes, como en Windows.
+- 🧩 **Para quien hace mods**: los paneles flotantes pueden fijar su propio tamaño, los mods pueden leer los eventos y reaccionar a ellos, los avisos pueden llevar hasta dos botones de acción, y un mod puede abrir el diálogo de atajos de teclado desplazado hasta una acción concreta.
+
+### Correcciones
+- ⚔️ **Corregido que el battleback se ignorara en Pokémon Essentials y La Base de Sky** — esos juegos leen el fondo de batalla desde los metadatos del mapa y nunca miraban el campo que escribía el editor. Ahora se aplica en todas las bases soportadas (Essentials 17.1, 19.1, 20.1, 21.1, LBDS y BES), y cada una guarda esos metadatos en un sitio distinto.
+- 🪨 **Corregido que las bases no siguieran al battleback** — elegir `cave1` cambiaba el fondo pero dejaba a los combatientes sobre hierba, porque Essentials nombra las bases según el entorno. Ahora manda tu battleback, y el entorno solo lo afina (`cave1_water_base0` sobre agua, `cave1_ice_base0` sobre hielo).
+- 💥 **Corregido que el plugin no cargara en Essentials 17.1 y BES** — una línea usaba sintaxis de Ruby que esos motores son demasiado antiguos para interpretar, y eso tumbaba el plugin entero al arrancar.
+- 💾 **Corregido un cierre inesperado al cargar partida en Essentials 17.1 y BES** — la versión de un solo archivo del plugin se había quedado atrás y aún llamaba a un método que esos motores no tienen.
+- 🔄 **Corregido que reordenar las capas extendidas no se viera en el juego en marcha.**
+- 🧭 **Corregido que el selector de ubicación se abriera en blanco**, y su desplazamiento ahora es suave y con rejilla de tiles.
+- 🖼️ **Corregido que los panoramas y battlebacks no se recargaran en caliente** en el juego que ya tuvieras abierto.
+- 👀 **Los indicadores de evento se ven más claros** en el mapa.
+- 🌍 **Corregidos textos sin traducir** en la exportación, las versiones de mapa, el menú contextual de tiles y las etiquetas ON/OFF.
+
+### Cambios
+- 📄 **El archivo de ajustes del editor por proyecto pasa a llamarse `ms-editor-config.json`.** Los proyectos existentes no se ven afectados — se vuelve a crear en el siguiente guardado.
+- 📐 **El panel izquierdo del editor de eventos se puede redimensionar**, y la ventana se abre con un tamaño más sensato.
+- 🔍 **La sección de información del tile se ha movido al final de la barra lateral del editor de tilesets.**
+
 ## v1.3.0
 
 Ahora la interfaz es tuya: elige un tema, recolorea lo que quieras y conserva tu sitio entre sesiones. Los gráficos que repintes en otro programa se recargan en el editor **y** en el juego que ya tengas abierto. El editor de tilesets se ha mudado a la base de datos y va mucho más rápido con hojas grandes.
