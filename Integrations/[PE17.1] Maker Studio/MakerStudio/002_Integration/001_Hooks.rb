@@ -88,6 +88,13 @@ def pbRefreshLiveMapData(map_id)
     if ts
       $game_map.instance_variable_set(:@tileset_name, ts.tileset_name)
       $game_map.instance_variable_set(:@autotile_names, ts.autotile_names)
+      # Mirror panorama/battleback too, so base-map "Change Battleback" and
+      # tileset-panorama edits apply on live reload — apply_map_background_overrides
+      # (below) re-bridges battleback onto metadata and re-suppresses the native
+      # panorama when MS panorama layers exist.
+      $game_map.instance_variable_set(:@panorama_name, ts.panorama_name)
+      $game_map.instance_variable_set(:@panorama_hue, ts.panorama_hue)
+      $game_map.instance_variable_set(:@battleback_name, ts.battleback_name)
       $game_map.instance_variable_set(:@passages, ts.passages)
       $game_map.instance_variable_set(:@priorities, ts.priorities)
       $game_map.instance_variable_set(:@terrain_tags, ts.terrain_tags)
@@ -195,6 +202,32 @@ class Game_Map
       # "Reload Map Data" debug command flushes it, so live edits still refresh.
       if MakerStudio::ENABLED && !MakerStudio.get_extended_data_for(map_id)
         MakerStudio.load_extended_layers_for_map(map_id, self)
+      end
+    end
+  end
+end
+
+#---------------------------------------------------------------------------
+# Continue with a matching magic_number takes the setMapChanged branch in
+# PScreen_Load, which does NOT call Game_Map#setup — the whole $MapFactory
+# (Game_Map objects with their already-instantiated Game_Events) is restored
+# straight from the save. Events added or edited in the editor since that save
+# therefore never appeared until a manual hot-reload. Re-reading the map's
+# .rxdata here is the same refresh the "Reload Map Data" debug command runs.
+#
+# The class is PokemonMapFactory — the SCRIPT is named MapFactory, the class is
+# not. `class MapFactory` would silently define a brand-new empty class and the
+# alias would NameError at load. Guarded so a base without it just skips.
+#---------------------------------------------------------------------------
+if defined?(PokemonMapFactory) && PokemonMapFactory.method_defined?(:setMapChanged)
+  class PokemonMapFactory
+    unless method_defined?(:__mkst__setMapChanged)
+      alias_method :__mkst__setMapChanged, :setMapChanged
+      def setMapChanged(prev_map)
+        __mkst__setMapChanged(prev_map)
+        return unless MakerStudio::ENABLED
+        return unless $game_map && defined?(pbRefreshLiveMapData)
+        pbRefreshLiveMapData($game_map.map_id)
       end
     end
   end

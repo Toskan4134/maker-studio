@@ -147,6 +147,13 @@ def pbRefreshLiveMapData(map_id)
     if ts
       $game_map.instance_variable_set(:@tileset_name, ts.tileset_name)
       $game_map.instance_variable_set(:@autotile_names, ts.autotile_names)
+      # Mirror panorama/battleback too, so base-map "Change Battleback" and
+      # tileset-panorama edits apply on live reload — apply_map_background_overrides
+      # (below) re-bridges battleback onto metadata and re-suppresses the native
+      # panorama when MS panorama layers exist.
+      $game_map.instance_variable_set(:@panorama_name, ts.panorama_name)
+      $game_map.instance_variable_set(:@panorama_hue, ts.panorama_hue)
+      $game_map.instance_variable_set(:@battleback_name, ts.battleback_name)
       $game_map.instance_variable_set(:@passages, ts.passages)
       $game_map.instance_variable_set(:@priorities, ts.priorities)
       $game_map.instance_variable_set(:@terrain_tags, ts.terrain_tags)

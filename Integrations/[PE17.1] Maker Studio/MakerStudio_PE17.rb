@@ -11,8 +11,12 @@
 # exact 'MakerStudio-Build:' / 'MakerStudio-Version:' prefixes; the release
 # workflow rewrites the version line.
 # MakerStudio-Build: PE17.1
-# MakerStudio-Version: 1.3.0
+# MakerStudio-Version: 1.4.0
 ###############################################################################
+
+
+
+
 
 ###############################################################################
 # >>> 000_Settings.rb
@@ -718,6 +722,13 @@ def pbRefreshLiveMapData(map_id)
     if ts
       $game_map.instance_variable_set(:@tileset_name, ts.tileset_name)
       $game_map.instance_variable_set(:@autotile_names, ts.autotile_names)
+      # Mirror panorama/battleback too, so base-map "Change Battleback" and
+      # tileset-panorama edits apply on live reload — apply_map_background_overrides
+      # (below) re-bridges battleback onto metadata and re-suppresses the native
+      # panorama when MS panorama layers exist.
+      $game_map.instance_variable_set(:@panorama_name, ts.panorama_name)
+      $game_map.instance_variable_set(:@panorama_hue, ts.panorama_hue)
+      $game_map.instance_variable_set(:@battleback_name, ts.battleback_name)
       $game_map.instance_variable_set(:@passages, ts.passages)
       $game_map.instance_variable_set(:@priorities, ts.priorities)
       $game_map.instance_variable_set(:@terrain_tags, ts.terrain_tags)
@@ -825,6 +836,32 @@ class Game_Map
       # "Reload Map Data" debug command flushes it, so live edits still refresh.
       if MakerStudio::ENABLED && !MakerStudio.get_extended_data_for(map_id)
         MakerStudio.load_extended_layers_for_map(map_id, self)
+      end
+    end
+  end
+end
+
+#---------------------------------------------------------------------------
+# Continue with a matching magic_number takes the setMapChanged branch in
+# PScreen_Load, which does NOT call Game_Map#setup — the whole $MapFactory
+# (Game_Map objects with their already-instantiated Game_Events) is restored
+# straight from the save. Events added or edited in the editor since that save
+# therefore never appeared until a manual hot-reload. Re-reading the map's
+# .rxdata here is the same refresh the "Reload Map Data" debug command runs.
+#
+# The class is PokemonMapFactory — the SCRIPT is named MapFactory, the class is
+# not. `class MapFactory` would silently define a brand-new empty class and the
+# alias would NameError at load. Guarded so a base without it just skips.
+#---------------------------------------------------------------------------
+if defined?(PokemonMapFactory) && PokemonMapFactory.method_defined?(:setMapChanged)
+  class PokemonMapFactory
+    unless method_defined?(:__mkst__setMapChanged)
+      alias_method :__mkst__setMapChanged, :setMapChanged
+      def setMapChanged(prev_map)
+        __mkst__setMapChanged(prev_map)
+        return unless MakerStudio::ENABLED
+        return unless $game_map && defined?(pbRefreshLiveMapData)
+        pbRefreshLiveMapData($game_map.map_id)
       end
     end
   end
@@ -3103,6 +3140,22 @@ module MakerStudio
   def apply_map_background_overrides(game_map, map_id)
     return unless game_map
     ext = (respond_to?(:get_extended_data_for) ? get_extended_data_for(map_id) : nil)
+    ms = ext ? ext["mapSettings"] : nil
+
+    # Battleback. Pokémon Essentials / LBDS read the battle backdrop from
+    # $game_map.metadata.battle_background (the map's "BattleBack" PBS field),
+    # NOT from the stock @battleback_name ivar (dead code here). Bridge the
+    # effective value onto the metadata so it shows in-game: the version's
+    # mapSettings override if set, else @battleback_name (stock Game_Map#setup
+    # copied it from the tileset, which the base-map "Change Battleback" picker
+    # writes). Runs before the ext/ms guards so a base map that only changed its
+    # tileset battleback (no @extended_layers) is still bridged. PE tilesets
+    # default to "", so untouched maps no-op and never clobber the PBS value.
+    bback = (ms && ms["battlebackName"]) || game_map.instance_variable_get(:@battleback_name)
+    bback = bback.to_s
+    __mkst_bridge_battleback(game_map, bback)
+    game_map.instance_variable_set(:@battleback_name, bback) if !bback.empty?
+
     return unless ext
 
     # Suppress native tileset fog when Maker Studio fog layers exist here.
@@ -3122,7 +3175,6 @@ module MakerStudio
       game_map.instance_variable_set(:@panorama_hue, 0)
     end
 
-    ms = ext["mapSettings"]
     return unless ms
 
     pano = ms["panoramaName"]
@@ -3130,10 +3182,76 @@ module MakerStudio
       game_map.instance_variable_set(:@panorama_name, pano)
       game_map.instance_variable_set(:@panorama_hue, (ms["panoramaHue"] || 0).to_i)
     end
+  end
 
-    bback = ms["battlebackName"]
-    if bback && !bback.empty?
-      game_map.instance_variable_set(:@battleback_name, bback)
+  # Ruby 1.8.1 (RGSS1) has no Object#instance_variable_defined?, and "read it
+  # and test for nil" is a different question here: nil is a legitimate cached
+  # PBS value. 1.8 yields strings from #instance_variables, 1.9+ symbols.
+  def __mkst_ivar_defined?(obj, name)
+    obj.instance_variables.any? { |v| v.to_s == name.to_s }
+  end
+  
+  # Bridge the effective battleback onto whatever the running engine reads as
+  # the map's "BattleBack" metadata, so its own battle scene resolves the WHOLE
+  # family from it: `<p>_bg` + `<p>_<env>_base0/_base1` + `<p>_message` in
+  # PE19+/LBDS, `battlebg<P>` + `playerbase<P><Env>` in PE17/BES. Three stores,
+  # tried in order, because the engines disagree on where map metadata lives:
+  #   * Game_Map#metadata          - PE20/21, LBDS
+  #   * GameData::MapMetadata      - PE19 (no Game_Map#metadata at all); the
+  #                                  record may not exist for this map, so
+  #                                  register one rather than drop the value
+  #   * pbLoadMetadata array       - PE17/BES ([map_id][MetadataBattleBack])
+  # The original value is cached on the first write so clearing the battleback
+  # restores it in-session. No-op where none of the three exist (stock RMXP,
+  # which reads the @battleback_name ivar set by the caller).
+  def __mkst_bridge_battleback(game_map, bback)
+    map_id = game_map.respond_to?(:map_id) ? game_map.map_id : nil
+    md = nil
+    md = (game_map.metadata rescue nil) if game_map.respond_to?(:metadata)
+    if md.nil? && map_id && defined?(GameData) && defined?(GameData::MapMetadata)
+      md = (GameData::MapMetadata.try_get(map_id) rescue nil)
+      if md.nil? && !bback.empty?
+        (GameData::MapMetadata.register({:id => map_id, :battle_background => bback}) rescue nil)
+        md = (GameData::MapMetadata.try_get(map_id) rescue nil)
+      end
+    end
+    if md && md.respond_to?(:battle_background)
+      if !bback.empty?
+        unless __mkst_ivar_defined?(md, :@ms_bb_orig)
+          md.instance_variable_set(:@ms_bb_orig, md.instance_variable_get(:@battle_background))
+        end
+        md.instance_variable_set(:@battle_background, bback)
+      elsif __mkst_ivar_defined?(md, :@ms_bb_orig)
+        md.instance_variable_set(:@battle_background, md.instance_variable_get(:@ms_bb_orig))
+        md.send(:remove_instance_variable, :@ms_bb_orig)
+      end
+      return
+    end
+    __mkst_bridge_battleback_legacy(map_id, bback)
+  end
+
+  # PE17 / BES keep map metadata as a plain array cached in $PokemonTemp, read
+  # by pbGetMetadata as meta[map_id][MetadataBattleBack]. Mutating that cached
+  # array is what makes pbBackdrop pick the value up - it re-reads it on every
+  # battle, and derives the bases from the same backdrop name.
+  def __mkst_bridge_battleback_legacy(map_id, bback)
+    return unless map_id && defined?(MetadataBattleBack)
+    meta = (pbLoadMetadata rescue nil)
+    return unless meta.is_a?(Array)
+    @ms_bb_orig_legacy = {} if @ms_bb_orig_legacy.nil?
+    entry = meta[map_id]
+    if !bback.empty?
+      if entry.nil?
+        entry = []
+        meta[map_id] = entry
+      end
+      unless @ms_bb_orig_legacy.has_key?(map_id)
+        @ms_bb_orig_legacy[map_id] = entry[MetadataBattleBack]
+      end
+      entry[MetadataBattleBack] = bback
+    elsif @ms_bb_orig_legacy.has_key?(map_id)
+      entry[MetadataBattleBack] = @ms_bb_orig_legacy[map_id] if entry
+      @ms_bb_orig_legacy.delete(map_id)
     end
   end
 
@@ -4105,6 +4223,7 @@ class Object
   end
 end
 
+
 ###############################################################################
 # >>> 002_Integration/011_LiveReload.rb
 ###############################################################################
@@ -4293,4 +4412,492 @@ class Interpreter
     ms_forced_route_targets.delete(target)
     true
   end
+end
+
+
+###############################################################################
+# >>> 002_Integration/013_EventExtensions.rb
+###############################################################################
+#===============================================================================
+# MakerStudio - Event Editor Extensions
+# Runtime support for Maker Studio-only event page fields that have no
+# native RGSS equivalent (switch negate, Block, Always on Bottom, and the
+# @ms_condition_tree advanced-conditions blob). See the PE21.1 build's header
+# for the full rationale; this file is the same logic against the Essentials
+# 17.1 core.
+#
+# Game_Event#refresh is an alias (NOT a full copy) that temporarily patches
+# each page's condition objects so the base's own page-picking loop respects
+# negate / condition-tree. This composes with ANY other script that also
+# aliases refresh (Events Utilities, custom event systems, etc.) — the previous
+# refresh runs inside ours with patched conditions, so its page-picking AND its
+# post-processing (comment parsing, etc.) all execute against the right page.
+#
+# The patching is needed because negate flips the comparison INSIDE the loop's
+# `next if` — an alias that just called the original would pick the wrong page
+# whenever a page uses negate. Instead we rewrite each condition's switch_valid
+# / switch_id / self_switch_ch in-place so the original loop's own logic yields
+# the MS-correct result, then restore in `ensure`.
+# condition tree's variable branch reads $game_variables directly.
+#
+# RGSS1 (Ruby 1.8): no leading-dot line continuations here.
+#===============================================================================
+class RPG::Event::Page::Condition
+  attr_accessor :switch1_negate      # true: page requires Switch 1 OFF instead of ON
+  attr_accessor :switch2_negate      # true: page requires Switch 2 OFF instead of ON
+  attr_accessor :self_switch_negate  # true: page requires Self Switch OFF instead of ON
+end
+
+class RPG::Event::Page
+  attr_accessor :block   # true: page is always impassable, ignoring tile passage/Through
+end
+
+class Game_Character
+  def block
+    @block.nil? ? false : @block
+  end
+  attr_writer :block
+end
+
+class Game_Event
+  # Recursively evaluates one @ms_condition_tree node. Mirrors evalNode in the
+  # editor's sim-conditions.ts — keep both in sync.
+  def eval_condition_node(node)
+    case node["kind"]
+    when "switch"
+      switchIsOn?(node["id"]) != !!node["negate"]
+    when "variable"
+      lt = $game_variables[node["id"]] < node["value"]
+      node["negate"] ? lt : !lt
+    when "self_switch"
+      key = [@map_id, @event.id, node["ch"]]
+      ($game_self_switches[key] == true) != !!node["negate"]
+    when "group"
+      children = node["children"] || []
+      node["op"] == "or" ? children.any? { |c| eval_condition_node(c) } : children.all? { |c| eval_condition_node(c) }
+    else
+      true
+    end
+  end
+
+  MS_SKIP_SWITCH = 0   # switch ID 0 is never used in RMXP -> always off
+
+  unless method_defined?(:__mkst_evtext_refresh)
+    alias_method :__mkst_evtext_refresh, :refresh
+  end
+
+  def refresh
+    patches = []   # [condition, attr, old_val]
+
+    unless @erased
+      @event.pages.each do |page|
+        c = page.condition
+
+        # switch1 negate
+        if c.switch1_valid && c.instance_variable_get(:@switch1_negate)
+          if switchIsOn?(c.switch1_id)
+            patches << [c, :switch1_id, c.switch1_id]
+            c.switch1_id = MS_SKIP_SWITCH
+          else
+            patches << [c, :switch1_valid, c.switch1_valid]
+            c.switch1_valid = false
+          end
+        end
+
+        # switch2 negate
+        if c.switch2_valid && c.instance_variable_get(:@switch2_negate)
+          if switchIsOn?(c.switch2_id)
+            patches << [c, :switch2_id, c.switch2_id]
+            c.switch2_id = MS_SKIP_SWITCH
+          else
+            patches << [c, :switch2_valid, c.switch2_valid]
+            c.switch2_valid = false
+          end
+        end
+
+        # self_switch negate
+        if c.self_switch_valid && c.instance_variable_get(:@self_switch_negate)
+          key = [@map_id, @event.id, c.self_switch_ch]
+          if $game_self_switches[key] == true
+            patches << [c, :self_switch_valid, c.self_switch_valid]
+            c.self_switch_valid = true
+            patches << [c, :self_switch_ch, c.self_switch_ch]
+            c.self_switch_ch = "Z"
+          else
+            patches << [c, :self_switch_valid, c.self_switch_valid]
+            c.self_switch_valid = false
+          end
+        end
+
+        # condition tree: if it fails, force the page to be skipped
+        tree = c.instance_variable_get(:@ms_condition_tree)
+        if tree && !eval_condition_node(tree)
+          unless c.switch1_valid && c.switch1_id == MS_SKIP_SWITCH
+            patches << [c, :switch1_valid, c.switch1_valid]
+            c.switch1_valid = true
+            patches << [c, :switch1_id, c.switch1_id]
+            c.switch1_id = MS_SKIP_SWITCH
+          end
+        end
+      end
+    end
+
+    __mkst_evtext_refresh   # base + any chained alias (Events Utilities, ...)
+
+    # MS-only page fields the base refresh doesn't set
+    @block = @page ? !!@page.instance_variable_get(:@block) : false
+
+  ensure
+    patches.each { |c, attr, val| c.send("#{attr}=", val) }
+  end
+end
+
+class Game_Map
+  unless method_defined?(:__mkst_evtext__passable?)
+    alias_method :__mkst_evtext__passable?, :passable?
+  end
+
+  # Essentials 17.1 has no at_coordinate?, so match the core's position check.
+  def passable?(x, y, d, self_event = nil)
+    return false if !valid?(x, y)
+    events.each_value do |event|
+      next if event == self_event
+      next if !(event.x == x && event.y == y)
+      return false if event.block
+    end
+    __mkst_evtext__passable?(x, y, d, self_event)
+  end
+end
+
+#===============================================================================
+# Always on Bottom — mirror of always_on_top (z = ALWAYS_ON_BOTTOM_Z, above
+# the ground band 0/2 and the map's shadows 1). always_on_top wins when both
+# are set.
+#===============================================================================
+module MakerStudio
+  ALWAYS_ON_BOTTOM_Z = 3 unless defined?(ALWAYS_ON_BOTTOM_Z)
+end
+
+class Game_Event
+  def ms_always_on_bottom?
+    return false if @always_on_top || @page.nil?
+    @page.instance_variable_get(:@always_on_bottom) ? true : false
+  end
+
+  unless method_defined?(:__mkst_evtext__screen_z)
+    alias_method :__mkst_evtext__screen_z, :screen_z
+  end
+  def screen_z(*args)
+    return MakerStudio::ALWAYS_ON_BOTTOM_Z if ms_always_on_bottom?
+    __mkst_evtext__screen_z(*args)
+  end
+end
+
+
+###############################################################################
+# >>> 002_Integration/014_GraphicRegion.rb
+###############################################################################
+#===============================================================================
+# MakerStudio - Graphic Region (partial graphics)
+#
+# Lets a graphic use only PART of its image file — the tiles picked off a
+# tileset in Maker Studio's graphic picker. That is the point of the feature:
+# giving an event a tile out of a tileset, which RPG Maker can only do through
+# @tile_id (map tilesets, current map only).
+#
+# Nothing here knows about tiles. The region is a plain pixel rect; the editor
+# is what constrains it to whole tiles, so this file stays one blt.
+#
+# The region is four numbers (x, y, w, h) in source-image pixels. w or h of 0
+# means "whole image", which is what every graphic authored without Maker Studio
+# reads as — so this plugin changes nothing until a region is actually set.
+#
+# Where the numbers live, and why they are invisible to vanilla RGSS:
+#
+#   event page graphic  @src_x/@src_y/@src_w/@src_h on RPG::Event::Page::Graphic
+#                       (extra ivars, the same trick 007_CustomSheetGrid uses)
+#   move route 41       @parameters[4..7]  (RMXP reads 0..3)
+#   Show Picture 231    @parameters[10..13] (RMXP reads 0..9)
+#
+# A map saved with regions therefore still runs without this plugin: the extra
+# ivars and parameters are ignored and the whole image is drawn.
+#
+# The region REPLACES the image everywhere downstream — the sheet grid from
+# 007_CustomSheetGrid divides the region, not the file — so one tile with a 1x1
+# sheet grid is a static sprite, and a 3x4 block of tiles still animates. The
+# editor sets that grid from the tile selection, so both come out right.
+#===============================================================================
+
+module MakerStudio
+  # [x, y, w, h] or nil. A region set by a move route (41) wins over the page's,
+  # so a route can re-cut the same sheet; Game_Event#refresh drops it below.
+  def self.character_src_rect(character)
+    return nil if character.nil?
+    r = character.instance_variable_get(:@ms_src_rect)
+    return r if r
+    return nil unless character.is_a?(Game_Event)
+    page = character.instance_variable_get(:@page)
+    graphic = page && page.graphic
+    return nil unless graphic
+    src_rect_ivars(graphic)
+  end
+
+  # The four ivars off any object, or nil when they say "whole image".
+  def self.src_rect_ivars(obj)
+    w = obj.instance_variable_get(:@src_w).to_i
+    h = obj.instance_variable_get(:@src_h).to_i
+    return nil if w <= 0 || h <= 0
+    [obj.instance_variable_get(:@src_x).to_i, obj.instance_variable_get(:@src_y).to_i, w, h]
+  end
+
+  # Four command parameters, or nil. Missing/short parameter arrays (a map
+  # written by RMXP itself) read as "whole image".
+  def self.src_rect_params(params, at)
+    return nil if params.nil?
+    w = params[at + 2].to_i
+    h = params[at + 3].to_i
+    return nil if w <= 0 || h <= 0
+    [params[at].to_i, params[at + 1].to_i, w, h]
+  end
+
+  # A fresh Bitmap holding just the region. Clamped to the source, so a region
+  # left over from a larger version of the file still draws something.
+  def self.cropped_bitmap(src, rect)
+    x, y, w, h = rect
+    x = 0 if x < 0
+    y = 0 if y < 0
+    x = src.width - 1 if x >= src.width
+    y = src.height - 1 if y >= src.height
+    w = src.width - x if w > src.width - x
+    h = src.height - y if h > src.height - y
+    w = 1 if w < 1
+    h = 1 if h < 1
+    out = Bitmap.new(w, h)
+    out.blt(0, 0, src, Rect.new(x, y, w, h))
+    out
+  end
+end
+
+#===============================================================================
+# Characters (event page graphics + move route "Change Graphic").
+#
+# The region is applied by replacing @charbitmap — the SOURCE the base class
+# reads every frame — not self.bitmap. PE21.1's update_bitmap reassigns
+# self.bitmap = @charbitmap.bitmap on every update; fighting that by overwriting
+# self.bitmap AFTER update leaves one frame where @cw/@ch (still full-file
+# dimensions) made update_charset_frame point src_rect at the wrong cell, so the
+# whole tileset flashed through. Once @charbitmap IS the crop, the base's own
+# update_bitmap / update_charset_frame / src_rect logic produces the right
+# result every frame with zero fighting. The hook still runs every update, but
+# only does work when the crop actually changes.
+#===============================================================================
+class Sprite_Character
+  unless method_defined?(:__mkst__region_update)
+    alias __mkst__region_update update
+  end
+
+  def update
+    __mkst__region_update
+    ms_region_refresh
+  end
+
+  def ms_region_refresh
+    char = @character
+    return if char.nil?
+    return if char.respond_to?(:tile_id) && char.tile_id.to_i >= 384
+
+    # refresh_graphic replaced @charbitmap under us (name/hue changed) —
+    # our saved original and crop are stale, start fresh.
+    if @ms_crop_bitmap && !@charbitmap.equal?(@ms_crop_bitmap)
+      @ms_original_charbitmap = nil
+      @ms_crop_bitmap = nil
+      @ms_region_key = nil
+    end
+
+    rect = MakerStudio.character_src_rect(char)
+
+    # No crop: restore the original charbitmap if we had replaced it.
+    if rect.nil?
+      if @ms_original_charbitmap
+        @charbitmap = @ms_original_charbitmap
+        @charbitmapAnimated = @ms_original_animated
+        @ms_original_charbitmap = nil
+        @ms_crop_bitmap.dispose if @ms_crop_bitmap
+        @ms_crop_bitmap = nil
+        @ms_region_key = nil
+        @character_name = nil   # force refresh_graphic to reload
+      end
+      return
+    end
+
+    return if @charbitmap.nil?
+
+    # Source bitmap to crop from: the original (pre-crop) if we saved one,
+    # else the current @charbitmap (first crop of this graphic).
+    source = @ms_original_charbitmap || @charbitmap
+    source_bmp = source.respond_to?(:bitmap) ? source.bitmap : source
+    return if source_bmp.nil? || source_bmp.disposed?
+
+    key = "#{source_bmp.object_id}|#{rect.join(',')}"
+    return if key == @ms_region_key
+
+    @ms_region_key = key
+
+    # Save original on first crop of this graphic.
+    unless @ms_original_charbitmap
+      @ms_original_charbitmap = @charbitmap
+      @ms_original_animated = @charbitmapAnimated
+    end
+
+    old_crop = @ms_crop_bitmap
+    @ms_crop_bitmap = MakerStudio.cropped_bitmap(source_bmp, rect)
+    old_crop.dispose if old_crop && !old_crop.disposed?
+
+    # Replace @charbitmap so the base's own update_bitmap, update_charset_frame
+    # and src_rect logic all operate on the crop every frame.
+    @charbitmap = @ms_crop_bitmap
+    @charbitmapAnimated = false
+    self.bitmap = @ms_crop_bitmap
+
+    cols, rows = MakerStudio.character_sheet_grid(char)
+    cols = 1 if cols < 1
+    rows = 1 if rows < 1
+    @cw = @ms_crop_bitmap.width / cols
+    @ch = @ms_crop_bitmap.height / rows
+    @cw = 1 if @cw < 1
+    @ch = 1 if @ch < 1
+    self.ox = @cw / 2
+    char.sprite_size = [@cw, @ch] if char.respond_to?(:sprite_size=)
+
+    # update_charset_frame already ran this frame with the old @cw/@ch; redo
+    # src_rect so the first frame after a crop change is correct.
+    row = (char.direction - 2) / 2
+    row = rows - 1 if row > rows - 1
+    row = 0 if row < 0
+    col = char.pattern.to_i
+    col = cols - 1 if col > cols - 1
+    col = 0 if col < 0
+    self.src_rect.set(col * @cw, row * @ch, @cw, @ch)
+  end
+end
+
+#===============================================================================
+# Move route "Change Graphic" (code 41): read the region out of the command
+# before the engine runs it. Peeking beats re-implementing the command — the
+# base keeps full control of name/hue/direction/pattern.
+#===============================================================================
+class Game_Character
+  if method_defined?(:update_move_route) || private_method_defined?(:update_move_route)
+    unless method_defined?(:__mkst__region_update_move_route) ||
+           private_method_defined?(:__mkst__region_update_move_route)
+      alias __mkst__region_update_move_route update_move_route
+    end
+
+    def update_move_route
+      route = @move_route
+      if route && @move_route_index && @move_route_index < route.list.size
+        command = route.list[@move_route_index]
+        if command && command.code == 41
+          # Always written, so switching to an uncropped graphic clears the
+          # region the page (or an earlier command) had set.
+          @ms_src_rect = MakerStudio.src_rect_params(command.parameters, 4)
+        end
+      end
+      __mkst__region_update_move_route
+    end
+  end
+end
+
+# A page change re-reads the graphic from the page, so a region a move route
+# left behind must not outlive it.
+class Game_Event
+  unless method_defined?(:__mkst__region_refresh)
+    alias __mkst__region_refresh refresh
+  end
+
+  def refresh
+    @ms_src_rect = nil
+    __mkst__region_refresh
+  end
+end
+
+#===============================================================================
+# Show Picture (231). The region rides past RMXP's ten parameters and is stashed
+# on the Game_Picture; Sprite_Picture cuts the bitmap the same way characters
+# are cut, so origin, zoom and rotation all measure from the region.
+#===============================================================================
+if defined?(Interpreter) && (Interpreter.method_defined?(:command_231) ||
+                             Interpreter.private_method_defined?(:command_231))
+class Interpreter
+  unless method_defined?(:__mkst__region_command_231) ||
+         private_method_defined?(:__mkst__region_command_231)
+    alias __mkst__region_command_231 command_231
+  end
+
+  def command_231
+    result = __mkst__region_command_231
+    begin
+      number = @parameters[0] + (@event_id > 0 ? 50 : 0)
+      picture = $game_screen && $game_screen.pictures[number]
+      if picture
+        picture.instance_variable_set(:@ms_src_rect,
+          MakerStudio.src_rect_params(@parameters, 10))
+      end
+    rescue StandardError
+      # A base with its own picture bookkeeping just gets the whole image.
+    end
+    result
+  end
+end
+end
+
+if defined?(Sprite_Picture) && Sprite_Picture.method_defined?(:update)
+class Sprite_Picture
+  unless method_defined?(:__mkst__region_update)
+    alias __mkst__region_update update
+  end
+
+  def update
+    __mkst__region_update
+    ms_region_refresh
+  end
+
+  def ms_region_refresh
+    return if @picture.nil?
+    rect = @picture.instance_variable_get(:@ms_src_rect)
+    if rect.nil?
+      @ms_region_key = nil
+      @ms_region_source = nil
+      @ms_region_bitmap = nil
+      return
+    end
+    current = self.bitmap
+    return if current.nil? || current.disposed?
+    source = current.equal?(@ms_region_bitmap) ? @ms_region_source : current
+    return if source.nil? || source.disposed?
+
+    key = "#{source.object_id}|#{rect.join(',')}"
+    if key != @ms_region_key
+      @ms_region_key = key
+      @ms_region_source = source
+      stale = @ms_region_bitmap
+      @ms_region_bitmap = MakerStudio.cropped_bitmap(source, rect)
+      self.bitmap = @ms_region_bitmap
+      stale.dispose if stale && !stale.disposed?
+    elsif !current.equal?(@ms_region_bitmap)
+      self.bitmap = @ms_region_bitmap
+    else
+      return
+    end
+
+    # The base centred on the whole image; the region is the image now.
+    if @picture.origin == 0
+      self.ox = 0
+      self.oy = 0
+    else
+      self.ox = @ms_region_bitmap.width / 2
+      self.oy = @ms_region_bitmap.height / 2
+    end
+  end
+end
 end

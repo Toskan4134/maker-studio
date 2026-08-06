@@ -38,6 +38,22 @@ module MakerStudio
   def apply_map_background_overrides(game_map, map_id)
     return unless game_map
     ext = (respond_to?(:get_extended_data_for) ? get_extended_data_for(map_id) : nil)
+    ms = ext ? ext["mapSettings"] : nil
+
+    # Battleback. Pokémon Essentials / LBDS read the battle backdrop from
+    # $game_map.metadata.battle_background (the map's "BattleBack" PBS field),
+    # NOT from the stock @battleback_name ivar (dead code here). Bridge the
+    # effective value onto the metadata so it shows in-game: the version's
+    # mapSettings override if set, else @battleback_name (stock Game_Map#setup
+    # copied it from the tileset, which the base-map "Change Battleback" picker
+    # writes). Runs before the ext/ms guards so a base map that only changed its
+    # tileset battleback (no @extended_layers) is still bridged. PE tilesets
+    # default to "", so untouched maps no-op and never clobber the PBS value.
+    bback = (ms && ms["battlebackName"]) || game_map.instance_variable_get(:@battleback_name)
+    bback = bback.to_s
+    __mkst_bridge_battleback(game_map, bback)
+    game_map.instance_variable_set(:@battleback_name, bback) if !bback.empty?
+
     return unless ext
 
     # Suppress native tileset fog when Maker Studio fog layers exist here.
@@ -57,7 +73,6 @@ module MakerStudio
       game_map.instance_variable_set(:@panorama_hue, 0)
     end
 
-    ms = ext["mapSettings"]
     return unless ms
 
     pano = ms["panoramaName"]
@@ -65,10 +80,76 @@ module MakerStudio
       game_map.instance_variable_set(:@panorama_name, pano)
       game_map.instance_variable_set(:@panorama_hue, (ms["panoramaHue"] || 0).to_i)
     end
+  end
 
-    bback = ms["battlebackName"]
-    if bback && !bback.empty?
-      game_map.instance_variable_set(:@battleback_name, bback)
+  # Ruby 1.8.1 (RGSS1) has no Object#instance_variable_defined?, and "read it
+  # and test for nil" is a different question here: nil is a legitimate cached
+  # PBS value. 1.8 yields strings from #instance_variables, 1.9+ symbols.
+  def __mkst_ivar_defined?(obj, name)
+    obj.instance_variables.any? { |v| v.to_s == name.to_s }
+  end
+  
+  # Bridge the effective battleback onto whatever the running engine reads as
+  # the map's "BattleBack" metadata, so its own battle scene resolves the WHOLE
+  # family from it: `<p>_bg` + `<p>_<env>_base0/_base1` + `<p>_message` in
+  # PE19+/LBDS, `battlebg<P>` + `playerbase<P><Env>` in PE17/BES. Three stores,
+  # tried in order, because the engines disagree on where map metadata lives:
+  #   * Game_Map#metadata          - PE20/21, LBDS
+  #   * GameData::MapMetadata      - PE19 (no Game_Map#metadata at all); the
+  #                                  record may not exist for this map, so
+  #                                  register one rather than drop the value
+  #   * pbLoadMetadata array       - PE17/BES ([map_id][MetadataBattleBack])
+  # The original value is cached on the first write so clearing the battleback
+  # restores it in-session. No-op where none of the three exist (stock RMXP,
+  # which reads the @battleback_name ivar set by the caller).
+  def __mkst_bridge_battleback(game_map, bback)
+    map_id = game_map.respond_to?(:map_id) ? game_map.map_id : nil
+    md = nil
+    md = (game_map.metadata rescue nil) if game_map.respond_to?(:metadata)
+    if md.nil? && map_id && defined?(GameData) && defined?(GameData::MapMetadata)
+      md = (GameData::MapMetadata.try_get(map_id) rescue nil)
+      if md.nil? && !bback.empty?
+        (GameData::MapMetadata.register({:id => map_id, :battle_background => bback}) rescue nil)
+        md = (GameData::MapMetadata.try_get(map_id) rescue nil)
+      end
+    end
+    if md && md.respond_to?(:battle_background)
+      if !bback.empty?
+        unless __mkst_ivar_defined?(md, :@ms_bb_orig)
+          md.instance_variable_set(:@ms_bb_orig, md.instance_variable_get(:@battle_background))
+        end
+        md.instance_variable_set(:@battle_background, bback)
+      elsif __mkst_ivar_defined?(md, :@ms_bb_orig)
+        md.instance_variable_set(:@battle_background, md.instance_variable_get(:@ms_bb_orig))
+        md.send(:remove_instance_variable, :@ms_bb_orig)
+      end
+      return
+    end
+    __mkst_bridge_battleback_legacy(map_id, bback)
+  end
+
+  # PE17 / BES keep map metadata as a plain array cached in $PokemonTemp, read
+  # by pbGetMetadata as meta[map_id][MetadataBattleBack]. Mutating that cached
+  # array is what makes pbBackdrop pick the value up - it re-reads it on every
+  # battle, and derives the bases from the same backdrop name.
+  def __mkst_bridge_battleback_legacy(map_id, bback)
+    return unless map_id && defined?(MetadataBattleBack)
+    meta = (pbLoadMetadata rescue nil)
+    return unless meta.is_a?(Array)
+    @ms_bb_orig_legacy = {} if @ms_bb_orig_legacy.nil?
+    entry = meta[map_id]
+    if !bback.empty?
+      if entry.nil?
+        entry = []
+        meta[map_id] = entry
+      end
+      unless @ms_bb_orig_legacy.has_key?(map_id)
+        @ms_bb_orig_legacy[map_id] = entry[MetadataBattleBack]
+      end
+      entry[MetadataBattleBack] = bback
+    elsif @ms_bb_orig_legacy.has_key?(map_id)
+      entry[MetadataBattleBack] = @ms_bb_orig_legacy[map_id] if entry
+      @ms_bb_orig_legacy.delete(map_id)
     end
   end
 
