@@ -50,7 +50,10 @@
     ]
   },
   "hero": {
-    "pageTitle": { "en": "Home", "es": "Inicio" },
+    "pageTitle": {
+      "en": "Map editor for RPG Maker XP",
+      "es": "Editor de mapas para RPG Maker XP"
+    },
     "metaDescription": {
       "en": "A modern, feature-rich tile map editor built as a replacement for RPG Maker XP's game editor. Reads and writes .rxdata directly — plus a full event editor, shadow system, and a JavaScript mod API.",
       "es": "Un editor de mapas de tiles moderno y completo creado como reemplazo del editor de juego de RPG Maker XP. Lee y escribe .rxdata directamente — con editor de eventos, sistema de sombras y una API de mods en JavaScript."

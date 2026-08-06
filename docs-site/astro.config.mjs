@@ -99,8 +99,11 @@ export default defineConfig({
         },
       ],
     }),
-    // Sitemap: the `latest` (root) build emits the canonical sitemap-index.xml;
-    // versioned builds emit their own under /vX.Y.Z/ (harmless extras).
+    // Sitemap: the `latest` (root) build emits the canonical sitemap-index.xml
+    // robots.txt points at. Versioned builds emit their own under /vX.Y.Z/ and
+    // there is no switching that off — Starlight registers this integration
+    // itself, so dropping it here changes nothing. Harmless: those copies are
+    // `noindex` (see src/components/Head.astro) and nothing links their sitemap.
     sitemap(),
   ],
 });

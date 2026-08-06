@@ -29,6 +29,15 @@ const SITE_DESCRIPTION =
 const TWITTER = "@Toskan4134";
 const THEME_COLOR = "#1e1e2e";
 
+// Old-version builds are a full copy of the docs under /vX.Y.Z/, so every page
+// has an identical twin at the root. Left indexable they compete with `latest`
+// for the same queries and multiply with every release — each page's signals
+// split across N copies, and the version Google picks is nobody's choice.
+// `noindex, follow` keeps them reachable and crawlable (the version selector
+// still works, links are still followed) while only `latest` is indexed.
+const isVersionedBuild =
+  !!process.env.DOCS_VERSION && process.env.DOCS_VERSION !== "latest";
+
 const pageTitle = entry.data.title as string | undefined;
 const pageDescription =
   (entry.data.description as string | undefined) || SITE_DESCRIPTION;
@@ -124,6 +133,7 @@ const jsonLd = {
 <meta name="theme-color" content={THEME_COLOR} />
 <meta name="application-name" content={SITE_NAME} />
 <meta name="author" content="Toskan4134" />
+{isVersionedBuild && <meta name="robots" content="noindex, follow" />}
 
 {/* 5. Structured data for rich search results */}
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
