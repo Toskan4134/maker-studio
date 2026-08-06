@@ -18,7 +18,11 @@ const logoPath = resolve(root, "src/assets/logo.png");
 
 // Brand wordmark from the single source of truth.
 const wordmark = splash.hero.title.en; // "Maker Studio"
-const tagline = "A modern tile map editor for RPG Maker XP projects.";
+// What the app IS — it replaces RPG Maker XP's editor whole (maps, events,
+// tilesets, database, scripts, simulator, mods), so "map editor" undersells it.
+// Second line names the parts, since the card has room the <title> doesn't.
+const tagline = "A modern replacement for the RPG Maker XP editor";
+const subline = "Maps · Events · Tilesets · Database · Scripts · Mods";
 const platforms = "Windows · macOS · Linux";
 
 const logoB64 = readFileSync(logoPath).toString("base64");
@@ -70,8 +74,11 @@ const svg = `
   <!-- Tagline -->
   <text x="96" y="452" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="36" fill="${ACCENT_HI}">${tagline}</text>
 
+  <!-- What it covers -->
+  <text x="96" y="500" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="26" fill="${TEXT}">${subline}</text>
+
   <!-- Platforms -->
-  <text x="96" y="520" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="28" fill="${MUTED}">${platforms}</text>
+  <text x="96" y="548" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="26" fill="${MUTED}">${platforms}</text>
 
   <!-- Docs URL, bottom-right -->
   <text x="${W - 96}" y="${H - 60}" text-anchor="end" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="26" fill="${ACCENT}">makerstudio.toskan.es</text>

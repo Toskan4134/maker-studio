@@ -54,7 +54,7 @@ export default defineConfig({
     starlight({
       title: "Maker Studio",
       description:
-        "Documentation for Maker Studio — a modern tile map editor for RPG Maker XP projects, plus its mod API.",
+        "Documentation for Maker Studio — a modern replacement for the RPG Maker XP editor, plus its JavaScript mod API.",
       logo: {
         src: "./src/assets/logo.png",
         alt: "Maker Studio",
