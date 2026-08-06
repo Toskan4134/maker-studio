@@ -65,11 +65,51 @@ Events can have multiple pages, each with its own conditions, graphic, and comma
 
 ### Conditions
 
-Control when a page becomes active:
+Control when a page becomes active. Every check you tick must pass — they are ANDed together, and the topmost page whose conditions all pass is the one that runs.
 
-- **Switch 1 / Switch 2**: Require specific switches to be ON.
-- **Variable**: Compare a game variable against a value.
-- **Self Switch**: Check a self switch (A through Z — A–D are the RPG Maker XP standard; E–Z work at runtime in Pokémon Essentials).
+- **Switch 1 / Switch 2**: Require specific switches to be **ON** or **OFF** — the dropdown after the switch name picks which.
+- **Variable**: Compare a game variable against a value (≥).
+- **Self Switch**: Check a self switch (A through Z — A–D are the RPG Maker XP standard; E–Z work at runtime in Pokémon Essentials), again **ON** or **OFF**.
+
+> **OFF** needs the **MakerStudio plugin** installed in your game (Tools -> Integration). Vanilla RPG
+> Maker XP can only ask for ON, so without the plugin the game reads an OFF check as a plain ON check
+> — the page turns on exactly when you meant it to turn off. The built-in
+> [Game Simulator](game-simulator.md) always honours it.
+
+#### Advanced Conditions
+
+Those four checks are everything the vanilla editor offers: two switches, one variable, one self
+switch, all ANDed. **Advanced Conditions** — the collapsible section at the bottom of Conditions —
+lifts that ceiling with a condition *tree*: as many checks as you want, mixed AND / OR, nested in
+groups. Boss defeated **or** cheat switch on. Any one of five NPCs talked to. Rival beaten **and**
+not (badge 3 **or** debug mode).
+
+Expand the section and add rows:
+
+- **Switch** — a switch, **ON** or **OFF**.
+- **Variable** — a variable, **≥** or **<** a value.
+- **Self Switch** — a self switch letter, **ON** or **OFF**.
+- **Group** — a nested block with its own joiner, up to 4 levels deep.
+
+Every group carries its own joiner in a dropdown: **Match ALL of these** (AND) or **Match ANY of
+these** (OR). Nesting groups is how you write mixed logic — put an ANY group inside the ALL group and
+you have "this and that and (either of these)". The **x** on a row deletes it; delete the last row and
+the tree is gone again.
+
+The tree is **ANDed on top of** the four checks above. It narrows a page further, it never overrides
+them — so a page can keep using plain Switch 1 for the obvious case and the tree for the awkward part.
+
+While collapsed, the section header shows a plain-language summary of what you built
+(`0005: Boss Defeated ON OR (0003: Door A ON AND 0004: Door B ON)`), so you can confirm the logic
+without expanding anything.
+
+A **Match ANY** group with nothing in it is always false and would silently kill the page, so the
+editor flags it inline. An empty **Match ALL** group is harmless — nothing to fail.
+
+> Advanced Conditions carry the **MS** badge: the tree only takes effect in-game with the MakerStudio
+> plugin installed (see [MS-Exclusive Feature Indicators](interface-guide.md#ms-exclusive-feature-indicators)).
+> Without the plugin the game ignores the tree and judges the page on the four ordinary checks alone —
+> more pages turn on, not fewer. The [Game Simulator](game-simulator.md) evaluates the tree properly.
 
 ### Graphic
 
@@ -114,7 +154,9 @@ Ordinary character sheets are unaffected — the tile grid only appears for tile
 
 ### Options
 
-Toggle individual flags: Move Animation, Stop Animation, Direction Fix, Through (walk through walls), Always on Top, and Always on Bottom.
+Toggle individual flags: Move Animation, Stop Animation, Direction Fix, Through (walk through walls), Always on Top, Block, and Always on Bottom.
+
+**Block** makes the event impassable: nothing — player or other events — can step onto its tile, whatever the tile underneath would allow. An ordinary event already blocks the player, so this is for the case that doesn't: an event whose graphic is a **tile** inherits that tile's passability, so one drawn with a walkable floor tile gets walked straight through. Check Block and it stops the player anyway — handy for a rug you can't cross, an invisible wall, or a cut-scene barrier. Block is the opposite of Through, so ticking one clears the other, and it is per page: a later page without Block makes the event walkable again. It carries the **MS** badge: the flag only takes effect in-game with the MakerStudio plugin installed (see [MS-Exclusive Feature Indicators](interface-guide.md#ms-exclusive-feature-indicators)). Without the plugin the event blocks (or doesn't) by its usual rules.
 
 **Always on Bottom** is the mirror of Always on Top: the event is drawn *underneath* every character, so the player walks over it instead of behind it — useful for floor decals, rugs, puddles, or shadows built as events. It still draws above the map's ground tiles. If both flags are checked, Always on Top wins. It carries the **MS** badge: the flag only takes effect in-game with the MakerStudio plugin installed (see [MS-Exclusive Feature Indicators](interface-guide.md#ms-exclusive-feature-indicators)). Without the plugin the event simply stacks by its position, as it did before.
 

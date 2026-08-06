@@ -65,11 +65,52 @@ Los eventos pueden tener varias páginas, cada una con sus propias condiciones, 
 
 ### Condiciones
 
-Controlan cuándo se activa una página:
+Controlan cuándo se activa una página. Todas las condiciones que marques deben cumplirse — se combinan con Y, y se ejecuta la primera página (de arriba abajo) que las cumpla todas.
 
-- **Switch 1 / Switch 2**: requieren que switches concretos estén ON.
-- **Variable**: compara una variable de juego con un valor.
-- **Self Switch**: comprueba un self switch (A a Z — A–D son el estándar de RPG Maker XP; E–Z funcionan en tiempo de ejecución en Pokémon Essentials).
+- **Interruptor** (las dos primeras filas): exigen que un interruptor concreto esté **ON** u **OFF** — el desplegable que hay tras el nombre del interruptor elige cuál.
+- **Variable**: compara una variable de juego con un valor (≥).
+- **Interruptor local**: comprueba un interruptor local (A a Z — A–D son el estándar de RPG Maker XP; E–Z funcionan en tiempo de ejecución en Pokémon Essentials), también **ON** u **OFF**.
+
+> **OFF** necesita el **plugin MakerStudio** instalado en tu juego (Tools -> Integration). El RPG Maker XP
+> original solo sabe pedir ON, así que sin el plugin el juego lee una condición OFF como una condición ON
+> normal: la página se activa justo cuando querías que no lo hiciera. El
+> [Simulador de juego](game-simulator.md) integrado siempre la respeta.
+
+#### Condiciones avanzadas
+
+Esas cuatro condiciones son todo lo que ofrece el editor original: dos interruptores, una variable, un
+interruptor local, y todas con Y. **Condiciones avanzadas** —la sección plegable al final de
+Condiciones— rompe ese techo con un *árbol* de condiciones: tantas comprobaciones como quieras,
+mezclando Y / O y anidadas en grupos. Jefe derrotado **o** interruptor de trucos activado. Haber
+hablado con cualquiera de cinco NPC. Rival derrotado **y** no (medalla 3 **o** modo depuración).
+
+Despliega la sección y añade filas:
+
+- **Interruptor** — un interruptor, **ON** u **OFF**.
+- **Variable** — una variable, **≥** o **<** que un valor.
+- **Interruptor local** — una letra de interruptor local, **ON** u **OFF**.
+- **Grupo** — un bloque anidado con su propio conector, hasta 4 niveles de profundidad.
+
+Cada grupo lleva su conector en un desplegable: **Cumplir TODAS estas** (Y) o **Cumplir ALGUNA de
+estas** (O). Anidar grupos es como se escribe la lógica mixta: mete un grupo ALGUNA dentro del grupo
+TODAS y tienes «esto y aquello y (cualquiera de estas)». La **x** de una fila la borra; borra la última
+fila y el árbol desaparece.
+
+El árbol se combina **con Y sobre** las cuatro condiciones de arriba. Solo restringe más la página,
+nunca las sustituye — así una página puede seguir usando el Switch 1 normal para el caso obvio y el
+árbol para la parte rara.
+
+Mientras está plegada, la cabecera de la sección muestra un resumen en lenguaje llano de lo que has
+construido (`0005: Boss Defeated ON OR (0003: Door A ON AND 0004: Door B ON)`), para que confirmes la
+lógica sin desplegar nada.
+
+Un grupo **Cumplir ALGUNA** vacío siempre es falso y dejaría la página muerta sin avisar, así que el
+editor lo señala ahí mismo. Un grupo **Cumplir TODAS** vacío es inofensivo: no hay nada que fallar.
+
+> Las Condiciones avanzadas llevan la insignia **MS**: el árbol solo surte efecto en el juego con el
+> plugin MakerStudio instalado (consulta [Indicadores de funciones exclusivas de MS](interface-guide.md#indicadores-de-funciones-exclusivas-de-ms)).
+> Sin el plugin el juego ignora el árbol y juzga la página solo por las cuatro condiciones normales —
+> se activan más páginas, no menos. El [Simulador de juego](game-simulator.md) sí evalúa el árbol.
 
 ### Gráfico
 
@@ -116,7 +157,9 @@ Las hojas de personaje normales no cambian: la cuadrícula de tiles solo aparece
 
 ### Options
 
-Activa banderas individuales: Animación al moverse, Animación al parar, Fijar dirección, Atravesar (atravesar paredes), Siempre encima y Siempre debajo.
+Activa banderas individuales: Animación al moverse, Animación al parar, Fijar dirección, Atravesar (atravesar paredes), Siempre encima, Bloquear y Siempre debajo.
+
+**Bloquear** hace el evento infranqueable: nadie —ni el jugador ni otros eventos— puede pisar su tile, permita lo que permita el tile de debajo. Un evento normal ya bloquea al jugador, así que esto es para el caso que no: un evento cuyo gráfico es un **tile** hereda la transitabilidad de ese tile, de modo que uno dibujado con un tile de suelo transitable se atraviesa sin más. Marca Bloquear y frena al jugador igualmente — útil para una alfombra que no se puede cruzar, un muro invisible o una barrera de escena. Bloquear es lo contrario de Atravesar, así que marcar uno desmarca el otro, y es por página: una página posterior sin Bloquear vuelve a dejar el evento transitable. Lleva la insignia **MS**: la bandera solo surte efecto en el juego con el plugin MakerStudio instalado (consulta [Indicadores de funciones exclusivas de MS](interface-guide.md#indicadores-de-funciones-exclusivas-de-ms)). Sin el plugin el evento bloquea (o no) según sus reglas de siempre.
 
 **Siempre debajo** es el reflejo de Siempre encima: el evento se dibuja *por debajo* de todos los personajes, así que el jugador le pasa por encima en vez de por detrás — útil para calcomanías de suelo, alfombras, charcos o sombras hechas con eventos. Aun así se dibuja por encima de los tiles de suelo del mapa. Si marcas ambas banderas, gana Siempre encima. Lleva la insignia **MS**: la bandera solo surte efecto en el juego con el plugin MakerStudio instalado (consulta [Indicadores de funciones exclusivas de MS](interface-guide.md#indicadores-de-funciones-exclusivas-de-ms)). Sin el plugin el evento simplemente se apila por su posición, como antes.
 
