@@ -162,6 +162,20 @@ The move-action list in **Set Move Route** supports the same editing keys as the
 | ↑ / ↓ | Previous / next move action |
 | Alt + ↑ / ↓ | Move the selected action up / down |
 
+## Move Route Editor (Draw path…)
+
+These only apply while the visual route editor is open, which is why they can use the bare arrow keys without clashing with anything else. They are all rebindable — see [Set Move Route](events-editor.md#draw-path--the-visual-route-editor).
+
+| Default Key | Action |
+|-------------|--------|
+| ↑ / ↓ / ← / → | Add a step in that direction |
+| Ctrl + ↑ / ↓ / ← / → | Add a Turn in that direction |
+| Backspace | Undo the last step |
+| Shift + ← | Undo the last step (alternative) |
+| Shift + → | Redo the last undone step |
+| Delete | Remove the selected steps |
+| Ctrl+Z / Ctrl+Y | Undo / redo any edit in the path editor |
+
 ## Scripts Editor
 
 | Default Key | Action |

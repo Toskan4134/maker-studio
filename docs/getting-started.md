@@ -31,7 +31,11 @@ The installers are **not code-signed** yet, so your OS shows a one-time warning 
 
 ### Step 2 — Install the game-side plugin
 
-Download the integration that matches your project:
+**The editor can do this for you.** Open your project: when it finds no integration, the dialog shows a **Build** dropdown with every supported engine. Pick the one that matches your project, press **Install**, and it downloads the right zip and sets up `Plugins/MakerStudio/` itself. Restart the game afterwards. You can reopen that dialog any time from **Help → Check Game Integration…**.
+
+The two paste-in builds — **Essentials v17.1** and **BES v5** — cannot be installed automatically, because they are a single script rather than a folder. Picking one turns the button into **Download**; once it finishes, **Open Folder** takes you to the zip so you can paste the `.rb` into the Script Editor yourself.
+
+To install by hand instead, download the integration that matches your project:
 
 | Your project | Direct download |
 |--------------|-----------------|
@@ -69,7 +73,7 @@ You can run the check any time from **Help → Check Game Integration…**, whic
 
 **BES v5 and v17.1 projects are covered too.** Those builds are one pasted script rather than a folder, so they carry their version as a comment in the script itself. The editor finds it in `Data/Scripts/` or `Scripts.rxdata` and, on **Update Now**, replaces that single script in place — no other script is touched, and the script bank is backed up first.
 
-If the editor finds no integration at all, it says so once per project and points you at the downloads — the editor works fine without one, but your game will ignore extended layers, shadows, extra autotiles and per-tile effects.
+If the editor finds no integration at all, it says so once per project and offers to install one (see [Step 2](#step-2--install-the-game-side-plugin)) — the editor works fine without one, but your game will ignore extended layers, shadows, extra autotiles and per-tile effects.
 
 One caveat for existing projects: integrations installed before this check existed carry no version marker. A folder plugin is still recognised — the editor works out which build it is from the plugin's own files and shows it as *(detected)* — but a *pasted* script reads as "not installed" until you paste the current one over it once.
 

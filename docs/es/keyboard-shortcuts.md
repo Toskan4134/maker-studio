@@ -162,6 +162,20 @@ La lista de acciones de movimiento en **Set Move Route** admite las mismas tecla
 | ↑ / ↓ | Acción de movimiento anterior / siguiente |
 | Alt + ↑ / ↓ | Mover la acción seleccionada arriba / abajo |
 
+## Editor de rutas de movimiento (Dibujar ruta…)
+
+Solo se aplican mientras el editor visual de rutas está abierto, por eso pueden usar las flechas a secas sin chocar con nada más. Todos son reasignables — mira [Set Move Route](events-editor.md#dibujar-ruta--el-editor-visual-de-rutas).
+
+| Tecla por defecto | Acción |
+|-------------|--------|
+| ↑ / ↓ / ← / → | Añadir un paso en esa dirección |
+| Ctrl + ↑ / ↓ / ← / → | Añadir un Turn en esa dirección |
+| Backspace | Deshacer el último paso |
+| Shift + ← | Deshacer el último paso (alternativa) |
+| Shift + → | Rehacer el último paso deshecho |
+| Delete | Eliminar los pasos seleccionados |
+| Ctrl+Z / Ctrl+Y | Deshacer / rehacer cualquier edición en el editor de rutas |
+
 ## Editor de scripts
 
 | Tecla por defecto | Acción |

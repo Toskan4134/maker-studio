@@ -245,7 +245,7 @@ Los fragmentos se guardan por instalación (compartidos entre todos tus proyecto
 
 Cada selector de gráficos tiene vista previa en vivo y favoritos: el **Graphic** de la página de evento (hoja de personaje), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), la acción **Change Graphic** de la ruta de movimiento, el selector de Battleback del mapa y el popup de edición de capa de fog / panorama / personalizada del panel de capas.
 
-- **Árbol de carpetas** — la lista es un árbol tipo explorador de archivos: las subcarpetas (p. ej. `Graphics/Characters/NPCs/`) se muestran como carpetas plegables que despliegas o pliegas con un clic, con sus imágenes anidadas e indentadas dentro. Las carpetas se ordenan arriba y todo se ordena por nombre. La carpeta que contiene tu gráfico actual se despliega automáticamente al abrir el selector, y el cuadro de búsqueda sigue encontrando cualquier gráfico en cualquier parte del árbol — así puedes elegir y marcar como favorito gráficos anidados directamente en vez de buscar con **Browse**.
+- **Árbol de carpetas** — la lista es un árbol tipo explorador de archivos: las subcarpetas (p. ej. `Graphics/Characters/NPCs/`) se muestran como carpetas plegables que despliegas o pliegas con un clic, con sus imágenes anidadas e indentadas dentro. Las carpetas se ordenan arriba y todo se ordena por nombre. La carpeta que contiene tu gráfico actual se despliega automáticamente al abrir el selector **y la lista se desplaza hasta él**, así que un gráfico enterrado al final de una carpeta larga aparece en pantalla de inmediato (solo lo hace una vez — si te desplazas, la lista se queda donde la dejes). El cuadro de búsqueda sigue encontrando cualquier gráfico en cualquier parte del árbol — así puedes elegir y marcar como favorito gráficos anidados directamente en vez de buscar con **Browse**.
 - **Browse nunca duplica** — el botón **…** puede elegir cualquier imagen bajo la carpeta `Graphics/` de tu proyecto. Si está en otra subcarpeta, el editor guarda una referencia relativa `../Folder/name` en vez de copiar el archivo (solo se copia una imagen de *fuera* de `Graphics/`). La vista previa se actualiza al instante, y las vistas previas que ya has visto se cachean para que alternar entre la lista y la pestaña **★ Favourites** no las recargue.
 - **Marca cualquier gráfico con estrella** — pasa sobre un nombre en la lista y haz clic en su estrella para marcarlo (estrella rellena = favorito). Los favoritos se recuerdan entre proyectos y sesiones.
 - **La imagen actual siempre tiene estrella** — si la imagen seleccionada no está en la lista de la carpeta actual (llegaste a ella con **Browse**, o vive en otra carpeta), aparece como su propia fila justo debajo de **(None)**, etiquetada con su ruta de carpeta — márcala desde ahí.
@@ -280,6 +280,21 @@ El editor de rutas ya está traducido por completo, así que con el editor en es
 botones de acción, las opciones de la ruta y las filas también se leen en español. Cada
 fila se dibuja con una guía de sangría, así que de un vistazo las acciones se leen como
 parte de la ruta y no como comandos propios.
+
+#### Dibujar ruta… — el editor visual de rutas
+
+Construir un paseo pulsando **Move Up** doce veces cansa rápido. **Dibujar ruta…** (junto a Test Move Route) abre el propio mapa y te deja trazar la ruta encima.
+
+- **Arrastra por las casillas** para caminar — cada casilla que cruzas se convierte en una acción Move, diagonales incluidas.
+- **Haz clic en una casilla lejana** para añadir un **Jump** directo hasta ahí.
+- **Clic derecho** recorta la ruta hasta el paso donde has hecho clic.
+- Los botones **Girar** y **Añadir Wait…** añaden las acciones que no mueven; doble clic en una fila de Wait para cambiar sus fotogramas (20 fotogramas = 1 segundo).
+- **Fijar inicio** elige la casilla desde la que arranca la ruta. Por defecto es la casilla del propio evento (o la posición inicial del jugador), y lo que elijas se recuerda la próxima vez que abras el editor para esa ruta.
+- **Deshacer / Rehacer** con `Ctrl+Z` / `Ctrl+Y`. Selecciona filas de la lista de pasos para borrarlas: el clic derecho elimina todo lo posterior al paso marcado, `Delete` elimina exactamente los que hayas seleccionado — ambos preguntan antes, y `Ctrl+Y` los recupera.
+- El **teclado** también dibuja: las flechas dan un paso, `Ctrl`+flechas giran, `Backspace` (o `Shift+←`) deshace el último paso y `Shift+→` lo rehace. Todos son reasignables en **Editor de rutas de movimiento** dentro de los ajustes de atajos.
+- Desplaza con arrastre del botón central o `Shift`+arrastrar, y haz zoom con `Ctrl`+rueda — igual que en el lienzo del mapa.
+
+**Aplicar como ruta de movimiento** sustituye las acciones de la ruta por el trazado que has dibujado. Si el comando ya tenía una ruta, el editor la muestra al abrirse, así que puedes extenderla o recortarla en vez de empezar de cero.
 
 Las acciones que toman parámetros abren su propio formulario, usando los mismos selectores que el resto del editor en vez de texto en bruto:
 
@@ -373,6 +388,10 @@ Las filas de comando se colorean por categoría para que la lista se lea como c�
 | Cursiva atenuada | End | Fila terminadora final de la página |
 
 Los colores siguen el tema activo del editor — la misma familia de tonos en modo oscuro y claro, desplazada para legibilidad sobre cada fondo. Las filas seleccionadas siempre se dibujan en blanco sobre azul independientemente de la categoría.
+
+**Las filas largas se desplazan en vez de cortarse.** Cuando el texto de un comando es más ancho que la lista, al pasar el ratón por encima el texto se desplaza lateralmente para que puedas leerlo entero sin ensanchar el panel ni abrir el comando.
+
+**Las filas de Transfer Player dicen a dónde llevan.** Un destino fijo se lee como el número del mapa, su nombre y las coordenadas — `007: Ciudad Plateada (12,8)` — y uno por variables indica qué variable guarda el mapa, la X y la Y.
 
 ## Limitaciones conocidas
 

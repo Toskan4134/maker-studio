@@ -242,7 +242,7 @@ Snippets are stored per-install (shared across all your projects) and remembered
 
 Every graphic picker has a live preview and favourites: the event page **Graphic** (character sheet), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), the Move Route **Change Graphic** action, the map Battleback picker, and the fog / panorama / custom layer edit popup in the Layer panel.
 
-- **Folder tree** — the list is a file-explorer tree: subfolders (e.g. `Graphics/Characters/NPCs/`) show as collapsible folders that you click to expand or collapse, with their images nested and indented inside. Folders sort to the top and everything is sorted by name. The folder containing your current graphic is expanded automatically when you open the picker, and the search box still finds any graphic anywhere in the tree — so you can pick and favourite nested graphics directly instead of hunting through **Browse**.
+- **Folder tree** — the list is a file-explorer tree: subfolders (e.g. `Graphics/Characters/NPCs/`) show as collapsible folders that you click to expand or collapse, with their images nested and indented inside. Folders sort to the top and everything is sorted by name. The folder containing your current graphic is expanded automatically when you open the picker **and the list scrolls to it**, so a graphic buried far down a long folder is on screen straight away (it only does this once — scroll away and the list stays where you put it). The search box still finds any graphic anywhere in the tree — so you can pick and favourite nested graphics directly instead of hunting through **Browse**.
 - **Browse never duplicates** — the **…** button can pick any image under your project's `Graphics/` folder. If it's in another subfolder, the editor stores a relative `../Folder/name` reference instead of copying the file in (only an image from *outside* `Graphics/` is copied). The preview updates instantly, and previews you've already viewed are cached so flipping between the list and the **★ Favourites** tab doesn't re-load them.
 - **Star any graphic** — hover a name in the list and click its star to favourite it (filled star = favourited). Favourites are remembered across projects and sessions.
 - **Current image always has a star** — if the selected image isn't in the current folder list (you reached it through **Browse**, or it lives in another folder), it shows up as its own row just under **(None)**, labelled with its folder path — star it from there.
@@ -277,6 +277,21 @@ The route editor is fully translated now, so with the editor in Spanish the acti
 buttons, the route options and the rows read in Spanish too. Each row is drawn with
 an indent guide, so at a glance the actions read as belonging to the route rather
 than as commands of their own.
+
+#### Draw path… — the visual route editor
+
+Building a walk by clicking **Move Up** twelve times gets old fast. **Draw path…** (next to Test Move Route) opens the map itself and lets you draw the route on it.
+
+- **Drag across tiles** to walk — each tile you cross becomes a Move action, diagonals included.
+- **Click a tile far away** to add a **Jump** straight there.
+- **Right-click** cuts the route back to the step you clicked.
+- **Turn** and **Add Wait…** buttons add the non-moving actions; double-click a Wait row to change its frame count (20 frames = 1 second).
+- **Set Start** picks the tile the route starts from. It defaults to the event's own tile (or the player's start position), and whatever you choose is remembered the next time you open the editor for that route.
+- **Undo / Redo** with `Ctrl+Z` / `Ctrl+Y`. Select rows in the step list to delete them: right-click removes everything after the marked step, `Delete` removes exactly the ones you selected — both ask first, and `Ctrl+Y` brings them back.
+- The **keyboard** draws too: arrow keys step, `Ctrl`+arrows turn, `Backspace` (or `Shift+←`) undoes the last step and `Shift+→` redoes it. All of these are rebindable under **Move Route Editor** in the shortcut settings.
+- Pan with middle-drag or `Shift`+drag, zoom with `Ctrl`+scroll — the same as the map canvas.
+
+**Apply as Move Route** replaces the route's actions with the path you drew. If the command already had a route, the editor opens showing it, so you can extend or trim rather than start over.
 
 Actions that take parameters open their own form, using the same pickers as the rest of the editor instead of raw text:
 
@@ -370,6 +385,10 @@ Command rows are colored by category so the list reads like syntax-highlighted c
 | Muted italic | End | Final terminator row of the page |
 
 Colors follow the active editor theme — the same hue family in dark and light mode, shifted for readability against each background. Selected rows always render white-on-blue regardless of category.
+
+**Long rows scroll instead of being cut off.** When a command's text is wider than the list, hovering it scrolls the text sideways so you can read all of it without widening the panel or opening the command.
+
+**Transfer Player rows say where they go.** A fixed destination reads as the map number, its name and the coordinates — `007: Pewter City (12,8)` — and a variable-driven one lists which variable holds the map, the X and the Y.
 
 ## Known Limitations
 
