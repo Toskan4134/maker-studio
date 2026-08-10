@@ -152,7 +152,15 @@ Un marcador verde **Start** aparece en ese tile, y la posición se guarda en tu 
 
 ## Ejecutar el juego
 
-Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego Run Game). El editor guarda todos los mapas abiertos con cambios sin guardar, luego lanza `Game.exe` en modo depuración desde la carpeta de tu proyecto.
+Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego Run Game). El editor lanza `Game.exe` en modo depuración desde la carpeta de tu proyecto.
+
+Si algún mapa abierto tiene cambios sin guardar, primero te pregunta — el editor ya no los guarda por su cuenta:
+
+- **Guardar y ejecutar** — guarda todos los mapas con cambios sin guardar y luego lanza el juego.
+- **Ejecutar sin guardar** — lanza el juego tal y como están los archivos en disco, dejando tus cambios sin guardar abiertos en el editor. Útil cuando quieres comprobar cómo se comporta el mapa *antes* de tus últimos cambios.
+- **Cancelar** — no se guarda nada y el juego no se lanza.
+
+Si no hay nada sin guardar no aparece ningún aviso: Run lanza el juego directamente.
 
 ### Si el juego ya está abierto
 

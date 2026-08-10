@@ -95,6 +95,8 @@ Los siguientes comandos se registran pero no se ejecutan (requieren Game.rxdata 
 
   Por eso un script que lanza una ruta de movimiento (por ejemplo `Followers.follow_into_door` de Essentials) no mueve a nadie en el simulador, y un **Esperar fin del movimiento** que contaba con ello no tiene nada que esperar. Cuando esa espera está acotada a *Este evento*, el log ahora lo dice en una línea propia en vez de pasar de largo en silencio.
 
+  **Un mod puede enseñar al simulador a ejecutar un script.** Los mods pueden encargarse de los comandos Script, de los Script dentro de una ruta de movimiento y de las condiciones de tipo Script, y también implementar o sustituir códigos de comando enteros — mira la documentación para desarrolladores de mods (`ctx.simulator`). Con un mod así instalado, los comandos de arriba dejan de ser solo registro.
+
 ## Opciones de la barra de herramientas
 
 - **Speed**: velocidad de reproducción 0,25×, 0,5×, 1×, 2× o 4×. Se conserva tras Restart para que los reinicios no te devuelvan a 1×.

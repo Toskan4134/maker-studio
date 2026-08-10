@@ -95,6 +95,8 @@ The following commands are logged but not executed (require Game.rxdata or Plugi
 
   A script that starts a move route (Essentials' `Followers.follow_into_door`, say) therefore moves nobody in the simulator, and a **Wait for Move's Completion** that was counting on it has nothing to wait for. When that wait is scoped to *This Event*, the log now says so on its own line rather than passing silently.
 
+  **A mod can teach the simulator to run a script.** Mods may claim Script commands, move-route Scripts and Script conditional branches, and implement or override whole command codes — see the mod developer docs (`ctx.simulator`). With such a mod installed, the commands above stop being logged-only.
+
 ## Toolbar Options
 
 - **Speed**: 0.25×, 0.5×, 1×, 2×, or 4× playback speed. Preserved across Restart so resets don't bounce you back to 1×.

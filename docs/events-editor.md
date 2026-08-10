@@ -361,6 +361,17 @@ You can drag command rows to reorder them. A block (Conditional, Loop, Show Choi
 - Drop the line between two commands → it lands at their level.
 - Drop in the empty space below the list → it goes to the end.
 
+### Reading a Row Without Opening It
+
+Each row shows a short summary of what the command does, so you rarely need to open a command
+to check it:
+
+- **Set Move Route** and **Wait for Move's Completion** name their target — `003: Guard`, not
+  just an id — alongside the step count and the repeat/skip flags.
+- **Change Screen Color Tone**, **Change Fog Color Tone**, **Screen Flash** and **Change Picture
+  Color Tone** show their channel values and duration (`R-68 G-68 B0 Gy68, 60 frames`).
+- Switch / variable rows show the switch or variable name, not only its number.
+
 ### Color Coding
 
 Command rows are colored by category so the list reads like syntax-highlighted code. Categories at a glance:

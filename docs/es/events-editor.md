@@ -364,6 +364,17 @@ Puedes arrastrar filas de comando para reordenarlas. Un bloque (Conditional, Loo
 - Suelta la línea entre dos comandos → cae a su nivel.
 - Suelta en el espacio vacío debajo de la lista → va al final.
 
+### Leer una fila sin abrirla
+
+Cada fila muestra un resumen corto de lo que hace el comando, así que casi nunca hace falta
+abrirlo para comprobarlo:
+
+- **Set Move Route** y **Wait for Move's Completion** nombran su objetivo — `003: Guardia`, no
+  solo un id — junto al número de pasos y las opciones de repetir/omitir.
+- **Change Screen Color Tone**, **Change Fog Color Tone**, **Screen Flash** y **Change Picture
+  Color Tone** muestran sus valores por canal y la duración (`R-68 G-68 B0 Gy68, 60 frames`).
+- Las filas de switch y variable muestran el nombre, no solo el número.
+
 ### Código de color
 
 Las filas de comando se colorean por categoría para que la lista se lea como código con resaltado de sintaxis. Categorías de un vistazo:

@@ -152,7 +152,15 @@ A green **Start** marker appears on that tile, and the position is saved to your
 
 ## Running the Game
 
-Click the green Run button in the toolbar (or use File then Run Game). The editor saves all open maps with unsaved changes, then launches `Game.exe` in debug mode from your project folder.
+Click the green Run button in the toolbar (or use File then Run Game). The editor launches `Game.exe` in debug mode from your project folder.
+
+If any open map has unsaved changes, you are asked first — the editor no longer saves them for you:
+
+- **Save & Run** — saves every map with unsaved changes, then launches.
+- **Run Without Saving** — launches the game as your files are on disk, leaving your unsaved edits open in the editor. Handy when you want to check how the map behaves *before* your latest changes.
+- **Cancel** — nothing is saved and the game is not launched.
+
+With nothing unsaved there is no prompt; Run launches straight away.
 
 ### If the Game Is Already Open
 
