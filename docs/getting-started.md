@@ -69,7 +69,7 @@ The editor checks for you. When you open a project whose `Plugins/MakerStudio` i
 - **Download Manually** — opens the release page so you can copy the folder in yourself.
 - **Later** — dismisses it for this project until the next editor update.
 
-You can run the check any time from **Help → Check Game Integration…**, which also tells you which build the project has (`PE21.1`, `LBDS1.2.0`, …) and its version.
+You can run the check any time from **Help → Check Game Integration…**, which also tells you which build the project has (`PE21.1`, `LBDS1.2.0`, …) and its version next to the newest one available.
 
 **BES v5 and v17.1 projects are covered too.** Those builds are one pasted script rather than a folder, so they carry their version as a comment in the script itself. The editor finds it in `Data/Scripts/` or `Scripts.rxdata` and, on **Update Now**, replaces that single script in place — no other script is touched, and the script bank is backed up first.
 

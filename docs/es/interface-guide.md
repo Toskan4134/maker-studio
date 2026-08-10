@@ -13,7 +13,7 @@ Cada elemento de menú muestra ahora un pequeño icono junto a su etiqueta para 
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, submenú **Export Map** (Export as JSON / PNG / GIF / WebP)
 - **Tools**: selección de herramienta (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ cualquier elemento de menú y panel aportado por mods)
-- **Help**: **Documentation** (abre esta documentación en línea en tu navegador), Keyboard Shortcuts, **Reset App** (recarga el editor — se conserva la disposición de paneles; `Ctrl+R`), Check for Updates, Stats, About Maker Studio, Toggle DevTools
+- **Help**: **Documentation** (abre esta documentación en línea en tu navegador), Keyboard Shortcuts, **Reset App** (recarga el editor — se conserva la disposición de paneles; `Ctrl+R`), Check for Updates (muestra la versión que tienes junto a la última publicada), Stats, About Maker Studio, Toggle DevTools
 
 ## Idioma
 

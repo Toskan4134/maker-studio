@@ -65,7 +65,7 @@ El editor lo comprueba por ti. Cuando abres un proyecto cuyo `Plugins/MakerStudi
 - **Descargar manualmente** — abre la página de la publicación para que copies la carpeta tú mismo.
 - **Más tarde** — lo descarta para este proyecto hasta la próxima actualización del editor.
 
-Puedes lanzar la comprobación cuando quieras desde **Ayuda → Comprobar integración del juego…**, que además te dice qué versión de integración tiene el proyecto (`PE21.1`, `LBDS1.2.0`, …) y su número de versión.
+Puedes lanzar la comprobación cuando quieras desde **Ayuda → Comprobar integración del juego…**, que además te dice qué versión de integración tiene el proyecto (`PE21.1`, `LBDS1.2.0`, …) y su número de versión junto a la última disponible.
 
 **Los proyectos de BES v5 y v17.1 también entran.** Esas versiones son un único script pegado en lugar de una carpeta, así que llevan su versión como comentario dentro del propio script. El editor lo encuentra en `Data/Scripts` o en `Scripts.rxdata` y, al pulsar **Actualizar ahora**, reemplaza solo ese script en su sitio: no toca ningún otro y antes hace copia de seguridad del banco de scripts.
 
