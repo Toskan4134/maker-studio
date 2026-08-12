@@ -336,7 +336,10 @@ Borrar un comando de bloque (o su marcador de cierre) quita el **bloque entero**
 
 ### Anidar comandos
 
-Para poner comandos *dentro* de un bloque, selecciona la línea de apertura del bloque (p. ej. el Conditional Branch, una rama When o el Loop) e Insert — el nuevo comando cae indentado un nivel dentro. Insertar tras un comando que ya está dentro de un bloque lo mantiene en ese nivel. No hay control de indentación manual; el anidado sigue dónde insertas o sueltas un comando.
+Por defecto, **Insertar y Pegar colocan el nuevo comando ENCIMA de la fila seleccionada** — como hermano anterior, no dentro de nada. Así que para poner un comando *dentro* de un bloque, haz una de estas dos cosas:
+
+- Clic derecho en la línea de apertura del bloque (el Conditional Branch, una rama When o el Loop) y elige **Insertar debajo** — el nuevo comando cae indentado un nivel dentro.
+- O selecciona una fila que ya esté dentro del bloque (su primer hijo, o cualquier comando dentro de él) e Inserta — el nuevo comando cae encima de esa fila, permaneciendo dentro del bloque.
 
 ### Atajos de teclado en la lista de comandos
 

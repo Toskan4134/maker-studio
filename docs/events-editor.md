@@ -333,7 +333,12 @@ Deleting a block command (or its closing marker) removes the **whole block**, in
 
 ### Nesting Commands
 
-To put commands *inside* a block, select the block's opening line (e.g. the Conditional Branch, a When branch, or the Loop) and Insert — the new command lands indented one level inside. Inserting after a command that's already inside a block keeps it at that level. There's no manual indent control; nesting follows where you insert or drop a command.
+By default, **Insert and Paste land the new command ABOVE the selected row** — as a preceding sibling, not inside anything. So to put a command *inside* a block, do one of the following:
+
+- Right-click the block's opening line (the Conditional Branch, a When branch, or the Loop) and choose **Insert below** — the new command lands indented one level inside.
+- Or select a row that is already inside the block (its first child, or any command within it) and Insert — the new command lands above that row, staying inside the block.
+
+There's no manual indent control; nesting follows where you insert or drop a command.
 
 ### Keyboard Shortcuts in the Command List
 
