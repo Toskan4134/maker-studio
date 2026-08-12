@@ -195,6 +195,16 @@ See the [Scripts editor guide](scripts.md#finding-things) for details.
 
 On the **Events layer**, the **Select** tool box-selects events: drag a marquee (Ctrl+drag adds, Shift+drag removes), drag the selection to move the group, Delete removes them all. See [Events Editor](events-editor.md#selecting-and-moving-events).
 
+## Maps Panel (Map List)
+
+| Default Key | Action |
+|-------------|--------|
+| Ctrl+C | Copy the selected map (whole map, including layers, events, and versions) |
+| Ctrl+V | Paste the copied map into this project as a new map, placed directly below the selected map |
+| Delete | Delete the selected map (asks for confirmation, same as right-click → Delete Map) |
+
+These only fire while the Maps panel has focus, so they don't conflict with copying tiles on the canvas. To paste a map **between two Maker Studio windows**, turn on **Edit → Cross-Project Clipboard** first: copy then mirrors to your OS clipboard, and paste reads from it. With the toggle off, copy/paste still works **within the same window** (the copy stays in memory). The pasted map lands directly below the selected map (at the root if no map is selected). See [Map Management](map-management.md#copying-a-map-between-projects).
+
 ## Game Simulator
 
 | Default Key | Action |

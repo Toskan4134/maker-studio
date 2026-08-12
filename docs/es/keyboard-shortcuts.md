@@ -195,6 +195,16 @@ Consulta la [guía del editor de scripts](scripts.md#finding-things) para más d
 
 En la **capa de eventos**, la herramienta **Select** hace selección de caja de eventos: arrastra un marco (Ctrl+arrastrar añade, Shift+arrastrar quita), arrastra la selección para mover el grupo, Delete los quita todos. Consulta [Editor de eventos](events-editor.md#selecting-and-moving-events).
 
+## Panel Mapas (lista de mapas)
+
+| Tecla por defecto | Acción |
+|-------------|--------|
+| Ctrl+C | Copiar el mapa seleccionado (mapa entero, incluyendo capas, eventos y versiones) |
+| Ctrl+V | Pegar el mapa copiado en este proyecto como un mapa nuevo, colocado justo debajo del mapa seleccionado |
+| Delete | Borrar el mapa seleccionado (pide confirmación, igual que clic derecho → Delete Map) |
+
+Estos solo se activan cuando el panel Mapas tiene el foco, así que no entran en conflicto con la copia de tiles en el lienzo. Para pegar un mapa **entre dos ventanas de Maker Studio**, activa primero **Edit → Cross-Project Clipboard**: la copia se refleja entonces en el portapapeles del SO y el pegado lo lee de ahí. Con el conmutador desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana** (la copia se queda en memoria). El mapa pegado cae justo debajo del mapa seleccionado (en la raíz si no hay ningún mapa seleccionado). Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
+
 ## Simulador de juego
 
 | Tecla por defecto | Acción |

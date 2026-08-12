@@ -30,6 +30,22 @@ To make a full copy of a map as a **brand-new map** (a separate `map_id`, not a 
 
 The copy is named *"<original> (copy)"*, placed under the same parent, and opened automatically. It is a faithful clone — tiles, events, layers, shadows/fog, **and any map versions** come along. If the source map has unsaved edits, they're saved first so the copy is current. This is different from a **map version** (same map, swapped in-game); use Duplicate Map when you want an independent map you can change without affecting the original.
 
+## Copying a Map Between Projects
+
+You can copy a whole map from one project to another with **Ctrl+C / Ctrl+V** in the map list, the same way RPG Maker XP does:
+
+1. Turn on **Edit → Cross-Project Clipboard** (it's off by default). With it off, copy/paste still works **within the same window**, but the copy is not mirrored to your OS clipboard, so a second window can't see it.
+2. Open two Maker Studio windows on the two projects (File → Open Project… in a second window).
+3. In the source project's map list, click the map you want to copy and press **Ctrl+C**. The whole map — tiles on every layer, events, shadows/fog/panorama layers, and any map versions — is serialized to your OS clipboard.
+4. In the destination project's map list, click a map that will sit above the new one (this both focuses the panel and picks the landing spot) and press **Ctrl+V**. The map is imported as a **new map placed directly below the selected map** (at the root of the tree if no map is selected) and opened automatically.
+
+Tips:
+
+- Copying across windows needs **Cross-Project Clipboard** on. Within a single window the toggle doesn't matter — use **Duplicate Map** for a same-project clone.
+- The copy goes through your OS clipboard (when the toggle is on), so it survives closing the source window. It is large, though — paste soon to avoid leaving a big payload on the clipboard.
+- The pasted map lands right below the selected map; drag it elsewhere afterwards if you want it nested under a different parent (or use **New Map Here…** for a fresh nested map).
+- The map's tileset is referenced by the tile graphics it uses; if the destination project lacks those tilesets/autotiles, the tiles still paste with their original ids but will render wrong until you add the missing graphics. Extended-layer tiles keep their original tileset reference.
+
 ## Resizing and Shifting Maps
 
 Open the resize dialog from Map then Resize / Shift Map, or right-click a map in the Map Tree and choose Resize/Shift.
@@ -116,6 +132,8 @@ These are **native RPG Maker XP fields**, so the music plays in any game with no
 ## Deleting a Map
 
 Right-click a map in the Map Tree and choose Delete Map, then confirm the deletion. Any child maps are moved up to the deleted map's parent so they are not lost. The map's `.rxdata` file is removed from disk.
+
+You can also **delete the selected map from the keyboard**: with the Maps panel focused, press **Delete**. The same confirmation prompt appears (child maps are moved up, the `.rxdata` file is removed).
 
 ## Exporting Maps
 

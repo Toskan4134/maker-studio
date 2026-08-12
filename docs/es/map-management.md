@@ -30,6 +30,22 @@ Para hacer una copia completa de un mapa como un **mapa totalmente nuevo** (un `
 
 La copia se llama *"<original> (copy)"*, se coloca bajo el mismo padre y se abre automáticamente. Es un clon fiel — tiles, eventos, capas, sombras/fog **y cualquier versión de mapa** vienen con ella. Si el mapa de origen tiene ediciones sin guardar, se guardan primero para que la copia esté al día. Esto es distinto de una **versión de mapa** (el mismo mapa, intercambiado en el juego); usa Duplicate Map cuando quieras un mapa independiente que puedas cambiar sin afectar al original.
 
+## Copiar un mapa entre proyectos
+
+Puedes copiar un mapa entero de un proyecto a otro con **Ctrl+C / Ctrl+V** en la lista de mapas, igual que RPG Maker XP:
+
+1. Activa **Edit → Cross-Project Clipboard** (está desactivado por defecto). Con él desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana**, pero la copia no se refleja en el portapapeles del SO, así que una segunda ventana no puede verla.
+2. Abre dos ventanas de Maker Studio en los dos proyectos (File → Open Project… en una segunda ventana).
+3. En la lista de mapas del proyecto de origen, haz clic en el mapa que quieres copiar y pulsa **Ctrl+C**. El mapa entero — tiles de cada capa, eventos, capas de sombras/fog/panorama y cualquier versión de mapa — se serializa al portapapeles del SO.
+4. En la lista de mapas del proyecto de destino, haz clic en un mapa que quedará por encima del mapa nuevo (esto da foco al panel y elige dónde caerá) y pulsa **Ctrl+V**. El mapa se importa como un **mapa nuevo colocado justo debajo del mapa seleccionado** (en la raíz del árbol si no hay ningún mapa seleccionado) y se abre automáticamente.
+
+Consejos:
+
+- Copiar entre ventanas necesita **Cross-Project Clipboard** activado. Dentro de una sola ventana el conmutador no importa — usa **Duplicate Map** para un clon en el mismo proyecto.
+- La copia pasa por el portapapeles del SO (cuando el conmutador está activado), así que sobrevive a cerrar la ventana de origen. Sin embargo, es grande — pega pronto para no dejar un payload grande en el portapapeles.
+- El mapa pegado cae justo debajo del mapa seleccionado; arrástralo a otro sitio después si quieres anidarlo bajo un padre distinto (o usa **Nuevo mapa aquí…** para un mapa nuevo anidado).
+- El tileset del mapa se referencia por los gráficos de tile que usa; si al proyecto de destino le faltan esos tilesets/autotiles, los tiles se pegan con sus ids originales pero se renderizarán mal hasta que añadas los gráficos ausentes. Los tiles de capas extendidas conservan su referencia original al tileset.
+
 ## Redimensionar y desplazar mapas
 
 Abre el diálogo de redimensión desde Map y luego Resize / Shift Map, o haz clic derecho en un mapa del árbol y elige Resize/Shift.
@@ -116,6 +132,8 @@ Estos son **campos nativos de RPG Maker XP**, así que la música suena en cualq
 ## Borrar un mapa
 
 Haz clic derecho en un mapa del árbol y elige Delete Map, luego confirma el borrado. Cualquier mapa hijo se mueve al padre del mapa borrado para que no se pierdan. El archivo `.rxdata` del mapa se quita del disco.
+
+También puedes **borrar el mapa seleccionado desde el teclado**: con el panel Mapas con el foco, pulsa **Delete**. Aparece el mismo aviso de confirmación (los mapas hijo se mueven al padre y el archivo `.rxdata` se quita del disco).
 
 ## Exportar mapas
 
