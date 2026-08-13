@@ -19,7 +19,7 @@ Para anidar el mapa nuevo bajo uno existente, **haz clic derecho en ese mapa** e
 
 Haz doble clic en cualquier mapa del árbol de mapas para abrirlo en una pestaña nueva del editor.
 
-Al volver a abrir un proyecto, Maker Studio recupera el **último mapa en el que estabas trabajando** en vez del primero de la lista. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue teniendo prioridad.) Las carpetas plegadas del árbol de mapas también vuelven tal y como las dejaste. Ambas cosas se recuerdan por proyecto y solo en este ordenador: no se escribe nada dentro del proyecto.
+Al volver a abrir un proyecto, Maker Studio recupera **exactamente el mismo conjunto de pestañas de mapas que tenías abiertas**, en el mismo orden de izquierda a derecha, y hace activo el mapa que estabas editando — así la sesión continúa donde la dejaste en vez de empezar por el primer mapa de la lista. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue teniendo prioridad y abre solo ese mapa.) También puedes **arrastrar las pestañas de los mapas para reordenarlas**; el nuevo orden es el que se restaura la próxima vez. Las carpetas plegadas del árbol de mapas también vuelven tal y como las dejaste. Todo esto se recuerda por proyecto y solo en este ordenador: no se escribe nada dentro del proyecto.
 
 ## Duplicar un mapa
 

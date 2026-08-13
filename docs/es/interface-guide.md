@@ -74,6 +74,8 @@ Cada mapa abierto tiene su propia pestaña en la parte superior del área del ed
 - El texto en cursiva significa que es una pestaña de vista previa que se cierra sola al abrir otro mapa.
 - Haz doble clic en una pestaña de vista previa para hacerla permanente.
 - Haz clic en el botón x o clic central en una pestaña para cerrarla.
+- **Arrastra una pestaña para reordenarla.** Una línea marca dónde va a caer, y la pestaña se coloca en esa posición.
+- Al volver a abrir un proyecto, **vuelven todos los mapas que tenías abiertos**, en el mismo orden de izquierda a derecha, y el mapa que estabas editando se vuelve el activo. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue abriendo solo ese mapa.) Esto se recuerda por proyecto y solo en este ordenador.
 
 ## Barra de estado (inferior)
 

@@ -19,7 +19,7 @@ To nest the new map under an existing one, **right-click that map** in the Map T
 
 Double-click any map in the Map Tree to open it in a new editor tab.
 
-When you reopen a project, Maker Studio goes back to the **map you were last working on** instead of the first map in the list. (Opening a map file directly — by double-clicking it in your file manager — still wins over this.) Your folded map-tree folders come back the way you left them too. Both are remembered per project, on this computer only, and nothing is written into the project itself.
+When you reopen a project, Maker Studio brings back the **exact set of map tabs you had open**, in the same left-to-right order, and makes the map you were last editing the active one — so a session picks up where you left off rather than starting on the first map in the list. (Opening a map file directly — by double-clicking it in your file manager — still wins over this and opens just that one map.) You can also **drag map tabs to reorder them**; the new order is what gets restored next time. Your folded map-tree folders come back the way you left them too. All of this is remembered per project, on this computer only, and nothing is written into the project itself.
 
 ## Duplicating a Map
 
