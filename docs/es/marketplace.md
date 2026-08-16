@@ -36,6 +36,12 @@ Cada tarjeta muestra un chip junto al nombre del mod que refleja la comprobació
 
 Verified no significa que el mod sea seguro de ejecutar; significa que los bytes coinciden con lo que el mantenedor del registro fijó. Lee siempre la descripción y comprueba el autor antes de instalar.
 
+## Mods que necesitan un editor más nuevo
+
+Cada mod declara qué versión de la Mod API necesita. Cuando un mod necesita una más nueva que la que ofrece tu Maker Studio, su tarjeta muestra un chip ámbar **Needs a newer editor** y el **botón Install / Update queda desactivado** — el tooltip indica la versión requerida. Actualiza Maker Studio (**Help → Check for Updates**) y el mod se instalará con normalidad.
+
+Esto también aplica a las actualizaciones de un mod que ya tienes: si una nueva release suya pasa a necesitar una API más nueva, la actualización se retiene hasta que actualices el editor, y tu versión instalada sigue funcionando mientras tanto. Un mod que aun así acabara instalado aparece como **error** en el Mod Manager, con la versión requerida en su mensaje, y se queda inactivo en lugar de funcionar a medias.
+
 ## Instalar un mod
 
 Haz clic en **Install** en una tarjeta. Aparece un diálogo de consentimiento que muestra:
@@ -105,6 +111,6 @@ No se envían datos de vuelta. El editor se identifica con un user-agent `Maker-
 
 **"manifest id mismatch"** — el `manifest.json` del zip declara un id distinto al de la entrada del registro. Probablemente se subió el asset equivocado. Reporta el mod.
 
-**Botón Install/Update atenuado** — o hay una instalación en curso (pasa el ratón sobre el botón para ver el paso actual: Downloading, Verifying, Installing), o la tarjeta muestra un chip rojo **Tampered** que significa que la release falló su comprobación SHA-256 y la instalación está bloqueada.
+**Botón Install/Update atenuado** — hay una instalación en curso (pasa el ratón sobre el botón para ver el paso actual: Downloading, Verifying, Installing), la tarjeta muestra un chip rojo **Tampered** que significa que la release falló su comprobación SHA-256 y la instalación está bloqueada, o la tarjeta muestra un chip ámbar **Needs a newer editor** y necesitas actualizar Maker Studio.
 
 **Instalación en proyecto desactivada** — abre un proyecto primero. La ruta de instalación en proyecto necesita una carpeta `Plugins/MakerStudio/003_Editor/Mods/`, que solo existe dentro de un proyecto real.

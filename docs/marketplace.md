@@ -36,6 +36,12 @@ Every card shows a chip next to the mod name that reflects the SHA-256 integrity
 
 Verified does not mean the mod is safe to run; it means the bytes match what the registry maintainer pinned. Always read the description and check the author before installing.
 
+## Mods That Need a Newer Editor
+
+Every mod declares which version of the Mod API it needs. When a mod needs a newer one than your Maker Studio provides, its card shows an amber **Needs a newer editor** chip and the **Install / Update button is disabled** — the tooltip names the version required. Update Maker Studio (**Help → Check for Updates**) and the mod installs normally.
+
+This also applies to updates of a mod you already have: if a new release of it starts requiring a newer API, the update is held back until you update the editor, and your installed version keeps working meanwhile. A mod that somehow got installed anyway shows up as **error** in the Mod Manager with the required version in its message, and stays inactive rather than half-running.
+
 ## Installing a Mod
 
 Click **Install** on a card. A consent dialog appears showing:
@@ -105,6 +111,6 @@ No data is sent back. The editor identifies itself with a `Maker-Studio-Marketpl
 
 **"manifest id mismatch"** — the zip's `manifest.json` declares a different id than the registry entry. Likely the wrong asset was uploaded. Report the mod.
 
-**Install/Update button greyed out** — either an install is already in progress (hover the button to see the current step: Downloading, Verifying, Installing), or the card shows a red **Tampered** chip meaning the release failed its SHA-256 check and install is blocked.
+**Install/Update button greyed out** — an install is already in progress (hover the button to see the current step: Downloading, Verifying, Installing), the card shows a red **Tampered** chip meaning the release failed its SHA-256 check and install is blocked, or the card shows an amber **Needs a newer editor** chip and you need to update Maker Studio first.
 
 **Project install disabled** — open a project first. The Project install path needs a `Plugins/MakerStudio/003_Editor/Mods/` folder, which only exists inside a real project.

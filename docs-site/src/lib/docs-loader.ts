@@ -226,6 +226,7 @@ function rewriteTarget(target: string, section: "guides" | "mods", locale?: stri
 	// "/mod-api.d.ts"), which the absolute-path guard below would otherwise pass
 	// through unchanged and 404 against the site root.
 	if (/mod-api\.d\.ts$/.test(target)) return `${RAW_BASE}/maker-studio-mods/${MODS_REF}/docs/mod-api.d.ts`;
+	if (/app-strings\.json$/.test(target)) return `${RAW_BASE}/maker-studio-mods/${MODS_REF}/docs/app-strings.json`;
 	if (/examples\/mods\/?$/.test(target)) return `${MODS_REPO}/tree/main/examples/mods`;
 	if (/PUBLISHING\.md$/.test(target)) return `${MODS_REPO}/blob/main/PUBLISHING.md`;
 	if (/^(https?:|mailto:|#|\/)/.test(target)) return target;
