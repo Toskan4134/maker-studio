@@ -115,6 +115,7 @@ const MOD_ORDER = [
 	"quick-reference",
 	"api-reference",
 	"events-reference",
+	"publishing",
 	"troubleshooting",
 	"api-changelog",
 ];
