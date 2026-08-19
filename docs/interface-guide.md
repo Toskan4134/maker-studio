@@ -159,6 +159,21 @@ Both apply the next time Maker Studio starts.
 
 ### Game tab
 
+**Game names** — the only two settings here that belong to the **project**, not to the editor, so
+they change with the project you have open and *Restore defaults* leaves them alone.
+
+- **Save folder name** — the game's title in `Game.ini`. RPG Maker creates the saved-games folder
+  from it (`%AppData%\<name>` on Windows), which is the folder the toolbar's **Saves** button opens.
+  Changing it means the saves are stored somewhere else from then on. It cannot be empty or contain
+  `\ / : * ? " < > |`, since it has to work as a folder name.
+- **Window title** — the `windowTitle` in `mkxp.json`, the caption of the game's own window. Purely
+  cosmetic; it has no effect on saves, and unlike the name above it may contain anything, including
+  accents. The field is greyed out with *"(no mkxp.json in this project)"* when the project doesn't
+  ship one.
+
+Both are written straight into `Game.ini` / `mkxp.json` when you press **Save**, leaving the rest of
+those files — comments included — exactly as they were. They apply at your next Run.
+
 **Which monitor the game opens on** (Windows only) — **The same one as the editor** (the default)
 puts the game on whichever screen the Maker Studio window is on when you press Run. Left to itself
 RPG Maker always centres the game on your *primary* screen, wherever you happen to be working, which

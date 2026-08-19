@@ -160,6 +160,23 @@ Ambos se aplican la próxima vez que arranque Maker Studio.
 
 ### Pestaña Juego
 
+**Nombres del juego** — las dos únicas opciones de aquí que pertenecen al **proyecto** y no al
+editor, así que cambian con el proyecto que tengas abierto y *Restaurar valores por defecto* no las
+toca.
+
+- **Nombre de la carpeta de partidas guardadas** — el título del juego en `Game.ini`. RPG Maker crea
+  con él la carpeta de partidas guardadas (`%AppData%\<nombre>` en Windows), que es la que abre el
+  botón **Partidas** de la barra de herramientas. Al cambiarlo, las partidas pasan a guardarse en
+  otro sitio. No puede estar vacío ni contener `\ / : * ? " < > |`, porque tiene que valer como
+  nombre de carpeta.
+- **Título de la ventana** — el `windowTitle` de `mkxp.json`, el título de la ventana del juego. Es
+  puramente estético: no afecta a las partidas guardadas y, a diferencia del nombre anterior, admite
+  cualquier cosa, acentos incluidos. El campo aparece deshabilitado con *"(este proyecto no tiene
+  mkxp.json)"* cuando el proyecto no incluye ese archivo.
+
+Ambos se escriben directamente en `Game.ini` / `mkxp.json` al pulsar **Save**, dejando el resto de
+esos archivos — comentarios incluidos — tal cual estaban. Se aplican en tu próximo Run.
+
 **En qué pantalla se abre el juego** (solo Windows) — **La misma que el editor** (por defecto) abre
 el juego en la pantalla en la que esté la ventana de Maker Studio al pulsar Run. Por su cuenta, RPG
 Maker centra siempre el juego en la pantalla *principal*, trabajes donde trabajes: justo lo que esta
