@@ -131,7 +131,9 @@ grid, and you choose tiles instead of a whole image. **Click** a tile to use jus
 **drag** across several to use a block. Everything outside your selection dims, and the **Tiles**
 read-out shows which tiles you took (`column, row · width×height`). **Use whole image** clears it.
 
-Use **…** (Browse) to reach `Graphics/Tilesets` from an event's Graphic field — any graphic under
+The list starts with a **Current tileset** row, right under **(None)** — the tileset of the map
+you have open. Click it and you are picking tiles from that map's own tileset straight away, no
+browsing. For any other tileset use **…** (Browse) to reach `Graphics/Tilesets` — any graphic under
 your project's `Graphics/` folder can be picked, whichever field you're filling.
 
 **Sheet Cols / Sheet Rows follow your selection**, so you don't have to think about them: one tile

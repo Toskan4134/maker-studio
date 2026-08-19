@@ -133,9 +133,11 @@ solo ese, o **arrastra** sobre varios para usar un bloque. Todo lo que queda fue
 se atenúa, y el indicador **Tiles** muestra qué tiles has cogido (`columna, fila · ancho×alto`).
 **Usar la imagen completa** lo quita.
 
-Usa **…** (Browse) para llegar a `Graphics/Tilesets` desde el campo Graphic de un evento: puedes
-elegir cualquier gráfico dentro de la carpeta `Graphics/` de tu proyecto, sea cual sea el campo
-que estés rellenando.
+La lista empieza con una fila **Tileset actual**, justo debajo de **(Ninguno)**: es el tileset del
+mapa que tienes abierto. Púlsala y ya estás eligiendo tiles de ese tileset, sin navegar. Para
+cualquier otro tileset usa **…** (Browse) para llegar a `Graphics/Tilesets`: puedes elegir
+cualquier gráfico dentro de la carpeta `Graphics/` de tu proyecto, sea cual sea el campo que estés
+rellenando.
 
 **Sheet Cols / Sheet Rows siguen a tu selección**, así que no tienes que pensar en ellos: un tile
 pasa a ser una hoja 1x1 (un sprite fijo) y un bloque 3x4 pasa a ser una hoja 3x4 que se anima.
