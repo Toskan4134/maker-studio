@@ -4,6 +4,7 @@
 
 Elige Mapa y luego Nuevo mapa en el menú, o haz clic en el botón **+** de la **cabecera del panel Mapas** (junto a la lista de mapas, reflejando el **+** de añadir capa del panel Capas). Rellena los datos:
 
+- **ID**: se rellena con el **ID libre más bajo empezando por 1**, así se reaprovechan los IDs que dejaron libres los mapas borrados en vez de que la numeración suba sin parar. Puedes escribir otro: cualquier ID entre 1 y 999 que no use ningún mapa existente. Si está ocupado, el campo lo indica y Crear queda deshabilitado.
 - **Nombre**: el nombre visible del mapa.
 - **Ancho / Alto**: dimensiones en tiles.
 - **Tileset**: qué tileset usa el mapa para sus capas nativas.
@@ -14,6 +15,12 @@ Haz clic en Crear para añadir el mapa a tu proyecto.
 ### Crear un mapa dentro de otro
 
 Para anidar el mapa nuevo bajo uno existente, **haz clic derecho en ese mapa** en el árbol de mapas y elige **Nuevo mapa aquí…**. El diálogo de nuevo mapa se abre con ese mapa ya puesto como **Padre**, y el mapa nuevo se crea como hijo suyo. (Puedes cambiar el padre antes de pulsar Crear.)
+
+## Cambiar el ID de un mapa
+
+Haz clic derecho en el mapa dentro del árbol de mapas y elige **Cambiar ID…**, luego escribe un ID libre entre 1 y 999. Maker Studio renombra `Map###.rxdata`, mueve la entrada del mapa en `MapInfos.rxdata` (sus mapas hijos siguen colgando de él), reescribe **todos los comandos Transferir jugador del proyecto** que apuntaban al ID antiguo, sigue la **posición inicial del jugador** si estaba en ese mapa, y renombra las imágenes de sombra horneadas del mapa. El aviso te dice cuántos comandos Transferir jugador se actualizaron.
+
+Los IDs de mapa escritos dentro de **scripts de Ruby** no se tocan: no hay forma fiable de encontrarlos, así que revísalos a mano. Los mapas sin guardar se guardan primero, porque la reescritura ocurre en disco.
 
 ## Abrir mapas
 

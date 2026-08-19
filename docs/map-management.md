@@ -4,6 +4,7 @@
 
 Choose Map then New Map from the menu, or click the **+** button in the **Maps panel header** (next to the map list, mirroring the add-layer **+** in the Layers panel). Fill in the details:
 
+- **ID**: Prefilled with the **lowest free ID starting at 1**, so IDs left free by deleted maps get reused instead of the numbering climbing forever. You can type a different one — any ID from 1 to 999 that no existing map uses. If it is taken, the field says so and Create stays disabled.
 - **Name**: The map's display name.
 - **Width / Height**: Dimensions in tiles.
 - **Tileset**: Which tileset the map uses for its native layers.
@@ -14,6 +15,12 @@ Click Create to add the map to your project.
 ### Creating a map inside another map
 
 To nest the new map under an existing one, **right-click that map** in the Map Tree and choose **New Map Here…**. The New Map dialog opens with that map already filled in as the **Parent**, and the new map is created as its child. (You can still change the parent before clicking Create.)
+
+## Changing a Map's ID
+
+Right-click the map in the Map Tree and choose **Change ID…**, then type a free ID from 1 to 999. Maker Studio renames `Map###.rxdata`, moves the map's entry in `MapInfos.rxdata` (its child maps stay attached), rewrites **every Transfer Player command in the project** that pointed at the old ID, follows the **player start position** if it was on that map, and renames the map's baked shadow images. The toast tells you how many Transfer Player commands were updated.
+
+Map IDs written inside **Ruby scripts** are not touched — nothing can find them reliably, so check those by hand. Unsaved maps are saved first, since the rewrite happens on disk.
 
 ## Opening Maps
 
