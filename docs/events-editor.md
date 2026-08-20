@@ -209,9 +209,9 @@ cut, paste, delete and Alt+↑/↓ reorder then act on the whole run.
 **Show Text**, **Comment**, and **Script** can hold as many lines as you need — just type them in the command's text box, one per line. In the command list, **each line gets its own row**, exactly like RPG Maker XP: the command row shows the first line, and every extra line appears below it on a row starting with `:`.
 
 ```
-@>Text: "Hello there!"
-:       "Nice weather today."
-:       "Are you heading to the gym?"
+@>Text: Hello there!
+:       Nice weather today.
+:       Are you heading to the gym?
 ```
 
 Each extra line is indented to sit exactly under the first one, so a long message reads as a single aligned block instead of a ragged staircase. The indent is measured from the command's own name, so it stays correct for every command and in every interface language.

@@ -212,9 +212,9 @@ cortar, pegar, borrar y reordenar con Alt+↑/↓ actúan entonces sobre todo el
 **Show Text**, **Comment** y **Script** pueden contener tantas líneas como necesites — escríbelas en el cuadro de texto del comando, una por línea. En la lista de comandos, **cada línea tiene su propia fila**, igual que en RPG Maker XP: la fila del comando muestra la primera línea, y cada línea extra aparece debajo en una fila que empieza por `:`.
 
 ```
-@>Text: "¡Hola!"
-:       "Hoy hace buen tiempo."
-:       "¿Vas al gimnasio?"
+@>Text: ¡Hola!
+:       Hoy hace buen tiempo.
+:       ¿Vas al gimnasio?
 ```
 
 Cada línea extra se indenta para quedar justo debajo de la primera, así que un mensaje largo se lee como un bloque alineado en vez de una escalera irregular. La indentación se mide a partir del nombre del propio comando, por lo que sigue siendo correcta para cualquier comando y en cualquier idioma de la interfaz.
