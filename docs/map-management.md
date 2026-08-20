@@ -80,7 +80,7 @@ Right-click a map in the Map Tree and choose Change Tileset, or use Map then Cha
 
 ## Panorama Layers and Battleback
 
-In RPG Maker XP the **panorama** (the scrolling background image behind a map) and the **battleback** (the battle background) belong to the *tileset*, so every map sharing a tileset shares one of each. Maker Studio replaces the single panorama with **panorama layers** edited from the Layer panel, and still lets you change the battleback right from the map you're editing.
+In RPG Maker XP the **panorama** (the scrolling background image behind a map) and the **battleback** (the battle background) belong to the *tileset*, so every map sharing a tileset shares one of each. Maker Studio replaces the single panorama with **panorama layers** edited from the Layer panel, and makes the battleback **a property of the map itself**.
 
 ### Panoramas — the "Panorama Layers" group
 
@@ -109,14 +109,15 @@ You only pick the background: **the bases the battlers stand on come with it.** 
 
 > **Needs the plugin.** Left to itself, Pokémon Essentials 19.1 and newer name the bases after the *environment*, not after your battleback — a cave battleback on a grassy map shows grass bases. The MakerStudio plugin is what puts your battleback first. Essentials 17.1 and BES already worked this way.
 
-What the change does depends on what you're editing:
+**The battleback belongs to the map, not to the tileset.** A map you have never set one on simply shows the battleback its tileset came with — so a fresh project looks exactly like RPG Maker XP. The moment you pick one, that map keeps its own: other maps on the same tileset are left alone, and later tileset changes stop reaching it. Map versions work the same way, each with its own.
 
-- **On the base map, you are editing the tileset** — exactly like RPG Maker XP. The new battleback is written to the tileset immediately and applies to **every map that uses that tileset** (other open maps update on the spot). In a stock RPG Maker XP game that's all it takes; Pokémon Essentials / LBDS games ignore the tileset field and read the backdrop from map metadata instead, so the MakerStudio plugin bridges the value onto that field in-game — on every supported base (Essentials 17.1, 19.1, 20.1, 21.1, LBDS and BES), each of which keeps that metadata in a different place. The base-map item carries no MS badge because the editor write itself is plain RMXP.
-- **On a map version, you set a per-version override**, stored in the map file (press **Ctrl+S** to keep it) and applied in-game by the MakerStudio plugin — so those items carry the MS badge.
+This is the same idea as fog and panorama layers: start from what the tileset gives you, then break away from it per map the first time you change something.
+
+Picking a battleback is a normal edit — press **Ctrl+S** to keep it. It is applied in-game by the MakerStudio plugin, which is why all three menu items carry the MS badge: Pokémon Essentials / LBDS games read the backdrop from map metadata, and the plugin bridges the value onto that field on every supported base (Essentials 17.1, 19.1, 20.1, 21.1, LBDS and BES), each of which keeps that metadata in a different place.
 
 The **battleback is not shown on the map canvas** — it only appears in battles in-game — but it is stored and editable here.
 
-> Maps saved with an older Maker Studio build may still contain a per-map base override; the editor now ignores it (the base map always shows the tileset's settings) and removes it the next time you save that map. The same in-game plugin also stops the tileset's own fog from drawing twice when a map uses Maker Studio fog layers.
+> The same in-game plugin also stops the tileset's own fog from drawing twice when a map uses Maker Studio fog layers.
 
 ## Map Audio (Auto-Change BGM / BGS)
 
@@ -130,7 +131,7 @@ The dialog has one row per track:
 - Tick **Auto-Change BGM** (or **Auto-Change BGS**) to turn that track on for this map. While the box is unticked the picker is greyed out and the map plays whatever was already playing.
 - Click the **…** button to choose the file from your project's `Audio/BGM/` (or `Audio/BGS/`) folder, with the usual volume and pitch sliders and a play button to preview it.
 
-Click **OK** to write the change **straight to the map file** — there is no separate save step and no unsaved-changes marker, so **Ctrl+S is not needed** (this works like changing a base map's battleback). **Cancel** discards it.
+Click **OK** to write the change **straight to the map file** — there is no separate save step and no unsaved-changes marker, so **Ctrl+S is not needed**. **Cancel** discards it.
 
 These are **native RPG Maker XP fields**, so the music plays in any game with no plugin installed — that's why the menu items carry no MS badge.
 

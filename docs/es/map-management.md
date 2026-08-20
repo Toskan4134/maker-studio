@@ -80,7 +80,7 @@ Haz clic derecho en un mapa del árbol y elige Change Tileset, o usa Map y luego
 
 ## Capas de panorama y battleback
 
-En RPG Maker XP el **panorama** (la imagen de fondo desplazable detrás de un mapa) y el **battleback** (el fondo de batalla) pertenecen al *tileset*, así que cada mapa que comparte un tileset comparte uno de cada. Maker Studio reemplaza el panorama único por **capas de panorama** editadas desde el panel de capas, y aún te deja cambiar el battleback directamente desde el mapa que estás editando.
+En RPG Maker XP el **panorama** (la imagen de fondo desplazable detrás de un mapa) y el **battleback** (el fondo de batalla) pertenecen al *tileset*, así que cada mapa que comparte un tileset comparte uno de cada. Maker Studio reemplaza el panorama único por **capas de panorama** editadas desde el panel de capas, y convierte el battleback en **una propiedad del mapa en sí**.
 
 ### Panoramas — el grupo "Panorama Layers"
 
@@ -109,14 +109,15 @@ Solo eliges el fondo: **las bases sobre las que están los combatientes vienen c
 
 > **Necesita el plugin.** Por su cuenta, Pokémon Essentials 19.1 y posteriores nombran las bases según el *entorno*, no según tu battleback — un battleback de cueva en un mapa con hierba muestra bases de hierba. El plugin de MakerStudio es el que pone tu battleback por delante. Essentials 17.1 y BES ya funcionaban así.
 
-Lo que hace el cambio depende de qué estés editando:
+**El battleback pertenece al mapa, no al tileset.** Un mapa en el que nunca has puesto uno simplemente muestra el battleback que trae su tileset — así que un proyecto nuevo se comporta exactamente como RPG Maker XP. En cuanto eliges uno, ese mapa se queda con el suyo: los demás mapas del mismo tileset no se tocan, y los cambios posteriores del tileset dejan de llegarle. Las versiones de mapa funcionan igual, cada una con la suya.
 
-- **En el mapa base, estás editando el tileset** — exactamente como RPG Maker XP. El nuevo battleback se escribe en el tileset al momento y se aplica a **todos los mapas que usan ese tileset** (otros mapas abiertos se actualizan al instante). En un juego RPG Maker XP estándar eso es todo lo que hace falta; los juegos Pokémon Essentials / LBDS ignoran el campo del tileset y leen el fondo desde los metadatos del mapa, así que el plugin de MakerStudio puentea el valor a ese campo en el juego — en todas las bases soportadas (Essentials 17.1, 19.1, 20.1, 21.1, LBDS y BES), cada una de las cuales guarda esos metadatos en un sitio distinto. El elemento del mapa base no lleva insignia MS porque la propia escritura del editor es RPG Maker XP plano.
-- **En una versión de mapa, estableces una sustitución por versión**, guardada en el archivo del mapa (pulsa **Ctrl+S** para conservarla) y aplicada en el juego por el plugin MakerStudio — así que esos elementos llevan la insignia MS.
+Es la misma idea que las capas de fog y de panorama: partes de lo que te da el tileset y te separas de él por mapa la primera vez que cambias algo.
+
+Elegir un battleback es una edición normal — pulsa **Ctrl+S** para conservarla. Lo aplica en el juego el plugin MakerStudio, y por eso los tres elementos de menú llevan la insignia MS: los juegos Pokémon Essentials / LBDS leen el fondo desde los metadatos del mapa, y el plugin puentea el valor a ese campo en todas las bases soportadas (Essentials 17.1, 19.1, 20.1, 21.1, LBDS y BES), cada una de las cuales guarda esos metadatos en un sitio distinto.
 
 El **battleback no se muestra en el lienzo del mapa** — solo aparece en las batallas en el juego — pero se guarda y se puede editar aquí.
 
-> Los mapas guardados con una build antigua de Maker Studio pueden aún contener una sustitución base por mapa; el editor ahora la ignora (el mapa base siempre muestra los ajustes del tileset) y la quita la próxima vez que guardes ese mapa. El mismo plugin en el juego también impide que el propio fog del tileset se dibuje dos veces cuando un mapa usa capas de fog de Maker Studio.
+> El mismo plugin en el juego también impide que el propio fog del tileset se dibuje dos veces cuando un mapa usa capas de fog de Maker Studio.
 
 ## Audio del mapa (Auto-Change BGM / BGS)
 
@@ -130,7 +131,7 @@ El diálogo tiene una fila por pista:
 - Marca **Auto-Change BGM** (o **Auto-Change BGS**) para activar esa pista en este mapa. Mientras la casilla está desmarcada el selector aparece atenuado y el mapa sigue reproduciendo lo que ya sonaba.
 - Haz clic en el botón **…** para elegir el archivo de la carpeta `Audio/BGM/` (o `Audio/BGS/`) de tu proyecto, con los habituales deslizadores de volumen y tono y un botón de reproducción para escucharlo.
 
-Haz clic en **OK** para escribir el cambio **directamente en el archivo del mapa** — no hay un paso de guardado aparte ni marca de cambios sin guardar, así que **no hace falta Ctrl+S** (funciona igual que cambiar el battleback de un mapa base). **Cancel** lo descarta.
+Haz clic en **OK** para escribir el cambio **directamente en el archivo del mapa** — no hay un paso de guardado aparte ni marca de cambios sin guardar, así que **no hace falta Ctrl+S**. **Cancel** lo descarta.
 
 Estos son **campos nativos de RPG Maker XP**, así que la música suena en cualquier juego sin plugin instalado — por eso los elementos de menú no llevan insignia MS.
 
