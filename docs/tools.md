@@ -141,6 +141,7 @@ Below the tileset grid, the **Autotiles** section lists every named autotile fro
 - **Open detail**: double-click an autotile (or right-click it and choose **Open Autotile**) to open its detail panel, where you can pick an individual piece of the autotile to stamp as a fixed part.
 - **Resize the list**: drag the bottom edge of the autotiles grid to make the section taller or shorter. The height you pick is remembered, like your panel layout.
 - **Follows your selection**: the section opens on its own whenever an autotile becomes selected — including picking one off the map with the Eyedropper or ALT+click — and collapses again as soon as you select a plain tile.
+- **Picked autotiles travel between maps**: the Eyedropper picks an autotile *by name*, so an autotile taken from one map still paints on a map whose tileset holds that graphic in a different slot — or does not hold it at all, in which case it paints as a named autotile. Tileset autotiles go back into their native slot whenever the map's tileset has them.
 
 If your filter matches nothing, the section shows **"No autotiles match."**; if the project has no autotiles at all, it shows **"No autotiles found."**
 

@@ -142,6 +142,7 @@ Debajo de la cuadrícula del tileset, la sección **Autotiles** lista cada autot
 - **Abrir detalle**: haz doble clic en un autotile (o clic derecho y elige **Open Autotile**) para abrir su panel de detalle, donde puedes elegir una pieza individual del autotile para estampar como parte fija.
 - **Redimensionar la lista**: arrastra el borde inferior de la cuadrícula de autotiles para hacer la sección más alta o más baja. La altura que elijas se recuerda, como tu disposición de paneles.
 - **Sigue tu selección**: la sección se abre sola cuando se selecciona un autotile — incluido al cogerlo del mapa con el Eyedropper o con ALT+clic — y se pliega de nuevo en cuanto seleccionas un tile normal.
+- **Los autotiles cogidos viajan entre mapas**: el Eyedropper coge un autotile *por nombre*, así que un autotile tomado de un mapa sigue pintándose en un mapa cuyo tileset tenga ese gráfico en otra ranura — o no lo tenga en absoluto, en cuyo caso se pinta como autotile con nombre. Los autotiles del tileset vuelven a su ranura nativa siempre que el tileset del mapa los tenga.
 
 Si tu filtro no coincide con nada, la sección muestra **"No autotiles match."**; si el proyecto no tiene autotiles en absoluto, muestra **"No autotiles found."**
 
