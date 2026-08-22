@@ -4,7 +4,7 @@
 # "ArgumentError: comparison of Symbol with :version failed" at boot. v20.1 fixed both (it lists
 # :essentials and uses `|| order.size`), so only this build must omit it.
 Name    = MakerStudio
-Version = 1.4.0
+Version = 1.5.0
 Website = https://toskan4134.github.io
 Credits = Toskan4134
 # MSIntegration = PE19.1   <- commented ON PURPOSE, do not uncomment: see the NOTE above

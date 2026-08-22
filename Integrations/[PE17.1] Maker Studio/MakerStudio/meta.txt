@@ -3,7 +3,7 @@
 # editor's reference. Install this build by pasting MakerStudio_PE17.rb into
 # the RMXP Script Editor (see this integration's README.md).
 Name         = MakerStudio
-Version      = 1.4.0
+Version      = 1.5.0
 Essentials   = 17.1
 Website      = https://toskan4134.github.io
 Credits      = Toskan4134

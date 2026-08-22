@@ -2,7 +2,7 @@
 # meta key it does not know ("Invalid plugin registry key" / "Clave de registro de plugin no
 # valida") and the game will not boot. The editor reads the key straight through the comment.
 Name          = MakerStudio
-Version       = 1.4.0
+Version       = 1.5.0
 Essentials    = 21.1
 Website       = https://toskan4134.github.io
 Credits       = Toskan4134

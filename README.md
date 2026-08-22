@@ -14,13 +14,13 @@
 
 **Game-side plugin (integrations) — direct download**
 
-[![PE21.1](https://img.shields.io/badge/Plugin-PE21.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.4.0/PE21.1.Maker.Studio.v1.4.0.zip)
-[![PE20.1](https://img.shields.io/badge/Plugin-PE20.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.4.0/PE20.1.Maker.Studio.v1.4.0.zip)
-[![PE19.1](https://img.shields.io/badge/Plugin-PE19.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.4.0/PE19.1.Maker.Studio.v1.4.0.zip)
-[![PE17.1](https://img.shields.io/badge/Plugin-PE17.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.4.0/PE17.1.Maker.Studio.v1.4.0.zip)
-[![LBDS 1.1.0](https://img.shields.io/badge/Plugin-LBDS1.1.0-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.4.0/LBDS1.1.0.Maker.Studio.v1.4.0.zip)
-[![LBDS 1.2.0](https://img.shields.io/badge/Plugin-LBDS1.2.0-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.4.0/LBDS1.2.0.Maker.Studio.v1.4.0.zip)
-[![BES5](https://img.shields.io/badge/Plugin-BES5-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.4.0/BES5.Maker.Studio.v1.4.0.zip)
+[![PE21.1](https://img.shields.io/badge/Plugin-PE21.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.5.0/PE21.1.Maker.Studio.v1.5.0.zip)
+[![PE20.1](https://img.shields.io/badge/Plugin-PE20.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.5.0/PE20.1.Maker.Studio.v1.5.0.zip)
+[![PE19.1](https://img.shields.io/badge/Plugin-PE19.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.5.0/PE19.1.Maker.Studio.v1.5.0.zip)
+[![PE17.1](https://img.shields.io/badge/Plugin-PE17.1-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.5.0/PE17.1.Maker.Studio.v1.5.0.zip)
+[![LBDS 1.1.0](https://img.shields.io/badge/Plugin-LBDS1.1.0-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.5.0/LBDS1.1.0.Maker.Studio.v1.5.0.zip)
+[![LBDS 1.2.0](https://img.shields.io/badge/Plugin-LBDS1.2.0-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.5.0/LBDS1.2.0.Maker.Studio.v1.5.0.zip)
+[![BES5](https://img.shields.io/badge/Plugin-BES5-6f42c1?style=for-the-badge)](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.5.0/BES5.Maker.Studio.v1.5.0.zip)
 
 Not sure which files you need? Follow the [**installation guide**](docs/getting-started.md#installation).
 

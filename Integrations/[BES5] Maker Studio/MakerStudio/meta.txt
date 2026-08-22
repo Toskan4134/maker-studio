@@ -3,7 +3,7 @@
 # editor's reference. Install the BES build by pasting MakerStudio_BES.rb into
 # the RMXP Script Editor (see this integration's README.md).
 Name         = MakerStudio
-Version      = 1.4.0
+Version      = 1.5.0
 Essentials   = 16.2 (BES v5)
 Website      = https://toskan4134.github.io
 Credits      = Toskan4134
