@@ -3,16 +3,16 @@ import Select from '@astrojs/starlight/components/Select.astro';
 
 // Mod API version dropdown — shown on mod pages (per-doc-set versioning). The
 // list comes from the maker-studio-mods repo's GitHub tags (latest = `main`,
-// plus every `vX.Y.Z` tag). The mods repo has no tags yet, so this currently
-// offers only "Latest"; it activates automatically once mod releases are tagged.
+// plus every `vX.Y.Z` tag — one per Mod API version). A new tag there is picked
+// up by the next daily build; nothing here needs editing.
 //
 // CI can pass the list via DOCS_MODS_VERSIONS_JSON (so it does no extra request);
 // local dev fetches the tags API directly. Any failure falls back to [latest].
 //
 // Target pathnames are computed server-side (see VersionSelect for the rationale
 // — same approach, no client-side regex). The mod-version URL segment is
-// `/<id>/` (mirrors the docs selector); mod-version builds are a follow-up once
-// the mods repo is tagged.
+// `/mods-<id>/`, NOT `/<id>/`: both repos tag `vX.Y.Z` independently, and app
+// v1.0.0 and Mod API v1.0.0 both exist — sharing the segment would collide.
 
 const TAGS_API = 'https://api.github.com/repos/Toskan4134/maker-studio-mods/tags?per_page=100';
 const VERSION_RE = /^v\d+\.\d+\.\d+$/;
@@ -62,7 +62,7 @@ const rest = (
 ).replace(/^\/+/, '');
 
 const options = versions.map((v) => {
-	const vBase = SITE_PREFIX + (v.id === 'latest' ? '/' : `/${v.id}/`);
+	const vBase = SITE_PREFIX + (v.id === 'latest' ? '/' : `/mods-${v.id}/`);
 	return { value: vBase + rest, selected: v.id === CURRENT, label: v.label };
 });
 ---

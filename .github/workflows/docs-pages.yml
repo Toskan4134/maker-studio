@@ -1,16 +1,20 @@
 name: Deploy docs site to GitHub Pages
 
-# Builds one Astro Starlight docs-site per version (latest = main, plus every
-# `vX.Y.Z` tag on the maker-studio repo), then deploys them side by side:
-# latest at the site root, each tag under a `/vX.Y.Z/` subpath with a version
-# switcher in the header.
+# Builds one Astro Starlight docs-site per version, then deploys them side by
+# side with a version switcher in the header:
+#   - latest (main of both repos) at the site root
+#   - every `vX.Y.Z` app tag under `/vX.Y.Z/`
+#   - every `vX.Y.Z` mods tag (one per Mod API version) under `/mods-vX.Y.Z/`
+# The `mods-` prefix is not decoration: both repos tag `vX.Y.Z` on their own
+# schedule and v1.0.0 exists in both, so the segments must not share a namespace.
 #
 # Doc sources are fetched from GitHub raw at each version's git ref:
 #   - guides (EN + es): Toskan4134/maker-studio@<app ref>/docs/
 #   - mods   (EN + es): Toskan4134/maker-studio-mods@<mods ref>/docs/
-# `latest` uses `main` for both. A tagged app version pins mod docs to a mods
-# tag of the same name if one exists, else `main` (the mods repo has no tags
-# yet, so all versions currently show main mod docs).
+# `latest` uses `main` for both. An app version pins only the guides (its mod
+# docs stay on `main` — the two version numbers are unrelated, so a same-name
+# tag would be a coincidence, not a match); a mod-API version is the mirror
+# image: guides from `main`, mod docs pinned to the tag.
 #
 # The version list is derived from the tags API at build time (no manifest file).
 
@@ -124,26 +128,35 @@ jobs:
               "https://api.github.com/repos/Toskan4134/maker-studio/tags?per_page=100" \
               | jq -r '.[].name' | grep -E "$TAG_RE" | sort -rV || true
           )
-          # Mods tags, for per-version mod-doc pinning (empty today).
-          MODS_TAGS="$(
+          # Mods tags — one per Mod API version, each built as its own version.
+          mapfile -t MODS_TAGS_ARR < <(
             curl -fsSL "${AUTH[@]}" \
               "https://api.github.com/repos/Toskan4134/maker-studio-mods/tags?per_page=100" \
-              | jq -r '.[].name' | grep -E "$TAG_RE" || true
-          )"
+              | jq -r '.[].name' | grep -E "$TAG_RE" | sort -rV || true
+          )
 
-          # Version list consumed by the VersionSelect component: [{id,label}].
-          VERSIONS_JSON="$(printf '%s\n' latest "${APP_TAGS[@]}" \
-            | jq -Rsc 'split("\n") | map(select(length>0))
-                       | map({id:., label:(if .=="latest" then "Latest" else . end)})')"
+          # Version lists consumed by VersionSelect / ModVersionSelect: [{id,label}].
+          to_json() { jq -Rsc 'split("\n") | map(select(length>0))
+                               | map({id:., label:(if .=="latest" then "Latest" else . end)})'; }
+          VERSIONS_JSON="$(printf '%s\n' latest "${APP_TAGS[@]}" | to_json)"
+          MODS_VERSIONS_JSON="$(printf '%s\n' latest "${MODS_TAGS_ARR[@]:-}" | to_json)"
           echo "Versions: latest ${APP_TAGS[*]:-}"
+          echo "Mod API versions: latest ${MODS_TAGS_ARR[*]:-}"
           echo "DOCS_VERSIONS_JSON=$VERSIONS_JSON"
+          echo "DOCS_MODS_VERSIONS_JSON=$MODS_VERSIONS_JSON"
 
           build_one() {
             # `npm run build` runs the custom docs loader, which inherits these
             # env vars to fetch this version's docs from GitHub (no port step).
-            local id="$1" app_ref="$2" mods_ref="$3" site_base="$4" out="$5"
-            echo "::group::Build $id (app@$app_ref mods@$mods_ref → $site_base)"
-            DOCS_SOURCE=remote DOCS_VERSION="$id" DOCS_VERSIONS_JSON="$VERSIONS_JSON" \
+            # The two *_VERSION vars are what each selector shows as current:
+            # a mod-API build serves the guides from main, so its app version
+            # stays `latest` while its mod version is the tag.
+            local label="$1" app_ref="$2" mods_ref="$3" site_base="$4" out="$5"
+            local docs_version="${6:-latest}" mods_version="${7:-latest}"
+            echo "::group::Build $label (app@$app_ref mods@$mods_ref → $site_base)"
+            DOCS_SOURCE=remote DOCS_VERSIONS_JSON="$VERSIONS_JSON" \
+              DOCS_MODS_VERSIONS_JSON="$MODS_VERSIONS_JSON" \
+              DOCS_VERSION="$docs_version" DOCS_MODS_VERSION="$mods_version" \
               DOCS_APP_REF="$app_ref" DOCS_MODS_REF="$mods_ref" \
               SITE_BASE="$site_base" OUT_DIR="$out" \
               npm run build
@@ -155,8 +168,7 @@ jobs:
 
           # tagged versions (best-effort — a broken old version is skipped, not fatal)
           for id in "${APP_TAGS[@]}"; do
-            if grep -qx "$id" <<<"$MODS_TAGS"; then mods_ref="$id"; else mods_ref=main; fi
-            if build_one "$id" "$id" "$mods_ref" "$SITE_PREFIX/$id" "build-$id"; then
+            if build_one "$id" "$id" main "$SITE_PREFIX/$id" "build-$id" "$id" latest; then
               :
             else
               echo "::endgroup::"
@@ -165,7 +177,20 @@ jobs:
             fi
           done
 
-          # Merge: latest → dist root, each tag → dist/<id>/
+          # Mod API versions: guides from main, mod docs pinned to the mods tag.
+          # Same best-effort rule as above.
+          for id in "${MODS_TAGS_ARR[@]:-}"; do
+            [ -n "$id" ] || continue
+            if build_one "mods-$id" main "$id" "$SITE_PREFIX/mods-$id" "build-mods-$id" latest "$id"; then
+              :
+            else
+              echo "::endgroup::"
+              echo "::warning::Mod API version $id build failed — skipping."
+              rm -rf "build-mods-$id"
+            fi
+          done
+
+          # Merge: latest → dist root, app tags → dist/<id>/, mods tags → dist/mods-<id>/
           rm -rf dist
           mkdir -p dist
           cp -a build-latest/. dist/
@@ -174,7 +199,12 @@ jobs:
             mkdir -p "dist/$id"
             cp -a "build-$id/." "dist/$id/"
           done
-          echo "Deployed versions: latest ${APP_TAGS[*]:-}"
+          for id in "${MODS_TAGS_ARR[@]:-}"; do
+            [ -n "$id" ] && [ -d "build-mods-$id" ] || continue
+            mkdir -p "dist/mods-$id"
+            cp -a "build-mods-$id/." "dist/mods-$id/"
+          done
+          echo "Deployed versions: latest ${APP_TAGS[*]:-} | mod API ${MODS_TAGS_ARR[*]:-}"
 
       # Published at the site root so the check job can fetch it next run.
       - name: Write build state (scheduled-run skip check)
