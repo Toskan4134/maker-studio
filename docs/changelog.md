@@ -2,6 +2,38 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.5.0
+
+Move routes are drawn on the map now instead of clicked together one **Move Up** at a time. The editor installs the game-side plugin by itself, whole maps travel between projects with Ctrl+C / Ctrl+V, any map can change its ID without breaking the transfers pointing at it, and the Show Text box finally tells you what all those `\c[…]` codes do.
+
+### Additions
+- 🚶 **Draw path… — the visual move-route editor** — a **Draw path…** button next to Test Move Route opens the map itself and lets you click the route onto it instead of stacking Move Up twelve times. Extend the path with the arrow keys, turn in place with Ctrl+arrows, undo with Backspace, delete several steps at once, and **Apply as Move Route** writes it back. If the command already had a route, it opens showing it, so you extend or trim instead of starting over — and a route that follows a **Wait for Move's Completion** starts from where the previous one ended. Every key in the editor is rebindable.
+- 🧩 **The editor installs the game plugin for you** — when a project has no integration, the dialog now offers a **Build** dropdown with every supported engine: pick yours, press **Install**, and it downloads the right zip and sets up `Plugins/MakerStudio/` itself. The two paste-in builds (Essentials v17.1 and BES v5) turn the button into **Download** and then **Open Folder**, since those are one script you paste into the Script Editor by hand.
+- 🔤 **Text codes, right in the Show Text box** — a **Text codes** button opens a reference of every message code your game understands, grouped into Substitution, Style and Flow; click one and it lands where your cursor was. Typing `\` filters the same list into an autocomplete you can pick from with the arrow keys. La Base de Sky projects also get that base's extra codes, including the **NameBox** ones, which are copied to your clipboard for a Script command.
+- 📋 **Copy a whole map into another project** — **Ctrl+C** in the map list copies the map with all its layers, events and versions, and **Ctrl+V** pastes it into the tree, exactly as RPG Maker XP does. Turn on **Edit → Cross-Project Clipboard** to make it work between two Maker Studio windows. **Delete** removes the selected map from the keyboard too.
+- 🗂️ **Reorderable map tabs, and a session that comes back whole** — drag tabs into the order you want, and reopening the project restores the whole set of tabs in that order with the map you were last editing active, not just the first map in the list.
+- 🔢 **Change a map's ID** — **Change ID…** in the map tree moves a map to any free number and rewrites **every Transfer Player command in the project** that pointed at it, follows the player start position and renames its baked shadows; the toast says how many commands were updated. New maps also reuse the free IDs left by deleted ones instead of always taking the next number.
+- ⚔️ **The battleback belongs to the map, not to the tileset** — a map you never set one on still shows the tileset's, so a fresh project looks like RPG Maker XP; the moment you pick one, that map keeps its own and other maps on the same tileset are left alone. Map versions each get theirs.
+- 🏷️ **Game names in Settings** — rename the folder your game keeps its saves in (`Game.ini`'s title) and the caption of the game window (`mkxp.json`), without leaving the editor or touching anything else in those files.
+- 🖼️ **Current tileset in the graphic picker** — an event's graphic list starts with a **Current tileset** row, so you can grab tiles from the map's own tileset without browsing for it.
+- 👀 **Command rows say more without being opened** — summaries now carry real values instead of bare ids, Transfer Player rows name where they go (`007: Pewter City (12,8)`), long rows scroll sideways when you hover them instead of being cut off, and Text, Comment and Script lines are shown without the wrapping quotes.
+- 🎚️ **Every slider takes a typed value** — double-click a slider's number and type the exact one you want, anywhere in the editor.
+- 🔄 **Both update checks show two versions** — the one you have and the newest one available, for the editor and for the game-side plugin.
+- 🖌️ **Brush strokes can start off the map** — begin a stroke above or to the left of the map edge and the part that lands on the map is painted, instead of nothing happening.
+- 🧩 **For mod developers**: Mod API **1.0.1** — mods can restyle any built-in editor UI (`ui.decorate`), add their own content to editor surfaces through named slots, teach the **Game Simulator** to run Script commands and conditions, ask whether the project is an LBDS one, and read where their event command was placed. Mods that need a newer editor than yours are now held back with a **Needs a newer editor** chip instead of failing halfway.
+
+### Fixes
+- 🧱 **Fixed an eyedropped autotile turning into the wrong tile** on a map using a different tileset — the pick now travels by name, not by slot.
+- 🖌️ **Fixed extra autotiles not connecting mid-stroke** — a stroke drawn with one of the game's own autotiles now joins up as you draw, instead of freezing on the first shape.
+- 👻 **Fixed the paint preview of an eyedropped autotile** showing the wrong piece.
+- 🎨 **Fixed the palette showing another map's tileset** when several maps came back at once on reopening a project.
+- 🏃 **Fixed event Frequency having five levels instead of six** — the page dropdown, Change Freq and the simulator all stopped at *Higher*, silently downgrading events set to *Highest*.
+
+### Changes
+- ⬆️ **Insert and Paste now land above the selected row**, as a sibling, instead of inside whatever block was selected. To put a command inside a block, insert on the row that is already inside it.
+- ▶️ **Run no longer saves your maps for you** — if anything is unsaved it asks first, and launches straight away when there is nothing pending.
+- 🧩 **Check Game Integration has its own icon** in the Help menu.
+
 ## v1.4.0
 
 Event pages stopped being a straitjacket: conditions can now be a tree of ANDs and ORs, a switch can be required OFF, and an event can block the tile it stands on. Graphics can be a slice of an image — pick tiles straight off a tileset and give them to an event. The tileset editor lets you write your own terrain tags, and battlebacks finally work in Pokémon Essentials, bases included.

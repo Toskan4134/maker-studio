@@ -227,6 +227,29 @@ Esas filas extra son *líneas del comando*, no comandos propios:
 
 Para partir un mensaje en varios cuadros de texto en el juego, inserta un *segundo* comando Show Text en vez de añadir más líneas al primero.
 
+### Códigos de texto en Show Text
+
+Los mensajes en Pokémon Essentials entienden un montón de códigos — `\v[3]` para el valor de una
+variable, `\pn` para el nombre del jugador, `<c=ff0000>` para texto en rojo, `\wt[20]` para una pausa.
+Nadie se los sabe todos, así que el formulario de Show Text los lleva incorporados.
+
+- **El botón Códigos de texto** debajo del cuadro de texto abre una lista de referencia, agrupada en
+  **Sustitución** (lo que se reemplaza por un valor: variables, nombre del jugador, dinero, colores),
+  **Estilo** (negrita, cursiva, tamaño, fuente, alineación) y **Flujo** (pausas, efectos de sonido,
+  imágenes de cara, comportamiento de la ventana). Cada fila muestra el código y qué hace — **haz
+  clic en una y se inserta donde tenías el cursor**.
+- **Escribe `\` y la lista viene a ti.** Aparece un desplegable filtrado por lo que llevas escrito;
+  ↑/↓ para elegir, Enter o Tab para insertar, Escape para descartarlo. Enter sobre un código que ya
+  has terminado de escribir simplemente hace un salto de línea, como siempre.
+- **Los proyectos de La Base de Sky tienen más.** Cuando el proyecto es de LBDS también aparecen los
+  códigos extra que añade esa base, incluido un grupo **NameBox** para el cartelito con el nombre
+  sobre el mensaje. Esos son Ruby para un comando **Script**, no texto del mensaje, así que al hacer
+  clic en uno **se copia al portapapeles** (te lo avisa un toast) y lo pegas en un comando Script.
+
+Los códigos son del juego, no del editor: el Simulador de juego integrado muestra el texto del mensaje
+tal cual, códigos incluidos, y el aspecto real de cada uno depende del sistema de mensajes y del
+windowskin de tu juego.
+
 ### Fragmentos de script
 
 Todo cuadro de script del editor de eventos tiene un botón **Fragmentos…** junto a su título **Script** — úsalo para mantener una biblioteca del código Ruby que reutilizas, en vez de reescribir (o buscar) las mismas líneas cada vez.

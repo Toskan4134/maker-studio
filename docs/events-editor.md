@@ -224,6 +224,29 @@ Those extra rows are *lines of the command*, not commands of their own:
 
 To break a message into separate text boxes in-game, insert a *second* Show Text command rather than adding more lines to the first one.
 
+### Text Codes in Show Text
+
+Messages in Pokémon Essentials understand a pile of codes — `\v[3]` for a variable's value, `\pn` for
+the player's name, `<c=ff0000>` for red text, `\wt[20]` for a pause. Nobody remembers all of them, so
+the Show Text form has them built in.
+
+- **The Text codes button** under the text box opens a reference list, grouped into **Substitution**
+  (things replaced with a value: variables, the player's name, money, colours), **Style** (bold,
+  italic, size, font, alignment), and **Flow** (pauses, sound effects, face pictures, window
+  behaviour). Each row shows the code and what it does — **click one and it is inserted where your
+  cursor was**.
+- **Type `\` and the list comes to you.** A dropdown appears filtered to what you have typed so far;
+  ↑/↓ pick, Enter or Tab inserts, Escape dismisses it. Enter on a code you already finished typing
+  just makes a new line, as usual.
+- **La Base de Sky projects get more.** When the project is an LBDS one, the extra codes that base
+  adds appear too, including a **NameBox** group for the name-plate above the message. Those are Ruby
+  for a **Script** command rather than message text, so clicking one **copies it to the clipboard**
+  (a toast tells you) and you paste it into a Script command.
+
+The codes are the game's, not the editor's: the built-in Game Simulator shows the message text as
+written, codes included, and what each one actually looks like is up to your game's message system
+and windowskin.
+
 ### Script Snippets
 
 Any script box in the Event Editor has a **Snippets…** button next to its **Script** title — use it to keep a library of Ruby code you reuse instead of retyping (or hunting for) the same lines every time.

@@ -2,6 +2,38 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.5.0
+
+Las rutas de movimiento ahora se dibujan sobre el mapa, en vez de montarse a base de pulsar **Move Up** doce veces. El editor instala el plugin del juego él solo, los mapas enteros viajan de un proyecto a otro con Ctrl+C / Ctrl+V, cualquier mapa puede cambiar de ID sin romper los transfers que apuntan a él, y el cuadro de Show Text por fin te dice qué hacen todos esos códigos `\c[…]`.
+
+### Novedades
+- 🚶 **Dibujar ruta… — el editor visual de rutas de movimiento** — un botón **Dibujar ruta…** junto a Test Move Route abre el mapa y te deja trazar la ruta encima en vez de apilar Move Up doce veces. Extiende el camino con las flechas, gira en el sitio con Ctrl+flechas, deshaz con Retroceso, borra varios pasos de golpe, y **Aplicar como ruta de movimiento** la escribe de vuelta. Si el comando ya tenía ruta, se abre mostrándola, así que la extiendes o la recortas en vez de empezar de cero — y una ruta que va detrás de un **Wait for Move's Completion** empieza donde acabó la anterior. Todas las teclas del editor son reasignables.
+- 🧩 **El editor instala el plugin del juego por ti** — cuando un proyecto no tiene integración, el diálogo ofrece un desplegable **Integración** con todos los motores soportados: elige el tuyo, pulsa **Instalar**, y descarga el zip correcto y monta `Plugins/MakerStudio/` él solo. Las dos integraciones que se pegan a mano (Essentials v17.1 y BES v5) convierten el botón en **Descargar** y luego **Abrir carpeta**, porque son un único script que pegas tú en el Editor de scripts.
+- 🔤 **Códigos de texto, dentro del cuadro de Show Text** — un botón **Códigos de texto** abre una referencia de todos los códigos de mensaje que entiende tu juego, agrupados en Sustitución, Estilo y Flujo; haz clic en uno y aparece donde tenías el cursor. Al escribir `\` esa misma lista se filtra en un autocompletado que eliges con las flechas. Los proyectos de La Base de Sky reciben además los códigos extra de esa base, incluidos los de **NameBox**, que se copian al portapapeles para un comando Script.
+- 📋 **Copia un mapa entero a otro proyecto** — **Ctrl+C** en la lista de mapas copia el mapa con todas sus capas, eventos y versiones, y **Ctrl+V** lo pega en el árbol, igual que en RPG Maker XP. Activa **Portapapeles entre proyectos** en el menú Edit para que funcione entre dos ventanas de Maker Studio. **Supr** también borra el mapa seleccionado desde el teclado.
+- 🗂️ **Pestañas de mapa reordenables, y una sesión que vuelve entera** — arrastra las pestañas al orden que quieras, y al reabrir el proyecto vuelve el conjunto completo de pestañas en ese orden, con el mapa que estabas editando como activo, en vez del primero de la lista.
+- 🔢 **Cambiar el ID de un mapa** — **Cambiar ID…** en el árbol de mapas mueve un mapa a cualquier número libre y reescribe **todos los comandos Transfer Player del proyecto** que apuntaban a él, sigue la posición inicial del jugador y renombra sus sombras generadas; el aviso te dice cuántos comandos se han actualizado. Los mapas nuevos además reaprovechan los IDs libres que dejaron los borrados en vez de coger siempre el siguiente número.
+- ⚔️ **El battleback es del mapa, no del tileset** — un mapa en el que nunca hayas puesto uno sigue mostrando el del tileset, así que un proyecto recién abierto se ve como en RPG Maker XP; en cuanto eliges uno, ese mapa se queda con el suyo y los demás mapas del mismo tileset no se tocan. Cada versión de mapa tiene la suya.
+- 🏷️ **Nombres del juego en Ajustes** — cambia el nombre de la carpeta donde el juego guarda las partidas (el título de `Game.ini`) y el título de la ventana del juego (`mkxp.json`) sin salir del editor ni tocar nada más de esos archivos.
+- 🖼️ **Tileset actual en el selector de gráficos** — la lista de gráficos de un evento empieza por una fila **Tileset actual**, así coges tiles del propio tileset del mapa sin tener que buscarlo.
+- 👀 **Las filas de comando cuentan más sin abrirlas** — los resúmenes llevan valores de verdad en vez de ids sueltos, las filas de Transfer Player dicen a dónde van (`007: Ciudad Plateada (12,8)`), las filas largas se desplazan al pasar el ratón en vez de quedarse cortadas, y las líneas de Text, Comment y Script se muestran sin las comillas que las envolvían.
+- 🎚️ **Todos los sliders aceptan un valor escrito** — haz doble clic en el número de un slider y escribe el valor exacto que quieres, en cualquier parte del editor.
+- 🔄 **Las dos comprobaciones de actualización muestran dos versiones** — la que tienes y la más nueva disponible, tanto para el editor como para el plugin del juego.
+- 🖌️ **Los trazos de pincel pueden empezar fuera del mapa** — empieza un trazo por encima o a la izquierda del borde y se pinta la parte que cae dentro, en vez de no pasar nada.
+- 🧩 **Para quien hace mods**: Mod API **1.0.1** — los mods pueden reestilizar cualquier parte de la interfaz del editor (`ui.decorate`), añadir contenido propio en zonas con nombre, enseñar al **Simulador de juego** a ejecutar comandos y condiciones Script, preguntar si el proyecto es de LBDS, y saber dónde se colocó su comando de evento. Los mods que necesitan un editor más nuevo que el tuyo se frenan con una etiqueta **Necesita un editor más nuevo** en vez de fallar a medias.
+
+### Correcciones
+- 🧱 **Corregido que un autotile cogido con el cuentagotas se convirtiera en otro tile** en un mapa con otro tileset — ahora la elección viaja por nombre, no por posición.
+- 🖌️ **Corregidos los autotiles extra que no se unían durante el trazo** — un trazo dibujado con uno de los autotiles del propio juego ahora se conecta mientras dibujas, en vez de quedarse con la primera forma.
+- 👻 **Corregida la vista previa de pintado de un autotile cogido con el cuentagotas**, que mostraba la pieza equivocada.
+- 🎨 **Corregida la paleta mostrando el tileset de otro mapa** cuando varios mapas volvían a la vez al reabrir un proyecto.
+- 🏃 **Corregido que la frecuencia de los eventos tuviera cinco niveles en vez de seis** — el desplegable de la página, Change Freq y el simulador se quedaban en *Higher* y bajaban en silencio los eventos puestos en *Highest*.
+
+### Cambios
+- ⬆️ **Insert y Pegar ahora caen encima de la fila seleccionada**, como hermanos, en vez de dentro del bloque que estuviera seleccionado. Para meter un comando dentro de un bloque, insértalo sobre una fila que ya esté dentro.
+- ▶️ **Run ya no guarda tus mapas por ti** — si hay algo sin guardar pregunta antes, y si no hay nada pendiente lanza directamente.
+- 🧩 **Comprobar integración del juego tiene su propio icono** en el menú Help.
+
 ## v1.4.0
 
 Las páginas de evento dejan de ser una camisa de fuerza: las condiciones pueden ser un árbol de Y y O, un switch puede exigirse en OFF, y un evento puede bloquear el tile en el que está. Un gráfico puede ser un trozo de una imagen — elige tiles directamente de un tileset y dáselos a un evento. El editor de tilesets te deja escribir tus propios terrain tags, y los battlebacks por fin funcionan en Pokémon Essentials, bases incluidas.
