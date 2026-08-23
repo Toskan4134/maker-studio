@@ -427,6 +427,8 @@ Command rows are colored by category so the list reads like syntax-highlighted c
 
 Colors follow the active editor theme — the same hue family in dark and light mode, shifted for readability against each background. Selected rows always render white-on-blue regardless of category.
 
+**Every command can have its own color.** The table above is the default grouping; in **Help → Settings… → Appearance** you can recolor a whole category at once, or give a single command — just Play SE, just Label — a color of its own under **Individual commands**. The **RPG Maker XP palette** button there repaints the list in RPG Maker XP's own colors.
+
 **Long rows scroll instead of being cut off.** When a command's text is wider than the list, hovering it scrolls the text sideways so you can read all of it without widening the panel or opening the command.
 
 **Transfer Player rows say where they go.** A fixed destination reads as the map number, its name and the coordinates — `007: Pewter City (12,8)` — and a variable-driven one lists which variable holds the map, the X and the Y.

@@ -428,6 +428,8 @@ Las filas de comando se colorean por categoría para que la lista se lea como c�
 
 Los colores siguen el tema activo del editor — la misma familia de tonos en modo oscuro y claro, desplazada para legibilidad sobre cada fondo. Las filas seleccionadas siempre se dibujan en blanco sobre azul independientemente de la categoría.
 
+**Cada comando puede tener su propio color.** La tabla de arriba es la agrupación por defecto; en **Ayuda → Ajustes… → Apariencia** puedes recolorear una categoría entera de golpe, o dar color propio a un solo comando — solo Reproducir SE, solo Etiqueta — en **Comandos individuales**. El botón **Paleta RPG Maker XP** repinta la lista con los colores del propio RPG Maker XP.
+
 **Las filas largas se desplazan en vez de cortarse.** Cuando el texto de un comando es más ancho que la lista, al pasar el ratón por encima el texto se desplaza lateralmente para que puedas leerlo entero sin ensanchar el panel ni abrir el comando.
 
 **Las filas de Transfer Player dicen a dónde llevan.** Un destino fijo se lee como el número del mapa, su nombre y las coordenadas — `007: Ciudad Plateada (12,8)` — y uno por variables indica qué variable guarda el mapa, la X y la Y.
