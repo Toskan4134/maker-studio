@@ -430,6 +430,8 @@ Los colores siguen el tema activo del editor — la misma familia de tonos en mo
 
 **Cada comando puede tener su propio color.** La tabla de arriba es la agrupación por defecto; en **Ayuda → Ajustes… → Apariencia** puedes recolorear una categoría entera de golpe, o dar color propio a un solo comando — solo Reproducir SE, solo Etiqueta — en **Comandos individuales**. El botón **Paleta RPG Maker XP** repinta la lista con los colores del propio RPG Maker XP.
 
+**Cada fila dice lo que hace el comando.** El texto tras el nombre detalla las opciones con las que se guardó, con nombres en vez de números — `Desplazar mapa: Abajo, 3 tiles, velocidad 4`, `Cambiar objetos: 004: Poción + 2`, `Mostrar imagen: #1 "title" — Arriba a la izquierda (16,32), 100%×100%, opacidad 255, Normal`. Switches, variables, mapas, eventos y registros de la base de datos salen por su nombre, así que una página se lee de arriba abajo sin abrir ni un comando.
+
 **Las filas largas se desplazan en vez de cortarse.** Cuando el texto de un comando es más ancho que la lista, al pasar el ratón por encima el texto se desplaza lateralmente para que puedas leerlo entero sin ensanchar el panel ni abrir el comando.
 
 **Las filas de Transfer Player dicen a dónde llevan.** Un destino fijo se lee como el número del mapa, su nombre y las coordenadas — `007: Ciudad Plateada (12,8)` — y uno por variables indica qué variable guarda el mapa, la X y la Y.

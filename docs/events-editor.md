@@ -429,6 +429,8 @@ Colors follow the active editor theme — the same hue family in dark and light 
 
 **Every command can have its own color.** The table above is the default grouping; in **Help → Settings… → Appearance** you can recolor a whole category at once, or give a single command — just Play SE, just Label — a color of its own under **Individual commands**. The **RPG Maker XP palette** button there repaints the list in RPG Maker XP's own colors.
 
+**Every row says what the command does.** The text after a command's name spells out the options it was given, with names instead of numbers — `Scroll Map: Down, 3 tiles, speed 4`, `Change Items: 004: Potion + 2`, `Show Picture: #1 "title" — Upper Left (16,32), 100%×100%, opacity 255, Normal`. Switches, variables, maps, events and database entries are all named, so a page can be read top to bottom without opening a single command.
+
 **Long rows scroll instead of being cut off.** When a command's text is wider than the list, hovering it scrolls the text sideways so you can read all of it without widening the panel or opening the command.
 
 **Transfer Player rows say where they go.** A fixed destination reads as the map number, its name and the coordinates — `007: Pewter City (12,8)` — and a variable-driven one lists which variable holds the map, the X and the Y.
