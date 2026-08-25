@@ -1,0 +1,12 @@
+# Maker Studio — .gitignore for your game project
+# Copy this file to your project root (next to Game.exe) and rename it to `.gitignore`.
+# It excludes only what Maker Studio generates on its own.
+
+# Local editor state: usage stats, session lock, hot-reload signal, dock layout.
+Plugins/MakerStudio/003_Editor/.project-stats.json
+Plugins/MakerStudio/003_Editor/.editor-session.lock
+Plugins/MakerStudio/003_Editor/.live-reload
+Plugins/MakerStudio/003_Editor/ms-editor-config.json
+
+# Rolling map backups written before every save — git is your real history.
+Data/map-backups/
