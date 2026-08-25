@@ -12,6 +12,8 @@
 | Select | S | Click and drag to select an area. Drag the selection to move tiles. Ctrl+drag to add tiles, Shift+drag to remove tiles from selection. |
 | Pan | Space (hold) | Pan the viewport. |
 
+> **Switching layers clears the selection** whenever you cross into or out of the Events layer: a tile selection is dropped when you go to Events, and selected events are dropped when you go back to a normal layer.
+
 > **On the Events layer**, only **Brush**, **Eraser**, **Select**, and **Pan** apply — Fill, Rectangle, and Eyedropper are disabled, and brush size has no effect. Select box-selects events for group move/delete. See [Events Editor](events-editor.md#tools-on-the-events-layer).
 
 > **Autotile previews:** when an autotile is selected, the Brush hover preview and the Rectangle drag preview show it fully edge-bordered — corners, edges and interior render just as they will be placed, and the preview connects to matching autotile already on the map. A locked autotile detail part previews as the exact part you picked. The placed result matches the preview.

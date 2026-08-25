@@ -191,7 +191,7 @@ See the [Scripts editor guide](scripts.md#finding-things) for details.
 | Default Key | Action |
 |-------------|--------|
 | Delete | Delete selected event (or all box-selected events) |
-| Ctrl+D / Escape | Deselect event(s) |
+| Ctrl+D / Escape | Deselect event(s) — Escape also clears any tile selection |
 
 On the **Events layer**, the **Select** tool box-selects events: drag a marquee (Ctrl+drag adds, Shift+drag removes), drag the selection to move the group, Delete removes them all. See [Events Editor](events-editor.md#selecting-and-moving-events).
 

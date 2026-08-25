@@ -12,6 +12,8 @@
 | Select | S | Haz clic y arrastra para seleccionar un área. Arrastra la selección para mover tiles. Ctrl+arrastrar para añadir tiles, Shift+arrastrar para quitar tiles de la selección. |
 | Pan | Espacio (mantener) | Desplaza el viewport. |
 
+> **Cambiar de capa quita la selección** siempre que entras o sales de la capa de eventos: la selección de tiles se descarta al pasar a Eventos, y los eventos seleccionados se descartan al volver a una capa normal.
+
 > **En la capa de eventos**, solo se aplican **Brush**, **Eraser**, **Select** y **Pan** — Fill, Rectangle y Eyedropper están desactivados, y el tamaño de pincel no tiene efecto. Select hace selección de caja de eventos para mover/borrar en grupo. Consulta [Editor de eventos](events-editor.md#tools-on-the-events-layer).
 
 > **Vistas previas de autotiles:** cuando se selecciona un autotile, la vista previa del Brush y la del arrastre del Rectangle lo muestran totalmente bordeado — esquinas, bordes e interior se dibujan tal como quedarán colocados, y la vista previa se conecta con los autotiles coincidentes que ya hay en el mapa. Una parte de detalle de autotile bloqueada se previsualiza como la parte exacta que elegiste. El resultado colocado coincide con la vista previa.

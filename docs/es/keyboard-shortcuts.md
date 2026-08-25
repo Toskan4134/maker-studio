@@ -191,7 +191,7 @@ Consulta la [guía del editor de scripts](scripts.md#finding-things) para más d
 | Tecla por defecto | Acción |
 |-------------|--------|
 | Delete | Borrar el evento seleccionado (o todos los eventos seleccionados por caja) |
-| Ctrl+D / Escape | Deseleccionar evento(s) |
+| Ctrl+D / Escape | Deseleccionar evento(s) — Escape borra también cualquier selección de tiles |
 
 En la **capa de eventos**, la herramienta **Select** hace selección de caja de eventos: arrastra un marco (Ctrl+arrastrar añade, Shift+arrastrar quita), arrastra la selección para mover el grupo, Delete los quita todos. Consulta [Editor de eventos](events-editor.md#selecting-and-moving-events).
 
