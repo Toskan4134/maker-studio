@@ -251,7 +251,16 @@ and windowskin.
 
 Any script box in the Event Editor has a **Snippets…** button next to its **Script** title — use it to keep a library of Ruby code you reuse instead of retyping (or hunting for) the same lines every time.
 
-Click **Snippets…** and the snippet manager opens: type a name into **Save current as new** at the bottom and click **Save** to store whatever is currently in the box, then pick a saved snippet later and click **Apply** (or double-click it) to drop the code back in. The list shows the highlighted snippet's code in a scrollable preview, so you can check you picked the right one before applying. Rename, overwrite with the current box contents, and delete all work from the same dialog, and **Export…** / **Import…** write and read snippet files so you can back them up or share them with someone else.
+**Select the lines you want first.** Highlight the three lines you reuse, click **Snippets…**, use the **+** button to add a *New Preset…* and name it — Maker Studio then asks whether to save **Selected code** or the **Whole script**, telling you how many lines each one is, so you can still change your mind. With nothing selected there is nothing to ask and the whole script is saved. **Overwrite** asks the same question before replacing a snippet.
+
+Pick a saved snippet and the right side shows its **name** on top and its **code** in an editable box below. From there:
+
+- **Use** drops the code into the script box (double-clicking the snippet in the list does the same).
+- **Edit Code** unlocks the code box — it is read-only until you press it, so you cannot change a snippet by accident. Type your fix, then press the **same button**, now reading **Save**, to store it back into the snippet. Switching to another snippet before saving throws the edit away.
+- **Overwrite** replaces the snippet with what is currently in the script box (your selection, or the whole script).
+- **Rename** and **Delete** work as you would expect.
+
+You can also **select several snippets** — Ctrl+click to add one, Shift+click for a range, or click a **folder's name** to take everything inside it — and then **Move to…** a folder, **Export…** or **Delete** the lot in one action. **Export…** / **Import…** write and read snippet files, and exporting with a selection writes only the snippets you picked, so you can share a handful instead of your whole library.
 
 Three places share **one** snippet library, so anything you save in one shows up in the others:
 
@@ -259,7 +268,7 @@ Three places share **one** snippet library, so anything you save in one shows up
 - the **Script** action inside Set Move Route,
 - the script box of a mod command that doesn't define its own fields.
 
-Applying a snippet **replaces the whole box**, it does not insert at the cursor. If the box already has code in it, a confirmation appears first telling you how many lines you are about to lose — so paste your snippet into an empty command, or copy out what you want to keep before applying. If the box is empty the snippet is applied straight away.
+Using a snippet does not insert at the cursor. If the box is empty the code goes straight in; if it already has code, you are asked what to do with it — **Add below** keeps what is there and puts the snippet underneath, **Replace** swaps the whole box for the snippet, and Cancel leaves everything alone.
 
 Snippets are stored per-install (shared across all your projects) and remembered across sessions.
 

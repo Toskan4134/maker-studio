@@ -42,17 +42,19 @@ El estado de bloqueo se recuerda entre sesiones. El Eyedropper siempre aplica la
 
 Haz clic en **Presets…** en la cabecera del panel Tile Properties para abrir el gestor de presets. Desde aquí puedes:
 
-- **Save current** como un nuevo preset con nombre — útil para combinaciones que reutilizas (p. ej. "Noche apagada", "Sepia").
-- **Apply** un preset guardado al pincel actual — el diálogo se cierra tras aplicar.
-- **Rename** un preset existente.
-- **Overwrite** un preset con los valores actuales del pincel.
-- **Delete** un preset.
-- **Export…** tus presets — marca los que quieras (todos marcados por defecto), elige una carpeta, y cada uno se guarda como su propio archivo `ms_<name>_<index>_preset.json`, así puedes compartir o respaldar solo los presets que elijas.
-- **Import…** uno o varios archivos de preset a la vez — selecciona varios archivos en el selector y todos se fusionan. Los presets se fusionan por nombre (un nombre coincidente se sobrescribe); los archivos que contienen otro tipo de preset (p. ej. presets de sombra) se omiten.
+- **Guardar** los valores actuales como un preset nuevo con nombre — útil para combinaciones que reutilizas (p. ej. "Noche apagada", "Sepia").
+- **Usar** un preset guardado en el pincel actual — el diálogo se cierra al usarlo (doble clic sobre un preset hace lo mismo).
+- **Renombrar** un preset existente.
+- **Sobrescribir** un preset con los valores actuales del pincel.
+- **Eliminar** un preset.
+- **Exportar…** tus presets — elige una carpeta y cada preset se guarda como su propio archivo `ms_<name>_<index>_preset.json`. **Si tienes presets seleccionados solo se exportan esos**; sin nada seleccionado sale la biblioteca entera. El botón te dice cuál es el caso (`Exportar 3…` cuando hay tres seleccionados).
+- **Importar…** uno o varios archivos de preset a la vez — selecciona varios archivos en el selector y todos se fusionan. Los presets se fusionan por nombre (un nombre coincidente se sobrescribe); los archivos que contienen otro tipo de preset (p. ej. presets de sombra) se omiten.
 
 Un lienzo de vista previa muestra cómo quedaría el preset resaltado aplicado al tile seleccionado actualmente. Los presets se guardan por instalación (compartidos entre todos tus proyectos) y se recuerdan entre sesiones.
 
-**Carpetas.** El botón **+** ofrece *Nuevo preset…* y *Nueva carpeta…*. Una carpeta puede estar vacía: se queda hasta que la borres. Los presets entran y salen de las carpetas **arrastrando**: suelta uno sobre una carpeta (o sobre cualquier preset de dentro) para archivarlo ahí, y suéltalo en la zona suelta de debajo de las carpetas para sacarlo. Soltar sobre otro preset además reordena. Haz clic derecho en una carpeta para renombrarla o borrarla; al borrarla te pregunta si los presets de dentro se van con ella o simplemente salen.
+**Seleccionar varios.** Haz clic en un preset para seleccionarlo, **Ctrl+clic** para añadir o quitar uno y **Mayús+clic** para coger todo lo que hay entre medias. Al hacer clic en el **nombre de una carpeta** se selecciona la carpeta y todo lo que contiene (la flecha de al lado la pliega). Con más de un elemento seleccionado, la parte derecha cambia a la lista de lo elegido más **Mover a…**, **Exportar…** y **Eliminar** — así archivas, compartes o borras un puñado de presets de una vez en lugar de uno a uno.
+
+**Carpetas.** El botón **+** ofrece *Nuevo preset…* y *Nueva carpeta…*. Una carpeta puede estar vacía: se queda hasta que la borres. Los presets entran y salen de las carpetas **arrastrando** (si arrastras uno de los seleccionados se mueve toda la selección) o con **Mover a…**: suelta uno sobre una carpeta (o sobre cualquier preset de dentro) para archivarlo ahí, y suéltalo en la zona suelta de debajo de las carpetas para sacarlo. Soltar un preset sobre otro además reordena. Haz clic derecho en una carpeta para renombrarla o borrarla; al borrarla te pregunta si los presets de dentro se van con ella o simplemente salen. Borrar una carpeta **seleccionada** desde el panel de selección se lleva siempre sus presets.
 
 ## Tamaño de pincel y borrador
 

@@ -254,7 +254,16 @@ windowskin de tu juego.
 
 Todo cuadro de script del editor de eventos tiene un botón **Fragmentos…** junto a su título **Script** — úsalo para mantener una biblioteca del código Ruby que reutilizas, en vez de reescribir (o buscar) las mismas líneas cada vez.
 
-Haz clic en **Fragmentos…** y se abre el gestor de fragmentos: escribe un nombre en **Guardar el actual como nuevo** abajo y pulsa **Guardar** para guardar lo que haya ahora en el cuadro; después elige un fragmento guardado y pulsa **Aplicar** (o haz doble clic en él) para volcar el código de vuelta. La lista muestra el código del fragmento resaltado en una vista previa con scroll, así que puedes comprobar que has elegido el correcto antes de aplicarlo. Renombrar, sobrescribir con el contenido actual del cuadro y borrar funcionan desde el mismo diálogo, y **Exportar…** / **Importar…** escriben y leen archivos de fragmentos para hacer copias de seguridad o compartirlos con otra persona.
+**Selecciona antes las líneas que quieras.** Marca las tres líneas que reutilizas, pulsa **Fragmentos…**, usa el botón **+** para añadir un *Nuevo preset…* y ponle nombre — Maker Studio te pregunta entonces si guardar el **Código seleccionado** o el **Script entero**, diciéndote cuántas líneas es cada uno, así que aún puedes cambiar de idea. Si no hay nada seleccionado no hay nada que preguntar y se guarda el script entero. **Sobrescribir** hace la misma pregunta antes de reemplazar un fragmento.
+
+Al elegir un fragmento guardado, la parte derecha muestra su **nombre** arriba y su **código** en un cuadro editable debajo. Desde ahí:
+
+- **Usar** vuelca el código en el cuadro de script (hacer doble clic en el fragmento de la lista hace lo mismo).
+- **Editar** desbloquea el cuadro de código — hasta que lo pulsas es de solo lectura, así no cambias un fragmento sin querer. Escribe tu arreglo y pulsa el **mismo botón**, que ahora pone **Guardar**, para guardarlo en el fragmento. Si cambias a otro fragmento antes de guardar, la edición se descarta.
+- **Sobrescribir** reemplaza el fragmento con lo que haya ahora en el cuadro de script (tu selección, o el script entero).
+- **Renombrar** y **Eliminar** funcionan como esperas.
+
+También puedes **seleccionar varios fragmentos** — Ctrl+clic para añadir uno, Mayús+clic para un rango, o clic en el **nombre de una carpeta** para coger todo lo que contiene — y luego **Mover a…** una carpeta, **Exportar…** o **Eliminar** todo de una vez. **Exportar…** / **Importar…** escriben y leen archivos de fragmentos, y exportar con una selección escribe solo los fragmentos elegidos, así compartes un puñado en vez de toda tu biblioteca.
 
 Tres sitios comparten **una misma** biblioteca de fragmentos, así que lo que guardes en uno aparece en los demás:
 
@@ -262,7 +271,7 @@ Tres sitios comparten **una misma** biblioteca de fragmentos, así que lo que gu
 - la acción **Script** dentro de Set Move Route,
 - el cuadro de script de un comando de mod que no define sus propios campos.
 
-Aplicar un fragmento **reemplaza el cuadro entero**, no lo inserta en la posición del cursor. Si el cuadro ya tiene código, primero aparece una confirmación que te indica cuántas líneas vas a perder — así que pega tu fragmento en un comando vacío, o copia antes lo que quieras conservar. Si el cuadro está vacío, el fragmento se aplica directamente.
+Usar un fragmento no lo inserta en la posición del cursor. Si el cuadro está vacío, el código entra directamente; si ya tiene código, se te pregunta qué hacer con él — **Añadir debajo** conserva lo que hay y pone el fragmento debajo, **Reemplazar** cambia el cuadro entero por el fragmento, y Cancelar lo deja todo como estaba.
 
 Los fragmentos se guardan por instalación (compartidos entre todos tus proyectos) y se recuerdan entre sesiones.
 
