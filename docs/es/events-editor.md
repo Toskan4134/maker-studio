@@ -265,13 +265,14 @@ Al elegir un fragmento guardado, la parte derecha muestra su **nombre** arriba y
 
 También puedes **seleccionar varios fragmentos** — Ctrl+clic para añadir uno, Mayús+clic para un rango, o clic en el **nombre de una carpeta** para coger todo lo que contiene — y luego **Mover a…** una carpeta, **Exportar…** o **Eliminar** todo de una vez. **Exportar…** / **Importar…** escriben y leen archivos de fragmentos, y exportar con una selección escribe solo los fragmentos elegidos, así compartes un puñado en vez de toda tu biblioteca.
 
-Tres sitios comparten **una misma** biblioteca de fragmentos, así que lo que guardes en uno aparece en los demás:
+Cuatro sitios comparten **una misma** biblioteca de fragmentos, así que lo que guardes en uno aparece en los demás:
 
 - el comando **Script**,
 - la acción **Script** dentro de Set Move Route,
-- el cuadro de script de un comando de mod que no define sus propios campos.
+- el cuadro de script de un comando de mod que no define sus propios campos,
+- el editor de **Scripts** (Herramientas → Scripts…), que tiene el mismo botón **Snippets…** en su barra.
 
-Usar un fragmento no lo inserta en la posición del cursor. Si el cuadro está vacío, el código entra directamente; si ya tiene código, se te pregunta qué hacer con él — **Añadir debajo** conserva lo que hay y pone el fragmento debajo, **Reemplazar** cambia el cuadro entero por el fragmento, y Cancelar lo deja todo como estaba.
+Usar un fragmento lo inserta **donde está el cursor**. Si el cuadro está vacío, el código entra directamente; si ya tiene código, se te pregunta qué hacer con él — **Insertar en el cursor** deja el fragmento en el cursor (reemplazando el código seleccionado, si hay) y no toca nada más, **Reemplazar** cambia el cuadro entero por el fragmento, y Cancelar no hace nada.
 
 Los fragmentos se guardan por instalación (compartidos entre todos tus proyectos) y se recuerdan entre sesiones.
 

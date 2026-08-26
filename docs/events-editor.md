@@ -262,13 +262,14 @@ Pick a saved snippet and the right side shows its **name** on top and its **code
 
 You can also **select several snippets** — Ctrl+click to add one, Shift+click for a range, or click a **folder's name** to take everything inside it — and then **Move to…** a folder, **Export…** or **Delete** the lot in one action. **Export…** / **Import…** write and read snippet files, and exporting with a selection writes only the snippets you picked, so you can share a handful instead of your whole library.
 
-Three places share **one** snippet library, so anything you save in one shows up in the others:
+Four places share **one** snippet library, so anything you save in one shows up in the others:
 
 - the **Script** command,
 - the **Script** action inside Set Move Route,
-- the script box of a mod command that doesn't define its own fields.
+- the script box of a mod command that doesn't define its own fields,
+- the **Scripts** editor (Tools → Scripts…), which has the same **Snippets…** button in its toolbar.
 
-Using a snippet does not insert at the cursor. If the box is empty the code goes straight in; if it already has code, you are asked what to do with it — **Add below** keeps what is there and puts the snippet underneath, **Replace** swaps the whole box for the snippet, and Cancel leaves everything alone.
+Using a snippet lands it **where your cursor is**. If the box is empty the code goes straight in; if it already has code, you are asked what to do with it — **Insert at cursor** drops the snippet at the caret (replacing the selected code, if any) and leaves everything else alone, **Replace** swaps the whole box for the snippet, and Cancel does nothing.
 
 Snippets are stored per-install (shared across all your projects) and remembered across sessions.
 
