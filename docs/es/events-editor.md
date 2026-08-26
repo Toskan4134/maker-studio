@@ -175,7 +175,7 @@ La lista de comandos es donde construyes la lógica del evento. Puedes añadir, 
 
 ### Añadir comandos
 
-Haz clic en Insert (o pulsa Insert / Enter) para abrir el Command Picker. El selector ordena los comandos en varias categorías con nombre específicas, cada una con una descripción de una línea bajo la pestaña activa:
+Haz clic en Insert (o pulsa Insert / Enter) para abrir el Command Picker. También puedes **hacer doble clic en la última fila vacía** de la lista (o en el espacio vacío debajo) para abrir el selector y añadir al final. El selector ordena los comandos en varias categorías con nombre específicas, cada una con una descripción de una línea bajo la pestaña activa:
 
 - **Mensajes** — mostrar texto, opciones y demás comandos de mensaje.
 - **Lógica** — condiciones, switches, variables, bucles, etiquetas y control de flujo.
