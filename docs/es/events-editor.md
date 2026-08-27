@@ -11,6 +11,8 @@ Activa los marcadores de evento desde el botón **Events** de la barra de herram
 
 Una vista previa de una celda sigue al cursor mostrando dónde caerá el evento.
 
+Si cancelas el editor de un evento que acabas de crear (pulsa **Esc**, cierra la ventana o descarta los cambios), el evento se elimina de nuevo — cancelar nunca deja un evento vacío. En cuanto pulsas OK o Apply, el evento se queda — y crearlo cuenta como **un solo paso de deshacer**, así que un único `Ctrl+Z` retira el evento nuevo, hayas rellenado lo que hayas rellenado antes de pulsar OK.
+
 ## Herramientas en la capa de eventos
 
 Con la **capa de eventos** activa, solo cuatro herramientas hacen algo; el resto aparece atenuado en la barra:

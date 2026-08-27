@@ -11,6 +11,8 @@ Toggle event markers from the **Events** button in the toolbar (or **View → Sh
 
 A single-cell preview follows the cursor showing where the event will land.
 
+If you cancel the editor of an event you just created (press **Esc**, close the window, or discard your changes), the event is removed again — cancelling never leaves an empty event behind. Once you press OK or Apply, the event stays — and creating it counts as **one undo step**, so a single `Ctrl+Z` takes the new event away again, whatever you filled in before pressing OK.
+
 ## Tools on the Events Layer
 
 With the **Events layer** active, only four tools do anything; the rest are greyed out in the toolbar:
