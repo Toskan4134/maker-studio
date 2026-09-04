@@ -14,6 +14,20 @@ Paleta de tiles → Edit Properties…**. El editor se abre desplazado hasta ese
 con él ya seleccionado, en vez de al principio de una hoja larga. Pulsa **Esc** para cerrar
 el editor (sigue preguntando por los cambios sin guardar).
 
+**Copiar, cortar y pegar un tileset completo**: clic derecho en una fila de la lista de tilesets para
+**Copiar tileset** / **Cortar tileset** / **Pegar tileset (reemplazar)** / **Pegar como nuevo
+tileset** / **Duplicar tileset** — ver [Copiar, cortar y pegar registros](database.md#copiar-cortar-y-pegar-registros)
+en la documentación de Database. Ninguna está disponible en la fila virtual **Autotiles**. Cortar un
+tileset pasa por la misma confirmación de borrado que eliminarlo directamente — otros mapas pueden
+seguir usándolo. Haz clic en una fila para dar el foco a la lista, luego Ctrl+C/Ctrl+X/Ctrl+V/Ctrl+J
+copian/cortan/pegan/duplican y Ctrl+Z/Ctrl+Y deshacen/rehacen el cambio, incluidas las escrituras a
+disco.
+
+**Borrar un tileset** (el icono de papelera en el panel de detalle) ahora pregunta con el mismo
+diálogo de confirmación que usa el resto del editor, en lugar de su propia ventana emergente — y
+borrar es deshacible: **Ctrl+Z** justo después de confirmar escribe el tileset de vuelta en su
+antigua ranura.
+
 (El comando aparte **Map → Change Tileset...** es distinto — intercambia qué tileset usa un *mapa* para sus capas nativas; consulta [Gestión de mapas](map-management.md). No edita las propiedades de los tiles.)
 
 ## Resumen

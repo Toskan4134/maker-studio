@@ -64,6 +64,21 @@ Los eventos pueden tener varias páginas, cada una con sus propias condiciones, 
 
 - Haz clic en + para añadir una página.
 - Haz clic en x para quitar una página. Siempre se requiere al menos una página.
+- **Clic derecho en una pestaña de página** para **Copiar página** / **Cortar página** / **Pegar
+  página**, encima de **Clone Page** / **Delete Page**. A diferencia de Clone (que duplica una página
+  dentro del mismo evento), Copiar/Cortar/Pegar funciona entre eventos distintos — copia una página
+  de un evento, abre otro evento y pégala como página nueva. Con **Edit → Advanced Clipboard →
+  Cross-Project Clipboard** activado, también funciona entre dos ventanas de Maker Studio abiertas.
+  Pegar siempre añade una página nueva después de la pestaña en la que hiciste clic derecho; nunca
+  sobrescribe la página bajo el cursor. Cortar copia la página y luego la quita (bloqueado si es la
+  última página, igual que Delete).
+- **Haz clic en una pestaña de página** para dar el foco de teclado a la tira de pestañas, luego
+  **Ctrl+C** / **Ctrl+X** / **Ctrl+V** copian/cortan/pegan una página igual, **Ctrl+J** la clona (igual
+  que clic derecho → Clone Page), y **Ctrl+Z** / **Ctrl+Y** deshacen/rehacen esas ediciones de página
+  — un historial de deshacer separado del de la lista de comandos de abajo, así que deshacer un
+  pegado de página nunca deshace también una edición de comando (ni viceversa). Añadir, borrar y
+  clonar una página —incluyendo con los botones de pestaña **+** / **×**, no solo los atajos— forman
+  parte de este mismo historial de deshacer ahora.
 
 ### Condiciones
 
@@ -386,6 +401,7 @@ Por defecto, **Insertar y Pegar colocan el nuevo comando ENCIMA de la fila selec
 | Delete / Backspace | Borrar el comando seleccionado |
 | Insert / Enter | Abrir el Command Picker |
 | Ctrl+C / Ctrl+V / Ctrl+X | Copiar, Pegar o Cortar comandos |
+| Ctrl+J | Duplicar el/los comando(s) seleccionado(s) — pega una copia ahí mismo; el menú contextual tiene la misma entrada **Duplicate** / **Duplicate (n)** |
 | Ctrl+A | Seleccionar todos los comandos de la lista (la fila End final de la página queda fuera de la selección). Útil antes de copiar o borrar en bloque |
 | Escape | Cancelar el Command Picker o el formulario de parámetros abierto (ver [Añadir comandos](#añadir-comandos)) |
 | Flechas arriba / abajo | Mover la selección |

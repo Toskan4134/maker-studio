@@ -32,8 +32,9 @@ When you reopen a project, Maker Studio brings back the **exact set of map tabs 
 
 To make a full copy of a map as a **brand-new map** (a separate `map_id`, not a version):
 
-- Right-click a map in the Map Tree and choose **Duplicate Map**, or
-- Open the map and choose **Map → Duplicate Map** from the menu.
+- Right-click a map in the Map Tree and choose **Duplicate Map**,
+- Open the map and choose **Map → Duplicate Map** from the menu, or
+- Click the map in the Maps panel to give it focus and press **Ctrl+J**.
 
 The copy is named *"<original> (copy)"*, placed under the same parent, and opened automatically. It is a faithful clone — tiles, events, layers, shadows/fog, **and any map versions** come along. If the source map has unsaved edits, they're saved first so the copy is current. This is different from a **map version** (same map, swapped in-game); use Duplicate Map when you want an independent map you can change without affecting the original.
 

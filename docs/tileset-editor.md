@@ -14,6 +14,18 @@ Palette → Edit Properties…**. The editor opens scrolled to that exact tile w
 already selected, instead of at the top of a long sheet. Press **Esc** to close the
 editor (it still asks about unsaved changes).
 
+**Copying, cutting, and pasting a whole tileset**: right-click a row in the tileset list for **Copy
+Tileset** / **Cut Tileset** / **Paste Tileset (Replace)** / **Paste as New Tileset** / **Duplicate
+Tileset** — see [Copying, Cutting, and Pasting Records](database.md#copying-cutting-and-pasting-records)
+in the Database docs. None of these are available on the virtual **Autotiles** row. Cutting a
+tileset goes through the same delete confirmation as deleting one outright — other maps may still use
+it. Click a row to focus the list, then Ctrl+C/Ctrl+X/Ctrl+V/Ctrl+J copy/cut/paste/duplicate and
+Ctrl+Z/Ctrl+Y undo/redo the change, including on-disk writes.
+
+**Deleting a tileset** (the trash icon in the detail pane) now asks with the same confirmation dialog
+used everywhere else in the editor, instead of its own custom popup — and deleting is undoable:
+**Ctrl+Z** right after confirming writes the tileset straight back into its old slot.
+
 (The separate **Map → Change Tileset...** command is different — it swaps which tileset a *map* uses for its native layers; see [Map Management](map-management.md). It does not edit tile properties.)
 
 ## Overview

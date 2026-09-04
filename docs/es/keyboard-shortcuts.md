@@ -99,8 +99,9 @@ prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda →
 | Ctrl+C | Copiar selección (capa activa) |
 | Ctrl+V | Pegar (modo vista previa — clic para confirmar) |
 | Ctrl+X | Cortar selección |
+| Ctrl+J | Duplicar — copia la selección y arma la vista previa de pegado al instante, así que el siguiente clic suelta la copia. La misma idea que Ctrl+C y luego Ctrl+V, en una sola pulsación. También **Edit → Duplicate** |
 
-En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X actúan sobre el evento seleccionado en su lugar — copia o corta un evento entero. Ctrl+V muestra un fantasma de vista previa que sigue al cursor; haz clic para soltar la copia (Escape para cancelar). Consulta [Editor de eventos](events-editor.md#copying-events).
+En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre el evento seleccionado en su lugar — copia, corta o duplica un evento entero. Ctrl+V (y el armado de Ctrl+J) muestra un fantasma de vista previa que sigue al cursor; haz clic para soltar la copia (Escape para cancelar). Consulta [Editor de eventos](events-editor.md#copying-events).
 
 | Ctrl+Shift+C | Copiar todas las capas |
 | Ctrl+Shift+V | Pegar en las capas originales |
@@ -141,12 +142,43 @@ En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X actúan sobre el evento sele
 | Ctrl+C | Copiar comando |
 | Ctrl+V | Pegar comando |
 | Ctrl+X | Cortar comando |
+| Ctrl+J | Duplicar el/los comando(s) seleccionado(s) — pega una copia ahí mismo, sin tocar lo que tengas copiado |
 | Ctrl+A | Seleccionar todos los comandos de la lista (la fila End final de la página queda fuera) |
 | Escape | Cancelar el Command Picker o el formulario de parámetros abierto — desde un formulario vuelve al selector, en la página desde la que elegiste |
 | Alt + ↑ | Mover comando arriba |
 | Alt + ↓ | Mover comando abajo |
 | ↑ | Comando anterior (salta las líneas extra de un Show Text / Comment / Script multilínea) |
 | ↓ | Comando siguiente (igual) |
+
+## Editor de eventos (pestañas de página)
+
+Haz clic en una pestaña de página para dar el foco a la tira de pestañas; a partir de ahí estas
+teclas actúan sobre toda la página — un historial de deshacer separado del de la lista de comandos
+de abajo.
+
+| Tecla por defecto | Acción |
+|-------------|--------|
+| Ctrl+C | Copiar página |
+| Ctrl+X | Cortar página |
+| Ctrl+V | Pegar página (añade una página nueva tras la pestaña en la que estás) |
+| Ctrl+J | Clonar la página actual (igual que el botón **+** de pestaña / clic derecho → Clone Page) |
+| Ctrl+Z | Deshacer edición de página — ahora también deshace añadir, borrar o clonar una página |
+| Ctrl+Y | Rehacer edición de página |
+
+## Database (Tilesets / Common Events / Animations / Switches / Variables)
+
+Haz clic en una fila de cualquier lista de Database para darle el foco; a partir de ahí estas teclas
+actúan sobre todo el registro — un historial de deshacer por lista. Consulta
+[Database](database.md#copiar-cortar-y-pegar-registros).
+
+| Tecla por defecto | Acción |
+|-------------|--------|
+| Ctrl+C | Copiar el registro seleccionado (o el nombre, en Switches/Variables) |
+| Ctrl+X | Cortar — copia y luego quita. Vacía la ranura en Common Events/Animations en vez de renumerar; abre la confirmación de borrado en Tilesets |
+| Ctrl+V | Pegar (reemplazar) sobre el registro seleccionado |
+| Ctrl+J | Duplicar el registro seleccionado — añade una copia en una ranura nueva al final de la lista |
+| Ctrl+Z | Deshacer la última edición de esa lista — pegar, cortar, reemplazar, duplicar, añadir, borrar y Change Maximum… cuentan todas, incluidas las escrituras a disco de Tilesets |
+| Ctrl+Y | Rehacerlo |
 
 ## Editor de eventos (ruta de movimiento)
 
@@ -201,9 +233,26 @@ En la **capa de eventos**, la herramienta **Select** hace selección de caja de 
 |-------------|--------|
 | Ctrl+C | Copiar el mapa seleccionado (mapa entero, incluyendo capas, eventos y versiones) |
 | Ctrl+V | Pegar el mapa copiado en este proyecto como un mapa nuevo, colocado justo debajo del mapa seleccionado |
+| Ctrl+J | Duplicar el mapa seleccionado (igual que clic derecho → Duplicate Map) |
 | Delete | Borrar el mapa seleccionado (pide confirmación, igual que clic derecho → Delete Map) |
 
 Estos solo se activan cuando el panel Mapas tiene el foco, así que no entran en conflicto con la copia de tiles en el lienzo. Para pegar un mapa **entre dos ventanas de Maker Studio**, activa primero **Edit → Cross-Project Clipboard**: la copia se refleja entonces en el portapapeles del SO y el pegado lo lee de ahí. Con el conmutador desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana** (la copia se queda en memoria). El mapa pegado cae justo debajo del mapa seleccionado (en la raíz si no hay ningún mapa seleccionado). Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
+
+## Panel de capas (lista de capas)
+
+Haz clic en una fila del panel de capas para darle el foco.
+
+| Tecla por defecto | Acción |
+|-------------|--------|
+| Ctrl+C | Copiar la capa activa, tiles y ajustes por tile incluidos (igual que clic derecho → Copiar capa) |
+| Ctrl+X | Cortar la capa activa — la copia y luego la vacía (igual que clic derecho → Cortar capa) |
+| Ctrl+V | Pegar la capa copiada — siempre pregunta si quieres reemplazar la capa activa o pegar en una capa nueva (igual que clic derecho → Pegar capa) |
+| Ctrl+J | Duplicar la capa activa, tiles incluidos — también funciona en capas nativas, y la copia siempre se convierte en una capa extendida nueva (igual que clic derecho → Duplicar capa) |
+
+Estos solo se activan mientras el panel de capas tiene el foco, así que no entran en conflicto con la
+copia de tiles en el lienzo. Funciona en cualquier capa, incluidas las nativas — una copia, corte o
+duplicado que no tenga otro sitio donde ir acaba en una capa extendida nueva, ya que una capa nativa
+es una ranura fija. Consulta [Capas](layers.md#panel-de-capas).
 
 ## Simulador de juego
 

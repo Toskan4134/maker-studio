@@ -32,8 +32,9 @@ Al volver a abrir un proyecto, Maker Studio recupera **exactamente el mismo conj
 
 Para hacer una copia completa de un mapa como un **mapa totalmente nuevo** (un `map_id` separado, no una versión):
 
-- Haz clic derecho en un mapa del árbol y elige **Duplicate Map**, o
-- Abre el mapa y elige **Map → Duplicate Map** en el menú.
+- Haz clic derecho en un mapa del árbol y elige **Duplicate Map**,
+- Abre el mapa y elige **Map → Duplicate Map** en el menú, o
+- Haz clic en el mapa en el panel Mapas para darle el foco y pulsa **Ctrl+J**.
 
 La copia se llama *"<original> (copy)"*, se coloca bajo el mismo padre y se abre automáticamente. Es un clon fiel — tiles, eventos, capas, sombras/fog **y cualquier versión de mapa** vienen con ella. Si el mapa de origen tiene ediciones sin guardar, se guardan primero para que la copia esté al día. Esto es distinto de una **versión de mapa** (el mismo mapa, intercambiado en el juego); usa Duplicate Map cuando quieras un mapa independiente que puedas cambiar sin afectar al original.
 

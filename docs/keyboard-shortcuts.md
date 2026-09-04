@@ -99,8 +99,9 @@ most six priorities) simply does nothing. All ten are rebindable in Help → Key
 | Ctrl+C | Copy selection (active layer) |
 | Ctrl+V | Paste (preview mode -- click to commit) |
 | Ctrl+X | Cut selection |
+| Ctrl+J | Duplicate — copies the selection and immediately arms the paste preview, so the next click drops the copy. Same idea as Ctrl+C then Ctrl+V, one keypress. Also **Edit → Duplicate** |
 
-On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event instead — copy or cut a whole event. Ctrl+V shows a preview ghost that follows the cursor; click to drop the copy (Escape to cancel). See [Events Editor](events-editor.md#copying-events).
+On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J act on the selected event instead — copy, cut, or duplicate a whole event. Ctrl+V (and Ctrl+J's arm) shows a preview ghost that follows the cursor; click to drop the copy (Escape to cancel). See [Events Editor](events-editor.md#copying-events).
 
 | Ctrl+Shift+C | Copy all layers |
 | Ctrl+Shift+V | Paste to original layers |
@@ -141,12 +142,41 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X act on the selected event inst
 | Ctrl+C | Copy command |
 | Ctrl+V | Paste command |
 | Ctrl+X | Cut command |
+| Ctrl+J | Duplicate the selected command(s) — pastes a copy right there without disturbing whatever you have copied |
 | Ctrl+A | Select every command in the list (the page's final End row is left out) |
 | Escape | Cancel the open Command Picker or parameter form — from a parameter form this returns to the picker, on the page you picked from |
 | Alt + ↑ | Move command up |
 | Alt + ↓ | Move command down |
 | ↑ | Previous command (steps over the extra lines of a multi-line Show Text / Comment / Script) |
 | ↓ | Next command (same) |
+
+## Event Editor (Page Tabs)
+
+Click a page tab to give the tab strip focus, then these act on the whole page — a separate undo
+history from the command list below it.
+
+| Default Key | Action |
+|-------------|--------|
+| Ctrl+C | Copy page |
+| Ctrl+X | Cut page |
+| Ctrl+V | Paste page (adds a new page after the tab you're on) |
+| Ctrl+J | Clone the current page (same as the **+** tab button / right-click → Clone Page) |
+| Ctrl+Z | Undo page edit — now also undoes adding, deleting, or cloning a page |
+| Ctrl+Y | Redo page edit |
+
+## Database (Tilesets / Common Events / Animations / Switches / Variables)
+
+Click a row in any Database list to give it focus, then these act on the whole record — a separate
+undo history per list. See [Database](database.md#copying-cutting-and-pasting-records).
+
+| Default Key | Action |
+|-------------|--------|
+| Ctrl+C | Copy the selected record (or name, in Switches/Variables) |
+| Ctrl+X | Cut — copies, then removes. Blanks the slot on Common Events/Animations instead of renumbering; opens the delete confirmation on Tilesets |
+| Ctrl+V | Paste (Replace) over the selected record |
+| Ctrl+J | Duplicate the selected record — appends a copy to a new slot at the end of the list |
+| Ctrl+Z | Undo the last edit in that list — paste, cut, replace, duplicate, add, delete, and Change Maximum… all count, including on-disk Tileset writes |
+| Ctrl+Y | Redo it |
 
 ## Event Editor (Move Route)
 
@@ -201,9 +231,25 @@ On the **Events layer**, the **Select** tool box-selects events: drag a marquee 
 |-------------|--------|
 | Ctrl+C | Copy the selected map (whole map, including layers, events, and versions) |
 | Ctrl+V | Paste the copied map into this project as a new map, placed directly below the selected map |
+| Ctrl+J | Duplicate the selected map (same as right-click → Duplicate Map) |
 | Delete | Delete the selected map (asks for confirmation, same as right-click → Delete Map) |
 
 These only fire while the Maps panel has focus, so they don't conflict with copying tiles on the canvas. To paste a map **between two Maker Studio windows**, turn on **Edit → Cross-Project Clipboard** first: copy then mirrors to your OS clipboard, and paste reads from it. With the toggle off, copy/paste still works **within the same window** (the copy stays in memory). The pasted map lands directly below the selected map (at the root if no map is selected). See [Map Management](map-management.md#copying-a-map-between-projects).
+
+## Layer Panel (Layer List)
+
+Click a row in the Layer Panel to give it focus.
+
+| Default Key | Action |
+|-------------|--------|
+| Ctrl+C | Copy the active layer, tiles and per-tile settings included (same as right-click → Copy Layer) |
+| Ctrl+X | Cut the active layer — copies it, then clears it (same as right-click → Cut Layer) |
+| Ctrl+V | Paste the copied layer — always asks whether to replace the active layer or paste into a new layer (same as right-click → Paste Layer) |
+| Ctrl+J | Duplicate the active layer, tiles included — works on native layers too, and the copy always lands as a new extended layer (same as right-click → Duplicate Layer) |
+
+These fire only while the Layer Panel has focus, so they don't conflict with copying tiles on the
+canvas. Works on any layer, native included — a copy, cut, or duplicate that has nowhere else to go
+lands in a new extended layer, since a native layer is a fixed slot. See [Layers](layers.md#layer-panel).
 
 ## Game Simulator
 

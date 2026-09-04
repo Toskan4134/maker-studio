@@ -11,6 +11,43 @@ Tabs:
 
 > Each editor has its own **Apply** button. Switching tabs or closing the window while you have unsaved changes asks you to confirm first — and in the Tilesets tab, so does switching to a different tileset. Every save backs up the original `.rxdata` to a `map-backups` folder beside it.
 
+## Copying, Cutting, and Pasting Records
+
+**Right-click a row** in Tilesets, Common Events, or Animations to copy or cut the whole record and
+paste it elsewhere — into another slot in the same project, or (with **Edit → Advanced Clipboard →
+Cross-Project Clipboard** on) into another open Maker Studio window:
+
+- **Copy** puts the record — every setting it has — on the clipboard.
+- **Cut** copies it, then removes it. On **Common Events** and **Animations** it can't remove the
+  slot outright (other commands point at these by number), so Cut instead **blanks the slot** and
+  leaves the numbering untouched. On **Tilesets**, Cut opens the normal delete confirmation, since
+  dropping a tileset can leave other maps pointing at nothing.
+- **Paste (Replace)** overwrites the record under your cursor. You're asked to confirm before a
+  tileset is replaced.
+- **Paste as New** adds the copied record as a brand-new entry instead of overwriting anything.
+- **Duplicate** copies the record straight into a fresh slot at the end of the list, in one step —
+  no clipboard involved. Its shortcut is **Ctrl+J**, the same "Duplicate" key used across the editor
+  (map selection, events, layers, maps, event pages and commands).
+
+One copy can be pasted as many times as you like — copying again replaces what's on the clipboard.
+Pasting a tileset carries everything: its graphic, autotile names, panorama/fog/battleback, and its
+full passage/priority/terrain tag data (see [Tileset Editor](tileset-editor.md)).
+
+**Switches** and **Variables** support the same idea for a single name: right-click an entry for
+**Copy Name** / **Cut Name** / **Paste Name** / **Duplicate Name**. Since a switch's name and a
+variable's name are the same kind of thing under the hood, a name copied (or cut, or duplicated) from
+Switches can be pasted into Variables (and back).
+
+**Keyboard shortcuts and undo**: click a row to give its list keyboard focus, then **Ctrl+C** /
+**Ctrl+X** / **Ctrl+V** / **Ctrl+J** copy, cut, paste, and duplicate the same way as the right-click
+menu — the exact keys are whatever you've bound to Copy/Cut/Paste/Duplicate in **Help → Keyboard
+Shortcuts...**. **Ctrl+Z** / **Ctrl+Y** undo and redo record-level edits on that list — not just
+paste/cut/replace/duplicate anymore, but also **+ Add**, **Change Maximum…**, **New Tileset**, and
+deleting a record, including the on-disk Tileset writes: undoing a pasted-in or newly-added tileset
+writes the old data straight back (or removes the slot it created), and undoing a deleted tileset
+writes it right back into its old slot. Each list's undo is independent of every other panel's —
+undoing here never touches the map canvas or an open editor's own undo history.
+
 ## Common Events
 
 Common events are command lists you can call from anywhere (via **Call Common Event**) or run automatically.
@@ -24,6 +61,9 @@ Common events are command lists you can call from anywhere (via **Call Common Ev
 4. For Autorun/Parallel, pick a **Condition Switch** — the event only runs while that switch is ON.
 5. Build the **command list** using the same editor as map events (Insert / Edit / Delete / drag to reorder, copy & paste, undo/redo).
 6. Click **Apply** to save.
+
+You can also copy, cut, paste, and duplicate a whole common event — see [Copying, Cutting, and
+Pasting Records](#copying-cutting-and-pasting-records) above.
 
 ## Animations
 
@@ -63,3 +103,6 @@ In the **SE and Flash Timing** list (right), **Add** a timing, then set:
 - **Condition** — None / Hit / Miss (when the timing applies).
 
 Click **Apply** to save. Your changes are written straight back to `Animations.rxdata`, so they show up in the game.
+
+You can also copy, cut, paste, and duplicate a whole animation — see [Copying, Cutting, and Pasting
+Records](#copying-cutting-and-pasting-records) above.

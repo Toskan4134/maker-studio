@@ -64,6 +64,19 @@ Events can have multiple pages, each with its own conditions, graphic, and comma
 
 - Click + to add a page.
 - Click x to remove a page. At least one page is always required.
+- **Right-click a page tab** for **Copy Page** / **Cut Page** / **Paste Page**, above **Clone Page** /
+  **Delete Page**. Unlike Clone (which duplicates a page within the same event), Copy/Cut/Paste works
+  across events — copy a page from one event, open a different event, and paste it in as a new page.
+  With **Edit → Advanced Clipboard → Cross-Project Clipboard** on, it also works between two open
+  Maker Studio windows. Pasting always adds a new page after the tab you right-clicked; it never
+  overwrites the page under your cursor. Cut copies the page and then removes it (blocked if it's the
+  last page, same as Delete).
+- **Click a page tab** to give the tab strip keyboard focus, then **Ctrl+C** / **Ctrl+X** / **Ctrl+V**
+  copy/cut/paste a page the same way, **Ctrl+J** clones it (same as right-click → Clone Page), and
+  **Ctrl+Z** / **Ctrl+Y** undo/redo those page edits — a separate undo history from the command list
+  below, so undoing a page paste never also undoes a command edit (or vice versa). Adding, deleting,
+  and cloning a page — including with the **+** / **×** tab buttons, not just the shortcuts — are all
+  part of this same undo history now.
 
 ### Conditions
 
@@ -385,6 +398,7 @@ There's no manual indent control; nesting follows where you insert or drop a com
 | Delete / Backspace | Delete the selected command |
 | Insert / Enter | Open the Command Picker |
 | Ctrl+C / Ctrl+V / Ctrl+X | Copy, Paste, or Cut commands |
+| Ctrl+J | Duplicate the selected command(s) — pastes a copy right there, right-click menu has the same **Duplicate** / **Duplicate (n)** entry |
 | Ctrl+A | Select every command in the list (the page's final End row stays out of the selection). Handy before a bulk copy or delete |
 | Escape | Cancel the open picker or parameter form (see [Adding Commands](#adding-commands)) |
 | Up / Down arrows | Move the selection |
