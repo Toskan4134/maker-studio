@@ -457,6 +457,8 @@ Colors follow the active editor theme — the same hue family in dark and light 
 
 **Every row says what the command does.** The text after a command's name spells out the options it was given, with names instead of numbers — `Scroll Map: Down, 3 tiles, speed 4`, `Change Items: 004: Potion + 2`, `Show Picture: #1 "title" — Upper Left (16,32), 100%×100%, opacity 255, Normal`. Switches, variables, maps, events and database entries are all named, so a page can be read top to bottom without opening a single command.
 
+**Later picture rows show the file name too.** Move Picture, Rotate Picture, Change Picture Color Tone and Erase Picture only store the picture number, so their row picks up the file name from the Show Picture above them in the list — `Erase Picture: #1 "title"`. Once the picture has been erased, or if there is no Show Picture above, the row shows just the number.
+
 **Long rows scroll instead of being cut off.** When a command's text is wider than the list, hovering it scrolls the text sideways so you can read all of it without widening the panel or opening the command.
 
 **Transfer Player rows say where they go.** A fixed destination reads as the map number, its name and the coordinates — `007: Pewter City (12,8)` — and a variable-driven one lists which variable holds the map, the X and the Y.

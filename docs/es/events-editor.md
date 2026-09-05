@@ -460,6 +460,8 @@ Los colores siguen el tema activo del editor — la misma familia de tonos en mo
 
 **Cada fila dice lo que hace el comando.** El texto tras el nombre detalla las opciones con las que se guardó, con nombres en vez de números — `Desplazar mapa: Abajo, 3 tiles, velocidad 4`, `Cambiar objetos: 004: Poción + 2`, `Mostrar imagen: #1 "title" — Arriba a la izquierda (16,32), 100%×100%, opacidad 255, Normal`. Switches, variables, mapas, eventos y registros de la base de datos salen por su nombre, así que una página se lee de arriba abajo sin abrir ni un comando.
 
+**Las filas de imagen posteriores también muestran el archivo.** Mover imagen, Rotar imagen, Cambiar tono de la imagen y Borrar imagen solo guardan el número de la imagen, así que su fila toma el nombre del archivo del Mostrar imagen que tienen encima en la lista — `Borrar imagen: #1 "title"`. Una vez borrada la imagen, o si no hay ningún Mostrar imagen encima, la fila muestra solo el número.
+
 **Las filas largas se desplazan en vez de cortarse.** Cuando el texto de un comando es más ancho que la lista, al pasar el ratón por encima el texto se desplaza lateralmente para que puedas leerlo entero sin ensanchar el panel ni abrir el comando.
 
 **Las filas de Transfer Player dicen a dónde llevan.** Un destino fijo se lee como el número del mapa, su nombre y las coordenadas — `007: Ciudad Plateada (12,8)` — y uno por variables indica qué variable guarda el mapa, la X y la Y.
