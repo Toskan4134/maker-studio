@@ -836,14 +836,20 @@ class TilemapRenderer
     tile.y += (tile.oy * tile.zoom_y.abs).round
   end
 
-  # Cap-model z for native tiles (see @cell_band_cache). Reflection / bridge
-  # tiles keep the engine's own z.
+  # Cap-model z for native tiles (see @cell_band_cache). Reflection tiles and
+  # engine-managed bridge tiles keep the engine's own z.
   alias __mkst__refresh_tile_z refresh_tile_z unless method_defined?(:__mkst__refresh_tile_z)
   def refresh_tile_z(tile, map, y, layer, tile_id)
     band = MakerStudio::ENABLED ? tile.cell_band : nil
     return __mkst__refresh_tile_z(tile, map, y, layer, tile_id) if band.nil?
     return __mkst__refresh_tile_z(tile, map, y, layer, tile_id) if tile.shows_reflection
-    return __mkst__refresh_tile_z(tile, map, y, layer, tile_id) if tile.bridge && $PokemonGlobal.bridge > 0
+    # The engine forces active-bridge tiles to z=0 (player walks the deck);
+    # a band-0 tile that sits above the map's shadows (z=2) would sink under
+    # the shadow sprite (z=1), so those keep our z.
+    if tile.bridge && $PokemonGlobal.bridge > 0
+      above_shadow = band == 0 && tile.ms_ground_z && tile.ms_ground_z > 0
+      return __mkst__refresh_tile_z(tile, map, y, layer, tile_id) unless above_shadow
+    end
     if band == 0
       # Ground band: below the map's shadows (0) or above them (2).
       tile.z = tile.ms_ground_z || 0

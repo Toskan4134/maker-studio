@@ -202,7 +202,7 @@ class Game_Map
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
       return true if (tile_data["priority"] ? tile_data["priority"].to_i : (@priorities[tile_id] || 0)) == 0
     end
-    # Fallback: native layers with per-layer tileset awareness + event collision
+    # Fallback: native layers with per-layer tileset awareness
     return native_layer_passable(x, y, dir, self_event)
   end
 
@@ -656,7 +656,7 @@ class Game_Map
 
   #---------------------------------------------------------------------------
   # Native layer passable? fallback — respects per-layer cross-tileset passages.
-  # Replicates native passable? logic: iterate [2,1,0], check passages + events.
+  # Replicates native passable? logic: iterate [2,1,0], check passages.
   #---------------------------------------------------------------------------
   def native_layer_passable(x, y, dir, self_event = nil)
     ext_data = MakerStudio.get_extended_data_for(@map_id)
@@ -686,15 +686,6 @@ class Game_Map
       return false if passage & bit != 0
       return false if passage & 0x0f == 0x0f
       return true if priority == 0
-    end
-    # Event collision check
-    if @events
-      for event in @events.values
-        next if event == self_event
-        next if event.through
-        next if event.x != x || event.y != y
-        return false if event.priority_type == 1 || event.priority_type == 2
-      end
     end
     return true
   end
