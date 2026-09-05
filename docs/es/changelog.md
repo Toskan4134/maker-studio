@@ -2,6 +2,37 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.6.0
+
+Cada comando de evento se describe ahora en la lista, con su propio color — incluidos los comandos de batalla. La ventana de Scripts edita cualquier fuente de scripts que tenga el proyecto, los registros enteros se copian y pegan por todo el editor, y los preajustes aprenden multiselección y una importación que pregunta antes de sobrescribir.
+
+### Novedades
+- 🎨 **Un color por comando** — cada comando de evento pinta ahora su fila con su propio color, y las filas de continuación (líneas de texto, else de ramas, pasos de ruta) siguen al comando al que pertenecen. Ajustes → Apariencia estrena un grupo **Comandos individuales** con una fila por comando, y un botón **Paleta RPG Maker XP** que rellena el conjunto entero de golpe, claro y oscuro.
+- ⚔️ **Los comandos de batalla se suman al editor** — **If Win / If Escape / If Lose / Battle End / Shop Goods** eran desconocidos para el editor: formularios en JSON crudo, sin color y sin estructura de bloque. Ahora son comandos de verdad, **Battle Processing** construye y sincroniza su esqueleto de ramas igual que Show Choices, las tiendas guardadas con el formato antiguo se adoptan al abrir, y el Simulador de juego se salta el bloque de batalla entero en vez de ejecutar seguidos los cuerpos de victoria, huida y derrota.
+- 📝 **Cada fila de comando se describe a sí misma** — el texto tras el nombre de un comando está escrito ya para todos los códigos, no solo para unos pocos: opciones por nombre ("Scroll Map: Down, 3 tiles, speed 4"), objetos, héroes y habilidades por nombre, y las filas de imagen posteriores dicen su archivo.
+- 📜 **La ventana de Scripts edita cualquier fuente de scripts** — la lista estaba atada a Scripts.rxdata; ahora edita la fuente que tenga el proyecto: Scripts.rxdata, Data/Scripts si el proyecto extrajo sus scripts, y cada carpeta de Plugins/. Las carpetas se muestran como árbol real, y los archivos se gestionan ahí mismo: nuevo archivo o carpeta, renombrar, borrar (con multiselección), arrastrar a una carpeta para mover. La barra lateral se redimensiona, pliegues y ancho se recuerdan, y la ventana vuelve donde la dejaste. Los fragmentos se insertan ahora en el cursor.
+- 🗂️ **Copiar, cortar, pegar y duplicar registros enteros** — toda lista que guarda un registro comparte ahora un portapapeles: una página de evento, un tileset, una animación, un evento común, el nombre de un switch o variable, una capa entera del mapa — copia de un sitio, pega en otro, o en otra ventana de Maker Studio con el portapapeles entre proyectos activado. **Ctrl+J** duplica lo que esté seleccionado, y cada lista mantiene su propia historia de Ctrl+Z.
+- 🧩 **Los preajustes maduran** — selecciona varios preajustes o carpetas con Ctrl/Shift y muévelos, expórtalos o bórralos de una acción; el panel de detalle edita el código de un fragmento en el sitio; un fragmento nuevo puede salir de la selección del editor; y la importación pregunta antes de sobrescribir — una lista de conflictos muestra lo tuyo contra lo importado, con las diferencias, y tú marcas qué reemplazar.
+- 👆 **Doble clic en la fila vacía del final de la lista de comandos** para añadir un comando — igual que el doble clic en el hueco de abajo.
+- 🧩 **Para quien hace mods**: Mod API **1.0.2** — los colores de los comandos de evento son públicos: el tema de un mod puede recolorear un solo comando sin abandonar su categoría, y `commandSchemas()` informa de la categoría de color de cada comando y del código que lo pinta.
+
+### Correcciones
+- 🌉 **Las sombras ya no se dibujan sobre un puente activo** — al cruzar un puente el motor fuerza sus tiles a z=0, lo que hundía los tiles de origen de la sombra por debajo de la propia sombra.
+- 💥 **La vista previa del Destello de pantalla muestra el color configurado** — el recuadro salía blanco eligieras lo que eligieras; ahora mezcla el color según la fuerza.
+- ⏱️ **Corregido que Control Timer durara un segundo por minuto** — el editor guardaba fotogramas donde RPG Maker XP guarda segundos, así que un temporizador de un minuto duraba un segundo en el juego.
+- 🔢 **Corregidas las filas de Change HP / SP / EXP / Level**, que leían todas las opciones posteriores al héroe desplazadas en uno — un parámetro que faltaba recorría el resto.
+- 🔥 **Corregido un cuelgue del juego (NoMethodError) en proyectos de La Base de Sky y Pokémon Essentials** cuando un seguidor pisaba un tile que ninguna capa decidía — el plugin pedía al motor una API que RPG Maker XP no tiene.
+- 💧 **Corregido el cuentagotas / ALT+clic sin desplazamiento de la paleta** después de un clic en la propia paleta.
+- 🧱 **Corregido que pintar un autotile nativo sobre uno extra resucitara el nombre antiguo** — la celda conservaba el nombre del autotile desplazado y dibujaba el gráfico viejo con el patrón nuevo.
+- 🖼️ **Corregidas las vistas previas de autotiles en el editor de tilesets**, que mostraban el último fotograma de animación en vez del primero.
+- 🗑️ **Corregido que los mapas borrados dejaran sus cachés de render**, así el siguiente mapa que tomaba el ID libre se renderizaba con el tileset del mapa borrado hasta re-elegirlo. **Escape en la capa de eventos** suelta ahora también la selección de tiles.
+- 💾 **Corregido el guardado de un tileset tras pintar más allá del final de una tabla corta de terrain tags / prioridades / pasajes** — el guardado fallaba con error.
+- 🗺️ **Corregido el selector de mapa de Transfer Player atascándose en tiles de relleno.**
+- ↩️ **El deshacer se pone serio** — cancelar un evento recién creado lo borra de nuevo en vez de dejar uno vacío en el mapa; crear uno es un solo Ctrl+Z; duplicar o pegar una capa es un deshacer, no dos; y reordenar capas, que nunca se pudo deshacer, ahora sí.
+
+### Cambios
+- ✂️ **Las filas de Show / Move Picture se recortan a nombre + opacidad** — origen, xy, zoom y mezcla casi siempre son los de por defecto y enterraban los dos datos que merece la pena ver; Move Picture añade la duración de la transición.
+
 ## v1.5.0
 
 Las rutas de movimiento ahora se dibujan sobre el mapa, en vez de montarse a base de pulsar **Move Up** doce veces. El editor instala el plugin del juego él solo, los mapas enteros viajan de un proyecto a otro con Ctrl+C / Ctrl+V, cualquier mapa puede cambiar de ID sin romper los transfers que apuntan a él, y el cuadro de Show Text por fin te dice qué hacen todos esos códigos `\c[…]`.

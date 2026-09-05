@@ -3,6 +3,40 @@
 User-facing changes to the Maker Studio app and its game-side plugin. Older
 releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/releases).
 
+## v1.6.0
+
+Every event command describes itself in the list now, in its own colour — battle commands included. The Scripts window edits any script source the project actually has, whole records copy and paste across the editor, and presets learn multi-selection and an import that asks before overwriting.
+
+### Additions
+- 🎨 **A colour per command** — every event command paints its row in its own colour now, and continuation rows (text lines, branch elses, move steps) follow the command they belong to. Settings → Appearance grows an **Individual commands** group with one row per command, and an **RPG Maker XP palette** button that fills the whole set at once, light and dark.
+- ⚔️ **The battle commands join the editor** — **If Win / If Escape / If Lose / Battle End / Shop Goods** were unknown to the editor: raw JSON forms, no colour, no block structure. They are real commands now, **Battle Processing** builds and syncs its branch skeleton the way Show Choices does, shops saved in the old shape are adopted on open, and the Game Simulator skips the whole battle block instead of running the win, escape and lose bodies in a row.
+- 📝 **Every command row describes itself** — the text after a command's name is written for every code now, not just a few: options by name ("Scroll Map: Down, 3 tiles, speed 4"), items, actors and skills by name, and the later picture rows name their file.
+- 📜 **The Scripts window edits any script source** — the list was tied to Scripts.rxdata; it now edits whichever source the project has: Scripts.rxdata, Data/Scripts when the project extracted its scripts, and every Plugins/ folder. Folder sources show a real tree, and you manage the files right there: new file or folder, rename, delete (multi-select included), drag onto a folder to move. The sidebar is resizable, folds and width persist, and the window reopens where you left off. Snippets insert at the cursor now.
+- 🗂️ **Copy, cut, paste and duplicate whole records** — every list that holds a record now shares one clipboard: an event page, a tileset, an animation, a common event, a switch or variable name, a whole map layer — copy out of one slot, paste into another, or into another Maker Studio window behind the cross-project toggle. **Ctrl+J** duplicates whatever is selected, and each list keeps its own Ctrl+Z history.
+- 🧩 **Presets grow up** — select several presets or folders with Ctrl/Shift and move, export or delete them in one action; the detail pane edits a snippet's code in place; a new snippet can be cut from the editor selection; and importing asks before overwriting — a clash list shows yours against the imported, with a diff, and you tick what to replace.
+- 👆 **Double-click the blank row at the end of the command list** to append a command — same as double-clicking the empty space below.
+- 🧩 **For mod developers**: Mod API **1.0.2** — event command colours are public: a mod theme can recolour a single command without leaving its category behind, and `commandSchemas()` reports each command's colour category and owning code.
+
+### Fixes
+- 🌉 **Shadows no longer draw over an active bridge** — while you cross a bridge the engine forces its tiles to z=0, which sank the shadow's source tiles under the shadow itself.
+- 💥 **The Screen Flash preview shows the configured colour** — the swatch was white whatever you picked; it now blends the colour by Strength.
+- ⏱️ **Fixed Control Timer running one second per minute** — the editor stored frames where RPG Maker XP stores seconds, so a one-minute timer ran one second in game.
+- 🔢 **Fixed the Change HP / SP / EXP / Level rows** reading every option after the actor one off — a missing parameter shifted the rest.
+- 🔥 **Fixed a game crash (NoMethodError) in La Base de Sky and Pokémon Essentials projects** when a follower stepped onto a tile no layer decided — the plugin asked the engine for an API RPG Maker XP doesn't have.
+- 💧 **Fixed the eyedropper / ALT+click not scrolling the palette** after a click on the palette itself.
+- 🧱 **Fixed painting a native autotile over an extra one resurrecting the old name** — the cell kept the displaced autotile's name and drew the old graphic with the new pattern.
+- 🖼️ **Fixed autotile previews in the Tileset Editor** showing the last animation frame instead of the first.
+- 🗑️ **Fixed deleted maps leaving their render caches behind**, so the next map to take the freed ID rendered with the deleted map's tileset until it was re-picked. **Escape on the Events layer** drops the tile selection now too.
+- 💾 **Fixed saving a tileset after painting past the end of a short terrain-tag / priority / passage table** — the save failed with an error.
+- 🗺️ **Fixed the transfer-player map picker getting stuck on placeholder tiles.**
+- ↩️ **Undo got honest** — cancelling a just-created event deletes it again instead of leaving an empty one on the map; creating one is a single Ctrl+Z; duplicating or pasting a layer is one undo, not two; and reordering layers, which was never undoable, now is.
+
+### Changes
+- ✂️ **Show / Move Picture rows are trimmed to name + opacity** — origin, xy, zoom and blend are almost always the defaults and buried the two facts worth scanning for; Move Picture appends the tween duration.
+
+### Documentation
+User guides and mod API reference: https://makerstudio.toskan.es/
+
 ## v1.5.0
 
 Move routes are drawn on the map now instead of clicked together one **Move Up** at a time. The editor installs the game-side plugin by itself, whole maps travel between projects with Ctrl+C / Ctrl+V, any map can change its ID without breaking the transfers pointing at it, and the Show Text box finally tells you what all those `\c[…]` codes do.
@@ -203,6 +237,37 @@ User guides and mod API reference: https://makerstudio.toskan.es/
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
+
+## v1.6.0
+
+Cada comando de evento se describe ahora en la lista, con su propio color — incluidos los comandos de batalla. La ventana de Scripts edita cualquier fuente de scripts que tenga el proyecto, los registros enteros se copian y pegan por todo el editor, y los preajustes aprenden multiselección y una importación que pregunta antes de sobrescribir.
+
+### Novedades
+- 🎨 **Un color por comando** — cada comando de evento pinta ahora su fila con su propio color, y las filas de continuación (líneas de texto, else de ramas, pasos de ruta) siguen al comando al que pertenecen. Ajustes → Apariencia estrena un grupo **Comandos individuales** con una fila por comando, y un botón **Paleta RPG Maker XP** que rellena el conjunto entero de golpe, claro y oscuro.
+- ⚔️ **Los comandos de batalla se suman al editor** — **If Win / If Escape / If Lose / Battle End / Shop Goods** eran desconocidos para el editor: formularios en JSON crudo, sin color y sin estructura de bloque. Ahora son comandos de verdad, **Battle Processing** construye y sincroniza su esqueleto de ramas igual que Show Choices, las tiendas guardadas con el formato antiguo se adoptan al abrir, y el Simulador de juego se salta el bloque de batalla entero en vez de ejecutar seguidos los cuerpos de victoria, huida y derrota.
+- 📝 **Cada fila de comando se describe a sí misma** — el texto tras el nombre de un comando está escrito ya para todos los códigos, no solo para unos pocos: opciones por nombre ("Scroll Map: Down, 3 tiles, speed 4"), objetos, héroes y habilidades por nombre, y las filas de imagen posteriores dicen su archivo.
+- 📜 **La ventana de Scripts edita cualquier fuente de scripts** — la lista estaba atada a Scripts.rxdata; ahora edita la fuente que tenga el proyecto: Scripts.rxdata, Data/Scripts si el proyecto extrajo sus scripts, y cada carpeta de Plugins/. Las carpetas se muestran como árbol real, y los archivos se gestionan ahí mismo: nuevo archivo o carpeta, renombrar, borrar (con multiselección), arrastrar a una carpeta para mover. La barra lateral se redimensiona, pliegues y ancho se recuerdan, y la ventana vuelve donde la dejaste. Los fragmentos se insertan ahora en el cursor.
+- 🗂️ **Copiar, cortar, pegar y duplicar registros enteros** — toda lista que guarda un registro comparte ahora un portapapeles: una página de evento, un tileset, una animación, un evento común, el nombre de un switch o variable, una capa entera del mapa — copia de un sitio, pega en otro, o en otra ventana de Maker Studio con el portapapeles entre proyectos activado. **Ctrl+J** duplica lo que esté seleccionado, y cada lista mantiene su propia historia de Ctrl+Z.
+- 🧩 **Los preajustes maduran** — selecciona varios preajustes o carpetas con Ctrl/Shift y muévelos, expórtalos o bórralos de una acción; el panel de detalle edita el código de un fragmento en el sitio; un fragmento nuevo puede salir de la selección del editor; y la importación pregunta antes de sobrescribir — una lista de conflictos muestra lo tuyo contra lo importado, con las diferencias, y tú marcas qué reemplazar.
+- 👆 **Doble clic en la fila vacía del final de la lista de comandos** para añadir un comando — igual que el doble clic en el hueco de abajo.
+- 🧩 **Para quien hace mods**: Mod API **1.0.2** — los colores de los comandos de evento son públicos: el tema de un mod puede recolorear un solo comando sin abandonar su categoría, y `commandSchemas()` informa de la categoría de color de cada comando y del código que lo pinta.
+
+### Correcciones
+- 🌉 **Las sombras ya no se dibujan sobre un puente activo** — al cruzar un puente el motor fuerza sus tiles a z=0, lo que hundía los tiles de origen de la sombra por debajo de la propia sombra.
+- 💥 **La vista previa del Destello de pantalla muestra el color configurado** — el recuadro salía blanco eligieras lo que eligieras; ahora mezcla el color según la fuerza.
+- ⏱️ **Corregido que Control Timer durara un segundo por minuto** — el editor guardaba fotogramas donde RPG Maker XP guarda segundos, así que un temporizador de un minuto duraba un segundo en el juego.
+- 🔢 **Corregidas las filas de Change HP / SP / EXP / Level**, que leían todas las opciones posteriores al héroe desplazadas en uno — un parámetro que faltaba recorría el resto.
+- 🔥 **Corregido un cuelgue del juego (NoMethodError) en proyectos de La Base de Sky y Pokémon Essentials** cuando un seguidor pisaba un tile que ninguna capa decidía — el plugin pedía al motor una API que RPG Maker XP no tiene.
+- 💧 **Corregido el cuentagotas / ALT+clic sin desplazamiento de la paleta** después de un clic en la propia paleta.
+- 🧱 **Corregido que pintar un autotile nativo sobre uno extra resucitara el nombre antiguo** — la celda conservaba el nombre del autotile desplazado y dibujaba el gráfico viejo con el patrón nuevo.
+- 🖼️ **Corregidas las vistas previas de autotiles en el editor de tilesets**, que mostraban el último fotograma de animación en vez del primero.
+- 🗑️ **Corregido que los mapas borrados dejaran sus cachés de render**, así el siguiente mapa que tomaba el ID libre se renderizaba con el tileset del mapa borrado hasta re-elegirlo. **Escape en la capa de eventos** suelta ahora también la selección de tiles.
+- 💾 **Corregido el guardado de un tileset tras pintar más allá del final de una tabla corta de terrain tags / prioridades / pasajes** — el guardado fallaba con error.
+- 🗺️ **Corregido el selector de mapa de Transfer Player atascándose en tiles de relleno.**
+- ↩️ **El deshacer se pone serio** — cancelar un evento recién creado lo borra de nuevo en vez de dejar uno vacío en el mapa; crear uno es un solo Ctrl+Z; duplicar o pegar una capa es un deshacer, no dos; y reordenar capas, que nunca se pudo deshacer, ahora sí.
+
+### Cambios
+- ✂️ **Las filas de Show / Move Picture se recortan a nombre + opacidad** — origen, xy, zoom y mezcla casi siempre son los de por defecto y enterraban los dos datos que merece la pena ver; Move Picture añade la duración de la transición.
 
 ## v1.5.0
 
