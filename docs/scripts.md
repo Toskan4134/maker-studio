@@ -59,6 +59,10 @@ Drag the line between the list and the code to make the list wider — long scri
 and it stays folded next time you come back. Files are edited and saved exactly like packed scripts;
 **Save** writes back only the files you actually changed.
 
+The window also remembers where you were: it reopens on the file you had open, with the caret and the
+list scrolled where you left them — and each source keeps its own place, so switching to a plugin and
+back loses nothing.
+
 You can manage the folder from here too:
 
 - **+** creates a **new file** or **new folder** — next to whatever file is open, or at the top level.

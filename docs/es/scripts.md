@@ -48,6 +48,10 @@ carpeta para plegarla, y seguirá plegada la próxima vez que vuelvas. Los archi
 guardan igual que los scripts empaquetados; **Save** escribe solo los archivos que hayas cambiado de
 verdad.
 
+La ventana también recuerda dónde estabas: al reabrirla vuelve al archivo que tenías abierto, con el
+cursor y la lista donde los dejaste — y cada sitio (`Scripts.rxdata`, `Data/Scripts`, cada plugin)
+guarda su propio lugar, así que cambiar entre ellos no pierde nada.
+
 Desde aquí también puedes gestionar la carpeta:
 
 - **+** crea un **archivo nuevo** o una **carpeta nueva** — junto al archivo que tengas abierto, o en
