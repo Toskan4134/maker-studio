@@ -88,6 +88,8 @@ Control when a page becomes active. Every check you tick must pass — they are 
 - **Variable**: Compare a game variable against a value (≥).
 - **Self Switch**: Check a self switch (A through Z — A–D are the RPG Maker XP standard; E–Z work at runtime in Pokémon Essentials), again **ON** or **OFF**.
 
+Switch and variable pickers remember the last entry you used or renamed in the current project and preselect it the next time they open. `↑` / `↓` moves through the filtered list.
+
 > **OFF** needs the **MakerStudio plugin** installed in your game (Tools -> Integration). Vanilla RPG
 > Maker XP can only ask for ON, so without the plugin the game reads an OFF check as a plain ON check
 > — the page turns on exactly when you meant it to turn off. The built-in
@@ -295,6 +297,7 @@ Snippets are stored per-install (shared across all your projects) and remembered
 Every graphic picker has a live preview and favourites: the event page **Graphic** (character sheet), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), the Move Route **Change Graphic** action, the map Battleback picker, and the fog / panorama / custom layer edit popup in the Layer panel.
 
 - **Folder tree** — the list is a file-explorer tree: subfolders (e.g. `Graphics/Characters/NPCs/`) show as collapsible folders that you click to expand or collapse, with their images nested and indented inside. Folders sort to the top and everything is sorted by name. The folder containing your current graphic is expanded automatically when you open the picker **and the list scrolls to it**, so a graphic buried far down a long folder is on screen straight away (it only does this once — scroll away and the list stays where you put it). The search box still finds any graphic anywhere in the tree — so you can pick and favourite nested graphics directly instead of hunting through **Browse**.
+- **Keyboard selection** — after clicking the folder or favourites list, `↑` / `↓` select and preview the previous or next graphic instead of scrolling the list.
 - **Browse never duplicates** — the **…** button can pick any image under your project's `Graphics/` folder. If it's in another subfolder, the editor stores a relative `../Folder/name` reference instead of copying the file in (only an image from *outside* `Graphics/` is copied). The preview updates instantly, and previews you've already viewed are cached so flipping between the list and the **★ Favourites** tab doesn't re-load them.
 - **Star any graphic** — hover a name in the list and click its star to favourite it (filled star = favourited). Favourites are remembered across projects and sessions.
 - **Current image always has a star** — if the selected image isn't in the current folder list (you reached it through **Browse**, or it lives in another folder), it shows up as its own row just under **(None)**, labelled with its folder path — star it from there.

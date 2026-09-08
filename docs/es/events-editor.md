@@ -90,6 +90,8 @@ Controlan cuándo se activa una página. Todas las condiciones que marques deben
 - **Variable**: compara una variable de juego con un valor (≥).
 - **Interruptor local**: comprueba un interruptor local (A a Z — A–D son el estándar de RPG Maker XP; E–Z funcionan en tiempo de ejecución en Pokémon Essentials), también **ON** u **OFF**.
 
+Los selectores de interruptores y variables recuerdan la última entrada que utilizaste o renombraste en el proyecto actual y la preseleccionan la próxima vez que se abren. `↑` / `↓` recorre la lista filtrada.
+
 > **OFF** necesita el **plugin MakerStudio** instalado en tu juego (Tools -> Integration). El RPG Maker XP
 > original solo sabe pedir ON, así que sin el plugin el juego lee una condición OFF como una condición ON
 > normal: la página se activa justo cuando querías que no lo hiciera. El
@@ -300,6 +302,7 @@ Los fragmentos se guardan por instalación (compartidos entre todos tus proyecto
 Cada selector de gráficos tiene vista previa en vivo y favoritos: el **Graphic** de la página de evento (hoja de personaje), **Show Picture**, **Execute Transition**, **Change Map Settings** (panorama / fog / battleback), la acción **Change Graphic** de la ruta de movimiento, el selector de Battleback del mapa y el popup de edición de capa de fog / panorama / personalizada del panel de capas.
 
 - **Árbol de carpetas** — la lista es un árbol tipo explorador de archivos: las subcarpetas (p. ej. `Graphics/Characters/NPCs/`) se muestran como carpetas plegables que despliegas o pliegas con un clic, con sus imágenes anidadas e indentadas dentro. Las carpetas se ordenan arriba y todo se ordena por nombre. La carpeta que contiene tu gráfico actual se despliega automáticamente al abrir el selector **y la lista se desplaza hasta él**, así que un gráfico enterrado al final de una carpeta larga aparece en pantalla de inmediato (solo lo hace una vez — si te desplazas, la lista se queda donde la dejes). El cuadro de búsqueda sigue encontrando cualquier gráfico en cualquier parte del árbol — así puedes elegir y marcar como favorito gráficos anidados directamente en vez de buscar con **Browse**.
+- **Selección con teclado** — después de hacer clic en la lista de la carpeta o de favoritos, `↑` / `↓` seleccionan y previsualizan el gráfico anterior o siguiente en lugar de desplazar la lista.
 - **Browse nunca duplica** — el botón **…** puede elegir cualquier imagen bajo la carpeta `Graphics/` de tu proyecto. Si está en otra subcarpeta, el editor guarda una referencia relativa `../Folder/name` en vez de copiar el archivo (solo se copia una imagen de *fuera* de `Graphics/`). La vista previa se actualiza al instante, y las vistas previas que ya has visto se cachean para que alternar entre la lista y la pestaña **★ Favourites** no las recargue.
 - **Marca cualquier gráfico con estrella** — pasa sobre un nombre en la lista y haz clic en su estrella para marcarlo (estrella rellena = favorito). Los favoritos se recuerdan entre proyectos y sesiones.
 - **La imagen actual siempre tiene estrella** — si la imagen seleccionada no está en la lista de la carpeta actual (llegaste a ella con **Browse**, o vive en otra carpeta), aparece como su propia fila justo debajo de **(None)**, etiquetada con su ruta de carpeta — márcala desde ahí.
