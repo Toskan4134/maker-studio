@@ -49,6 +49,8 @@ Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las p�
 
 Haz doble clic en un evento existente (o selecciónalo y haz clic en Edit) para abrir el editor de eventos.
 
+Al insertar un nuevo comando Show Choices antes de otro, el nuevo comando recibe su propio bloque When/End. El bloque existente y los comandos intermedios permanecen intactos; al cancelar se elimina solo el bloque provisional.
+
 La ventana del diálogo se puede redimensionar — arrastra su esquina inferior derecha para agrandarla, lo que ayuda cuando un evento tiene muchas páginas o una lista de comandos larga.
 
 Abajo del todo: **Aceptar** guarda los cambios y cierra el editor, **Aplicar** los guarda y lo deja abierto (útil para probar un evento largo por partes), y **Cancelar** los descarta — si hay algo sin guardar, se te pregunta antes.
