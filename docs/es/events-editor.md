@@ -328,7 +328,7 @@ Editar un comando **Set Move Route** abre un editor de rutas: elige el objetivo 
 La lista de acciones de movimiento se edita igual que la lista de comandos principal:
 
 - **Selecciona** con un clic; **Shift+clic** extiende la selección y **Ctrl+clic** añade o quita acciones individuales — todo lo de abajo actúa sobre toda la selección.
-- **Copy / Cut / Paste** con `Ctrl+C` / `Ctrl+X` / `Ctrl+V` — las acciones de movimiento tienen su propio portapapeles, así que copiarlas nunca sobrescribe comandos de evento copiados (y viceversa). Las acciones pegadas caen tras la selección, siempre dentro de la ruta.
+- **Copy / Cut / Paste** con `Ctrl+C` / `Ctrl+X` / `Ctrl+V` — las acciones de movimiento tienen su propio portapapeles, así que copiarlas nunca sobrescribe comandos de evento copiados (y viceversa). Las acciones nuevas y pegadas caen encima de la selección, siempre dentro de la ruta.
 - **Undo / Redo** con `Ctrl+Z` / `Ctrl+Y`, limitado a la ruta que estás editando.
 - **Edita** la acción seleccionada con `Space` o `Enter` (abre su formulario de parámetros), **Supr** la quita, las **flechas** mueven la selección, y `Alt+↑` / `Alt+↓` reordenan.
 - **Arrastra y suelta** una acción — o toda una multiselección — para reordenar; una línea muestra dónde caerá.
