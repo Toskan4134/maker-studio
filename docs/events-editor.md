@@ -47,6 +47,10 @@ With the **Events layer** active, you can duplicate whole events (all pages and 
 
 ## Event Editor Dialog
 
+The command list keeps script indentation visible. Long command labels stay
+truncated until hovered, then scroll to reveal their full text. Command-list
+shortcuts remain available after using the toolbar or clicking empty space.
+
 Double-click an existing event (or select it and click Edit) to open the Event Editor.
 
 When inserting a new Show Choices command before another one, the new command gets its own When/End block. The existing block and any commands between them stay unchanged; cancelling the new command removes only its provisional block.

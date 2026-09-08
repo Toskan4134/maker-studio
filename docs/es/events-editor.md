@@ -47,6 +47,11 @@ Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las p�
 
 ## Diálogo del editor de eventos
 
+La lista de comandos conserva la indentación de los scripts. Las etiquetas
+largas permanecen truncadas hasta pasar el cursor por encima, momento en que
+se desplazan para mostrar el texto completo. Los atajos siguen disponibles
+después de usar la barra de herramientas o hacer clic en un espacio vacío.
+
 Haz doble clic en un evento existente (o selecciónalo y haz clic en Edit) para abrir el editor de eventos.
 
 Al insertar un nuevo comando Show Choices antes de otro, el nuevo comando recibe su propio bloque When/End. El bloque existente y los comandos intermedios permanecen intactos; al cancelar se elimina solo el bloque provisional.
