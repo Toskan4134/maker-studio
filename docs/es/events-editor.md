@@ -391,6 +391,8 @@ Algunos comandos crean bloques emparejados:
 
 Borrar un comando de bloque (o su marcador de cierre) quita el **bloque entero**, incluido cada comando anidado dentro.
 
+Seleccionar el comando que abre un bloque resalta el bloque entero, incluidas sus filas anidadas, para mostrar visualmente todo lo que afectarán borrar, copiar, arrastrar y reordenar.
+
 ### Anidar comandos
 
 Por defecto, **Insertar y Pegar colocan el nuevo comando ENCIMA de la fila seleccionada** — como hermano anterior, no dentro de nada. Así que para poner un comando *dentro* de un bloque, haz una de estas dos cosas:

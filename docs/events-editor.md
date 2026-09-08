@@ -386,6 +386,8 @@ Some commands create paired blocks:
 
 Deleting a block command (or its closing marker) removes the **whole block**, including every command nested inside it.
 
+Selecting a block's opening command highlights that whole block, including its nested rows, so the visual selection matches what delete, copy, drag and reorder will affect.
+
 ### Nesting Commands
 
 By default, **Insert and Paste land the new command ABOVE the selected row** — as a preceding sibling, not inside anything. So to put a command *inside* a block, do one of the following:
