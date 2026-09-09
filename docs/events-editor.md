@@ -326,6 +326,8 @@ The dropdown lists the current map's fog layers by name. In-game the command cha
 
 Editing a **Set Move Route** command opens a route editor: click the target field to choose **This Event**, **Player**, or another current-map event from the event picker dialog (events are shown with their padded ID and name), toggle Repeat / Skip If Cannot Move, and build the list of move actions.
 
+The redesigned editor keeps the route in a left-hand **Sequence** panel with a live step count and puts the insertion controls in a scrollable area on the right. Actions are grouped into **Movement**, **Orientation**, **Route timing**, **Behavior**, **Appearance & frames**, and **Other actions**. Drag the divider between the panels to resize the sequence list, or focus it and press **← / →**; on smaller windows the action groups collapse to one column.
+
 The move-action list edits just like the main command list:
 
 - **Select** with a click; **Shift+click** extends the selection and **Ctrl+click** adds or removes individual actions — everything below acts on the whole selection.

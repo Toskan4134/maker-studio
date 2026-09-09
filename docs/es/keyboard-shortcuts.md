@@ -193,6 +193,7 @@ La lista de acciones de movimiento en **Set Move Route** admite las mismas tecla
 | Delete | Borrar comando de movimiento |
 | ↑ / ↓ | Acción de movimiento anterior / siguiente |
 | Alt + ↑ / ↓ | Mover la acción seleccionada arriba / abajo |
+| ← / → (con el separador de secuencia enfocado) | Cambiar el ancho del panel de secuencia de la ruta |
 
 ## Editor de rutas de movimiento (Dibujar ruta…)
 

@@ -191,6 +191,7 @@ The move-action list in **Set Move Route** supports the same editing keys as the
 | Delete | Delete move command |
 | ↑ / ↓ | Previous / next move action |
 | Alt + ↑ / ↓ | Move the selected action up / down |
+| ← / → (sequence divider focused) | Resize the route sequence panel |
 
 ## Move Route Editor (Draw path…)
 

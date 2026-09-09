@@ -332,6 +332,8 @@ El desplegable lista las capas de fog del mapa actual por nombre. En el juego el
 
 Editar un comando **Set Move Route** abre un editor de rutas: pulsa el campo del objetivo para elegir **This Event**, **Player** u otro evento del mapa actual en el diálogo del selector de eventos (los eventos aparecen con su id y nombre), activa Repeat / Skip If Cannot Move y construye la lista de acciones de movimiento.
 
+El editor rediseñado mantiene la ruta en un panel izquierdo de **Secuencia**, con un contador de pasos, y coloca los controles para insertar acciones en un área desplazable a la derecha. Las acciones se agrupan en **Movimiento**, **Orientación**, **Ritmo de ruta**, **Comportamiento**, **Apariencia y frames** y **Otras acciones**. Arrastra el separador entre los paneles para cambiar el ancho de la lista, o enfócalo y pulsa **← / →**; en ventanas pequeñas los grupos de acciones pasan a una sola columna.
+
 La lista de acciones de movimiento se edita igual que la lista de comandos principal:
 
 - **Selecciona** con un clic; **Shift+clic** extiende la selección y **Ctrl+clic** añade o quita acciones individuales — todo lo de abajo actúa sobre toda la selección.
