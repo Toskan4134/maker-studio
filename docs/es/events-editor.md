@@ -229,7 +229,7 @@ Si tienes mods instalados que añaden sus propios comandos de evento, aparecen p
 
 Haz doble clic en un comando para editar sus parámetros. Muchos comandos tienen formularios tipados dedicados (Show Text, Control Switches, Conditional Branch, etc.). Los comandos que aún no tienen un formulario tipado muestran un editor JSON en bruto en su lugar.
 
-**Control Variables — origen Character.** Elige **Character** para leer un campo de un personaje. El formulario empieza con **Event ID -1** (**Player**) y **Field Map X**; `0` significa **This Event** y `1+` significa un evento del mapa actual. Estos valores también se restauran al cambiar a Character, para que el valor del origen anterior no se reutilice como id de evento.
+**Control Variables — origen Character.** Elige **Character** para leer un campo de un personaje. Pulsa el campo del objetivo para abrir el diálogo del selector de eventos, donde aparecen **Player**, **This Event** y los eventos del mapa actual; los eventos muestran su id con ceros y su nombre, por ejemplo `003: Guardia`. El objetivo inicial es **Player** (`-1`) y el campo es **Map X**; `0` significa **This Event** y `1+` significa un evento del mapa actual. Estos valores también se restauran al cambiar a Character, para que el valor del origen anterior no se reutilice como id de evento.
 
 **Seleccionar varios comandos con el teclado**: mantén **Shift** y pulsa ↑ / ↓ para
 ampliar o reducir la selección desde donde empezaste, igual que con Shift+clic. Copiar,
@@ -330,7 +330,7 @@ El desplegable lista las capas de fog del mapa actual por nombre. En el juego el
 
 ### Set Move Route
 
-Editar un comando **Set Move Route** abre un editor de rutas: elige el objetivo (This Event, Player u otro evento), activa Repeat / Skip If Cannot Move y construye la lista de acciones de movimiento.
+Editar un comando **Set Move Route** abre un editor de rutas: pulsa el campo del objetivo para elegir **This Event**, **Player** u otro evento del mapa actual en el diálogo del selector de eventos (los eventos aparecen con su id y nombre), activa Repeat / Skip If Cannot Move y construye la lista de acciones de movimiento.
 
 La lista de acciones de movimiento se edita igual que la lista de comandos principal:
 
