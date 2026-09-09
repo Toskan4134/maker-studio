@@ -229,6 +229,8 @@ Si tienes mods instalados que añaden sus propios comandos de evento, aparecen p
 
 Haz doble clic en un comando para editar sus parámetros. Muchos comandos tienen formularios tipados dedicados (Show Text, Control Switches, Conditional Branch, etc.). Los comandos que aún no tienen un formulario tipado muestran un editor JSON en bruto en su lugar.
 
+**Control Variables — origen Character.** Elige **Character** para leer un campo de un personaje. El formulario empieza con **Event ID -1** (**Player**) y **Field Map X**; `0` significa **This Event** y `1+` significa un evento del mapa actual. Estos valores también se restauran al cambiar a Character, para que el valor del origen anterior no se reutilice como id de evento.
+
 **Seleccionar varios comandos con el teclado**: mantén **Shift** y pulsa ↑ / ↓ para
 ampliar o reducir la selección desde donde empezaste, igual que con Shift+clic. Copiar,
 cortar, pegar, borrar y reordenar con Alt+↑/↓ actúan entonces sobre todo el bloque.

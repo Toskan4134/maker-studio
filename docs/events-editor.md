@@ -223,6 +223,8 @@ If you have mods installed that add their own event commands, extra tabs marked 
 
 Double-click a command to edit its parameters. Many commands have dedicated typed forms (Show Text, Control Switches, Conditional Branch, and so on). Commands that do not yet have a typed form show a raw JSON editor instead.
 
+**Control Variables — Character source.** Choose **Character** to read a field from a character. The form starts with **Event ID -1** (**Player**) and **Field Map X**; `0` means **This Event**, and `1+` means an event on the current map. These defaults are also restored when switching into Character, so a value from the previous source is not reused as an event id.
+
 **Selecting several commands from the keyboard**: hold **Shift** and press ↑ / ↓ to
 grow or shrink the selection from where you started, the same as Shift+clicking. Copy,
 cut, paste, delete and Alt+↑/↓ reorder then act on the whole run.
