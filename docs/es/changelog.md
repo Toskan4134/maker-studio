@@ -2,6 +2,22 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.6.1
+
+Una versión del editor de eventos: el editor de Move Route se reconstruye alrededor de un panel de secuencia y acciones agrupadas, los objetivos de evento se eligen de una lista de eventos de verdad, y los selectores recuerdan dónde estabas.
+
+### Novedades
+- 🧭 **Un nuevo editor de Move Route** — la ruta vive en un panel **Secuencia** a la izquierda con el recuento de pasos en vivo, y las acciones quedan a la derecha agrupadas en **Movimiento**, **Orientación**, **Tiempos de ruta**, **Comportamiento**, **Apariencia y fotogramas** y **Otras acciones**. Arrastra el divisor (o enfócalo y pulsa **← / →**) para redimensionar la lista de secuencia; en ventanas pequeñas los grupos se pliegan a una columna. Las acciones de movimiento tienen su propio portapapeles — **Ctrl+C / Ctrl+X / Ctrl+V** nunca pisan los comandos de evento copiados — y los pasos nuevos o pegados caen encima de la selección, siempre dentro de la ruta.
+- 🎯 **Los objetivos de evento salen de un selector de eventos** — **Set Move Route** y **Control Variables → Character** abren el diálogo selector de eventos en vez de un campo de id: **Player**, **This Event** y todos los eventos del mapa actual, con id rellenado y nombre (`003: Guard`).
+- ⌨️ **Los selectores recuerdan y navegan** — los selectores de switch y variable preseleccionan la entrada que usaste o renombraste por última vez en el proyecto, **↑ / ↓** recorre la lista filtrada, y en el selector de gráficos **↑ / ↓** selecciona y previsualiza el gráfico anterior o siguiente tras hacer clic en la lista de carpetas o favoritos. Los selectores con búsqueda se abren con el foco donde esperas, y **Play SE** arranca directamente desde el selector de audio.
+- 🔲 **Seleccionar el comando de apertura de un bloque resalta el bloque entero**, filas anidadas incluidas, así lo que ves seleccionado es exactamente lo que borrar, copiar, arrastrar y reordenar van a tocar.
+
+### Correcciones
+- 🔀 **Corregida la inserción de un Show Choices antes de otro** — el comando nuevo recibe ahora su propio bloque When / End, el bloque existente y lo que hubiera entre medias quedan intactos, y cancelar borra solo el bloque provisional.
+- 🔢 **Corregido que Control Variables → Character arrastrara el valor de la fuente anterior como id de evento** — al cambiar a Character se restauran ahora **Player** y **Map X**.
+- 📝 **Corregidas las vistas previas de comandos multilínea al editar** — las filas de continuación se mantienen intactas, la vista previa conserva el prefijo y la sangría de cada línea, y las etiquetas largas se desplazan al pasar el ratón sin volver a renderizar la lista con cada tecla.
+- ⌨️ **Corregidos los atajos de la lista de comandos y de la ruta de movimiento que dejaban de responder** tras usar la barra de herramientas o hacer clic en un hueco vacío — siguen activos por todo el editor, cediendo igualmente ante campos de texto y diálogos.
+
 ## v1.6.0
 
 Cada comando de evento se describe ahora en la lista, con su propio color — incluidos los comandos de batalla. La ventana de Scripts edita cualquier fuente de scripts que tenga el proyecto, los registros enteros se copian y pegan por todo el editor, y los preajustes aprenden multiselección y una importación que pregunta antes de sobrescribir.

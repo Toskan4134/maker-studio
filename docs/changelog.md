@@ -2,6 +2,22 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.6.1
+
+An event-editor release: the Move Route editor is rebuilt around a sequence panel and grouped actions, event targets are picked from a real event list, and the pickers remember where you were.
+
+### Additions
+- 🧭 **A new Move Route editor** — the route lives in a **Sequence** panel on the left with a live step count, and the actions sit on the right grouped into **Movement**, **Orientation**, **Route timing**, **Behavior**, **Appearance & frames** and **Other actions**. Drag the divider (or focus it and press **← / →**) to resize the sequence list; on small windows the groups collapse to one column. Move actions get their own clipboard — **Ctrl+C / Ctrl+X / Ctrl+V** never overwrite copied event commands — and new or pasted steps land above the selection, always inside the route.
+- 🎯 **Event targets come from an event picker** — **Set Move Route** and **Control Variables → Character** open the event picker dialog instead of a raw id field: **Player**, **This Event** and every event on the current map, shown with padded id and name (`003: Guard`).
+- ⌨️ **Pickers remember and navigate** — the switch and variable pickers preselect the entry you last used or renamed in the project, **↑ / ↓** walks the filtered list, and in the graphic picker **↑ / ↓** selects and previews the previous or next graphic after clicking the folder or favourites list. Searchable pickers open with the focus where you expect it, and **Play SE** starts straight from the audio selector.
+- 🔲 **Selecting a block's opening command highlights the whole block**, nested rows included, so what you see selected is exactly what delete, copy, drag and reorder will touch.
+
+### Fixes
+- 🔀 **Fixed inserting a Show Choices before another one** — the new command now gets its own When / End block, the existing block and anything between them stay untouched, and cancelling removes only the provisional block.
+- 🔢 **Fixed Control Variables → Character carrying over the previous source's value as an event id** — switching to Character now restores **Player** and **Map X**.
+- 📝 **Fixed multiline command previews while editing** — continuation rows stay intact, the preview keeps each line's prefix and indentation, and long labels scroll on hover without re-rendering the list on every keystroke.
+- ⌨️ **Fixed command-list and move-route shortcuts going quiet** after using the toolbar or clicking empty space — they stay active across the whole editor, still yielding to text inputs and dialogs.
+
 ## v1.6.0
 
 Every event command describes itself in the list now, in its own colour — battle commands included. The Scripts window edits any script source the project actually has, whole records copy and paste across the editor, and presets learn multi-selection and an import that asks before overwriting.
