@@ -149,7 +149,7 @@ Define la apariencia visual del evento:
 
 La vista previa funciona como el mapa: **Ctrl+rueda** para hacer zoom hacia el cursor, **rueda / Shift+rueda** para desplazar arriba-abajo / izquierda-derecha, y **arrastrar con botón central** o **Espacio+arrastrar** para desplazar (la imagen siempre queda a la vista). Haz clic en una celda para elegir su Row/Col; el botón **Fit** restablece la vista. Útil para alinear celdas en hojas grandes o densas.
 
-Las imágenes muy altas —un tileset completo tiene cientos de filas— se abren **ajustadas al ancho y empezando por arriba**, en vez de comprimidas en una sola pantalla donde no se distingue nada. Desplázate hacia abajo para ver el resto.
+Las imágenes muy altas —un tileset completo tiene cientos de filas— se abren **ajustadas al ancho**. Al volver a abrir un gráfico de tileset con una selección guardada, la vista empieza en ese bloque de tiles y sus vecinos. Una barra vertical junto a la vista previa permite recorrer toda la hoja arrastrándola y se mantiene sincronizada con la rueda, el desplazamiento y el zoom. Sin una selección guardada, empieza arriba.
 
 #### Usar tiles de un tileset como gráfico
 

@@ -145,7 +145,7 @@ Set the event's visual appearance:
 
 The preview works like the map: **Ctrl+scroll** to zoom toward the cursor, **scroll / Shift+scroll** to pan up-down / left-right, and **middle-drag** or **Space+drag** to pan (the image always stays in view). Click a cell to pick its Row/Col; the **Fit** button resets the view. Handy for lining up cells on large or dense sheets.
 
-Very tall images — a full tileset is hundreds of rows — open **fitted to the width, starting at the top**, rather than squeezed onto one screen where nothing is readable. Scroll down to reach the rest.
+Very tall images — a full tileset is hundreds of rows — open **fitted to the width**. When you reopen a tileset graphic with a saved tile selection, the preview starts on that tile block and its neighbours. A vertical bar beside the preview lets you drag through the full sheet; it stays in sync with the wheel, pan and zoom. Without a saved selection, it starts at the top.
 
 #### Using tiles from a tileset as the graphic
 
