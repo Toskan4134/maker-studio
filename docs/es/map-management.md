@@ -164,6 +164,14 @@ Map y luego Export Map y luego Export as GIF crea un GIF animado mostrando las a
 
 Map y luego Export Map y luego Export as WebP crea un WebP animado. WebP admite el espacio de color completo de 24 bits, así que conserva los degradados de sombra y los colores de fog que el GIF no puede. Antes de guardar, el editor pregunta si la animación debe repetirse para siempre o reproducirse una vez y parar — elige "Play once" si piensas incrustar el archivo en algún sitio que no deba repetir. La salida es sin pérdida por defecto.
 
+### Eventos en las imágenes exportadas
+
+PNG, GIF y WebP hacen la misma pregunta antes de guardar, con tres respuestas:
+
+- **Eventos visibles** — dibuja cada evento con el gráfico de su página activa, y nada en absoluto para los que un jugador nunca vería: los que no tienen gráfico y aquellos cuyo archivo de gráfico falta. Esto es lo que el mapa se ve de verdad.
+- **Todos los eventos** — lo mismo, más un recuadro naranja sobre cada evento invisible. Útil cuando quieres que la imagen sirva además de mapa de dónde están tus eventos.
+- **Sin eventos** — solo el escenario.
+
 ## Importar mapas
 
 Map y luego Import Map from JSON carga un archivo JSON exportado previamente como un mapa nuevo en tu proyecto.

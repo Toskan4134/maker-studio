@@ -164,6 +164,14 @@ Map then Export Map then Export as GIF creates an animated GIF showing autotile 
 
 Map then Export Map then Export as WebP creates an animated WebP. WebP supports the full 24-bit color space, so it preserves shadow gradients and fog colors GIF cannot. Before saving, the editor asks whether the animation should loop forever or play once and stop — pick "Play once" if you intend to embed the file somewhere that should not repeat. Output is lossless by default.
 
+### Events in exported images
+
+PNG, GIF and WebP all ask the same question before saving, with three answers:
+
+- **Visible events** — draws each event with its active page's graphic, and nothing at all for the ones a player would never see: events with no graphic, and events whose graphic file is missing. This is what the map actually looks like.
+- **All events** — the same, plus an orange box on every invisible event. Use it when you want the image to double as a map of where your events sit.
+- **No events** — scenery only.
+
 ## Importing Maps
 
 Map then Import Map from JSON loads a previously exported JSON file as a new map in your project.
