@@ -29,7 +29,7 @@ You will see the badge on, for example:
 - **Map → Change Battleback…** — the battleback is stored on the map (not on its tileset), and the plugin is what applies it in-game, so this item and the version submenu's "(this version)" entry both carry the badge. (Panoramas are no longer changed from a menu — they are edited as the **Panorama Layers** group in the Layer panel; see the [Layers Guide](layers.md#fog-panorama-and-custom-layer-groups).)
 - Layer panel rows for the fog/panorama layer groups (and any mod-added groups), shadow groups, and extra (non-native) tile layers.
 - The **Autotiles** section of the Tile Palette — Maker Studio uses its own autotile system that is not tied to a map's tileset, so **all** painted autotiles need the plugin in-game (the badge's tooltip says so). Also a small badge over the tileset search box while you are browsing a tileset other than the map's own (cross-tileset painting).
-- The **Tile Properties** panel header, and plugin-dependent event command forms (Change Map Settings when its type is set to **Fog**, fog color/opacity, the move-route **Set Frame** section). In tight spots — like the Sheet Cols/Rows fields in the graphic picker — the badge appears as a small dot instead.
+- The **Tile Properties** panel header, and plugin-dependent event command forms (Change Map Settings when its type is set to **Fog** or **Panorama**, fog color/opacity, the move-route **Set Frame** section). In tight spots — like the Sheet Cols/Rows fields in the graphic picker — the badge appears as a small dot instead.
 
 If you use these features in a game that does not have the plugin, the game simply ignores them (or they are unavailable) at runtime — your maps still load fine in stock RPG Maker XP.
 

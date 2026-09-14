@@ -312,15 +312,24 @@ Every graphic picker has a live preview and favourites: the event page **Graphic
 
 The same star works everywhere, so a character you favourite on an event's page is also pinned the next time you pick a Move Route graphic.
 
-### Fog Commands and Multiple Fog Layers
+### Fog and Panorama Commands, and Multiple Layers
 
-Because a Maker Studio map can have **several fog layers** (not just the single tileset fog of stock RPG Maker XP), the three fog-related event commands let you pick **which fog layer** to affect:
+Because a Maker Studio map can have **several fog and panorama layers** (not just the single tileset fog and panorama of stock RPG Maker XP), these event commands let you pick **which layer** to affect:
 
-- **Change Map Settings** (when the type is set to **Fog**) — pick the fog layer; the form pre-fills with that layer's current properties (graphic, hue, blend type, zoom, scroll X/Y, follow-camera), which you can then edit. (Opacity is handled by Change Fog Opacity below.)
+- **Change Map Settings** (type **Fog** or **Panorama**) — pick the layer, then edit the full property set: graphic, hue, opacity, blend type, zoom, scroll X/Y, follow-camera and parallax. Picking a layer pre-fills every field with that layer's current values, so you start from what the map actually looks like and change only what you want. Type **Battleback** just picks the backdrop, as in stock RPG Maker XP.
 - **Change Fog Color Tone** — pick the fog layer, then set the tone. The **Frames** field fades the tone in gradually over that many frames (0 = instant).
-- **Change Fog Opacity** — pick the fog layer, then set the opacity. The **Frames** field fades the opacity gradually (0 = instant).
+- **Change Fog Opacity** — pick the fog layer, then set the opacity. The **Frames** field fades the opacity gradually (0 = instant). Change Map Settings also sets opacity, but instantly — use this one when you want the fade.
 
-The dropdown lists the current map's fog layers by name. In-game the command changes that specific layer; if it can't find the layer it falls back to the map's main fog. These commands only affect **fog** layers — there are no event commands for panorama or custom layer groups (panoramas are edited in the Layer panel, battlebacks from the Map menu — see [Map Management](map-management.md#panorama-layers-and-battleback)).
+The dropdown lists the current map's layers of the chosen type by name. In-game the command changes that specific layer; if it can't find the layer it falls back to the map's main fog or panorama.
+
+**Creating a layer during the game.** The last entry in the dropdown is **New layer (created in-game)**. Pick it and the command creates the layer when it runs, so a map that has *no* fog (or no panorama) at all can gain one — a storm rolling in, a sky appearing. Set the graphic and the rest of the properties as usual. The new layer lives for as long as the player stays around that map: it is not saved into the map file, and it is gone once the player travels far enough away. To make it permanent, add the layer in the Layer panel instead.
+
+Picking that option also shows **Reuse this layer when the command runs again**, which decides what happens the second time the event fires:
+
+- **Ticked** (the default) — the command always drives the same layer. Running it again re-applies the settings instead of piling up copies, and because the layer has a fixed **Layer id**, a later Change Fog Opacity or Change Fog Color Tone can target it. The id is filled in for you with a free one; change it only if you want two commands to share a layer.
+- **Unticked** — every activation adds *another* layer, numbered 1, 2, 3… as they appear, so Change Fog Opacity or Tone can still address one by that number. Good for something that should accumulate; just remember a parallel or autorun page fires constantly and will keep stacking layers for as long as it runs.
+
+Tone and opacity commands still only affect **fog** layers. Custom layer groups have no event commands (they are edited in the Layer panel; battlebacks come from the Map menu — see [Map Management](map-management.md#panorama-layers-and-battleback)).
 
 ### Set Move Route
 

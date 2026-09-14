@@ -318,15 +318,24 @@ Cada selector de gráficos tiene vista previa en vivo y favoritos: el **Graphic*
 
 La misma estrella funciona en todas partes, así que un personaje que marcas en la página de un evento también queda fijado la próxima vez que elijas un gráfico de ruta de movimiento.
 
-### Comandos de fog y múltiples capas de fog
+### Comandos de fog y panorama, y múltiples capas
 
-Como un mapa de Maker Studio puede tener **varias capas de fog** (no solo el fog único del tileset de RPG Maker XP estándar), los tres comandos de evento relacionados con fog te dejan elegir **qué capa de fog** afectar:
+Como un mapa de Maker Studio puede tener **varias capas de fog y de panorama** (no solo el fog y el panorama únicos del tileset de RPG Maker XP estándar), estos comandos de evento te dejan elegir **qué capa** afectar:
 
-- **Change Map Settings** (cuando el tipo es **Fog**) — elige la capa de fog; el formulario se rellena previamente con las propiedades actuales de esa capa (gráfico, hue, tipo de mezcla, zoom, scroll X/Y, follow-camera), que luego puedes editar. (La opacidad la gestiona Change Fog Opacity, abajo.)
+- **Change Map Settings** (tipo **Fog** o **Panorama**) — elige la capa y edita el conjunto completo de propiedades: gráfico, hue, opacidad, tipo de mezcla, zoom, scroll X/Y, follow-camera y paralaje. Al elegir una capa se rellenan todos los campos con sus valores actuales, así que partes de cómo se ve el mapa realmente y cambias solo lo que quieras. El tipo **Battleback** solo elige el fondo de batalla, igual que en RPG Maker XP estándar.
 - **Change Fog Color Tone** — elige la capa de fog, luego define el tono. El campo **Frames** funde el tono gradualmente durante ese número de frames (0 = instantáneo).
-- **Change Fog Opacity** — elige la capa de fog, luego define la opacidad. El campo **Frames** funde la opacidad gradualmente (0 = instantáneo).
+- **Change Fog Opacity** — elige la capa de fog, luego define la opacidad. El campo **Frames** funde la opacidad gradualmente (0 = instantáneo). Change Map Settings también define la opacidad, pero de golpe — usa este cuando quieras el fundido.
 
-El desplegable lista las capas de fog del mapa actual por nombre. En el juego el comando cambia esa capa concreta; si no encuentra la capa, vuelve al fog principal del mapa. Estos comandos solo afectan a capas de **fog** — no hay comandos de evento para panorama o grupos de capa personalizados (los panoramas se editan en el panel de capas, los battlebacks desde el menú Map — consulta [Gestión de mapas](map-management.md#panorama-layers-and-battleback)).
+El desplegable lista las capas del mapa actual del tipo elegido, por nombre. En el juego el comando cambia esa capa concreta; si no encuentra la capa, vuelve al fog o al panorama principal del mapa.
+
+**Crear una capa durante el juego.** La última entrada del desplegable es **Nueva capa (creada en el juego)**. Elígela y el comando crea la capa al ejecutarse, así que un mapa que *no* tiene ningún fog (o ningún panorama) puede obtener uno — una tormenta que se acerca, un cielo que aparece. Define el gráfico y el resto de propiedades como siempre. La capa nueva vive mientras el jugador siga por ese mapa: no se guarda en el archivo del mapa y desaparece cuando el jugador se aleja lo suficiente. Para que sea permanente, añade la capa desde el panel de capas.
+
+Al elegir esa opción aparece además **Reutilizar esta capa cuando el comando se vuelva a ejecutar**, que decide qué pasa la segunda vez que salta el evento:
+
+- **Marcado** (por defecto) — el comando controla siempre la misma capa. Volver a ejecutarlo reaplica los ajustes en vez de acumular copias, y como la capa tiene un **Id de la capa** fijo, un Change Fog Opacity o un Change Fog Color Tone posterior pueden apuntarla. El id se rellena solo con uno libre; cámbialo solo si quieres que dos comandos compartan una capa.
+- **Sin marcar** — cada activación añade *otra* capa, numeradas 1, 2, 3… según aparecen, así que Change Fog Opacity o Tone pueden seguir apuntando a una por ese número. Está bien para algo que deba acumularse; solo recuerda que una página en paralelo o autorun salta constantemente y seguirá apilando capas mientras se ejecute.
+
+Los comandos de tono y opacidad siguen afectando solo a capas de **fog**. Los grupos de capa personalizados no tienen comandos de evento (se editan en el panel de capas; los battlebacks vienen del menú Map — consulta [Gestión de mapas](map-management.md#panorama-layers-and-battleback)).
 
 ### Set Move Route
 
