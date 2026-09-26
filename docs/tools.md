@@ -7,7 +7,7 @@
 | Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
 | Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Shift+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
 | Fill | F | Flood-fill a contiguous area with the selected tile — or with the selected multi-tile pattern, repeated across the filled area. |
-| Wand | Shift+S | Select matching tiles on the active layer. Continuous selects only the connected region; turn it off to select every match on that layer. |
+| Wand | Shift+S | Select matching tiles on the active layer. Ctrl/Meta adds matches to the current selection; Shift removes them; no modifier replaces it. Continuous selects only the connected region; turn it off to select every match on that layer. |
 | Magic Eraser | Shift+E | Erase tiles matching the tile under the cursor on every selected tile layer. Continuous limits each layer to the connected region; turn it off to erase all matches on each layer. |
 | Rectangle | R | Click and drag to fill a rectangular area. Tile pattern preview shown while dragging. |
 | Eyedropper | I | Pick a tile and its properties from the canvas. |

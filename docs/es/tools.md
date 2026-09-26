@@ -7,7 +7,7 @@
 | Brush | B | Pinta tiles. Una vista previa translúcida del/los tile(s) que vas a colocar sigue al cursor. Admite estampas multi-tile y tamaño de pincel ajustable. Shift+clic dibuja una línea desde la última posición pintada. Ctrl+arrastrar bloquea el pintado a un solo eje. |
 | Eraser | E | Borra tiles dejándolos vacíos. Tiene su propio tamaño de borrador ajustable. Shift+clic dibuja una línea desde la última posición borrada. Ctrl+arrastrar bloquea el borrado a un solo eje. |
 | Fill | F | Rellena por inundación un área contigua con el tile seleccionado — o con el patrón multi-tile seleccionado, repetido por toda el área. |
-| Wand | Shift+S | Selecciona los tiles coincidentes en la capa activa. Con Continuo, selecciona solo la región conectada; desactívalo para seleccionar todas las coincidencias de esa capa. |
+| Wand | Shift+S | Selecciona los tiles coincidentes en la capa activa. Ctrl/Meta añade las coincidencias a la selección actual; Shift las elimina; sin modificador, la reemplaza. Con Continuo, selecciona solo la región conectada; desactívalo para seleccionar todas las coincidencias de esa capa. |
 | Borrador mágico | Shift+E | Borra los tiles que coinciden con el situado bajo el cursor en todas las capas de tiles seleccionadas. Con Continuo, limita cada capa a la región conectada; desactívalo para borrar todas las coincidencias de cada capa. |
 | Rectangle | R | Haz clic y arrastra para rellenar un área rectangular. Se muestra una vista previa del patrón de tiles mientras arrastras. |
 | Eyedropper | I | Toma un tile y sus propiedades desde el lienzo. |
