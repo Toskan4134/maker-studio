@@ -106,7 +106,7 @@ most six priorities) simply does nothing. All ten are rebindable in Help → Key
 On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J act on the selected event instead — copy, cut, or duplicate a whole event. Ctrl+V (and Ctrl+J's arm) shows a preview ghost that follows the cursor; click to drop the copy (Escape to cancel). See [Events Editor](events-editor.md#copying-events).
 
 | Ctrl+Shift+C | Copy all layers |
-| Ctrl+Shift+V | Paste to original layers |
+| Ctrl+Shift+V | Paste in selected layers |
 | Ctrl+Shift+X | Cut all layers |
 | Ctrl + click/drag | Add tiles to selection |
 | Shift + click/drag | Remove tiles from selection |

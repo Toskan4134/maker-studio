@@ -205,10 +205,12 @@ When you move a selection with the Select tool, the selection marquee now follow
 
 ## Copy and Paste
 
-- Ctrl+C copies the selected area with full tile data (including per-tile properties on extended layers).
-- Ctrl+Shift+C copies the selection across all layers at once.
-- Ctrl+V enters paste preview mode. Move your cursor to position the paste, then click to commit.
-- Ctrl+Shift+V (Paste All Layers) pastes onto the original source layers each tile was copied from, instead of the active layer — same preview-then-click flow.
+- Ctrl+C copies the selected cells from the tile layers selected when you copy, including tile properties and empty cells. With one source layer, Ctrl+V pastes to the active layer; with several, it pastes only the source layer with the same index as the active layer.
+- Ctrl+X cuts the selected cells from the selected tile layers. Delete clears those cells from the selected tile layers. Moving a selection moves its contents on those layers too, including hidden layers.
+- Ctrl+V enters paste preview mode. Move your cursor to position the paste, then click to commit. Empty cells inside the selection replace destination cells; unselected cells in an irregular selection stay untouched.
+- Ctrl+Shift+C / Ctrl+Shift+X copy or cut the selection across every native and extended tile layer, while respecting the selection shape.
+- Ctrl+Shift+V (Paste in Selected Layers) maps copied layers, top to bottom, onto selected destination layers in panel order. Extra destinations stay unchanged; copied layers without a destination are skipped with a warning.
+- Duplicate copies all selected tile layers and opens the advanced paste preview. Each move, cut, delete, or paste across layers is one undo step.
 - Press Escape to cancel the paste preview.
 - **Between two open projects:** enable **Edit → Advanced Clipboard → Cross-Project Clipboard** in both windows, then a tile (or all-layer) copy can be pasted into another project's window. Off by default.
 

@@ -203,10 +203,12 @@ Cuando mueves una selección con la herramienta Select, el marco de selección a
 
 ## Copiar y pegar
 
-- Ctrl+C copia el área seleccionada con datos completos de tile (incluidas las propiedades por tile en capas extendidas).
-- Ctrl+Shift+C copia la selección de todas las capas a la vez.
-- Ctrl+V entra en modo de vista previa de pegado. Mueve el cursor para posicionar el pegado, luego haz clic para confirmar.
-- Ctrl+Shift+V (Paste All Layers) pega en las capas de origen originales de las que se copió cada tile, en lugar de en la capa activa — mismo flujo de vista previa y clic.
+- Ctrl+C copia las casillas seleccionadas de las capas de tiles seleccionadas en ese momento, incluidas las propiedades y casillas vacías. Si se copia una capa, Ctrl+V pega en la capa activa; si se copian varias, solo pega la capa de origen que tenga el mismo índice que la activa.
+- Ctrl+X corta las casillas seleccionadas de las capas de tiles seleccionadas. Supr borra esas casillas de las capas seleccionadas. Al mover una selección también se mueven sus contenidos en esas capas, incluidas las ocultas.
+- Ctrl+V entra en vista previa de pegado. Mueve el cursor para posicionarlo y haz clic para confirmar. Las casillas vacías dentro de la selección reemplazan las casillas de destino; las zonas sin seleccionar de una selección irregular quedan intactas.
+- Ctrl+Shift+C / Ctrl+Shift+X copian o cortan la selección de todas las capas de tiles nativas y extendidas, respetando la forma de la selección.
+- Ctrl+Shift+V (**Paste in Selected Layers**) reparte las capas copiadas, de arriba abajo, entre las capas de destino seleccionadas según el orden del panel. Los destinos sobrantes quedan intactos; las capas copiadas sin destino se omiten y se muestra un aviso.
+- Duplicar copia todas las capas de tiles seleccionadas y abre la vista previa de pegado avanzado. Cada movimiento, corte, borrado o pegado multicapa se deshace en un solo paso.
 - Pulsa Escape para cancelar la vista previa de pegado.
 - **Entre dos proyectos abiertos:** activa **Edit → Advanced Clipboard → Cross-Project Clipboard** en ambas ventanas, y entonces una copia de tile (o de todas las capas) se puede pegar en la ventana de otro proyecto. Desactivado por defecto.
 
