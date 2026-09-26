@@ -41,13 +41,13 @@ La barra de herramientas está en la parte superior de la ventana y da acceso r�
 
 De izquierda a derecha, los grupos de la barra son:
 
-`Save · Run · Saves · Sim Map` | `Brush · Eraser · Fill · Rectangle · Eyedropper · Select · Pan` | `Zoom` | `Database · Scripts` | `Versions` | `Grid · Col · Dim` | `Theme`
+`Save · Run · Saves · Sim Map` | `Brush · Eraser/Borrador mágico · Fill · Rectangle · Eyedropper · Select/Wand · Pan` | `opciones de herramienta` | `Zoom` | `Database · Scripts` | `Versions` | `Grid · Col · Dim` | `Theme`
 
 - **Save, Run** — **Save** escribe el mapa actual (Shift+Click guarda todos los mapas abiertos); **Run** lanza el juego (en Linux, Shift+Click te deja elegir el prefijo Proton/Wine o, si está disponible, una build nativa de Linux). (Crear un mapa nuevo ahora está en la cabecera del panel Maps — ver el Árbol de mapas más abajo.)
 - **Saves** — aparece tras el primer Run; abre la carpeta donde el juego guarda sus partidas. En Windows es la carpeta de guardado nativa; en macOS y Linux es la carpeta dentro del prefijo Wine/Proton en el que se ejecutó el juego, o — tras una ejecución con la build nativa de Linux — la propia carpeta de guardado de Linux del juego. Consulta [Ejecutar el juego](map-management.md#running-the-game).
 - **Sim Map** — abre el [Simulador de juego](game-simulator.md) en el mapa actual con la entrada del jugador activada.
-- **Tools** — las siete herramientas de dibujo (Brush, Eraser, Fill, Rectangle, Eyedropper, Select, Pan), mostradas como iconos. Pasa el ratón sobre cualquiera para ver su nombre y su atajo.
-- **Herramienta Brush** — pasa el ratón para ver un popover con un deslizador de tamaño, un **conmutador rápido de pinceles** (tus presets de Custom Shape Brush guardados más Default/Custom) y un acceso **Brush Editor…**. Cuando hay un pincel personalizado activo, un indicador compacto junto a las herramientas muestra el nombre del pincel con una ✕ para limpiarlo. Consulta [Custom Shape Brush](tools.md#custom-shape-brush).
+- **Tools** — las herramientas de dibujo aparecen en botones del mismo ancho, con el icono centrado. Select/Wand y Eraser/Borrador mágico comparten un botón que conserva el icono de la herramienta elegida; un chevrón enmarcado junto al icono indica que hay más herramientas. Al pasar el cursor se abre un menú con el icono, nombre y atajo de cada opción. Brush también muestra un chevrón enmarcado para indicar sus opciones. El tamaño y las demás opciones aparecen junto a la herramienta activa. **Continuo** solo aparece con Fill, Wand y Borrador mágico.
+- **Herramienta Brush** — su popover tiene un **conmutador rápido de pinceles** (presets guardados de Custom Shape Brush más Default/Custom) y un acceso **Brush Editor…**. El control de tamaño de la herramienta activa aparece junto a las herramientas. Cuando hay un pincel personalizado activo, un indicador compacto junto a las herramientas muestra el nombre del pincel con una ✕ para limpiarlo. Consulta [Custom Shape Brush](tools.md#custom-shape-brush).
 - **Zoom** — muestra el porcentaje de zoom actual; pasa el ratón para ver los controles de acercar/alejar.
 - **Database / Scripts** — abren la ventana de [Database](database.md) y el [editor de Scripts](scripts.md). (También disponibles en el menú **Tools**.) Switches, Variables y Tilesets ya no tienen sus propios botones en la barra — ahora son pestañas **dentro de la Database** (donde aún puedes renombrar entradas en línea, añadir más ranuras y editar tilesets).
 - **Versions** — muestra la [versión de mapa](map-versions.md) actual como una insignia (p. ej. `V2/3`) y abre el Version Manager. Relevante cuando un mapa tiene versiones extra.
@@ -63,7 +63,8 @@ El Árbol de mapas muestra una vista jerárquica de todos los mapas de tu proyec
 
 - Hacer doble clic en el nombre de un mapa para renombrarlo.
 - Clic derecho para un menú contextual: Open, Rename, Change Tileset, Resize/Shift, Delete.
-- Arrastrar y soltar mapas para reorganizar la jerarquía.
+- Usa **Ctrl+clic** para alternar filas del mapa o **Shift+clic** para seleccionar un rango visible. Arrastra una fila seleccionada para mover juntas todas las raíces seleccionadas y sus descendientes, conservando el orden.
+- Borra los mapas seleccionados con Delete o desde el menú contextual. Si tienen descendientes, elige colocarlos en las posiciones de los mapas borrados o eliminar también los subárboles. La confirmación avisa de mapas abiertos con cambios sin guardar y se hacen copias de seguridad de los archivos borrados.
 - Hacer clic en la flecha de un mapa con hijos para plegarlo. **Las carpetas plegadas siguen plegadas** la próxima vez que abras el proyecto, y el mapa que estabas editando se vuelve a abrir con él — consulta [Abrir mapas](map-management.md#abrir-mapas).
 
 ## Barra de pestañas

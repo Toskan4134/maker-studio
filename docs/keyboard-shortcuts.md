@@ -12,6 +12,8 @@ All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defau
 | R | Rectangle |
 | I | Eyedropper |
 | S | Select |
+| Shift+S | Wand |
+| Shift+E | Magic Eraser |
 | Space (hold) | Pan mode |
 
 ## View Toggles
@@ -235,11 +237,11 @@ On the **Events layer**, the **Select** tool box-selects events: drag a marquee 
 | Ctrl+J | Duplicate the selected map (same as right-click → Duplicate Map) |
 | Delete | Delete the selected map (asks for confirmation, same as right-click → Delete Map) |
 
-These only fire while the Maps panel has focus, so they don't conflict with copying tiles on the canvas. To paste a map **between two Maker Studio windows**, turn on **Edit → Cross-Project Clipboard** first: copy then mirrors to your OS clipboard, and paste reads from it. With the toggle off, copy/paste still works **within the same window** (the copy stays in memory). The pasted map lands directly below the selected map (at the root if no map is selected). See [Map Management](map-management.md#copying-a-map-between-projects).
+In the Maps panel, **Ctrl+click** toggles rows and **Shift+click** selects the visible range. Drag a selected row to move all selected roots together with their descendants. Delete opens choices to keep descendants in the deleted maps' positions or delete them too; the confirmation warns about unsaved open maps. These shortcuts only fire while the Maps panel has focus, so they don't conflict with copying tiles on the canvas. To paste a map **between two Maker Studio windows**, turn on **Edit → Cross-Project Clipboard** first: copy then mirrors to your OS clipboard, and paste reads from it. With the toggle off, copy/paste still works **within the same window** (the copy stays in memory). The pasted map lands directly below the selected map (at the root if no map is selected). See [Map Management](map-management.md#copying-a-map-between-projects).
 
 ## Layer Panel (Layer List)
 
-Click a row in the Layer Panel to give it focus.
+Click a row in the Layer Panel to give it focus. **Ctrl/Meta+click** toggles rows and **Shift+click** selects the visible range without changing the active layer. The selected tile rows are edited together by the canvas tools; one stroke has one Undo.
 
 | Default Key | Action |
 |-------------|--------|

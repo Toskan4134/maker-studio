@@ -7,10 +7,14 @@
 | Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
 | Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Shift+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
 | Fill | F | Flood-fill a contiguous area with the selected tile — or with the selected multi-tile pattern, repeated across the filled area. |
+| Wand | Shift+S | Select matching tiles on the active layer. Continuous selects only the connected region; turn it off to select every match on that layer. |
+| Magic Eraser | Shift+E | Erase tiles matching the tile under the cursor on every selected tile layer. Continuous limits each layer to the connected region; turn it off to erase all matches on each layer. |
 | Rectangle | R | Click and drag to fill a rectangular area. Tile pattern preview shown while dragging. |
 | Eyedropper | I | Pick a tile and its properties from the canvas. |
 | Select | S | Click and drag to select an area. Drag the selection to move tiles. Ctrl+drag to add tiles, Shift+drag to remove tiles from selection. |
 | Pan | Space (hold) | Pan the viewport. |
+
+Wand and Magic Eraser use the same **Continuous** option as Fill. Matching compares tile ID and autotile name. The Wand builds its selection on the active layer, and that selection limits painting across all selected tile layers. Brush, Eraser, Fill, Rectangle, and Magic Eraser apply to selected tile layers as one action, so one Undo restores all of them. The toolbar shows only the options used by the active tool.
 
 > **Switching layers clears the selection** whenever you cross into or out of the Events layer: a tile selection is dropped when you go to Events, and selected events are dropped when you go back to a normal layer.
 

@@ -41,13 +41,13 @@ The toolbar sits at the top of the window and provides quick access to common ac
 
 Left to right, the toolbar groups are:
 
-`Save · Run · Saves · Sim Map` | `Brush · Eraser · Fill · Rectangle · Eyedropper · Select · Pan` | `Zoom` | `Database · Scripts` | `Versions` | `Grid · Col · Dim` | `Theme`
+`Save · Run · Saves · Sim Map` | `Brush · Eraser/Magic Eraser · Fill · Rectangle · Eyedropper · Select/Wand · Pan` | `tool options` | `Zoom` | `Database · Scripts` | `Versions` | `Grid · Col · Dim` | `Theme`
 
 - **Save, Run** — **Save** writes the current map (Shift+Click saves every open map); **Run** launches the game (on Linux, Shift+Click lets you choose the Proton/Wine prefix or, if available, a native Linux build). (Creating a new map now lives in the Maps panel header — see Map Tree below.)
 - **Saves** — appears after the first Run; opens the folder where the game stores its save files. On Windows this is the native saves folder; on macOS and Linux it is the folder inside the Wine/Proton prefix the game ran in, or — after a native Linux build run — the game's own Linux save folder. See [Running the Game](map-management.md#running-the-game).
 - **Sim Map** — opens the [Game Simulator](game-simulator.md) on the current map with player input enabled.
-- **Tools** — the seven drawing tools (Brush, Eraser, Fill, Rectangle, Eyedropper, Select, Pan), shown as icons. Hover any of them to see its name and keyboard shortcut.
-- **Brush tool** — hover to reveal a popover with a size slider, a **quick brush switcher** (your saved Custom Shape Brush presets plus Default/Custom), and a **Brush Editor…** opener. When a custom brush is active, a compact indicator next to the tools shows the brush's name with a ✕ to clear it. See [Custom Shape Brush](tools.md#custom-shape-brush).
+- **Tools** — drawing tools appear as same-width buttons with centered icons. Select/Wand and Eraser/Magic Eraser each share a button that keeps the selected tool's icon; a bordered chevron sits beside the icon to show that more tools are available. Hover to open a styled menu with each option's icon, name, and shortcut. The Brush also shows a bordered chevron for its options. Size and other options appear beside the active tool. **Continuous** appears only for Fill, Wand, and Magic Eraser.
+- **Brush tool** — its popover has a **quick brush switcher** (saved Custom Shape Brush presets plus Default/Custom) and a **Brush Editor…** opener. The active tool's size control is shown beside the tools. When a custom brush is active, a compact indicator next to the tools shows the brush's name with a ✕ to clear it. See [Custom Shape Brush](tools.md#custom-shape-brush).
 - **Zoom** — shows the current zoom percentage; hover to reveal zoom in/out controls.
 - **Database / Scripts** — open the [Database](database.md) window and the [Scripts editor](scripts.md). (Also available under the **Tools** menu.) Switches, Variables, and Tilesets no longer have their own toolbar buttons — they are now tabs **inside the Database** (where you can still rename entries inline, add more slots, and edit tilesets).
 - **Versions** — shows the current [map version](map-versions.md) as a badge (e.g. `V2/3`) and opens the Version Manager. Relevant once a map has extra versions.
@@ -63,7 +63,8 @@ The Map Tree shows a hierarchical view of every map in your project. The panel h
 
 - Double-click a map name to rename it.
 - Right-click for a context menu: Open, Rename, Change Tileset, Resize/Shift, Delete.
-- Drag and drop maps to reorganize the hierarchy.
+- Use **Ctrl+click** to toggle map rows or **Shift+click** to select a visible range. Drag a selected row to move all selected roots and their descendants together while preserving order.
+- Delete selected maps with Delete or the context menu. If maps have descendants, choose to promote them into the deleted maps' positions or delete the subtrees too. The confirmation warns about open maps with unsaved changes, and deleted map files are backed up.
 - Click the arrow next to a map that has children to fold it away. **Folded folders stay folded** the next time you open the project, and the map you were last editing reopens with it — see [Opening Maps](map-management.md#opening-maps).
 
 ## Tab Bar

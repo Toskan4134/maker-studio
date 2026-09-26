@@ -7,10 +7,14 @@
 | Brush | B | Pinta tiles. Una vista previa translúcida del/los tile(s) que vas a colocar sigue al cursor. Admite estampas multi-tile y tamaño de pincel ajustable. Shift+clic dibuja una línea desde la última posición pintada. Ctrl+arrastrar bloquea el pintado a un solo eje. |
 | Eraser | E | Borra tiles dejándolos vacíos. Tiene su propio tamaño de borrador ajustable. Shift+clic dibuja una línea desde la última posición borrada. Ctrl+arrastrar bloquea el borrado a un solo eje. |
 | Fill | F | Rellena por inundación un área contigua con el tile seleccionado — o con el patrón multi-tile seleccionado, repetido por toda el área. |
+| Wand | Shift+S | Selecciona los tiles coincidentes en la capa activa. Con Continuo, selecciona solo la región conectada; desactívalo para seleccionar todas las coincidencias de esa capa. |
+| Borrador mágico | Shift+E | Borra los tiles que coinciden con el situado bajo el cursor en todas las capas de tiles seleccionadas. Con Continuo, limita cada capa a la región conectada; desactívalo para borrar todas las coincidencias de cada capa. |
 | Rectangle | R | Haz clic y arrastra para rellenar un área rectangular. Se muestra una vista previa del patrón de tiles mientras arrastras. |
 | Eyedropper | I | Toma un tile y sus propiedades desde el lienzo. |
 | Select | S | Haz clic y arrastra para seleccionar un área. Arrastra la selección para mover tiles. Ctrl+arrastrar para añadir tiles, Shift+arrastrar para quitar tiles de la selección. |
 | Pan | Espacio (mantener) | Desplaza el viewport. |
+
+Wand y Borrador mágico usan la misma opción **Continuo** que Fill. La comparación usa el ID del tile y el nombre del autotile. Wand crea la selección en la capa activa, y esa selección limita el pintado en todas las capas de tiles seleccionadas. Brush, Eraser, Fill, Rectangle y Borrador mágico actúan sobre las capas de tiles seleccionadas como una sola acción, así que un único Deshacer las restaura todas. La barra solo muestra las opciones de la herramienta activa.
 
 > **Cambiar de capa quita la selección** siempre que entras o sales de la capa de eventos: la selección de tiles se descarta al pasar a Eventos, y los eventos seleccionados se descartan al volver a una capa normal.
 

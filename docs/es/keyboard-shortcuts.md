@@ -12,6 +12,8 @@ Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A co
 | R | Rectangle |
 | I | Eyedropper |
 | S | Select |
+| Shift+S | Wand |
+| Shift+E | Borrador mágico |
 | Espacio (mantener) | Modo Pan |
 
 ## Conmutadores de vista
@@ -237,11 +239,11 @@ En la **capa de eventos**, la herramienta **Select** hace selección de caja de 
 | Ctrl+J | Duplicar el mapa seleccionado (igual que clic derecho → Duplicate Map) |
 | Delete | Borrar el mapa seleccionado (pide confirmación, igual que clic derecho → Delete Map) |
 
-Estos solo se activan cuando el panel Mapas tiene el foco, así que no entran en conflicto con la copia de tiles en el lienzo. Para pegar un mapa **entre dos ventanas de Maker Studio**, activa primero **Edit → Cross-Project Clipboard**: la copia se refleja entonces en el portapapeles del SO y el pegado lo lee de ahí. Con el conmutador desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana** (la copia se queda en memoria). El mapa pegado cae justo debajo del mapa seleccionado (en la raíz si no hay ningún mapa seleccionado). Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
+En el panel Mapas, **Ctrl+clic** alterna filas y **Shift+clic** selecciona el rango visible. Arrastra una fila seleccionada para mover juntas todas las raíces seleccionadas con sus descendientes. Delete permite conservar los descendientes en las posiciones de los mapas borrados o borrarlos también; la confirmación avisa de mapas abiertos con cambios sin guardar. Estos atajos solo se activan cuando el panel Mapas tiene el foco, así que no entran en conflicto con la copia de tiles en el lienzo. Para pegar un mapa **entre dos ventanas de Maker Studio**, activa primero **Edit → Cross-Project Clipboard**: la copia se refleja entonces en el portapapeles del SO y el pegado lo lee de ahí. Con el conmutador desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana** (la copia se queda en memoria). El mapa pegado cae justo debajo del mapa seleccionado (en la raíz si no hay ningún mapa seleccionado). Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
 
 ## Panel de capas (lista de capas)
 
-Haz clic en una fila del panel de capas para darle el foco.
+Haz clic en una fila del panel de capas para darle el foco. **Ctrl/Meta+clic** alterna filas y **Shift+clic** selecciona el rango visible sin cambiar la capa activa. Las herramientas del lienzo editan juntas las capas de tiles seleccionadas; un trazo se deshace de una vez.
 
 | Tecla por defecto | Acción |
 |-------------|--------|
