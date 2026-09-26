@@ -26,7 +26,7 @@ Los IDs de mapa escritos dentro de **scripts de Ruby** no se tocan: no hay forma
 
 Haz doble clic en cualquier mapa del árbol de mapas para abrirlo en una pestaña nueva del editor.
 
-Al volver a abrir un proyecto, Maker Studio recupera **exactamente el mismo conjunto de pestañas de mapas que tenías abiertas**, en el mismo orden de izquierda a derecha, y hace activo el mapa que estabas editando — así la sesión continúa donde la dejaste en vez de empezar por el primer mapa de la lista. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue teniendo prioridad y abre solo ese mapa.) También puedes **arrastrar las pestañas de los mapas para reordenarlas**; el nuevo orden es el que se restaura la próxima vez. Las carpetas plegadas del árbol de mapas también vuelven tal y como las dejaste. Todo esto se recuerda por proyecto y solo en este ordenador: no se escribe nada dentro del proyecto.
+Al volver a abrir un proyecto, Maker Studio recupera **exactamente el mismo conjunto de pestañas de mapas**, en el mismo orden de izquierda a derecha e incluidas las fijadas, y hace activo el mapa que estabas editando. El menú contextual de una pestaña permite fijarla o desfijarla; las fijadas permanecen al principio y los cierres en grupo las conservan. Si dejas la barra vacía, seguirá vacía al volver. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue teniendo prioridad y abre solo ese mapa.) También puedes **arrastrar las pestañas de los mapas para reordenarlas dentro de su grupo fijado o normal**; el nuevo orden es el que se restaura la próxima vez. Las carpetas plegadas del árbol de mapas también vuelven tal y como las dejaste. Todo esto se recuerda por proyecto y solo en este ordenador: no se escribe nada dentro del proyecto.
 
 ## Duplicar un mapa
 
@@ -156,7 +156,7 @@ Map y luego Export Map y luego Export as JSON guarda un volcado completo del map
 
 ### Exportar como PNG
 
-Map y luego Export Map y luego Export as PNG renderiza todo el mapa a una imagen PNG a resolución completa.
+Map y luego Export Map y luego Export as PNG renderiza todo el mapa a una imagen PNG a resolución completa. El diálogo de guardado sugiere un nombre con el ID del mapa y la fecha y hora local, por ejemplo `Map001_2026-09-26_18-30-45-123.png`, lo que ayuda a evitar sobrescribir exportaciones hechas en distintos momentos. Puedes editar el nombre antes de guardar.
 
 ### Exportar como GIF (animado)
 
@@ -276,11 +276,11 @@ Ejecutar dos ventanas de Maker Studio en proyectos **distintos** está totalment
 
 ## Confirmación de cierre
 
-Cuando cierras una pestaña que tiene cambios sin guardar, el editor te pide confirmar:
+Haz clic derecho en una pestaña para cerrarla, cerrar las demás, cerrar las pestañas a su derecha, cerrar las guardadas o cerrar todas las normales. Estas acciones en grupo conservan las pestañas fijadas; también puedes cerrar una fijada desde su propia pestaña. Si el grupo incluye mapas sin guardar, una sola confirmación cubre el grupo:
 
-- **Save**: guarda el mapa, luego cierra la pestaña.
-- **Discard**: cierra la pestaña sin guardar.
-- **Cancel**: vuelve al editor sin cerrar.
+- **Save**: guarda todos los mapas con cambios y cierra las pestañas solicitadas cuando hayan terminado todos los guardados.
+- **Discard**: cierra las pestañas solicitadas sin guardar y elimina las capturas de recuperación de los cambios descartados.
+- **Cancel**: vuelve al editor y conserva abiertas todas las pestañas solicitadas.
 
 ## Cambiar de proyecto con cambios sin guardar
 

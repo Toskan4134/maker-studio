@@ -74,9 +74,11 @@ Cada mapa abierto tiene su propia pestaña en la parte superior del área del ed
 - Un punto indicador significa que el mapa tiene cambios sin guardar.
 - El texto en cursiva significa que es una pestaña de vista previa que se cierra sola al abrir otro mapa.
 - Haz doble clic en una pestaña de vista previa para hacerla permanente.
+- Haz clic derecho en una pestaña para fijarla o desfijarla, o para usar las opciones de cierre. Las pestañas fijadas muestran una chincheta y se colocan al principio; puedes arrastrarlas para reordenar dentro del grupo fijado o normal. Fijar una vista previa la convierte en permanente.
+- El menú contextual permite cerrar la pestaña pulsada, las demás, las pestañas a su derecha, las guardadas o todas las normales. Los cierres en grupo conservan las fijadas; puedes cerrar una fijada desde su propia pestaña.
 - Haz clic en el botón x o clic central en una pestaña para cerrarla.
 - **Arrastra una pestaña para reordenarla.** Una línea marca dónde va a caer, y la pestaña se coloca en esa posición.
-- Al volver a abrir un proyecto, **vuelven todos los mapas que tenías abiertos**, en el mismo orden de izquierda a derecha, y el mapa que estabas editando se vuelve el activo. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue abriendo solo ese mapa.) Esto se recuerda por proyecto y solo en este ordenador.
+- Al volver a abrir un proyecto, **vuelven todos los mapas que tenías abiertos**, incluidas las pestañas fijadas, y el mapa que estabas editando se vuelve el activo. Una barra de pestañas que dejaste vacía sigue vacía. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue abriendo solo ese mapa.) Esto se recuerda por proyecto y solo en este ordenador.
 
 ## Barra de estado (inferior)
 

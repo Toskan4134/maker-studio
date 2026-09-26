@@ -26,7 +26,7 @@ Map IDs written inside **Ruby scripts** are not touched — nothing can find the
 
 Double-click any map in the Map Tree to open it in a new editor tab.
 
-When you reopen a project, Maker Studio brings back the **exact set of map tabs you had open**, in the same left-to-right order, and makes the map you were last editing the active one — so a session picks up where you left off rather than starting on the first map in the list. (Opening a map file directly — by double-clicking it in your file manager — still wins over this and opens just that one map.) You can also **drag map tabs to reorder them**; the new order is what gets restored next time. Your folded map-tree folders come back the way you left them too. All of this is remembered per project, on this computer only, and nothing is written into the project itself.
+When you reopen a project, Maker Studio brings back the **exact set of map tabs you had open**, in the same left-to-right order and with the same pinned tabs, and makes the map you were last editing the active one. A tab context menu lets you pin or unpin a tab; pinned tabs stay at the beginning of the tab bar and group close commands preserve them. An intentionally empty tab bar stays empty. (Opening a map file directly — by double-clicking it in your file manager — still wins over this and opens just that one map.) You can also **drag map tabs to reorder them within their pinned or regular group**; the new order is what gets restored next time. Your folded map-tree folders come back the way you left them too. All of this is remembered per project, on this computer only, and nothing is written into the project itself.
 
 ## Duplicating a Map
 
@@ -156,7 +156,7 @@ Map then Export Map then Export as JSON saves a complete dump of the map includi
 
 ### Export as PNG
 
-Map then Export Map then Export as PNG renders the entire map to a PNG image at full resolution.
+Map then Export Map then Export as PNG renders the entire map to a PNG image at full resolution. The save dialog suggests a filename with the map ID and local date and time, for example `Map001_2026-09-26_18-30-45-123.png`, which helps avoid overwriting exports made at different times. You can edit the name before saving.
 
 ### Export as GIF (Animated)
 
@@ -274,11 +274,11 @@ Running two Maker Studio windows on **different** projects is fully supported (i
 
 ## Close Confirmation
 
-When you close a tab that has unsaved changes, the editor asks you to confirm:
+Right-click a tab to close it, close other tabs, close tabs to its right, close saved tabs, or close all regular tabs. These group actions leave pinned tabs open; the individual close action can close a pinned tab too. If a requested group includes unsaved maps, one confirmation covers the group:
 
-- **Save**: Saves the map, then closes the tab.
-- **Discard**: Closes the tab without saving.
-- **Cancel**: Returns to the editor without closing.
+- **Save**: Saves every map with changes, then closes the requested tabs after all saves succeed.
+- **Discard**: Closes the requested tabs without saving and removes recovery snapshots for discarded changes.
+- **Cancel**: Returns to the editor with all requested tabs still open.
 
 ## Switching Projects with Unsaved Changes
 

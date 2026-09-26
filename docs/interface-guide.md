@@ -74,9 +74,11 @@ Each open map gets its own tab along the top of the editor area.
 - A dot indicator means the map has unsaved changes.
 - Italic text means it is a preview tab that auto-closes when you open another map.
 - Double-click a preview tab to make it permanent.
+- Right-click a tab to pin/unpin it or use the close actions. Pinned tabs show a pin and stay at the beginning of the tab bar; drag to reorder within the pinned or regular group. Pinning a preview makes it permanent.
+- The context menu can close the clicked tab, other tabs, tabs to its right, saved tabs, or all regular tabs. Group actions leave pinned tabs open; close the clicked tab directly to close a pinned one.
 - Click the x button or middle-click a tab to close it.
 - **Drag a tab to reorder it.** A line marks where it will land, and the tab drops into that slot.
-- When you reopen a project, **every map you had open comes back**, in the same left-to-right order, and the map you were last editing becomes the active one. (Opening a map file directly — by double-clicking it in your file manager — still opens just that one map.) This is remembered per project, on this computer only.
+- When you reopen a project, **every map you had open comes back**, with pinned tabs restored, and the map you were last editing becomes the active one. An intentionally empty tab bar remains empty. (Opening a map file directly — by double-clicking it in your file manager — still opens just that one map.) This is remembered per project, on this computer only.
 
 ## Status Bar (bottom)
 
