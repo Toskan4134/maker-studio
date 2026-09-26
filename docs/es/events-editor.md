@@ -239,6 +239,8 @@ cortar, pegar, borrar y reordenar con Alt+↑/↓ actúan entonces sobre todo el
 
 **Show Text**, **Comment** y **Script** pueden contener tantas líneas como necesites — escríbelas en el cuadro de texto del comando, una por línea. En la lista de comandos, **cada línea tiene su propia fila**, igual que en RPG Maker XP: la fila del comando muestra la primera línea, y cada línea extra aparece debajo en una fila que empieza por `:`.
 
+Al insertar uno de estos comandos, su campo de texto recibe el foco y el cursor queda al final. Abrir un comando existente no cambia el foco ni selecciona automáticamente su texto.
+
 ```
 @>Text: ¡Hola!
 :       Hoy hace buen tiempo.

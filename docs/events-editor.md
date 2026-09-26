@@ -233,6 +233,8 @@ cut, paste, delete and Alt+↑/↓ reorder then act on the whole run.
 
 **Show Text**, **Comment**, and **Script** can hold as many lines as you need — just type them in the command's text box, one per line. In the command list, **each line gets its own row**, exactly like RPG Maker XP: the command row shows the first line, and every extra line appears below it on a row starting with `:`.
 
+When you insert one of these commands, its text field receives focus and the caret starts at the end. Opening an existing command does not move focus or select its text automatically.
+
 ```
 @>Text: Hello there!
 :       Nice weather today.
