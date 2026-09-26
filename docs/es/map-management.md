@@ -140,9 +140,11 @@ Estos son **campos nativos de RPG Maker XP**, así que la música suena en cualq
 
 ## Borrar un mapa
 
-Haz clic derecho en un mapa del árbol y elige Delete Map, luego confirma el borrado. Cualquier mapa hijo se mueve al padre del mapa borrado para que no se pierdan. El archivo `.rxdata` del mapa se quita del disco.
+Haz clic derecho en uno o varios mapas del árbol y elige **Delete Map**, luego confirma. Si un mapa seleccionado tiene descendientes, puedes borrar solo los mapas seleccionados y colocar sus hijos en sus posiciones, o borrar los mapas seleccionados junto con todos sus descendientes. La confirmación avisa si borrar los mapas elegidos descartará cambios sin guardar en pestañas abiertas. Antes de borrar se hacen copias de seguridad de los archivos de mapa.
 
-También puedes **borrar el mapa seleccionado desde el teclado**: con el panel Mapas con el foco, pulsa **Delete**. Aparece el mismo aviso de confirmación (los mapas hijo se mueven al padre y el archivo `.rxdata` se quita del disco).
+Usa **Ctrl+clic** para alternar filas en la selección, o **Shift+clic** para seleccionar el rango visible. Arrastra cualquier fila seleccionada para mover juntas las raíces seleccionadas; cada raíz lleva sus descendientes y se conserva el orden. Un filtro o una carpeta plegada limita las filas que entran en un rango de Shift.
+
+También puedes **borrar los mapas seleccionados desde el teclado**: con el panel Mapas enfocado, pulsa **Delete**. Aparece la misma confirmación; al terminar se cierran las pestañas de esos mapas y se limpia su caché.
 
 ## Exportar mapas
 

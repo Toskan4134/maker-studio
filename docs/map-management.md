@@ -140,9 +140,11 @@ These are **native RPG Maker XP fields**, so the music plays in any game with no
 
 ## Deleting a Map
 
-Right-click a map in the Map Tree and choose Delete Map, then confirm the deletion. Any child maps are moved up to the deleted map's parent so they are not lost. The map's `.rxdata` file is removed from disk.
+Right-click one or more maps in the Map Tree and choose **Delete Map**, then confirm. If a selected map has descendants, you can delete only the selected maps and move their children into their places, or delete the selected maps and all descendants. The confirmation warns if deleting the chosen maps will discard unsaved changes in open tabs. Map files are backed up before deletion.
 
-You can also **delete the selected map from the keyboard**: with the Maps panel focused, press **Delete**. The same confirmation prompt appears (child maps are moved up, the `.rxdata` file is removed).
+Use **Ctrl+click** to toggle map rows in the selection, or **Shift+click** to select the visible range. Drag any selected row to move all selected map roots together; each root carries its descendants, and their order is preserved. A filter or collapsed folder limits the rows included in a Shift range.
+
+You can also **delete the selected maps from the keyboard**: with the Maps panel focused, press **Delete**. The same confirmation appears; after deletion, open map tabs and cached data are closed.
 
 ## Exporting Maps
 
