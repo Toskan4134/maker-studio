@@ -13,7 +13,7 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
-- **Help**: **Documentation** (opens this online documentation in your browser), Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), Check for Updates (shows the version you are running next to the newest published one), Stats, About Maker Studio, Toggle DevTools
+- **Help**: **Documentation** (opens this online documentation in your browser), Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), Check for Updates (shows the version you are running next to the newest published one), Stats, About Maker Studio, **Toggle Render Diagnostics** (temporary map overlay with render timings; select it again to close), Toggle DevTools
 
 ## Language
 
@@ -84,7 +84,11 @@ Each open map gets its own tab along the top of the editor area.
 
 The status bar displays useful context at a glance: cursor coordinates (X, Y), the event name under your cursor, the current tool, brush size, the active layer's name, zoom level, and whether undo history is available.
 
-On very large or heavy maps it may also show **"⏸ Animations paused (performance)"**. When many tiles are visible at once, the editor keeps panning smooth by drawing from a cached image — and pauses autotile/fog animation when rebuilding that cache would take longer than 16ms (~60fps). Zoom back in (so fewer tiles are visible) and animation resumes automatically. (Animations also pause, without the indicator, while a dialog is open or the simulator is running.)
+On very large or animation-heavy maps, autotile animation may slow to 2 or 1 updates per second at intermediate zooms to keep the editor responsive. It remains at 4 updates per second at 10% zoom or lower and at 200% or higher. If direct tile drawing or rebuilding the cached image takes more than 20ms, animation pauses until a later render takes 10ms or less; the status bar then shows **"⏸ Animations paused (performance)"**. Panning, painting, and zooming remain available. (Animations also pause, without the indicator, while a dialog is open or the simulator is running.)
+
+Tileset images taller than 16,000 pixels trigger a warning because they may increase graphics load.
+
+Choose **Help → Toggle Render Diagnostics** to see repaint frequency, atlas dimensions, and JavaScript render timings. The timings do not include macOS graphics/compositor work.
 
 ## Dockable Panels
 

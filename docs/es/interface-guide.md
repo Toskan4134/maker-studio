@@ -13,7 +13,7 @@ Cada elemento de menú muestra ahora un pequeño icono junto a su etiqueta para 
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, submenú **Export Map** (Export as JSON / PNG / GIF / WebP)
 - **Tools**: selección de herramienta (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ cualquier elemento de menú y panel aportado por mods)
-- **Help**: **Documentation** (abre esta documentación en línea en tu navegador), Keyboard Shortcuts, **Reset App** (recarga el editor — se conserva la disposición de paneles; `Ctrl+R`), Check for Updates (muestra la versión que tienes junto a la última publicada), Stats, About Maker Studio, Toggle DevTools
+- **Help**: **Documentation** (abre esta documentación en línea en tu navegador), Keyboard Shortcuts, **Reset App** (recarga el editor — se conserva la disposición de paneles; `Ctrl+R`), Check for Updates (muestra la versión que tienes junto a la última publicada), Stats, About Maker Studio, **Alternar diagnóstico de renderizado** (superposición temporal del mapa con tiempos de renderizado; vuelve a pulsarlo para cerrarla), Toggle DevTools
 
 ## Idioma
 
@@ -84,7 +84,11 @@ Cada mapa abierto tiene su propia pestaña en la parte superior del área del ed
 
 La barra de estado muestra contexto útil de un vistazo: coordenadas del cursor (X, Y), el nombre del evento bajo el cursor, la herramienta actual, el tamaño del pincel, el nombre de la capa activa, el nivel de zoom y si hay historial de deshacer disponible.
 
-En mapas muy grandes o pesados también puede mostrar **"⏸ Animations paused (performance)"**. Cuando hay muchos tiles visibles a la vez, el editor mantiene el desplazamiento fluido dibujando desde una imagen en caché — y pausa la animación de autotiles/fog cuando reconstruir esa caché tardaría más de 16ms (~60fps). Acerca el zoom (para que se vean menos tiles) y la animación se reanuda automáticamente. (Las animaciones también se pausan, sin el indicador, mientras hay un diálogo abierto o el simulador en marcha.)
+En mapas muy grandes o con muchas animaciones, los autotiles pueden bajar a 2 o 1 actualizaciones por segundo en zoom intermedio para mantener la respuesta del editor. Se mantienen a 4 actualizaciones por segundo con un zoom del 10% o menos y a partir del 200%. Si dibujar tiles directamente o reconstruir la imagen en caché tarda más de 20ms, la animación se pausa hasta que un repintado posterior tarde 10ms o menos; entonces la barra de estado muestra **"⏸ Animations paused (performance)"**. Se puede seguir desplazando, pintando y cambiando el zoom. (Las animaciones también se pausan, sin el indicador, mientras hay un diálogo abierto o el simulador en marcha.)
+
+Las imágenes de tileset de más de 16.000 píxeles de alto muestran un aviso porque pueden aumentar la carga gráfica.
+
+Elige **Help → Alternar diagnóstico de renderizado** para ver la frecuencia de repintado, las dimensiones del atlas y los tiempos de renderizado de JavaScript. Esos tiempos no incluyen el trabajo gráfico/compositor de macOS.
 
 ## Paneles acoplables
 
