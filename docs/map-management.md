@@ -227,6 +227,18 @@ On **Windows**, the **Game** tab of **Help → Settings…** has a **Which monit
 
 Your choice is remembered per project, so later runs launch straight away without asking again. To make the dialog reappear later — for example to switch between Proton and the native build — use **File → Clear Proton Preference**. That item only appears when there is actually a Proton/Wine choice to forget: on Linux, with a project open, and only if you launched it through Proton or Wine (a project you run with the native Linux build has nothing to clear).
 
+### Seeing Map Changes After Restart
+
+After you save native map data — tiles, events, a map's tileset or its audio —
+close and reopen the game, then continue the same save to see those changes on
+the map you're already on. Event dialogue edits are included, and this works
+without the Maker Studio integration plugin.
+
+This applies to map data supported by the game engine itself. Map versions and
+extended features that rely on the integration plugin still require it.
+To reload changes while the game stays open, use Live Reload below; that
+requires the integration plugin.
+
 ### Live Reload While the Game Is Running
 
 With the Maker Studio plugin installed, you don't have to restart the game to see an edit. When you

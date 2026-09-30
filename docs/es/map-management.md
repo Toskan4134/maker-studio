@@ -227,6 +227,19 @@ En **Windows**, la pestaña **Juego** de **Help → Settings…** tiene la opci�
 
 Tu elección se recuerda por proyecto, así que las ejecuciones posteriores lanzan directo sin volver a preguntar. Para que el diálogo vuelva a aparecer más adelante — por ejemplo, para cambiar entre Proton y la build nativa — usa **File → Clear Proton Preference**. Esa entrada solo aparece cuando hay realmente una elección de Proton/Wine que olvidar: en Linux, con un proyecto abierto y solo si lo lanzaste con Proton o Wine (un proyecto que ejecutas con la build nativa de Linux no tiene nada que limpiar).
 
+### Ver los cambios del mapa después de reiniciar
+
+Después de guardar datos nativos del mapa —tiles, eventos, el tileset o el audio
+de un mapa—, cierra y vuelve a abrir el juego y continúa la misma partida para
+ver los cambios en el mapa en el que ya estabas. También se actualizan los
+diálogos de los eventos, aunque no tengas instalado el plugin de integración de
+Maker Studio.
+
+Esto se aplica a los datos de mapa que admite el propio motor. Las versiones de
+mapa y las funciones extendidas que dependen del plugin siguen requiriéndolo.
+Para recargar cambios sin cerrar el juego, usa la Recarga en caliente de abajo;
+esa función sí requiere el plugin de integración.
+
 ### Recarga en caliente con el juego abierto
 
 Con el plugin de Maker Studio instalado no hace falta reiniciar el juego para ver un cambio. Al
