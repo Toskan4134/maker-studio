@@ -14,8 +14,12 @@
 #    (the editor picks the layer from a list; the id rides in the command
 #    parameters). Falls back to the engine's native single-fog behaviour when
 #    the map has no Maker Studio fog layer with that id.
-#      - command_204 (Change Map Settings, type 1 = Fog): applies EVERY fog
-#        property (graphic, hue, blend, zoom, scroll x/y, follow, opacity).
+#      - command_204 (Change Map Settings, type 0 = Panorama / 1 = Fog): applies
+#        EVERY layer property (graphic, hue, opacity, blend, zoom, scroll x/y,
+#        follow, parallax). With the command's create flag set it also CREATES
+#        the layer when the map has none, so a fog/panorama can appear at
+#        runtime on a map that shipped without one — driving one layer over and
+#        over, or adding a fresh one per run (parameter 12).
 #      - command_205 (Change Fog Color Tone): tones that fog plane, optionally
 #        animated over `frames`.
 #      - command_206 (Change Fog Opacity): fades that fog plane's opacity,
@@ -157,19 +161,72 @@ module MakerStudio
   # Maker Studio fog sprite accessors. Operate on the @fog_sprites_cache that
   # 004_FogOverride.rb builds (a module ivar shared on this same module object).
   #---------------------------------------------------------------------------
-  def find_fog_sprite(map_id, fog_id)
+  def find_group_sprite(map_id, group_key, layer_id)
     return nil unless @fog_sprites_cache
     sprites = @fog_sprites_cache[map_id]
     return nil unless sprites
     sprites.each do |sprite|
       next if sprite.nil? || sprite.disposed?
-      # The cache now holds ALL graphic groups (fog/panorama/custom) — the fog
-      # event commands must only retarget fog-group sprites.
-      group = sprite.instance_variable_get(:@ms_group)
-      next unless group.nil? || group == "fog"
-      return sprite if sprite.instance_variable_get(:@fog_id) == fog_id
+      # The cache holds ALL graphic groups (fog/panorama/custom) — a command
+      # must only retarget sprites of the group it addresses.
+      group = sprite.instance_variable_get(:@ms_group) || "fog"
+      next unless group == group_key
+      return sprite if sprite.instance_variable_get(:@fog_id) == layer_id
     end
     nil
+  end
+
+  def find_fog_sprite(map_id, fog_id)
+    find_group_sprite(map_id, "fog", fog_id)
+  end
+
+  # Next free layer id in a group on this map. Only the sprite cache matters:
+  # it is the only thing layer lookups search. Ids are handed out in order from
+  # 1, so an author can address a layer a command created (1 on the first run,
+  # 2 on the second, …) from Change Fog Opacity / Tone.
+  def next_group_layer_id(map_id, group_key)
+    max = 0
+    sprites = @fog_sprites_cache ? @fog_sprites_cache[map_id] : nil
+    if sprites
+      sprites.each do |sprite|
+        next if sprite.nil? || sprite.disposed?
+        next unless (sprite.instance_variable_get(:@ms_group) || "fog") == group_key
+        id = sprite.instance_variable_get(:@fog_id).to_i
+        max = id if id > max
+      end
+    end
+    max + 1
+  end
+
+  # Create a graphic-layer sprite at runtime, so a map that ships with no fog /
+  # panorama layer can still gain one from a Change Map Settings command. The
+  # group's clipping Viewport is created too when the map has none.
+  # The layer is NOT written back to the map file: like every other runtime
+  # property change here, it lives as long as the map's sprites do and is gone
+  # after the map leaves the factory.
+  def create_group_layer(map_id, group_key, layer_id)
+    return nil unless @fog_sprites_cache && @fog_viewports_cache
+    vps = (@fog_viewports_cache[map_id] ||= {})
+    vp = vps[group_key]
+    if viewport_disposed?(vp)
+      vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
+      vp.z = (group_key == "panorama" ? PANORAMA_GROUP_Z : FOG_GROUP_Z)
+      vp.visible = true
+      vps[group_key] = vp
+    end
+    sprite = Plane.new(vp)
+    sprite.z = 0
+    sprite.opacity = 255
+    sprite.instance_variable_set(:@fog_id, layer_id)
+    sprite.instance_variable_set(:@ms_group, group_key)
+    sprite.instance_variable_set(:@map_id, map_id)
+    sprite.instance_variable_set(:@fog_sx, 0.0)
+    sprite.instance_variable_set(:@fog_sy, 0.0)
+    sprite.instance_variable_set(:@fog_follow, false)
+    sprite.instance_variable_set(:@ms_parallax, 1.0)
+    @fog_scroll_offsets["#{group_key}:#{layer_id}"] ||= { :ox => 0, :oy => 0 }
+    (@fog_sprites_cache[map_id] ||= []).push(sprite)
+    sprite
   end
 
   # Coerce a command's tone parameter (an RPG::Tone at runtime, or a [r,g,b,gray]
@@ -225,7 +282,9 @@ module MakerStudio
   end
 
   # Internal: swap a sprite's bitmap to graphic `name` (hue-rotated). Empty name
-  # clears the bitmap. No-op (keeps current bitmap) when name is nil.
+  # clears the bitmap. No-op (keeps current bitmap) when name is nil. The
+  # graphics folder follows the sprite's own group, so a panorama layer resolves
+  # against Graphics/Panoramas and not Graphics/Fogs.
   def apply_fog_graphic(sprite, name, hue)
     return if name.nil?
     if name.empty?
@@ -234,7 +293,8 @@ module MakerStudio
       old.dispose if old && !old.disposed?
       return
     end
-    path = find_fog_graphic(name)
+    dir = (sprite.instance_variable_get(:@ms_group) == "panorama" ? PANORAMA_DIR : FOG_DIR)
+    path = find_group_graphic(dir, name)
     return unless path
     begin
       bmp = Bitmap.new(path)
@@ -248,11 +308,13 @@ module MakerStudio
     old.dispose if old && !old.disposed?
   end
 
-  # Apply the Edit-Fog property set to a fog layer (command_204 / type 1).
-  # Any nil argument is left unchanged. Opacity is NOT touched here — use the
-  # Change Fog Opacity command (206) for that.
-  def set_fog_properties(map_id, fog_id, name, hue, blend_type, zoom, sx, sy, follow)
-    sprite = find_fog_sprite(map_id, fog_id)
+  # Apply the whole layer property set to a fog / panorama layer (command_204,
+  # type 1 / type 0). Any nil argument is left unchanged. Returns false when the
+  # map has no such layer and `create` is falsy, so the caller can fall back to
+  # the engine's native single-fog / single-panorama behaviour.
+  def set_group_properties(map_id, group_key, layer_id, name, hue, blend_type, zoom, sx, sy, follow, opacity = nil, parallax = nil, create = false)
+    sprite = find_group_sprite(map_id, group_key, layer_id)
+    sprite = create_group_layer(map_id, group_key, layer_id) if sprite.nil? && create
     return false unless sprite
     apply_fog_graphic(sprite, name, hue)
     sprite.blend_type = blend_type.to_i unless blend_type.nil?
@@ -262,10 +324,16 @@ module MakerStudio
       sprite.zoom_x = z
       sprite.zoom_y = z
     end
+    sprite.opacity = opacity.to_i unless opacity.nil?
     sprite.instance_variable_set(:@fog_sx, sx.to_f) unless sx.nil?
     sprite.instance_variable_set(:@fog_sy, sy.to_f) unless sy.nil?
     sprite.instance_variable_set(:@fog_follow, follow.to_i == 1) unless follow.nil?
+    sprite.instance_variable_set(:@ms_parallax, parallax.to_f) unless parallax.nil?
     true
+  end
+
+  def set_fog_properties(map_id, fog_id, name, hue, blend_type, zoom, sx, sy, follow, opacity = nil, parallax = nil, create = false)
+    set_group_properties(map_id, "fog", fog_id, name, hue, blend_type, zoom, sx, sy, follow, opacity, parallax, create)
   end
 
   #---------------------------------------------------------------------------
@@ -357,12 +425,20 @@ class Interpreter
     alias_method :__mkst__command_204, :command_204
   end
   def command_204
-    if defined?(MakerStudio) && MakerStudio::ENABLED && @parameters[0] == 1 && $game_map
-      fog_id = @parameters[3]
-      if MakerStudio.find_fog_sprite($game_map.map_id, fog_id)
-        MakerStudio.set_fog_properties($game_map.map_id, fog_id,
+    group = (@parameters[0] == 1 ? "fog" : (@parameters[0] == 0 ? "panorama" : nil))
+    if defined?(MakerStudio) && MakerStudio::ENABLED && group && $game_map
+      layer_id = @parameters[3]
+      create = (@parameters[11] == 1)
+      # @parameters[12]: 1 — or nil, on commands saved before the flag existed —
+      # keeps driving this command's own layer; 0 adds a fresh one on every run.
+      if create && @parameters[12] == 0
+        layer_id = MakerStudio.next_group_layer_id($game_map.map_id, group)
+      end
+      if create || MakerStudio.find_group_sprite($game_map.map_id, group, layer_id)
+        MakerStudio.set_group_properties($game_map.map_id, group, layer_id,
           @parameters[1], @parameters[2], @parameters[4], @parameters[5],
-          @parameters[6], @parameters[7], @parameters[8])
+          @parameters[6], @parameters[7], @parameters[8],
+          @parameters[9], @parameters[10], create)
         return true
       end
     end

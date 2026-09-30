@@ -2,6 +2,21 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.7.0
+
+La edición de mapas recibe una puesta al día importante: organiza árboles enteros de mapas, edita varias capas a la vez, incorpora nuevas herramientas de selección y exporta imágenes con fecha y hora. También mejora la recuperación del renderizado, la carga de mapas guardados y las actualizaciones de la app.
+
+### Novedades
+- 🗺️ **Gestiona árboles de mapas en bloque** — selecciona, mueve y borra varios mapas a la vez; reordena las pestañas y conserva su disposición entre sesiones.
+- 🪄 **Pinta y selecciona más rápido** — usa la Varita y el Borrador mágico, edita varias capas a la vez y copia o pega una capa seleccionada.
+- 🖼️ **Exporta mapas con más control** — elige si aparecen los eventos invisibles y obtén PNG con fecha y hora.
+- ⚙️ **Cambia más ajustes del mapa desde eventos** — edita todas las propiedades de capa y crea capas durante el juego.
+
+### Correcciones
+- 🎨 **Recupera el lienzo tras interrupciones del renderizado** y vuelve a cargar correctamente los mapas guardados al continuar un proyecto.
+- 🔄 **Mejora las actualizaciones** en Windows y Linux, y corrige las opciones de transparencia de eventos.
+- 👆 **Selecciona todo el texto con cuatro clics** en el editor.
+
 ## v1.6.1
 
 Una versión del editor de eventos: el editor de Move Route se reconstruye alrededor de un panel de secuencia y acciones agrupadas, los objetivos de evento se eligen de una lista de eventos de verdad, y los selectores recuerdan dónde estabas.

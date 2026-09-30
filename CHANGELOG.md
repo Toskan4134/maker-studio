@@ -3,6 +3,21 @@
 User-facing changes to the Maker Studio app and its game-side plugin. Older
 releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/releases).
 
+## v1.7.0
+
+Map editing gets a major pass: organize whole map trees, edit several layers together, use new selection tools, and export timestamped images. This release also improves rendering recovery, saved-map loading and app updates.
+
+### Additions
+- 🗺️ **Manage map trees in batches** — select, move and delete several maps at once; reorder map tabs and keep your tab layout between sessions.
+- 🪄 **Paint and select faster** — use the Wand and Magic Eraser, edit multiple layers together, and copy or paste a selected layer.
+- 🖼️ **Export maps with more control** — choose whether invisible events appear in an image and get timestamped PNG exports.
+- ⚙️ **Change more map settings from events** — edit the full layer property set and create layers at runtime.
+
+### Fixes
+- 🎨 **Recover the canvas after rendering interruptions** and reload saved maps correctly when continuing a game project.
+- 🔄 **Improve updater behavior** on Windows and Linux, and correct event transparency options.
+- 👆 **Select all text with a fourth click** in the editor.
+
 ## v1.6.1
 
 An event-editor release: the Move Route editor is rebuilt around a sequence panel and grouped actions, event targets are picked from a real event list, and the pickers remember where you were.
@@ -256,6 +271,21 @@ User guides and mod API reference: https://makerstudio.toskan.es/
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
+
+## v1.7.0
+
+La edición de mapas recibe una puesta al día importante: organiza árboles enteros de mapas, edita varias capas a la vez, incorpora nuevas herramientas de selección y exporta imágenes con fecha y hora. También mejora la recuperación del renderizado, la carga de mapas guardados y las actualizaciones de la app.
+
+### Novedades
+- 🗺️ **Gestiona árboles de mapas en bloque** — selecciona, mueve y borra varios mapas a la vez; reordena las pestañas y conserva su disposición entre sesiones.
+- 🪄 **Pinta y selecciona más rápido** — usa la Varita y el Borrador mágico, edita varias capas a la vez y copia o pega una capa seleccionada.
+- 🖼️ **Exporta mapas con más control** — elige si aparecen los eventos invisibles y obtén PNG con fecha y hora.
+- ⚙️ **Cambia más ajustes del mapa desde eventos** — edita todas las propiedades de capa y crea capas durante el juego.
+
+### Correcciones
+- 🎨 **Recupera el lienzo tras interrupciones del renderizado** y vuelve a cargar correctamente los mapas guardados al continuar un proyecto.
+- 🔄 **Mejora las actualizaciones** en Windows y Linux, y corrige las opciones de transparencia de eventos.
+- 👆 **Selecciona todo el texto con cuatro clics** en el editor.
 
 ## v1.6.1
 

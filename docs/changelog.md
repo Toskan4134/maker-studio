@@ -2,6 +2,21 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.7.0
+
+Map editing gets a major pass: organize whole map trees, edit several layers together, use new selection tools, and export timestamped images. This release also improves rendering recovery, saved-map loading and app updates.
+
+### Additions
+- 🗺️ **Manage map trees in batches** — select, move and delete several maps at once; reorder map tabs and keep your tab layout between sessions.
+- 🪄 **Paint and select faster** — use the Wand and Magic Eraser, edit multiple layers together, and copy or paste a selected layer.
+- 🖼️ **Export maps with more control** — choose whether invisible events appear in an image and get timestamped PNG exports.
+- ⚙️ **Change more map settings from events** — edit the full layer property set and create layers at runtime.
+
+### Fixes
+- 🎨 **Recover the canvas after rendering interruptions** and reload saved maps correctly when continuing a game project.
+- 🔄 **Improve updater behavior** on Windows and Linux, and correct event transparency options.
+- 👆 **Select all text with a fourth click** in the editor.
+
 ## v1.6.1
 
 An event-editor release: the Move Route editor is rebuilt around a sequence panel and grouped actions, event targets are picked from a real event list, and the pickers remember where you were.
