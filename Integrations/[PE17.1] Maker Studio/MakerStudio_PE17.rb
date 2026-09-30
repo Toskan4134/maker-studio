@@ -11,7 +11,7 @@
 # exact 'MakerStudio-Build:' / 'MakerStudio-Version:' prefixes; the release
 # workflow rewrites the version line.
 # MakerStudio-Build: PE17.1
-# MakerStudio-Version: 1.7.0
+# MakerStudio-Version: 1.7.1
 ###############################################################################
 
 

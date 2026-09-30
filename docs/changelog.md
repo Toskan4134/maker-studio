@@ -2,6 +2,16 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.7.1
+
+This update keeps Move Route actions in click order and makes large-tileset warnings easier to manage.
+
+### Changes
+- ⚠️ **Manage large-tileset warnings** — open the tileset from its warning, dismiss future warnings, and re-enable them from **Help → Show Application Warnings Again → Re-enable Large Tileset Warnings**.
+
+### Fixes
+- 🔀 **Keep Move Route actions in click order** — after each insertion, the selection advances to the next position so successive clicks preserve their order.
+
 ## v1.7.0
 
 Map editing gets a major pass: organize whole map trees, edit several layers together, use new selection tools, and export timestamped images. This release also improves rendering recovery, saved-map loading and app updates.

@@ -2,6 +2,16 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.7.1
+
+Esta actualización respeta el orden de los clics al añadir acciones a Move Route y facilita la gestión de los avisos de tilesets grandes.
+
+### Cambios
+- ⚠️ **Gestiona los avisos de tilesets grandes** — abre el tileset desde el aviso, silencia los siguientes y vuelve a activarlos desde **Ayuda → Volver a mostrar los avisos de la aplicación → Reactivar avisos de tilesets grandes**.
+
+### Correcciones
+- 🔀 **Respeta el orden de los clics al añadir acciones a Move Route** — tras insertar una acción, la selección avanza al hueco siguiente para que la próxima quede después.
+
 ## v1.7.0
 
 La edición de mapas recibe una puesta al día importante: organiza árboles enteros de mapas, edita varias capas a la vez, incorpora nuevas herramientas de selección y exporta imágenes con fecha y hora. También mejora la recuperación del renderizado, la carga de mapas guardados y las actualizaciones de la app.
