@@ -241,6 +241,8 @@ cortar, pegar, borrar y reordenar con Alt+↑/↓ actúan entonces sobre todo el
 
 Al insertar uno de estos comandos, su campo de texto recibe el foco y el cursor queda al final. Abrir un comando existente no cambia el foco ni selecciona automáticamente su texto.
 
+En cualquiera de los tres editores de texto, **haz cuatro clics seguidos** para seleccionar todo el texto.
+
 ```
 @>Text: ¡Hola!
 :       Hoy hace buen tiempo.

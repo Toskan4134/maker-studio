@@ -13,7 +13,7 @@ Open it from the **Scripts** button on the toolbar (next to **Database**) or **T
   `=` signs) appear dimmed.
 - **Right:** the selected script's code, with Ruby syntax highlighting, line numbers, and find &
   replace (`Ctrl+F` — see [Finding things](#finding-things)). Edit it like any code editor; standard
-  `Ctrl+Z` / `Ctrl+Y` undo/redo work inside it.
+  `Ctrl+Z` / `Ctrl+Y` undo/redo work inside it. Click four times in the code to select the whole script.
 
 ## Managing scripts
 

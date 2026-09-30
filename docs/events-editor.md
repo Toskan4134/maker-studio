@@ -235,6 +235,8 @@ cut, paste, delete and Alt+↑/↓ reorder then act on the whole run.
 
 When you insert one of these commands, its text field receives focus and the caret starts at the end. Opening an existing command does not move focus or select its text automatically.
 
+Click four times in any of the three text editors to select all the text.
+
 ```
 @>Text: Hello there!
 :       Nice weather today.

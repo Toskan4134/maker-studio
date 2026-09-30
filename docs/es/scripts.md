@@ -7,7 +7,7 @@ El editor de **Scripts** te permite ver, reordenar, renombrar, añadir, borrar y
 ## La ventana
 
 - **Izquierda:** la lista de scripts, en el orden en que RPG Maker XP los ejecuta. Los divisores de sección (títulos hechos de signos `=`) aparecen atenuados.
-- **Derecha:** el código del script seleccionado, con resaltado de sintaxis Ruby, números de línea y buscar y reemplazar (`Ctrl+F` — consulta [Encontrar cosas](#finding-things)). Edítalo como cualquier editor de código; el deshacer/rehacer estándar `Ctrl+Z` / `Ctrl+Y` funciona dentro de él.
+- **Derecha:** el código del script seleccionado, con resaltado de sintaxis Ruby, números de línea y buscar y reemplazar (`Ctrl+F` — consulta [Encontrar cosas](#finding-things)). Edítalo como cualquier editor de código; el deshacer/rehacer estándar `Ctrl+Z` / `Ctrl+Y` funciona dentro de él. Haz cuatro clics seguidos en el código para seleccionar todo el script.
 
 ## Gestionar scripts
 
