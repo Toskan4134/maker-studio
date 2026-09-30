@@ -13,7 +13,8 @@ Cada elemento de menú muestra ahora un pequeño icono junto a su etiqueta para 
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, submenú **Export Map** (Export as JSON / PNG / GIF / WebP)
 - **Tools**: selección de herramienta (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ cualquier elemento de menú y panel aportado por mods)
-- **Help**: **Documentation** (abre esta documentación en línea en tu navegador), Keyboard Shortcuts, **Reset App** (recarga el editor — se conserva la disposición de paneles; `Ctrl+R`), Check for Updates (muestra la versión que tienes junto a la última publicada), Stats, About Maker Studio, **Alternar diagnóstico de renderizado** (superposición temporal del mapa con tiempos de renderizado; vuelve a pulsarlo para cerrarla), Toggle DevTools
+- **Help**: **Documentation** (abre esta documentación en línea en tu navegador), Keyboard Shortcuts, **Reset App** (recarga el editor — se conserva la disposición de paneles; `Ctrl+R`), **Volver a mostrar los avisos de la aplicación** (reactivar todos los avisos o elegir por separado tilesets grandes, integración del juego o Proton), Check for Updates (muestra la versión que tienes junto a la última publicada), Stats, About Maker Studio, **Alternar diagnóstico de renderizado** (superposición temporal del mapa con tiempos de renderizado; vuelve a pulsarlo para cerrarla), Toggle DevTools
+  - **Reactivar todos los avisos de la aplicación** restablece las tres categorías. El submenú también ofrece **Reactivar avisos de tilesets grandes**, **Reactivar avisos de integración del juego** y **Volver a preguntar la elección de Proton** por separado; las tres acciones se aplican a todos los proyectos. **Mods → Show Dependency Warnings Again** sigue siendo independiente y solo controla los avisos de dependencias de mods. **File → Clear Proton Preference** continúa borrando la elección guardada del proyecto abierto.
 
 ## Idioma
 
@@ -86,7 +87,7 @@ La barra de estado muestra contexto útil de un vistazo: coordenadas del cursor 
 
 En mapas muy grandes o con muchas animaciones, los autotiles pueden bajar a 2 o 1 actualizaciones por segundo en zoom intermedio para mantener la respuesta del editor. Se mantienen a 4 actualizaciones por segundo con un zoom del 10% o menos y a partir del 200%. Si dibujar tiles directamente o reconstruir la imagen en caché tarda más de 20ms, la animación se pausa hasta que un repintado posterior tarde 10ms o menos; entonces la barra de estado muestra **"⏸ Animations paused (performance)"**. Se puede seguir desplazando, pintando y cambiando el zoom. (Las animaciones también se pausan, sin el indicador, mientras hay un diálogo abierto o el simulador en marcha.)
 
-Las imágenes de tileset de más de 16.000 píxeles de alto muestran un aviso porque pueden aumentar la carga gráfica.
+Al dibujar un mapa cuyo tileset supera los 16.064 píxeles de alto, aparece un diálogo con su nombre y altura. Pulsa **Ver tileset** para abrir ese registro en **Database → Tilesets**. **No volver a mostrar este aviso** silencia estos diálogos en todos los proyectos hasta que los reactives en **Help → Volver a mostrar los avisos de la aplicación → Reactivar avisos de tilesets grandes**. Si varios mapas generan el aviso, los diálogos aparecen uno por uno.
 
 Elige **Help → Alternar diagnóstico de renderizado** para ver la frecuencia de repintado, las dimensiones del atlas y los tiempos de renderizado de JavaScript. Esos tiempos no incluyen el trabajo gráfico/compositor de macOS.
 

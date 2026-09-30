@@ -13,7 +13,8 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
-- **Help**: **Documentation** (opens this online documentation in your browser), Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), Check for Updates (shows the version you are running next to the newest published one), Stats, About Maker Studio, **Toggle Render Diagnostics** (temporary map overlay with render timings; select it again to close), Toggle DevTools
+- **Help**: **Documentation** (opens this online documentation in your browser), Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), **Show Application Warnings Again** submenu (re-enable all application warnings, or choose large tileset, game integration, or Proton prompts individually), Check for Updates (shows the version you are running next to the newest published one), Stats, About Maker Studio, **Toggle Render Diagnostics** (temporary map overlay with render timings; select it again to close), Toggle DevTools
+  - **Re-enable All Application Warnings** resets all three categories. The submenu also offers **Re-enable Large Tileset Warnings**, **Re-enable Game Integration Prompts**, and **Re-enable Proton Launch Choice** separately; all apply across projects. **Mods → Show Dependency Warnings Again** remains separate and only controls mod dependency warnings. **File → Clear Proton Preference** still clears the saved choice for the open project.
 
 ## Language
 
@@ -86,7 +87,7 @@ The status bar displays useful context at a glance: cursor coordinates (X, Y), t
 
 On very large or animation-heavy maps, autotile animation may slow to 2 or 1 updates per second at intermediate zooms to keep the editor responsive. It remains at 4 updates per second at 10% zoom or lower and at 200% or higher. If direct tile drawing or rebuilding the cached image takes more than 20ms, animation pauses until a later render takes 10ms or less; the status bar then shows **"⏸ Animations paused (performance)"**. Panning, painting, and zooming remain available. (Animations also pause, without the indicator, while a dialog is open or the simulator is running.)
 
-Tileset images taller than 16,000 pixels trigger a warning because they may increase graphics load.
+When you draw a map whose tileset image is taller than 16,064 pixels, a dialog shows the tileset name and height. Choose **View Tileset** to open that record in **Database → Tilesets**. **Don't show this warning again** silences these dialogs across projects until you re-enable **Help → Show Application Warnings Again → Re-enable Large Tileset Warnings**. If several maps trigger the warning, their dialogs appear one at a time.
 
 Choose **Help → Toggle Render Diagnostics** to see repaint frequency, atlas dimensions, and JavaScript render timings. The timings do not include macOS graphics/compositor work.
 
