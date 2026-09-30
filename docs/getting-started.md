@@ -21,7 +21,7 @@ Download the build for your system (these links always point to the latest versi
 | **macOS** | [`.dmg`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_aarch64.dmg) (Apple Silicon) |
 | **Linux** | [`.AppImage`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_x86_64.AppImage) (universal) · [`.deb`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_amd64.deb) (Debian/Ubuntu) |
 
-Every build (current and previous versions) is also on the [Releases](https://github.com/Toskan4134/maker-studio/releases) page. Once installed, the app keeps itself up to date automatically.
+Every build (current and previous versions) is also on the [Releases](https://github.com/Toskan4134/maker-studio/releases) page. Once installed, the app checks for updates when it starts and shows an available update before asking about a project's integration.
 
 The installers are **not code-signed** yet, so your OS shows a one-time warning on install:
 
@@ -63,7 +63,7 @@ To check it worked: start your game in **Debug mode**, open the Debug menu (F9),
 
 The plugin ships alongside the editor, so a project can end up running an older one than the app — usually after you update the editor and forget to re-copy the folder. Symptoms are subtle: the game renders something differently from the editor, or a fix you read about in the changelog doesn't apply in-game.
 
-The editor checks for you. When you open a project whose `Plugins/MakerStudio` is older than the app, it offers three choices:
+The editor checks the integration when you open a project. If it is older than the app, it offers three choices:
 
 - **Update Now** — downloads the matching integration and replaces the plugin files for you. Your `003_Editor/` folder (project mods, config, stats, and the portable editor if you keep one there) is left untouched. Restart the game afterwards.
 - **Download Manually** — opens the release page so you can copy the folder in yourself.
