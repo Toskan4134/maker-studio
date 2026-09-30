@@ -344,7 +344,8 @@ The redesigned editor keeps the route in a left-hand **Sequence** panel with a l
 The move-action list edits just like the main command list:
 
 - **Select** with a click; **Shift+click** extends the selection and **Ctrl+click** adds or removes individual actions — everything below acts on the whole selection.
-- **Copy / Cut / Paste** with `Ctrl+C` / `Ctrl+X` / `Ctrl+V` — move actions have their own clipboard, so copying them never overwrites copied event commands (and vice versa). New and pasted actions land above the selection, always inside the route.
+- **Insert actions with the buttons** — each new action lands above the selected row (or before the route terminator); then the row immediately after the new action is selected, which may be the route terminator. Later actions therefore keep the order you add them. Parameter forms still edit the action just inserted.
+- **Copy / Cut / Paste** with `Ctrl+C` / `Ctrl+X` / `Ctrl+V` — pasted actions land above the selection and keep their normal multi-selection behavior. Move actions have their own clipboard, so copying them never overwrites copied event commands (and vice versa).
 - **Undo / Redo** with `Ctrl+Z` / `Ctrl+Y`, scoped to the route you are editing.
 - **Edit** the selected action with `Space` or `Enter` (opens its parameter form), **Delete** removes it, the **arrow keys** move the selection, and `Alt+↑` / `Alt+↓` reorder.
 - **Drag and drop** one action — or a whole multi-selection — to reorder; a line shows where it will land.
