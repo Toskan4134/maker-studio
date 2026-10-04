@@ -171,6 +171,12 @@ Ordinary character sheets are unaffected — the tile grid only appears for tile
 > Tiles-as-graphics need the **MakerStudio plugin** installed in your game (Tools -> Integration).
 > Without it the game draws the whole tileset image — the map still opens and runs, it just ignores
 > the selection.
+>
+> If entering a map with an event that uses a tileset tile as its graphic raises
+> `Operation not supported for mega surfaces`, update the Maker Studio integration in **Tools ->
+> Integration**. Older integrations try to assign the full, very tall tileset before cropping the
+> selected tile. As a temporary workaround, export that tile or block as a small image in
+> `Graphics/Characters` and use it as the event graphic.
 
 ### Autonomous Movement
 
