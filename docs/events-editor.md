@@ -231,6 +231,8 @@ Double-click a command to edit its parameters. Many commands have dedicated type
 
 **Control Variables — Character source.** Choose **Character** to read a field from a character. Click the target field to open the event picker dialog, where **Player**, **This Event**, and current-map events are listed; map events show their padded ID and name, such as `003: Guard`. The initial target is **Player** (`-1`) and the field is **Map X**; `0` means **This Event**, and `1+` means an event on the current map. These defaults are also restored when switching into Character, so a value from the previous source is not reused as an event id.
 
+If you change a command form, Escape, clicking outside, the close button, and Cancel ask whether to **Apply & Close**, **Discard**, or keep editing. If you revert all fields, it closes without a prompt. This applies to Show Text, Comment, Script, and other command forms. A new **Scroll Map** starts at Down, distance 0, speed 4.
+
 **Selecting several commands from the keyboard**: hold **Shift** and press ↑ / ↓ to
 grow or shrink the selection from where you started, the same as Shift+clicking. Copy,
 cut, paste, delete and Alt+↑/↓ reorder then act on the whole run.
@@ -258,6 +260,8 @@ Those extra rows are *lines of the command*, not commands of their own:
 - The **arrow keys** step over the extra lines, so the selection always lands on a whole command.
 
 To break a message into separate text boxes in-game, insert a *second* Show Text command rather than adding more lines to the first one.
+
+For version history and diffs of project files, see [Git integration](git.md).
 
 ### Text Codes in Show Text
 
@@ -378,7 +382,7 @@ Building a walk by clicking **Move Up** twelve times gets old fast. **Draw path�
 
 Actions that take parameters open their own form, using the same pickers as the rest of the editor instead of raw text:
 
-- **Change Graphic** — character graphic file picker (with preview + hue) plus Direction and Pattern, and the same **tile picking** as the event page graphic when you choose a tileset.
+- **Change Graphic** — character graphic file picker (with preview + hue) plus Direction and Pattern, and the same **tile picking** as the event page graphic when you choose a tileset. Older route commands with Retain direction open as Down; applying the picker stores the highlighted frame without another click.
 - **Play SE** — SE file picker with volume/pitch and a play-test button.
 - **Script** — multi-line Ruby code box.
 - **Change Speed / Change Freq** — labelled dropdowns (Slowest…Fastest, Lowest…Highest), matching RPG Maker XP.

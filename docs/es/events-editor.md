@@ -227,6 +227,8 @@ Si tienes mods instalados que añaden sus propios comandos de evento, aparecen p
 
 ### Editar comandos
 
+Si cambias un formulario de comando, Escape, un clic fuera, el botón de cierre y Cancel preguntan si quieres aplicar y cerrar, descartar o seguir editando. Si deshaces todos los cambios, se cierra sin preguntar. Se aplica a Show Text, Comment, Script y los demás formularios. Un **Scroll Map** nuevo empieza en Down, distancia 0 y velocidad 4. Para consultar el historial y las diferencias de archivos del proyecto, abre la [integración con Git](git.md).
+
 Haz doble clic en un comando para editar sus parámetros. Muchos comandos tienen formularios tipados dedicados (Show Text, Control Switches, Conditional Branch, etc.). Los comandos que aún no tienen un formulario tipado muestran un editor JSON en bruto en su lugar.
 
 **Control Variables — origen Character.** Elige **Character** para leer un campo de un personaje. Pulsa el campo del objetivo para abrir el diálogo del selector de eventos, donde aparecen **Player**, **This Event** y los eventos del mapa actual; los eventos muestran su id con ceros y su nombre, por ejemplo `003: Guardia`. El objetivo inicial es **Player** (`-1`) y el campo es **Map X**; `0` significa **This Event** y `1+` significa un evento del mapa actual. Estos valores también se restauran al cambiar a Character, para que el valor del origen anterior no se reutilice como id de evento.
@@ -342,6 +344,8 @@ Al elegir esa opción aparece además **Reutilizar esta capa cuando el comando s
 Los comandos de tono y opacidad siguen afectando solo a capas de **fog**. Los grupos de capa personalizados no tienen comandos de evento (se editan en el panel de capas; los battlebacks vienen del menú Map — consulta [Gestión de mapas](map-management.md#panorama-layers-and-battleback)).
 
 ### Set Move Route
+
+Los comandos de ruta antiguos con dirección Retain se abren como Down. En **Change Graphic**, al aplicar se guarda el frame resaltado sin tener que volver a pulsarlo.
 
 Editar un comando **Set Move Route** abre un editor de rutas: pulsa el campo del objetivo para elegir **This Event**, **Player** u otro evento del mapa actual en el diálogo del selector de eventos (los eventos aparecen con su id y nombre), activa Repeat / Skip If Cannot Move y construye la lista de acciones de movimiento.
 
