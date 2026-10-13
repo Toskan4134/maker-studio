@@ -108,12 +108,6 @@ Tras guardar, los overlays de colisión y prioridad se actualizan al instante en
 
 ## Cómo lee el overlay de colisión una pila de tiles
 
-**Show Collision** (menú View, o el botón **Col** de la barra) ahora responde cada tile igual que el juego.
-Recorre la celda desde la capa superior hacia abajo y se detiene en el primer tile que o bloquea del todo
-o es un tile de **suelo** (priority 0) — ese tile decide. Un tile que es transitable pero tiene priority
-**1 o más** (una franja, la copa de un árbol, el borde de un tejado) es *transparente* para la colisión,
-así que el overlay sigue leyendo hacia abajo y muestra la colisión del tile de debajo. Pon encima un tile
-transitable de **priority 0** y la celda se lee como abierta, porque es lo que pasa en el juego.
+Show Collision (menú View o el botón Col de la barra) combina los bloqueos direccionales de todas las capas nativas y extra ocupadas de la casilla. Un tile con prioridad 0 no cancela un bloqueo de un tile inferior; la prioridad controla la oclusión visual, no el paso. El paso, la prioridad y el terreno de cada tile se leen de su propio tileset cuando tiene un origen explícito. Esto incluye las propiedades expandidas de un autotile con nombre aunque no tenga una ranura nativa; los mapas antiguos sin origen guardado conservan la búsqueda heredada por nombre.
 
-Los marcadores de bush, counter y terrain-tag no se cortan en ese tile de suelo: se muestran si **algún**
-tile de la pila los lleva, igual que los responde el juego.
+Los marcadores de bush, counter y terrain-tag siguen sus propias reglas de acumulación y permanecen visibles si algún tile de la pila los contiene. El overlay del editor, el Simulador y el plugin del juego usan la misma regla de colisión direccional.

@@ -19,14 +19,8 @@
 #   terrain.ignore_passability     ->  (no equivalent on v17.1 — dropped)
 #   terrain.id != :None            ->  tag != 0 && tag != PBTerrain::Neutral
 #
-# Cross-tileset native cells are blanked in the Table by the renderer; their
-# original tile id is recovered via MakerStudio.each_native_extra_tile_at, so
-# collision still resolves from the referenced tileset's tables.
-#
-# NOTE (documented limitation): pure per-tile passage/priority/terrain OVERRIDES
-# painted on the NATIVE layers (without an autotile_name or tileset_id) are not
-# applied here — the engine's untouched native logic is used for those cells. Overrides
-# on extended layers, extra autotiles and cross-tileset tiles work fully.
+# The overlay renderer can blank native Table cells, so collision restores their
+# original ids before resolving passage and terrain.
 #===============================================================================
 class Game_Map
   NEUTRAL_TT = (defined?(PBTerrain) ? PBTerrain::Neutral : 13)
@@ -42,6 +36,14 @@ class Game_Map
     end
     name = td["autotile_name"]
     return nil unless name
+    if td["tileset_id"]
+      ts = $data_tilesets[td["tileset_id"].to_i]
+      return nil unless ts && ts.autotile_names
+      idx = ts.autotile_names.index(name)
+      return nil unless idx
+      base = (idx + 1) * 48
+      return [ts.passages[base] || 0, ts.priorities[base] || 0, ts.terrain_tags[base] || 0]
+    end
     entry = MakerStudio::DataStore.get_expanded_autotile(name)
     return [entry["passage"].to_i, entry["priority"].to_i, entry["terrain_tag"].to_i] if entry
     # Game_Map (self) carries autotile_names on v17.1; the RPG::Map (@map) does not.
@@ -95,35 +97,24 @@ class Game_Map
   end
   private :ms_tile_passage
 
-  def ms_tile_priority(tid, td)
-    return td["priority"].to_i if td["priority"]
-    if td["autotile_name"]
-      resolved = ms_extra_autotile_data(td)
-      return resolved ? resolved[1] : 0
-    elsif td["tileset_id"]
-      ts = $data_tilesets[td["tileset_id"].to_i]
-      return ts ? (ts.priorities[tid] || 0) : 0
-    end
-    @priorities[tid] || 0
-  end
-  private :ms_tile_priority
-
-  # Yield [tid, td, native_extra] for every Maker Studio tile at (x,y):
-  # extended FIRST (extended layers sit above every native layer), then
-  # native-extra (top layer down). Uses THIS map's id (not $game_map) so
-  # collision works on connected maps too. The native_extra flag lets the
-  # passability checks refuse to let a ground native-layer tile DECIDE the
-  # cell (see playerPassable?).
+  # Yield visible extended tiles, then native tiles top-down on this map.
   def ms_each_tile_at(x, y)
     mid = map_id
-    MakerStudio.each_extended_tile_at(mid, x, y) { |tid, td| yield tid, td, false }
-    MakerStudio.each_native_extra_tile_at(mid, x, y) { |tid, td| yield tid, td, true }
-    # Plain native tiles blanked by the overlay renderer because an extra
-    # autotile sits below them (blank_covered_plain_tiles) — the Table reads 0
-    # there, so the engine's native scan can't see them anymore. Keep honouring their
-    # passage here (block-only, like other native-layer extras).
-    if MakerStudio.respond_to?(:each_covered_plain_tile_at)
-      MakerStudio.each_covered_plain_tile_at(mid, x, y) { |tid, td| yield tid, td, true }
+    MakerStudio.each_extended_tile_at(mid, x, y) { |tid, td| yield tid, td }
+    return unless @map && @map.data
+    ext = MakerStudio.get_extended_data_for(mid)
+    native_props = ext ? ext["nativeProperties"] : nil
+    key = "#{x},#{y}"
+    (MakerStudio::NATIVE_LAYERS - 1).downto(0) do |layer|
+      tid = @map.data[x, y, layer]
+      next if tid.nil?
+      if MakerStudio.respond_to?(:original_native_tile_id)
+        tid = MakerStudio.original_native_tile_id(mid, x, y, layer, tid)
+      end
+      td = native_props && native_props[layer] ? native_props[layer][key] : nil
+      td = {} unless td
+      next if tid == 0 && !td["autotile_name"]
+      yield tid, td
     end
   end
   private :ms_each_tile_at
@@ -135,7 +126,7 @@ class Game_Map
   def playerPassable?(x, y, d, self_event = nil)
     return __mkst__playerPassable(x, y, d, self_event) unless MakerStudio::ENABLED
     bit = (1 << (d / 2 - 1)) & 0x0f
-    ms_each_tile_at(x, y) do |tid, td, native_extra|
+    ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
       if terrain != 0 && terrain != NEUTRAL_TT
         if PBTerrain.isBridge?(terrain)
@@ -155,13 +146,6 @@ class Game_Map
       end
       passage = ms_tile_passage(tid, td)
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
-      # A ground extended tile decides the cell (extended sits above every
-      # native layer). A ground NATIVE-layer extra tile must NOT decide:
-      # plain native tiles on layers above it are only checked by the engine
-      # fallback (bitmap-composited CustomTilemap — no per-layer interleave
-      # here), so deciding would erase their impassability.
-      return true if ms_tile_priority(tid, td) == 0 && !native_extra
-      # else: fall through to the next Maker Studio tile / engine native logic
     end
     __mkst__playerPassable(x, y, d, self_event)
   end
@@ -176,11 +160,9 @@ class Game_Map
     return __mkst__passable(x, y, d, self_event) unless MakerStudio::ENABLED
     return playerPassable?(x, y, d, self_event) if self_event == $game_player
     bit = (1 << (d / 2 - 1)) & 0x0f
-    ms_each_tile_at(x, y) do |tid, td, native_extra|
+    ms_each_tile_at(x, y) do |tid, td|
       passage = ms_tile_passage(tid, td)
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
-      # Ground native-layer extras must not decide — see playerPassable?.
-      return true if ms_tile_priority(tid, td) == 0 && !native_extra
     end
     __mkst__passable(x, y, d, self_event)
   end
@@ -191,11 +173,9 @@ class Game_Map
   alias __mkst__passableStrict passableStrict? unless method_defined?(:__mkst__passableStrict)
   def passableStrict?(x, y, d, self_event = nil)
     return __mkst__passableStrict(x, y, d, self_event) unless MakerStudio::ENABLED
-    ms_each_tile_at(x, y) do |tid, td, native_extra|
+    ms_each_tile_at(x, y) do |tid, td|
       passage = ms_tile_passage(tid, td)
       return false if passage & 0x0f != 0
-      # Ground native-layer extras must not decide — see playerPassable?.
-      return true if ms_tile_priority(tid, td) == 0 && !native_extra
     end
     __mkst__passableStrict(x, y, d, self_event)
   end

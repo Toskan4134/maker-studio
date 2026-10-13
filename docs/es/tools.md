@@ -150,7 +150,8 @@ Debajo de la cuadrícula del tileset, la sección **Autotiles** lista cada autot
 - **Abrir detalle**: haz doble clic en un autotile (o clic derecho y elige **Open Autotile**) para abrir su panel de detalle, donde puedes elegir una pieza individual del autotile para estampar como parte fija.
 - **Redimensionar la lista**: arrastra el borde inferior de la cuadrícula de autotiles para hacer la sección más alta o más baja. La altura que elijas se recuerda, como tu disposición de paneles.
 - **Sigue tu selección**: la sección se abre sola cuando se selecciona un autotile — incluido al cogerlo del mapa con el Eyedropper o con ALT+clic — y se pliega de nuevo en cuanto seleccionas un tile normal.
-- **Los autotiles cogidos viajan entre mapas**: el Eyedropper coge un autotile *por nombre*, así que un autotile tomado de un mapa sigue pintándose en un mapa cuyo tileset tenga ese gráfico en otra ranura — o no lo tenga en absoluto, en cuyo caso se pinta como autotile con nombre. Los autotiles del tileset vuelven a su ranura nativa siempre que el tileset del mapa los tenga.
+- **Los autotiles cogidos viajan entre mapas**: el Eyedropper los identifica por gráfico y conserva el tileset de origen. Al pintar usa la ranura nativa de ese origen cuando existe; si no, mantiene el autotile con nombre, así que una ranura o nombre coincidente de otro tileset no cambia sus gráficos ni sus propiedades.
+- **Los tiles conservan su origen:** las selecciones de autotiles con nombre y los tiles cogidos de otro tileset conservan su identidad. Los tiles con el mismo id o nombre de autotile pero de tilesets distintos no se consideran iguales en Rellenar, Varita o Borrar por coincidencia; copiar, pegar y mover selecciones conserva el origen y las propiedades.
 
 Si tu filtro no coincide con nada, la sección muestra **"No autotiles match."**; si el proyecto no tiene autotiles en absoluto, muestra **"No autotiles found."**
 
@@ -204,6 +205,7 @@ Cuando mueves una selección con la herramienta Select, el marco de selección a
 ## Copiar y pegar
 
 - Ctrl+C copia las casillas seleccionadas de las capas de tiles seleccionadas en ese momento, incluidas las propiedades y casillas vacías. Si se copia una capa, Ctrl+V pega en la capa activa; si se copian varias, solo pega la capa de origen que tenga el mismo índice que la activa.
+- El origen del tileset forma parte de los datos copiados, también en tiles nativos del mapa, así que al pegar en otro mapa no se reinterpreta un id coincidente con el tileset de destino.
 - Ctrl+X corta las casillas seleccionadas de las capas de tiles seleccionadas. Supr borra esas casillas de las capas seleccionadas. Al mover una selección también se mueven sus contenidos en esas capas, incluidas las ocultas.
 - Ctrl+V entra en vista previa de pegado. Mueve el cursor para posicionarlo y haz clic para confirmar. Las casillas vacías dentro de la selección reemplazan las casillas de destino; las zonas sin seleccionar de una selección irregular quedan intactas.
 - Ctrl+Shift+C / Ctrl+Shift+X copian o cortan la selección de todas las capas de tiles nativas y extendidas, respetando la forma de la selección.

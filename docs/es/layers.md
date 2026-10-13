@@ -48,7 +48,7 @@ Los grupos por encima de los tiles (fog y grupos personalizados con prioridad 鈮
 
 ## Overlay de colisi贸n
 
-Pulsa C para alternar el overlay de colisi贸n. Muestra las banderas de paso directamente en el lienzo como flechas direccionales e indicadores de bloqueado/abierto. Para cada casilla muestra el paso y el terreno del tile **superior** colocado ah铆, combinando los valores base del tileset con cualquier sustituci贸n por tile.
+Pulsa C para alternar el overlay de colisi贸n. Muestra las banderas de paso directamente en el lienzo como flechas direccionales e indicadores de bloqueado/abierto. Los bloqueos direccionales se combinan entre todas las capas nativas y extra ocupadas, as铆 que un tile superior con prioridad 0 no puede borrar un bloqueo inferior. El paso y el terreno se resuelven desde el tileset de origen de cada tile cuando est谩 indicado; los marcadores de bush, counter y terreno siguen sus propias reglas de pila.
 
 ## Prioridad y orden de capas
 

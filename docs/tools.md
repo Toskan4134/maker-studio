@@ -149,7 +149,8 @@ Below the tileset grid, the **Autotiles** section lists every named autotile fro
 - **Open detail**: double-click an autotile (or right-click it and choose **Open Autotile**) to open its detail panel, where you can pick an individual piece of the autotile to stamp as a fixed part.
 - **Resize the list**: drag the bottom edge of the autotiles grid to make the section taller or shorter. The height you pick is remembered, like your panel layout.
 - **Follows your selection**: the section opens on its own whenever an autotile becomes selected — including picking one off the map with the Eyedropper or ALT+click — and collapses again as soon as you select a plain tile.
-- **Picked autotiles travel between maps**: the Eyedropper picks an autotile *by name*, so an autotile taken from one map still paints on a map whose tileset holds that graphic in a different slot — or does not hold it at all, in which case it paints as a named autotile. Tileset autotiles go back into their native slot whenever the map's tileset has them.
+- **Picked autotiles travel between maps**: the Eyedropper identifies named autotiles by graphic and retains their source tileset. Painting uses that source's native slot when it has one, otherwise it stays a named autotile, so a matching slot or name in another tileset cannot change its graphics or properties.
+- **Tiles keep their source:** named autotile selections and tiles picked from another tileset retain that tileset's identity. Equal tile ids or autotile names from different tilesets are not treated as the same tile by fill, wand or erase-matching tools; copy, paste and selection moves keep the source and tile properties.
 
 If your filter matches nothing, the section shows **"No autotiles match."**; if the project has no autotiles at all, it shows **"No autotiles found."**
 
@@ -206,6 +207,7 @@ When you move a selection with the Select tool, the selection marquee now follow
 ## Copy and Paste
 
 - Ctrl+C copies the selected cells from the tile layers selected when you copy, including tile properties and empty cells. With one source layer, Ctrl+V pastes to the active layer; with several, it pastes only the source layer with the same index as the active layer.
+- Tileset origin is part of copied tile data, including native tiles copied from their map, so pasting on another map does not reinterpret a matching numeric id using the destination tileset.
 - Ctrl+X cuts the selected cells from the selected tile layers. Delete clears those cells from the selected tile layers. Moving a selection moves its contents on those layers too, including hidden layers.
 - Ctrl+V enters paste preview mode. Move your cursor to position the paste, then click to commit. Empty cells inside the selection replace destination cells; unselected cells in an irregular selection stay untouched.
 - Ctrl+Shift+C / Ctrl+Shift+X copy or cut the selection across every native and extended tile layer, while respecting the selection shape.

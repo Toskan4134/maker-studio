@@ -74,6 +74,8 @@ The player walks continuously while a direction key is held — no per-tile reta
 
 The simulator supports many RPG Maker XP event commands:
 
+Tile collision combines blocked directions across native and extra layers, matching the editor overlay and the in-game plugin. Tiles painted from another tileset use that source's passage properties.
+
 - **Message**: Show Text, Show Choices, Input Number
 - **Flow Control**: Conditional Branch, Loop, Break Loop, Label, Exit Event Processing
 - **Game Data**: Control Switches, Control Variables, Control Self Switches, Control Timer

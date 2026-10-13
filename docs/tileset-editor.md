@@ -106,12 +106,6 @@ After saving, collision and priority overlays update immediately on all open map
 
 ## How the Collision Overlay Reads a Stack
 
-**Show Collision** (View menu, or the **Col** toolbar button) now answers each tile exactly like the game
-does. It walks the cell from the top layer down and stops at the first tile that either blocks everything
-or is a **ground** tile (priority 0) — that tile decides. A tile that is passable but has priority **1 or
-higher** (a fringe, a treetop, a roof edge) is *see-through* for collision, so the overlay keeps reading
-down and shows the collision of the tile underneath it. Put a passable **priority 0** tile on top instead
-and the cell reads as open, because that is what happens in-game.
+Show Collision (View menu, or the Col toolbar button) combines blocked directions from every occupied native and extra layer in the cell. A priority-0 tile does not cancel a blocked direction from a tile below it; priority controls visual occlusion, not passage. Each tile's passage, priority and terrain come from its own tileset when it has an explicit source. This includes expanded properties for a named autotile with no native slot; older map data without a stored source keeps the legacy name-based lookup.
 
-Bush, counter and terrain-tag markers are not cut off by that ground tile: they show if **any** tile in
-the stack carries them, matching how the game answers them.
+Bush, counter and terrain-tag markers follow their own aggregation rules and remain visible when a tile in the stack carries them. The editor overlay, Game Simulator and in-game plugin use the same directional collision rule.

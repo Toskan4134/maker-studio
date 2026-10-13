@@ -74,6 +74,8 @@ El jugador anda de forma continua mientras se mantiene una tecla de dirección �
 
 El simulador admite muchos comandos de evento de RPG Maker XP:
 
+La colisión combina los bloqueos direccionales de las capas nativas y extra, igual que el overlay del editor y el plugin del juego. Los tiles pintados desde otro tileset usan las propiedades de paso de ese origen.
+
 - **Message**: Show Text, Show Choices, Input Number.
 - **Flow Control**: Conditional Branch, Loop, Break Loop, Label, Exit Event Processing.
 - **Game Data**: Control Switches, Control Variables, Control Self Switches, Control Timer.
