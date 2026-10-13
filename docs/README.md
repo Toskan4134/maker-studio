@@ -10,6 +10,7 @@ Welcome to Maker Studio -- a modern, feature-rich tile map editor that replaces 
 - [Layers Guide](layers.md) -- Native and extended layers
 - [Shadows Guide](shadows.md) -- Creating and managing shadows
 - [Events Editor](events-editor.md) -- Event editing and command lists
+- [Git Integration](git.md) -- Commit project changes, explore commit history, and compare project files and maps
 - [Database](database.md) -- Common Events, Animations, and the tabbed Database window
 - [Scripts Editor](scripts.md) -- View, reorder, and edit Ruby scripts; open Data/Scripts in VS Code
 - [Game Simulator](game-simulator.md) -- Test events and move routes in-editor

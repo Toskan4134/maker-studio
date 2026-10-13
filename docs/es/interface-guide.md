@@ -2,6 +2,8 @@
 
 ## Barra de menús
 
+Cuando hay un proyecto abierto, el botón independiente **Git** abre la [integración con Git](git.md) para revisar cambios, explorar el grafo de commits, comparar archivos y gestionar ramas.
+
 Cada elemento de menú muestra ahora un pequeño icono junto a su etiqueta para localizar comandos más rápido. Los menús, de izquierda a derecha, son **File, Edit, View, Map, Tools, Mods, Help**.
 
 - **File**: Open Project, **Open Recent** (proyectos abiertos recientemente, más Clear Recent Projects), **Abrir carpeta del juego** (abre la carpeta de tu proyecto en el Explorador de Windows / Finder / tu gestor de archivos — práctico para meter gráficos o comprobar qué ha escrito el editor), **Abrir carpeta de partidas guardadas** (abre la carpeta donde el juego escribe sus archivos de guardado — ver [Gestión de mapas](map-management.md#abrir-la-carpeta-de-guardados)), Save, Save All, Run Game, **Clear Proton Preference** (solo Linux — olvida tu elección recordada de lanzamiento Proton/Wine para que el diálogo de selección vuelva a aparecer la próxima vez que pulses Run; solo se muestra cuando hay una elección así que olvidar)

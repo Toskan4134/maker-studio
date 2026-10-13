@@ -2,6 +2,8 @@
 
 ## Menu Bar
 
+When a project is open, the standalone **Git** button opens [Git integration](git.md) for changes, commit history, file comparisons, and branch operations.
+
 Every menu item now shows a small icon next to its label so you can spot commands faster. The menus, left to right, are **File, Edit, View, Map, Tools, Mods, Help**.
 
 - **File**: Open Project, **Open Recent** (recently opened projects, plus Clear Recent Projects), **Open Project Folder** (opens your project's folder in Windows Explorer / Finder / your file manager — handy for dropping in graphics or checking what the editor wrote), **Open Saves Folder** (opens the folder the game writes its save files to — see [Map Management](map-management.md#opening-the-saves-folder)), Save, Save All, Run Game, **Clear Proton Preference** (Linux only — forgets your remembered Proton/Wine launch choice so the picker dialog shows again next time you press Run; it is only listed when there is such a choice to forget)
