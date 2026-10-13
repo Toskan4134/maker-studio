@@ -1,6 +1,7 @@
 # Atajos de teclado
 
 Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A continuación se listan los valores por defecto.
+Mientras haya un diálogo modal abierto, se pausan los atajos globales del editor que queda detrás; los controles y atajos propios del diálogo siguen funcionando. Los formularios de comandos de evento con cambios preguntan antes de cerrarse; consulta el [Editor de eventos](events-editor.md).
 
 ## Herramientas
 

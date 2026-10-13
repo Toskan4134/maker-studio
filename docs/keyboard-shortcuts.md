@@ -1,6 +1,7 @@
 # Keyboard Shortcuts
 
 All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defaults are listed below.
+While a modal dialog is open, global shortcuts for the editor behind it are paused; controls and shortcuts owned by the dialog continue to work. Changed event-command forms ask before closing — see [Events Editor](events-editor.md).
 
 ## Tools
 
