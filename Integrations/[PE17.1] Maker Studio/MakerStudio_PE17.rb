@@ -349,7 +349,8 @@ module MakerStudio
     def expanded_autotile_index
       return @expanded_autotile_index if @expanded_autotile_index
       index = {}
-      ($data_tilesets || []).each do |ts|
+      source_index = {}
+      ($data_tilesets || []).each_with_index do |ts, tileset_id|
         next unless ts
         raw = ts.instance_variable_get(:@expanded_autotiles)
         next unless raw.is_a?(String) && !raw.empty?
@@ -359,22 +360,27 @@ module MakerStudio
           parsed.each do |e|
             next unless e.is_a?(Hash) && e["name"]
             # First tileset wins, matching the old first-match-scan behaviour.
+            source = source_index[tileset_id] ||= {}
+            source[e["name"]] = e if source && !source[e["name"]]
             index[e["name"]] = e unless index[e["name"]]
           end
         rescue
         end
       end
+      @expanded_autotile_source_index = source_index
       @expanded_autotile_index = index
     end
 
     # Call whenever the tilesets are reloaded (editor hot-reload).
     def clear_expanded_autotile_index
       @expanded_autotile_index = nil
+      @expanded_autotile_source_index = nil
     end
 
-    def get_expanded_autotile(autotile_name)
+    def get_expanded_autotile(autotile_name, tileset_id = nil)
       return nil unless autotile_name && $data_tilesets
-      expanded_autotile_index[autotile_name]
+      return expanded_autotile_index[autotile_name] if tileset_id.nil?
+      (@expanded_autotile_source_index[tileset_id.to_i] || {})[autotile_name]
     end
   end
 end
@@ -1260,8 +1266,17 @@ module MakerStudio
   def resolve_priority(base_tile_id, tile_data, map)
     return tile_data["priority"].to_i if tile_data["priority"]
     if tile_data["autotile_name"]
-      entry = MakerStudio::DataStore.get_expanded_autotile(tile_data["autotile_name"])
+      source_id = tile_data["tileset_id"]
+      entry = MakerStudio::DataStore.get_expanded_autotile(tile_data["autotile_name"], source_id)
       return entry["priority"].to_i if entry
+      if source_id
+        ts = $data_tilesets[source_id.to_i]
+        if ts && ts.autotile_names
+          idx = ts.autotile_names.index(tile_data["autotile_name"])
+          return ts.priorities[(idx + 1) * 48] || 0 if idx
+        end
+        return 0
+      end
       if map.respond_to?(:autotile_names)
         idx = map.autotile_names.index(tile_data["autotile_name"])
         return (map.priorities[(idx + 1) * 48] || 0) if idx
@@ -2458,7 +2473,10 @@ class Game_Map
     name = td["autotile_name"]
     return nil unless name
     if td["tileset_id"]
-      ts = $data_tilesets[td["tileset_id"].to_i]
+      source_id = td["tileset_id"].to_i
+      entry = MakerStudio::DataStore.get_expanded_autotile(name, source_id)
+      return [entry["passage"].to_i, entry["priority"].to_i, entry["terrain_tag"].to_i] if entry
+      ts = $data_tilesets[source_id]
       return nil unless ts && ts.autotile_names
       idx = ts.autotile_names.index(name)
       return nil unless idx
@@ -2671,12 +2689,12 @@ end
 #===============================================================================
 # MakerStudio - Graphic Layer Groups (Fog / Panorama / Custom) Override
 # Renders the Maker Studio graphic layer groups as Plane sprites:
-#   - fogLayers          at viewport z = 3000  (above all tiles/events)
-#   - panoramaLayers     at viewport z = -1000 (beneath all tiles)
-#   - customLayerGroups  at viewport z = group "priority" (mod-defined)
+#   - fogLayers          at Plane z = 3000  (above all tiles/events)
+#   - panoramaLayers     at Plane z = -1000 (beneath all tiles)
+#   - customLayerGroups  at Plane z = group "priority" (mod-defined)
 # Every layer shares the same config: graphic, hue, opacity, blend_type, zoom,
 # sx/sy scroll, follow_player, parallax. Groups are clipped to each map's
-# boundaries using a per-map per-group Viewport so connected maps don't overlap.
+# boundaries using per-map priority-bucket Viewports so connected maps don't overlap.
 #
 # Scroll convention: positive sx = layer moves right, positive sy = down.
 # Camera follow: follow_player = screen-locked. Otherwise the "parallax"
@@ -2696,15 +2714,57 @@ module MakerStudio
   PANORAMA_DIR = File.join("Graphics", "Panoramas")
   FOG_GROUP_Z = 3000
   PANORAMA_GROUP_Z = -1000
+  GRAPHIC_GROUP_BELOW_VIEWPORT_Z = -1
+  # RGSS1 uses z=0 for the map, then z=50/100 for weather, pictures and screen UI.
+  GRAPHIC_GROUP_ABOVE_VIEWPORT_Z = 40
 
   # Module-level sprite cache — { map_id => [plane_sprite, ...] } (all groups)
   @fog_sprites_cache = {}
-  # Per-map per-group viewports for clipping — { map_id => { group_key => Viewport } }
+  # Per-map viewports for clipping — { map_id => { viewport_z => Viewport } }
   @fog_viewports_cache = {}
   # Per-layer scroll offsets — { "group_key:layer_id" => { :ox => 0, :oy => 0 } }
   @fog_scroll_offsets = {}
 
   module_function
+
+  def group_viewport_z(group_z)
+    group_z < 0 ? GRAPHIC_GROUP_BELOW_VIEWPORT_Z : GRAPHIC_GROUP_ABOVE_VIEWPORT_Z
+  end
+
+  def group_priority_for(map_id, group_key)
+    return FOG_GROUP_Z if group_key == "fog"
+    return PANORAMA_GROUP_Z if group_key == "panorama"
+    ext_data = @extended_data_cache && @extended_data_cache[map_id]
+    groups = ext_data && ext_data["customLayerGroups"]
+    if groups
+      groups.each do |group|
+        next unless group && group["key"] == group_key
+        return (group["priority"] || 0).to_i
+      end
+    end
+    FOG_GROUP_Z
+  end
+
+  def sync_viewport_screen_effects(vp)
+    screen = $game_screen
+    return unless screen
+    if vp.respond_to?(:tone=) && screen.respond_to?(:tone)
+      target = screen.tone
+      current = vp.tone if vp.respond_to?(:tone)
+      if target && (!current || current.red != target.red || current.green != target.green ||
+                    current.blue != target.blue || current.gray != target.gray)
+        vp.tone = target.clone
+      end
+    end
+    if vp.respond_to?(:color=) && screen.respond_to?(:flash_color)
+      target = screen.flash_color
+      current = vp.color if vp.respond_to?(:color)
+      if target && (!current || current.red != target.red || current.green != target.green ||
+                    current.blue != target.blue || current.alpha != target.alpha)
+        vp.color = target.clone
+      end
+    end
+  end
 
   # RGSS1 (Essentials v17.x) has NO Viewport#disposed? — Sprite/Plane/Bitmap all
   # define it, Viewport does not, and the v17 base hits the same gap in
@@ -2778,16 +2838,20 @@ module MakerStudio
       dir       = group[2]
       layers    = group[3]
 
-      # Clipping viewport, one per group so each group sits at its own z.
+      # Share one clipping viewport per priority bucket; Plane.z keeps group order.
       # Sized to the SCREEN, not to the map: a Plane fills its whole viewport
       # rect, so a map-sized viewport made every fog/panorama layer draw a
       # map-sized surface (a 500x500 map = 16000x16000 px) every frame, most of
       # it off-camera. update_fog_sprites re-clips it to the visible part of the
       # map each frame and shifts the plane to compensate.
-      vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
-      vp.z = group_z
-      vp.visible = true
-      viewports[group_key] = vp
+      viewport_z = group_viewport_z(group_z)
+      vp = viewports[viewport_z]
+      unless vp
+        vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
+        vp.z = viewport_z
+        vp.visible = true
+        viewports[viewport_z] = vp
+      end
 
       layers.each do |layer|
         next unless layer["visible"] != false
@@ -2812,7 +2876,7 @@ module MakerStudio
         # Create Plane sprite clipped to the group viewport
         sprite = Plane.new(vp)
         sprite.bitmap = bmp
-        sprite.z = 0
+        sprite.z = group_z
         sprite.opacity = (layer["opacity"] || 255).to_i
         sprite.blend_type = (config["blendType"] || 0).to_i
 
@@ -2892,6 +2956,7 @@ module MakerStudio
       if vps
         vps.each do |group_key, vp|
           next if viewport_disposed?(vp)
+          sync_viewport_screen_effects(vp)
           if on_screen
             vp.rect.set(cx, cy, cw, ch)
             # Apply screen shake so layers wobble with the map. viewport1
@@ -3289,15 +3354,17 @@ module MakerStudio
   def create_group_layer(map_id, group_key, layer_id)
     return nil unless @fog_sprites_cache && @fog_viewports_cache
     vps = (@fog_viewports_cache[map_id] ||= {})
-    vp = vps[group_key]
+    group_z = group_priority_for(map_id, group_key)
+    viewport_z = group_viewport_z(group_z)
+    vp = vps[viewport_z]
     if viewport_disposed?(vp)
       vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
-      vp.z = (group_key == "panorama" ? PANORAMA_GROUP_Z : FOG_GROUP_Z)
+      vp.z = viewport_z
       vp.visible = true
-      vps[group_key] = vp
+      vps[viewport_z] = vp
     end
     sprite = Plane.new(vp)
-    sprite.z = 0
+    sprite.z = group_z
     sprite.opacity = 255
     sprite.instance_variable_set(:@fog_id, layer_id)
     sprite.instance_variable_set(:@ms_group, group_key)
@@ -4752,6 +4819,31 @@ class Sprite_Character
     alias __mkst__region_update update
   end
 
+  unless method_defined?(:__mkst__region_bitmap_set)
+    alias __mkst__region_bitmap_set bitmap=
+  end
+
+  # A mega surface cannot reach Sprite#bitmap=, so bind its selected region
+  # first. ms_region_refresh adopts this crop after the base update.
+  def bitmap=(bmp)
+    rect = MakerStudio.character_src_rect(@character)
+    old_crop = nil
+    if bmp && rect && bmp.respond_to?(:mega?) && bmp.mega?
+      key = "#{bmp.object_id}|#{rect.join(',')}"
+      unless key == @ms_pending_crop_key
+        old_crop = @ms_pending_crop_bitmap
+        @ms_pending_crop_bitmap = MakerStudio.cropped_bitmap(bmp, rect)
+        @ms_pending_crop_key = key
+      end
+      @ms_pending_crop_source = bmp
+      @ms_pending_crop_rect = rect
+      bmp = @ms_pending_crop_bitmap
+    end
+    result = __mkst__region_bitmap_set(bmp)
+    old_crop.dispose if old_crop && !old_crop.equal?(bmp) && !old_crop.disposed?
+    result
+  end
+
   def update
     __mkst__region_update
     ms_region_refresh
@@ -4765,9 +4857,11 @@ class Sprite_Character
     # refresh_graphic replaced @charbitmap under us (name/hue changed) —
     # our saved original and crop are stale, start fresh.
     if @ms_crop_bitmap && !@charbitmap.equal?(@ms_crop_bitmap)
+      old_crop = @ms_crop_bitmap
       @ms_original_charbitmap = nil
       @ms_crop_bitmap = nil
       @ms_region_key = nil
+      old_crop.dispose if old_crop && !old_crop.equal?(self.bitmap) && !old_crop.disposed?
     end
 
     rect = MakerStudio.character_src_rect(char)
@@ -4806,14 +4900,23 @@ class Sprite_Character
     end
 
     old_crop = @ms_crop_bitmap
-    @ms_crop_bitmap = MakerStudio.cropped_bitmap(source_bmp, rect)
-    old_crop.dispose if old_crop && !old_crop.disposed?
+    if @ms_pending_crop_source.equal?(source_bmp) && @ms_pending_crop_rect == rect &&
+       @ms_pending_crop_bitmap
+      @ms_crop_bitmap = @ms_pending_crop_bitmap
+      @ms_pending_crop_bitmap = nil
+      @ms_pending_crop_key = nil
+      @ms_pending_crop_source = nil
+      @ms_pending_crop_rect = nil
+    else
+      @ms_crop_bitmap = MakerStudio.cropped_bitmap(source_bmp, rect)
+    end
 
     # Replace @charbitmap so the base's own update_bitmap, update_charset_frame
     # and src_rect logic all operate on the crop every frame.
     @charbitmap = @ms_crop_bitmap
     @charbitmapAnimated = false
     self.bitmap = @ms_crop_bitmap
+    old_crop.dispose if old_crop && !old_crop.equal?(@ms_crop_bitmap) && !old_crop.disposed?
 
     cols, rows = MakerStudio.character_sheet_grid(char)
     cols = 1 if cols < 1

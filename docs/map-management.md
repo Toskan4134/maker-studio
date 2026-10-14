@@ -174,6 +174,8 @@ PNG, GIF and WebP all ask the same question before saving, with three answers:
 - **All events** — the same, plus an orange box on every invisible event. Use it when you want the image to double as a map of where your events sit.
 - **No events** — scenery only.
 
+Event graphics draw back-to-front by depth, with event ID as the tie-breaker. Tall graphics are included in the depth calculation; the same order is used in the canvas and simulator.
+
 ## Importing Maps
 
 Map then Import Map from JSON loads a previously exported JSON file as a new map in your project.

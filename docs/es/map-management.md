@@ -174,6 +174,8 @@ PNG, GIF y WebP hacen la misma pregunta antes de guardar, con tres respuestas:
 - **Todos los eventos** — lo mismo, más un recuadro naranja sobre cada evento invisible. Útil cuando quieres que la imagen sirva además de mapa de dónde están tus eventos.
 - **Sin eventos** — solo el escenario.
 
+Los gráficos de evento se dibujan de atrás hacia delante según su profundidad, con la ID como desempate. El cálculo tiene en cuenta los gráficos altos; el lienzo y el simulador usan el mismo orden.
+
 ## Importar mapas
 
 Map y luego Import Map from JSON carga un archivo JSON exportado previamente como un mapa nuevo en tu proyecto.

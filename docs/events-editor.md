@@ -2,7 +2,7 @@
 
 ## Viewing Events
 
-Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
+Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. Overlapping event graphics draw back-to-front by depth, with event ID as the tie-breaker. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
 
 ## Creating Events
 
@@ -41,7 +41,7 @@ With the **Events layer** active, you can duplicate whole events (all pages and 
 - **Right-click** an event for **Cut**, **Copy**, and **Paste** (pastes at the cell you clicked).
 - Or use **Ctrl+C** (copy) and **Ctrl+X** (cut) on the selected event, then **Ctrl+V** to paste — no need for the menu.
 
-**Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, and command from the original; only its ID and position change.
+**Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, and command from the original; only its ID, position, and generated name can change. A default name such as `EV001` is replaced with the new ID's default name. A custom name gets the next unused suffix (`Guard` → `Guard 1`; copying `Guard 1` continues with `Guard 2`). The first paste after Cut keeps the original name; later pastes use the copy naming rule.
 
 > **One event per tile.** Two events cannot share a cell — the game treats overlapping events as a single occupant. Pasting onto a tile that already has an event, or dragging an event onto another event, is blocked with a *"Tile already has an event"* notice. Pick an empty tile (or delete/move the existing event first).
 
@@ -373,7 +373,7 @@ Building a walk by clicking **Move Up** twelve times gets old fast. **Draw path�
 - **Click a tile far away** to add a **Jump** straight there.
 - **Right-click** cuts the route back to the step you clicked.
 - **Turn** and **Add Wait…** buttons add the non-moving actions; double-click a Wait row to change its frame count (20 frames = 1 second).
-- **Set Start** picks the tile the route starts from. It defaults to the event's own tile (or the player's start position), and whatever you choose is remembered the next time you open the editor for that route.
+- **Set Start** picks the tile the route starts from. The editor derives it from earlier commands on the same page for the same target, including direct location changes, known swaps, and earlier move routes. When a route may still be running or the position depends on a variable or branch, the position is marked as estimated. Set Start remains a manual override and is remembered the next time you open the editor for that route.
 - **Undo / Redo** with `Ctrl+Z` / `Ctrl+Y`. Select rows in the step list to delete them: right-click removes everything after the marked step, `Delete` removes exactly the ones you selected — both ask first, and `Ctrl+Y` brings them back.
 - The **keyboard** draws too: arrow keys step, `Ctrl`+arrows turn, `Backspace` (or `Shift+←`) undoes the last step and `Shift+→` redoes it. All of these are rebindable under **Move Route Editor** in the shortcut settings.
 - Pan with middle-drag or `Shift`+drag, zoom with `Ctrl`+scroll — the same as the map canvas.

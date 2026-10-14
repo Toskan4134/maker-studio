@@ -207,15 +207,17 @@ module MakerStudio
   def create_group_layer(map_id, group_key, layer_id)
     return nil unless @fog_sprites_cache && @fog_viewports_cache
     vps = (@fog_viewports_cache[map_id] ||= {})
-    vp = vps[group_key]
+    group_z = group_priority_for(map_id, group_key)
+    viewport_z = group_viewport_z(group_z)
+    vp = vps[viewport_z]
     if viewport_disposed?(vp)
       vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
-      vp.z = (group_key == "panorama" ? PANORAMA_GROUP_Z : FOG_GROUP_Z)
+      vp.z = viewport_z
       vp.visible = true
-      vps[group_key] = vp
+      vps[viewport_z] = vp
     end
     sprite = Plane.new(vp)
-    sprite.z = 0
+    sprite.z = group_z
     sprite.opacity = 255
     sprite.instance_variable_set(:@fog_id, layer_id)
     sprite.instance_variable_set(:@ms_group, group_key)

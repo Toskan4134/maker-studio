@@ -2,7 +2,7 @@
 
 ## Ver eventos
 
-Activa los marcadores de evento desde el botón **Events** de la barra de herramientas (o **View → Show Events**). Los eventos aparecen como marcadores de color en el lienzo. Cuando pasas el cursor sobre un evento, la barra de estado de abajo muestra el nombre del evento. (Pulsar **V** selecciona la *capa* de eventos para editar — no alterna la visibilidad de los marcadores.)
+Activa los marcadores de evento desde el botón **Events** de la barra de herramientas (o **View → Show Events**). Los eventos aparecen como marcadores de color en el lienzo. Si sus gráficos se solapan, se dibujan de atrás hacia delante según su profundidad, con la ID del evento como desempate. Cuando pasas el cursor sobre un evento, la barra de estado de abajo muestra el nombre del evento. (Pulsar **V** selecciona la *capa* de eventos para editar — no alterna la visibilidad de los marcadores.)
 
 ## Crear eventos
 
@@ -41,7 +41,7 @@ Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las p�
 - **Clic derecho** en un evento para **Cut**, **Copy** y **Paste** (pega en la celda en la que hiciste clic).
 - O usa **Ctrl+C** (copiar) y **Ctrl+X** (cortar) sobre el evento seleccionado, luego **Ctrl+V** para pegar — sin necesidad del menú.
 
-**Pegar con Ctrl+V** muestra una *vista previa*: un fantasma del evento copiado sigue a tu cursor. **Haz clic** donde quieras soltar la copia; pulsa **Escape** para cancelar. Cortar copia el evento y luego lo quita. El evento pegado conserva cada página, condición, gráfico y comando del original; solo cambian su ID y su posición.
+**Pegar con Ctrl+V** muestra una *vista previa*: un fantasma del evento copiado sigue a tu cursor. **Haz clic** donde quieras soltar la copia; pulsa **Escape** para cancelar. Cortar copia el evento y luego lo quita. El evento pegado conserva cada página, condición, gráfico y comando del original; pueden cambiar la ID, la posición y el nombre generado. Un nombre predeterminado como `EV001` se sustituye por el nombre predeterminado de la ID nueva. Un nombre personalizado recibe el siguiente sufijo libre (`Guard` → `Guard 1`; al copiar `Guard 1` continúa con `Guard 2`). El primer pegado después de cortar conserva el nombre original; los siguientes aplican la regla de copia.
 
 > **Un evento por tile.** Dos eventos no pueden compartir una celda — el juego trata los eventos solapados como un único ocupante. Pegar sobre un tile que ya tiene un evento, o arrastrar un evento sobre otro, se bloquea con un aviso *"Tile already has an event"*. Elige un tile vacío (o borra/mueve primero el evento existente).
 
@@ -373,7 +373,7 @@ Construir un paseo pulsando **Move Up** doce veces cansa rápido. **Dibujar ruta
 - **Haz clic en una casilla lejana** para añadir un **Jump** directo hasta ahí.
 - **Clic derecho** recorta la ruta hasta el paso donde has hecho clic.
 - Los botones **Girar** y **Añadir Wait…** añaden las acciones que no mueven; doble clic en una fila de Wait para cambiar sus fotogramas (20 fotogramas = 1 segundo).
-- **Fijar inicio** elige la casilla desde la que arranca la ruta. Por defecto es la casilla del propio evento (o la posición inicial del jugador), y lo que elijas se recuerda la próxima vez que abras el editor para esa ruta.
+- **Fijar inicio** elige la casilla desde la que arranca la ruta. El editor la calcula a partir de los comandos anteriores de la misma página y el mismo objetivo, incluidos cambios directos de posición, intercambios conocidos y rutas anteriores. Si una ruta puede seguir ejecutándose o la posición depende de una variable o una rama, se indica que es estimada. Fijar inicio sigue teniendo prioridad como ajuste manual y se recuerda al volver a abrir esa ruta.
 - **Deshacer / Rehacer** con `Ctrl+Z` / `Ctrl+Y`. Selecciona filas de la lista de pasos para borrarlas: el clic derecho elimina todo lo posterior al paso marcado, `Delete` elimina exactamente los que hayas seleccionado — ambos preguntan antes, y `Ctrl+Y` los recupera.
 - El **teclado** también dibuja: las flechas dan un paso, `Ctrl`+flechas giran, `Backspace` (o `Shift+←`) deshace el último paso y `Shift+→` lo rehace. Todos son reasignables en **Editor de rutas de movimiento** dentro de los ajustes de atajos.
 - Desplaza con arrastre del botón central o `Shift`+arrastrar, y haz zoom con `Ctrl`+rueda — igual que en el lienzo del mapa.

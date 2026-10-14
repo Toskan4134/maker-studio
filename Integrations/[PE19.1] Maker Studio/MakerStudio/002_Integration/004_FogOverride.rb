@@ -1,12 +1,12 @@
 #===============================================================================
 # MakerStudio - Graphic Layer Groups (Fog / Panorama / Custom) Override
 # Renders the Maker Studio graphic layer groups as Plane sprites:
-#   - fogLayers          at viewport z = 3000  (above all tiles/events)
-#   - panoramaLayers     at viewport z = -1000 (beneath all tiles)
-#   - customLayerGroups  at viewport z = group "priority" (mod-defined)
+#   - fogLayers          at Plane z = 3000  (above all tiles/events)
+#   - panoramaLayers     at Plane z = -1000 (beneath all tiles)
+#   - customLayerGroups  at Plane z = group "priority" (mod-defined)
 # Every layer shares the same config: graphic, hue, opacity, blend_type, zoom,
 # sx/sy scroll, follow_player, parallax. Groups are clipped to each map's
-# boundaries using a per-map per-group Viewport so connected maps don't overlap.
+# boundaries using per-map priority-bucket Viewports so connected maps don't overlap.
 #
 # Scroll convention: positive sx = layer moves right, positive sy = down.
 # Camera follow: follow_player = screen-locked. Otherwise the "parallax"
@@ -26,15 +26,57 @@ module MakerStudio
   PANORAMA_DIR = File.join("Graphics", "Panoramas")
   FOG_GROUP_Z = 3000
   PANORAMA_GROUP_Z = -1000
+  GRAPHIC_GROUP_BELOW_VIEWPORT_Z = -1
+  # RGSS1 uses z=0 for the map, then z=50/100 for weather, pictures and screen UI.
+  GRAPHIC_GROUP_ABOVE_VIEWPORT_Z = 40
 
   # Module-level sprite cache — { map_id => [plane_sprite, ...] } (all groups)
   @fog_sprites_cache = {}
-  # Per-map per-group viewports for clipping — { map_id => { group_key => Viewport } }
+  # Per-map viewports for clipping — { map_id => { viewport_z => Viewport } }
   @fog_viewports_cache = {}
   # Per-layer scroll offsets — { "group_key:layer_id" => { :ox => 0, :oy => 0 } }
   @fog_scroll_offsets = {}
 
   module_function
+
+  def group_viewport_z(group_z)
+    group_z < 0 ? GRAPHIC_GROUP_BELOW_VIEWPORT_Z : GRAPHIC_GROUP_ABOVE_VIEWPORT_Z
+  end
+
+  def group_priority_for(map_id, group_key)
+    return FOG_GROUP_Z if group_key == "fog"
+    return PANORAMA_GROUP_Z if group_key == "panorama"
+    ext_data = @extended_data_cache && @extended_data_cache[map_id]
+    groups = ext_data && ext_data["customLayerGroups"]
+    if groups
+      groups.each do |group|
+        next unless group && group["key"] == group_key
+        return (group["priority"] || 0).to_i
+      end
+    end
+    FOG_GROUP_Z
+  end
+
+  def sync_viewport_screen_effects(vp)
+    screen = $game_screen
+    return unless screen
+    if vp.respond_to?(:tone=) && screen.respond_to?(:tone)
+      target = screen.tone
+      current = vp.tone if vp.respond_to?(:tone)
+      if target && (!current || current.red != target.red || current.green != target.green ||
+                    current.blue != target.blue || current.gray != target.gray)
+        vp.tone = target.clone
+      end
+    end
+    if vp.respond_to?(:color=) && screen.respond_to?(:flash_color)
+      target = screen.flash_color
+      current = vp.color if vp.respond_to?(:color)
+      if target && (!current || current.red != target.red || current.green != target.green ||
+                    current.blue != target.blue || current.alpha != target.alpha)
+        vp.color = target.clone
+      end
+    end
+  end
 
   # RGSS1 (Essentials v17.x) has NO Viewport#disposed? — Sprite/Plane/Bitmap all
   # define it, Viewport does not, and the v17 base hits the same gap in
@@ -108,16 +150,20 @@ module MakerStudio
       dir       = group[2]
       layers    = group[3]
 
-      # Clipping viewport, one per group so each group sits at its own z.
+      # Share one clipping viewport per priority bucket; Plane.z keeps group order.
       # Sized to the SCREEN, not to the map: a Plane fills its whole viewport
       # rect, so a map-sized viewport made every fog/panorama layer draw a
       # map-sized surface (a 500x500 map = 16000x16000 px) every frame, most of
       # it off-camera. update_fog_sprites re-clips it to the visible part of the
       # map each frame and shifts the plane to compensate.
-      vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
-      vp.z = group_z
-      vp.visible = true
-      viewports[group_key] = vp
+      viewport_z = group_viewport_z(group_z)
+      vp = viewports[viewport_z]
+      unless vp
+        vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
+        vp.z = viewport_z
+        vp.visible = true
+        viewports[viewport_z] = vp
+      end
 
       layers.each do |layer|
         next unless layer["visible"] != false
@@ -142,7 +188,7 @@ module MakerStudio
         # Create Plane sprite clipped to the group viewport
         sprite = Plane.new(vp)
         sprite.bitmap = bmp
-        sprite.z = 0
+        sprite.z = group_z
         sprite.opacity = (layer["opacity"] || 255).to_i
         sprite.blend_type = (config["blendType"] || 0).to_i
 
@@ -222,6 +268,7 @@ module MakerStudio
       if vps
         vps.each do |group_key, vp|
           next if viewport_disposed?(vp)
+          sync_viewport_screen_effects(vp)
           if on_screen
             vp.rect.set(cx, cy, cw, ch)
             # Apply screen shake so layers wobble with the map. viewport1
