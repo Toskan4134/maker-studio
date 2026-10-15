@@ -2,6 +2,30 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.8.0
+
+Los proyectos estrenan control de versiones integrado: haz commit de los cambios, recorre el historial de commits y compara archivos, imágenes y mapas sin salir del editor. Esta versión también mantiene cada tile ligado al tileset del que viene, pregunta antes de descartar cambios en un comando, dibuja la niebla por debajo de los efectos de pantalla en el juego y corrige dos cuelgues del juego.
+
+### Novedades
+- 🌿 **Integración con Git** — el nuevo botón **Git** de la barra de menús hace commit de los archivos del proyecto que elijas, descarta los cambios de un archivo sin reiniciar el editor, y hace pull, push o cambia de rama con el Git instalado en tu ordenador. Un proyecto que aún no es un repositorio se puede inicializar desde la misma ventana.
+- 🕰️ **Historial de commits con vistas previas completas** — **Historial de commits** dibuja tus ramas como un grafo (hasta los 1.000 commits más recientes) y lista los **Archivos modificados** de cada commit. Compara un archivo con su versión anterior en **Lado a lado** o **Unificado**, con resaltado de sintaxis para Ruby, JSON, Markdown y más; los scripts, los registros de la base de datos y los mapas tienen comparaciones estructuradas (los mapas, también una visual lado a lado), las imágenes se abren en un visor con zoom y el audio se reproduce ahí mismo. Los archivos muy grandes esperan a **Cargar de todos modos** para no ralentizar el editor.
+- 📍 **Las rutas de movimiento saben dónde empiezan** — el editor de rutas calcula la casilla de inicio a partir de los comandos anteriores de la misma página (cambios de posición, intercambios, rutas previas) y la marca como estimada cuando una rama o una variable la hacen incierta. **Fijar inicio** sigue teniendo prioridad.
+- 🏷️ **Los eventos pegados reciben nombres con sentido** — un nombre predeterminado sigue a la ID nueva (`EV001` pegado como evento 4 pasa a `EV004`), y un nombre personalizado recibe el siguiente número libre (`Guard` → `Guard 1` → `Guard 2`). El primer pegado tras cortar conserva el nombre original.
+
+### Correcciones
+- 🧱 **Los tiles conservan las propiedades de su tileset** — los tiles y autotiles pintados, cogidos o pegados desde otro tileset mantienen su propio paso, prioridad y terrain tag en el editor, en el Simulador de juego y en el juego, y Relleno y Varita ya no los confunden con un tile del mismo número de otro tileset.
+- 🎭 **Eventos y niebla se dibujan en el orden correcto** — los gráficos de evento solapados se dibujan de atrás hacia delante según su profundidad (incluidos los gráficos altos) en el lienzo, en las imágenes exportadas y en el simulador. En el juego, la niebla queda ahora por debajo del clima, las imágenes y los overlays de pantalla, y sigue el tono y el destello de pantalla.
+- 💥 **Corregidos dos cuelgues del juego** — elegir la última opción de un Mostrar opciones anidado colgaba el juego (`undefined method 'indent' for nil`); al guardar el evento se añaden ahora los cierres de rama que el juego necesita. Entrar en un mapa con un evento que usa un tile del tileset como gráfico ya no falla con "Operation not supported for mega surfaces". Actualiza la integración (**Ayuda → Comprobar integración del juego…**) para recibir las correcciones del juego.
+- ↩️ **Deshacer tras guardar se mantiene** — deshacer la creación, el borrado o la edición de un evento después de guardar se escribe en el siguiente guardado, así los eventos borrados ya no vuelven y los deshechos ya no se quedan.
+- 🎬 **Valores por defecto correctos en los comandos** — un **Desplazar mapa** nuevo empieza en Abajo, distancia 0, velocidad 4, y **Cambiar gráfico** en una ruta de movimiento guarda el frame resaltado sin otro clic (los comandos antiguos con Mantener se abren como Abajo).
+- ⌨️ **Los atajos se quedan dentro de los diálogos** — mientras hay un diálogo abierto, el editor de detrás ya no reacciona a sus atajos; los controles propios del diálogo siguen funcionando.
+- 📜 **Scripts.rxdata se abre aunque tus scripts estén extraídos** — seleccionarlo en la ventana de Scripts muestra ahora su cargador en vez de no hacer nada.
+- 🔄 **Las actualizaciones aparecen al arrancar** — la app busca una versión nueva al iniciarse y la muestra antes de preguntar por la integración del proyecto.
+
+### Cambios
+- 🛡️ **Pregunta antes de descartar cambios en un comando** — cerrar un formulario de comando modificado con Escape, un clic fuera, el botón de cierre o Cancelar pregunta si quieres **Aplicar y cerrar**, **Descartar** o seguir editando. Los formularios sin cambios se cierran directamente.
+- 🚧 **La colisión combina todas las capas** — una dirección bloqueada en cualquier capa nativa o extra sigue bloqueada aunque encima haya un tile con prioridad 0. El overlay de colisión, el Simulador de juego y el juego aplican la misma regla.
+
 ## v1.7.1
 
 Esta actualización respeta el orden de los clics al añadir acciones a Move Route y facilita la gestión de los avisos de tilesets grandes.

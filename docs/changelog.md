@@ -2,6 +2,30 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.8.0
+
+Projects get built-in version control: commit changes, browse the commit history and compare files, images and maps without leaving the editor. This release also keeps every tile tied to the tileset it came from, asks before discarding command edits, draws fog under in-game screen effects and fixes two game crashes.
+
+### Additions
+- 🌿 **Git integration** — the new **Git** button in the menu bar commits the project files you select, discards a file's changes without restarting the editor, and pulls, pushes or switches branches using the Git installed on your computer. A project that is not a repository yet can be initialized from the same window.
+- 🕰️ **Commit history with rich previews** — **Commit history** draws your branches as a graph (up to the 1,000 most recent commits) and lists each commit's **Changed files**. Compare a file with its previous version **Side by side** or **Unified**, with syntax highlighting for Ruby, JSON, Markdown and more; scripts, database records and maps get structured comparisons (maps also a visual side-by-side), images open in a zoomable viewer and audio plays in place. Very large files wait for **Load anyway** so they never slow the editor down.
+- 📍 **Move routes know where they start** — the path editor works out the starting tile from earlier commands on the same page (location changes, swaps, previous routes) and marks it as estimated when a branch or variable makes it uncertain. **Set Start** still overrides it.
+- 🏷️ **Pasted events get sensible names** — a default name follows the new ID (`EV001` pasted as event 4 becomes `EV004`), and a custom name gets the next free number (`Guard` → `Guard 1` → `Guard 2`). The first paste after a cut keeps the original name.
+
+### Fixes
+- 🧱 **Tiles keep their own tileset's properties** — tiles and autotiles painted, picked or pasted from another tileset keep their own passage, priority and terrain tag in the editor, the Game Simulator and in-game, and Fill and Wand no longer mistake them for a same-numbered tile from a different tileset.
+- 🎭 **Events and fog draw in the right order** — overlapping event graphics draw back-to-front by depth (tall graphics included) on the canvas, in exported images and in the simulator. In-game, fog now sits below weather, pictures and screen overlays, and follows screen tone and flash.
+- 💥 **Fixed two game crashes** — choosing the last option of a nested Show Choices crashed the game (`undefined method 'indent' for nil`); saving the event now adds the branch endings the game needs. Entering a map with an event that uses a tileset tile as its graphic no longer fails with "Operation not supported for mega surfaces". Update the integration (**Help → Check Game Integration...**) to get the in-game fixes.
+- ↩️ **Undo after a save sticks** — undoing an event creation, deletion or edit after saving is written on the next save, so deleted events no longer come back and undone ones no longer linger.
+- 🎬 **Correct command defaults** — a new **Scroll Map** starts at Down, distance 0, speed 4, and **Change Graphic** in a move route saves the highlighted frame without another click (older commands set to Retain open as Down).
+- ⌨️ **Shortcuts stay inside dialogs** — while a dialog is open, the editor behind it no longer reacts to its shortcuts; the dialog's own controls keep working.
+- 📜 **Scripts.rxdata opens when your scripts are extracted** — selecting it in the Scripts window now shows its loader instead of doing nothing.
+- 🔄 **Updates show up on startup** — the app checks for a new version when it starts and shows it before asking about the project's integration.
+
+### Changes
+- 🛡️ **Ask before discarding command edits** — closing a changed command form with Escape, a click outside, the close button or Cancel asks whether to **Apply & Close**, **Discard** or keep editing. Unchanged forms still close straight away.
+- 🚧 **Collision combines every layer** — a blocked direction on any native or extra layer stays blocked, even under a priority-0 tile placed on top. The collision overlay, the Game Simulator and the game all apply the same rule.
+
 ## v1.7.1
 
 This update keeps Move Route actions in click order and makes large-tileset warnings easier to manage.

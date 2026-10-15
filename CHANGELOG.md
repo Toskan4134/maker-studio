@@ -3,6 +3,33 @@
 User-facing changes to the Maker Studio app and its game-side plugin. Older
 releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/releases).
 
+## v1.8.0
+
+Projects get built-in version control: commit changes, browse the commit history and compare files, images and maps without leaving the editor. This release also keeps every tile tied to the tileset it came from, asks before discarding command edits, draws fog under in-game screen effects and fixes two game crashes.
+
+### Additions
+- 🌿 **Git integration** — the new **Git** button in the menu bar commits the project files you select, discards a file's changes without restarting the editor, and pulls, pushes or switches branches using the Git installed on your computer. A project that is not a repository yet can be initialized from the same window.
+- 🕰️ **Commit history with rich previews** — **Commit history** draws your branches as a graph (up to the 1,000 most recent commits) and lists each commit's **Changed files**. Compare a file with its previous version **Side by side** or **Unified**, with syntax highlighting for Ruby, JSON, Markdown and more; scripts, database records and maps get structured comparisons (maps also a visual side-by-side), images open in a zoomable viewer and audio plays in place. Very large files wait for **Load anyway** so they never slow the editor down.
+- 📍 **Move routes know where they start** — the path editor works out the starting tile from earlier commands on the same page (location changes, swaps, previous routes) and marks it as estimated when a branch or variable makes it uncertain. **Set Start** still overrides it.
+- 🏷️ **Pasted events get sensible names** — a default name follows the new ID (`EV001` pasted as event 4 becomes `EV004`), and a custom name gets the next free number (`Guard` → `Guard 1` → `Guard 2`). The first paste after a cut keeps the original name.
+
+### Fixes
+- 🧱 **Tiles keep their own tileset's properties** — tiles and autotiles painted, picked or pasted from another tileset keep their own passage, priority and terrain tag in the editor, the Game Simulator and in-game, and Fill and Wand no longer mistake them for a same-numbered tile from a different tileset.
+- 🎭 **Events and fog draw in the right order** — overlapping event graphics draw back-to-front by depth (tall graphics included) on the canvas, in exported images and in the simulator. In-game, fog now sits below weather, pictures and screen overlays, and follows screen tone and flash.
+- 💥 **Fixed two game crashes** — choosing the last option of a nested Show Choices crashed the game (`undefined method 'indent' for nil`); saving the event now adds the branch endings the game needs. Entering a map with an event that uses a tileset tile as its graphic no longer fails with "Operation not supported for mega surfaces". Update the integration (**Help → Check Game Integration...**) to get the in-game fixes.
+- ↩️ **Undo after a save sticks** — undoing an event creation, deletion or edit after saving is written on the next save, so deleted events no longer come back and undone ones no longer linger.
+- 🎬 **Correct command defaults** — a new **Scroll Map** starts at Down, distance 0, speed 4, and **Change Graphic** in a move route saves the highlighted frame without another click (older commands set to Retain open as Down).
+- ⌨️ **Shortcuts stay inside dialogs** — while a dialog is open, the editor behind it no longer reacts to its shortcuts; the dialog's own controls keep working.
+- 📜 **Scripts.rxdata opens when your scripts are extracted** — selecting it in the Scripts window now shows its loader instead of doing nothing.
+- 🔄 **Updates show up on startup** — the app checks for a new version when it starts and shows it before asking about the project's integration.
+
+### Changes
+- 🛡️ **Ask before discarding command edits** — closing a changed command form with Escape, a click outside, the close button or Cancel asks whether to **Apply & Close**, **Discard** or keep editing. Unchanged forms still close straight away.
+- 🚧 **Collision combines every layer** — a blocked direction on any native or extra layer stays blocked, even under a priority-0 tile placed on top. The collision overlay, the Game Simulator and the game all apply the same rule.
+
+### Documentation
+User guides and mod API reference: https://makerstudio.toskan.es/
+
 ## v1.7.1
 
 This update keeps Move Route actions in click order and makes large-tileset warnings easier to manage.
@@ -281,6 +308,40 @@ User guides and mod API reference: https://makerstudio.toskan.es/
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
+
+## v1.8.0
+
+Los proyectos estrenan control de versiones integrado: haz commit de los cambios, recorre el historial de commits y compara archivos, imágenes y mapas sin salir del editor. Esta versión también mantiene cada tile ligado al tileset del que viene, pregunta antes de descartar cambios en un comando, dibuja la niebla por debajo de los efectos de pantalla en el juego y corrige dos cuelgues del juego.
+
+### Novedades
+- 🌿 **Integración con Git** — el nuevo botón **Git** de la barra de menús hace commit de los archivos del proyecto que elijas, descarta los cambios de un archivo sin reiniciar el editor, y hace pull, push o cambia de rama con el Git instalado en tu ordenador. Un proyecto que aún no es un repositorio se puede inicializar desde la misma ventana.
+- 🕰️ **Historial de commits con vistas previas completas** — **Historial de commits** dibuja tus ramas como un grafo (hasta los 1.000 commits más recientes) y lista los **Archivos modificados** de cada commit. Compara un archivo con su versión anterior en **Lado a lado** o **Unificado**, con resaltado de sintaxis para Ruby, JSON, Markdown y más; los scripts, los registros de la base de datos y los mapas tienen comparaciones estructuradas (los mapas, también una visual lado a lado), las imágenes se abren en un visor con zoom y el audio se reproduce ahí mismo. Los archivos muy grandes esperan a **Cargar de todos modos** para no ralentizar el editor.
+- 📍 **Las rutas de movimiento saben dónde empiezan** — el editor de rutas calcula la casilla de inicio a partir de los comandos anteriores de la misma página (cambios de posición, intercambios, rutas previas) y la marca como estimada cuando una rama o una variable la hacen incierta. **Fijar inicio** sigue teniendo prioridad.
+- 🏷️ **Los eventos pegados reciben nombres con sentido** — un nombre predeterminado sigue a la ID nueva (`EV001` pegado como evento 4 pasa a `EV004`), y un nombre personalizado recibe el siguiente número libre (`Guard` → `Guard 1` → `Guard 2`). El primer pegado tras cortar conserva el nombre original.
+
+### Correcciones
+- 🧱 **Los tiles conservan las propiedades de su tileset** — los tiles y autotiles pintados, cogidos o pegados desde otro tileset mantienen su propio paso, prioridad y terrain tag en el editor, en el Simulador de juego y en el juego, y Relleno y Varita ya no los confunden con un tile del mismo número de otro tileset.
+- 🎭 **Eventos y niebla se dibujan en el orden correcto** — los gráficos de evento solapados se dibujan de atrás hacia delante según su profundidad (incluidos los gráficos altos) en el lienzo, en las imágenes exportadas y en el simulador. En el juego, la niebla queda ahora por debajo del clima, las imágenes y los overlays de pantalla, y sigue el tono y el destello de pantalla.
+- 💥 **Corregidos dos cuelgues del juego** — elegir la última opción de un Mostrar opciones anidado colgaba el juego (`undefined method 'indent' for nil`); al guardar el evento se añaden ahora los cierres de rama que el juego necesita. Entrar en un mapa con un evento que usa un tile del tileset como gráfico ya no falla con "Operation not supported for mega surfaces". Actualiza la integración (**Ayuda → Comprobar integración del juego…**) para recibir las correcciones del juego.
+- ↩️ **Deshacer tras guardar se mantiene** — deshacer la creación, el borrado o la edición de un evento después de guardar se escribe en el siguiente guardado, así los eventos borrados ya no vuelven y los deshechos ya no se quedan.
+- 🎬 **Valores por defecto correctos en los comandos** — un **Desplazar mapa** nuevo empieza en Abajo, distancia 0, velocidad 4, y **Cambiar gráfico** en una ruta de movimiento guarda el frame resaltado sin otro clic (los comandos antiguos con Mantener se abren como Abajo).
+- ⌨️ **Los atajos se quedan dentro de los diálogos** — mientras hay un diálogo abierto, el editor de detrás ya no reacciona a sus atajos; los controles propios del diálogo siguen funcionando.
+- 📜 **Scripts.rxdata se abre aunque tus scripts estén extraídos** — seleccionarlo en la ventana de Scripts muestra ahora su cargador en vez de no hacer nada.
+- 🔄 **Las actualizaciones aparecen al arrancar** — la app busca una versión nueva al iniciarse y la muestra antes de preguntar por la integración del proyecto.
+
+### Cambios
+- 🛡️ **Pregunta antes de descartar cambios en un comando** — cerrar un formulario de comando modificado con Escape, un clic fuera, el botón de cierre o Cancelar pregunta si quieres **Aplicar y cerrar**, **Descartar** o seguir editando. Los formularios sin cambios se cierran directamente.
+- 🚧 **La colisión combina todas las capas** — una dirección bloqueada en cualquier capa nativa o extra sigue bloqueada aunque encima haya un tile con prioridad 0. El overlay de colisión, el Simulador de juego y el juego aplican la misma regla.
+
+## v1.7.1
+
+Esta actualización respeta el orden de los clics al añadir acciones a Move Route y facilita la gestión de los avisos de tilesets grandes.
+
+### Cambios
+- ⚠️ **Gestiona los avisos de tilesets grandes** — abre el tileset desde el aviso, silencia los siguientes y vuelve a activarlos desde **Ayuda → Volver a mostrar los avisos de la aplicación → Reactivar avisos de tilesets grandes**.
+
+### Correcciones
+- 🔀 **Respeta el orden de los clics al añadir acciones a Move Route** — tras insertar una acción, la selección avanza al hueco siguiente para que la próxima quede después.
 
 ## v1.7.0
 
