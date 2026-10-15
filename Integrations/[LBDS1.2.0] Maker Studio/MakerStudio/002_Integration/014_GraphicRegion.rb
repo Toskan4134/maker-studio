@@ -97,6 +97,31 @@ class Sprite_Character
     alias __mkst__region_update update
   end
 
+  unless method_defined?(:__mkst__region_bitmap_set)
+    alias __mkst__region_bitmap_set bitmap=
+  end
+
+  # A mega surface cannot reach Sprite#bitmap=, so bind its selected region
+  # first. ms_region_refresh adopts this crop after the base update.
+  def bitmap=(bmp)
+    rect = MakerStudio.character_src_rect(@character)
+    old_crop = nil
+    if bmp && rect && bmp.respond_to?(:mega?) && bmp.mega?
+      key = "#{bmp.object_id}|#{rect.join(',')}"
+      unless key == @ms_pending_crop_key
+        old_crop = @ms_pending_crop_bitmap
+        @ms_pending_crop_bitmap = MakerStudio.cropped_bitmap(bmp, rect)
+        @ms_pending_crop_key = key
+      end
+      @ms_pending_crop_source = bmp
+      @ms_pending_crop_rect = rect
+      bmp = @ms_pending_crop_bitmap
+    end
+    result = __mkst__region_bitmap_set(bmp)
+    old_crop.dispose if old_crop && !old_crop.equal?(bmp) && !old_crop.disposed?
+    result
+  end
+
   def update
     __mkst__region_update
     ms_region_refresh
@@ -110,9 +135,11 @@ class Sprite_Character
     # refresh_graphic replaced @charbitmap under us (name/hue changed) —
     # our saved original and crop are stale, start fresh.
     if @ms_crop_bitmap && !@charbitmap.equal?(@ms_crop_bitmap)
+      old_crop = @ms_crop_bitmap
       @ms_original_charbitmap = nil
       @ms_crop_bitmap = nil
       @ms_region_key = nil
+      old_crop.dispose if old_crop && !old_crop.equal?(self.bitmap) && !old_crop.disposed?
     end
 
     rect = MakerStudio.character_src_rect(char)
@@ -151,14 +178,23 @@ class Sprite_Character
     end
 
     old_crop = @ms_crop_bitmap
-    @ms_crop_bitmap = MakerStudio.cropped_bitmap(source_bmp, rect)
-    old_crop.dispose if old_crop && !old_crop.disposed?
+    if @ms_pending_crop_source.equal?(source_bmp) && @ms_pending_crop_rect == rect &&
+       @ms_pending_crop_bitmap
+      @ms_crop_bitmap = @ms_pending_crop_bitmap
+      @ms_pending_crop_bitmap = nil
+      @ms_pending_crop_key = nil
+      @ms_pending_crop_source = nil
+      @ms_pending_crop_rect = nil
+    else
+      @ms_crop_bitmap = MakerStudio.cropped_bitmap(source_bmp, rect)
+    end
 
     # Replace @charbitmap so the base's own update_bitmap, update_charset_frame
     # and src_rect logic all operate on the crop every frame.
     @charbitmap = @ms_crop_bitmap
     @charbitmapAnimated = false
     self.bitmap = @ms_crop_bitmap
+    old_crop.dispose if old_crop && !old_crop.equal?(@ms_crop_bitmap) && !old_crop.disposed?
 
     cols, rows = MakerStudio.character_sheet_grid(char)
     cols = 1 if cols < 1

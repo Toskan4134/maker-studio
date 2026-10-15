@@ -38,7 +38,10 @@ class Game_Map
     auto_name = tile_data["autotile_name"]
     return nil unless auto_name
     if tile_data["tileset_id"]
-      ts = $data_tilesets[tile_data["tileset_id"].to_i]
+      source_id = tile_data["tileset_id"].to_i
+      entry = MakerStudio::DataStore.get_expanded_autotile(auto_name, source_id)
+      return [entry["passage"].to_i, entry["priority"].to_i, entry["terrain_tag"].to_i] if entry
+      ts = $data_tilesets[source_id]
       return nil unless ts && ts.autotile_names
       idx = ts.autotile_names.index(auto_name)
       return nil unless idx

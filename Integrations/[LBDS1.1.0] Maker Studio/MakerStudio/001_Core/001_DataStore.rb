@@ -88,7 +88,8 @@ module MakerStudio
     def expanded_autotile_index
       return @expanded_autotile_index if @expanded_autotile_index
       index = {}
-      ($data_tilesets || []).each do |ts|
+      source_index = {}
+      ($data_tilesets || []).each_with_index do |ts, tileset_id|
         next unless ts
         raw = ts.instance_variable_get(:@expanded_autotiles)
         next unless raw.is_a?(String) && !raw.empty?
@@ -98,22 +99,27 @@ module MakerStudio
           parsed.each do |e|
             next unless e.is_a?(Hash) && e["name"]
             # First tileset wins, matching the old first-match-scan behaviour.
+            source = source_index[tileset_id] ||= {}
+            source[e["name"]] = e if source && !source[e["name"]]
             index[e["name"]] = e unless index[e["name"]]
           end
         rescue
         end
       end
+      @expanded_autotile_source_index = source_index
       @expanded_autotile_index = index
     end
 
     # Call whenever the tilesets are reloaded (editor hot-reload).
     def clear_expanded_autotile_index
       @expanded_autotile_index = nil
+      @expanded_autotile_source_index = nil
     end
 
-    def get_expanded_autotile(autotile_name)
+    def get_expanded_autotile(autotile_name, tileset_id = nil)
       return nil unless autotile_name && $data_tilesets
-      expanded_autotile_index[autotile_name]
+      return expanded_autotile_index[autotile_name] if tileset_id.nil?
+      (@expanded_autotile_source_index[tileset_id.to_i] || {})[autotile_name]
     end
   end
 end

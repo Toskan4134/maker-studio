@@ -131,8 +131,17 @@ module MakerStudio
   # Tilesets.rxdata was never re-saved with the expanded_autotiles config).
   def resolve_band_priority(map, tid, td)
     if td && td["autotile_name"]
-      entry = DataStore.get_expanded_autotile(td["autotile_name"])
+      source_id = td["tileset_id"]
+      entry = DataStore.get_expanded_autotile(td["autotile_name"], source_id)
       return entry["priority"].to_i if entry
+      if source_id
+        ts = $data_tilesets[source_id.to_i]
+        if ts && ts.autotile_names
+          idx = ts.autotile_names.index(td["autotile_name"])
+          return (ts.priorities[(idx + 1) * MakerStudio::TILES_PER_AUTOTILE] || 0) if idx
+        end
+        return td["priority"] ? td["priority"].to_i : 0
+      end
       idx = map.autotile_names.index(td["autotile_name"])
       return (map.priorities[(idx + 1) * MakerStudio::TILES_PER_AUTOTILE] || 0) if idx
       return td["priority"] ? td["priority"].to_i : 0
@@ -1180,8 +1189,17 @@ class TilemapRenderer
   def resolve_shadow_tile_passage(tid, entry, default_passages)
     return entry["passage"].to_i if entry && entry["passage"]
     if entry && entry["autotile_name"]
-      auto_entry = MakerStudio::DataStore.get_expanded_autotile(entry["autotile_name"])
+      source_id = entry["tileset_id"]
+      auto_entry = MakerStudio::DataStore.get_expanded_autotile(entry["autotile_name"], source_id)
       return auto_entry["passage"].to_i if auto_entry && auto_entry["passage"]
+      if source_id
+        ts = $data_tilesets[source_id.to_i]
+        if ts && ts.autotile_names
+          idx = ts.autotile_names.index(entry["autotile_name"])
+          return ts.passages[(idx + 1) * MakerStudio::TILES_PER_AUTOTILE] || 0 if idx
+        end
+        return default_passages[tid] || 0
+      end
     end
     if entry && entry["tileset_id"]
       ts = $data_tilesets[entry["tileset_id"].to_i]
@@ -1201,7 +1219,7 @@ class TilemapRenderer
   def resolve_tile_priority(tile_id, tile_data, map)
     # Extra autotile: resolve live from config / autotile slots
     if tile_data && tile_data["autotile_name"]
-      pri = resolve_autotile_priority(tile_data["autotile_name"], map)
+      pri = resolve_autotile_priority(tile_data["autotile_name"], map, tile_data["tileset_id"])
       return pri if pri
       return tile_data["priority"] ? tile_data["priority"].to_i : 0
     end
@@ -1224,17 +1242,22 @@ class TilemapRenderer
   # Returns nil when the autotile is unknown everywhere, so the caller can
   # fall back to the baked per-tile priority.
   #---------------------------------------------------------------------------
-  def resolve_autotile_priority(autotile_name, map)
-    # Check expanded_autotiles config first (named autotile priority override)
-    entry = MakerStudio::DataStore.get_expanded_autotile(autotile_name)
+  def resolve_autotile_priority(autotile_name, map, tileset_id = nil)
+    entry = MakerStudio::DataStore.get_expanded_autotile(autotile_name, tileset_id)
     return entry["priority"].to_i if entry
-    # Check map's own tileset native autotile slots
+    if tileset_id
+      ts = $data_tilesets[tileset_id.to_i]
+      if ts && ts.autotile_names
+        idx = ts.autotile_names.index(autotile_name)
+        return ts.priorities[(idx + 1) * MakerStudio::TILES_PER_AUTOTILE] || 0 if idx
+      end
+      return nil
+    end
     idx = map.autotile_names.index(autotile_name)
     if idx
       base = (idx + 1) * MakerStudio::TILES_PER_AUTOTILE
       return map.priorities[base] || 0
     end
-    # Check all tilesets
     $data_tilesets.each do |ts|
       next unless ts
       idx = ts.autotile_names.index(autotile_name)

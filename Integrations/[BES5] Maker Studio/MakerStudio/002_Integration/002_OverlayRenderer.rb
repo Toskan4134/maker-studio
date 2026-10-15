@@ -319,8 +319,17 @@ module MakerStudio
   def resolve_priority(base_tile_id, tile_data, map)
     return tile_data["priority"].to_i if tile_data["priority"]
     if tile_data["autotile_name"]
-      entry = MakerStudio::DataStore.get_expanded_autotile(tile_data["autotile_name"])
+      source_id = tile_data["tileset_id"]
+      entry = MakerStudio::DataStore.get_expanded_autotile(tile_data["autotile_name"], source_id)
       return entry["priority"].to_i if entry
+      if source_id
+        ts = $data_tilesets[source_id.to_i]
+        if ts && ts.autotile_names
+          idx = ts.autotile_names.index(tile_data["autotile_name"])
+          return ts.priorities[(idx + 1) * 48] || 0 if idx
+        end
+        return 0
+      end
       if map.respond_to?(:autotile_names)
         idx = map.autotile_names.index(tile_data["autotile_name"])
         return (map.priorities[(idx + 1) * 48] || 0) if idx
