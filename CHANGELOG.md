@@ -3,6 +3,8 @@
 User-facing changes to the Maker Studio app and its game-side plugin. Older
 releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/releases).
 
+User guides and mod API reference: https://makerstudio.toskan.es/
+
 ## v1.8.1
 
 A hotfix release: floors painted over walls are walkable again, pasted tiles keep their graphic and a game crash with extra autotiles is gone.
@@ -77,9 +79,6 @@ An event-editor release: the Move Route editor is rebuilt around a sequence pane
 - 📝 **Fixed multiline command previews while editing** — continuation rows stay intact, the preview keeps each line's prefix and indentation, and long labels scroll on hover without re-rendering the list on every keystroke.
 - ⌨️ **Fixed command-list and move-route shortcuts going quiet** after using the toolbar or clicking empty space — they stay active across the whole editor, still yielding to text inputs and dialogs.
 
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
-
 ## v1.6.0
 
 Every event command describes itself in the list now, in its own colour — battle commands included. The Scripts window edits any script source the project actually has, whole records copy and paste across the editor, and presets learn multi-selection and an import that asks before overwriting.
@@ -110,9 +109,6 @@ Every event command describes itself in the list now, in its own colour — batt
 
 ### Changes
 - ✂️ **Show / Move Picture rows are trimmed to name + opacity** — origin, xy, zoom and blend are almost always the defaults and buried the two facts worth scanning for; Move Picture appends the tween duration.
-
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
 
 ## v1.5.0
 
@@ -145,9 +141,6 @@ Move routes are drawn on the map now instead of clicked together one **Move Up**
 - ⬆️ **Insert and Paste now land above the selected row**, as a sibling, instead of inside whatever block was selected. To put a command inside a block, insert on the row that is already inside it.
 - ▶️ **Run no longer saves your maps for you** — if anything is unsaved it asks first, and launches straight away when there is nothing pending.
 - 🧩 **Check Game Integration has its own icon** in the Help menu.
-
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
 
 ## v1.4.0
 
@@ -182,9 +175,6 @@ Event pages stopped being a straitjacket: conditions can now be a tree of ANDs a
 - 📄 **The per-project editor settings file is now `ms-editor-config.json`.** Existing projects are unaffected — it is created again on the next save.
 - 📐 **The event editor's left panel can be resized**, and the window opens at a more sensible size.
 - 🔍 **The tile info section moved to the bottom of the tileset editor's sidebar.**
-
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
 
 ## v1.3.0
 
@@ -228,18 +218,12 @@ The interface is yours now: pick a theme, recolour anything, and keep your place
 - ⚠️ **"Don't warn me again" is gone from the already-running prompt** — launching a second copy of the game, or closing the one that is running, is worth confirming every time.
 - 🐧 **Clear Proton Preference is only listed when there is a choice to forget.**
 
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
-
 ## v1.2.1
 
 Hotfix for v1.2.0: the Integration stopped games from starting.
 
 ### Fixes
 - 🚑 **Fixed the game refusing to start after installing the v1.2.0 Integration** — it failed at boot with a plugin error about an invalid registration key (`Invalid plugin registry key 'msintegration'` / `Clave de registro de plugin no válida 'msintegration'`). The line the editor uses to recognise which Integration you have is now hidden from the engine, so it identifies itself exactly as before without the engine ever seeing it. Affected every folder-installed Integration on every engine; if you installed v1.2.0, update to v1.2.1.
-
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
 
 ## v1.2.0
 
@@ -263,9 +247,6 @@ A big update to the event editor and the game-side plugin: a redesigned command 
 ### Changes
 - 🔄 **Autotiles are never rotated or flipped** — an autotile picks its pattern from the tiles around it, so a rotated or mirrored one no longer matched the edge it was chosen for (and could look upright in the editor but rotated in-game). The transform controls are now greyed out while an autotile is selected, and rotating a stamp that contains autotiles leaves them alone. Rotations saved on autotiles by older versions are ignored everywhere.
 
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
-
 ## v1.1.1
 
 Small update: a faster way to open projects, plus editor and in-game preview performance fixes.
@@ -276,9 +257,6 @@ Small update: a faster way to open projects, plus editor and in-game preview per
 ### Fixes
 - ⚡ **Editor performance** — the map canvas no longer lags when painting lots of tiles, tiles with color or rotation properties, or autotiles, or when working on very large maps.
 - 🗺️ **Faster in-game map previews** — the debug "jump to map" and map-connection editor screens no longer freeze on maps with many styled tiles.
-
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
 
 ## v1.1.0
 
@@ -305,15 +283,14 @@ Update focused on stability: several in-game and editor bugs fixed, plus broader
 - 📝 The event editor now shows each line of a multi-line Show Text, Comment or Script command as its own row, matching the classic editor's look — while still selecting, moving and deleting as one command.
 - 🪟 The event editor window no longer resizes itself when switching between pages.
 
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
-
 ---
 
 # Registro de cambios
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
+
+Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
 
 ## v1.8.1
 
@@ -452,9 +429,6 @@ Las rutas de movimiento ahora se dibujan sobre el mapa, en vez de montarse a bas
 - ▶️ **Run ya no guarda tus mapas por ti** — si hay algo sin guardar pregunta antes, y si no hay nada pendiente lanza directamente.
 - 🧩 **Comprobar integración del juego tiene su propio icono** en el menú Help.
 
-### Documentación
-Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
-
 ## v1.4.0
 
 Las páginas de evento dejan de ser una camisa de fuerza: las condiciones pueden ser un árbol de Y y O, un switch puede exigirse en OFF, y un evento puede bloquear el tile en el que está. Un gráfico puede ser un trozo de una imagen — elige tiles directamente de un tileset y dáselos a un evento. El editor de tilesets te deja escribir tus propios terrain tags, y los battlebacks por fin funcionan en Pokémon Essentials, bases incluidas.
@@ -488,9 +462,6 @@ Las páginas de evento dejan de ser una camisa de fuerza: las condiciones pueden
 - 📄 **El archivo de ajustes del editor por proyecto pasa a llamarse `ms-editor-config.json`.** Los proyectos existentes no se ven afectados — se vuelve a crear en el siguiente guardado.
 - 📐 **El panel izquierdo del editor de eventos se puede redimensionar**, y la ventana se abre con un tamaño más sensato.
 - 🔍 **La sección de información del tile se ha movido al final de la barra lateral del editor de tilesets.**
-
-### Documentación
-Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
 
 ## v1.3.0
 
@@ -534,18 +505,12 @@ Ahora la interfaz es tuya: elige un tema, recolorea lo que quieras y conserva tu
 - ⚠️ **Se ha quitado "No volver a avisar" del aviso de juego en ejecución** — lanzar una segunda copia del juego, o cerrar la que está abierta, merece confirmarse siempre.
 - 🐧 **Clear Proton Preference solo aparece cuando hay una elección que olvidar.**
 
-### Documentación
-Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
-
 ## v1.2.1
 
 Corrección urgente de la v1.2.0: la integración impedía que el juego arrancase.
 
 ### Correcciones
 - 🚑 **Corregido que el juego no arrancaba tras instalar la integración v1.2.0** — fallaba al iniciar con un error de plugin sobre una clave de registro no válida (`Clave de registro de plugin no válida 'msintegration'` / `Invalid plugin registry key 'msintegration'`). La línea que usa el editor para reconocer qué integración tienes queda ahora oculta al motor, así que se sigue identificando igual que antes sin que el motor llegue a verla. Afectaba a todas las integraciones que se instalan como carpeta, en todos los motores; si instalaste la v1.2.0, actualiza a la v1.2.1.
-
-### Documentación
-Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
 
 ## v1.2.0
 
@@ -569,9 +534,6 @@ Una actualización grande del editor de eventos y del plugin del lado del juego:
 ### Cambios
 - 🔄 **Los autotiles nunca se rotan ni se voltean** — un autotile elige su patrón según los tiles de alrededor, así que uno rotado o reflejado dejaba de encajar con el borde para el que se eligió (y podía verse recto en el editor pero rotado en el juego). Los controles de transformación aparecen ahora atenuados mientras hay un autotile seleccionado, y rotar una estampa que contenga autotiles los deja intactos. Las rotaciones guardadas en autotiles por versiones anteriores se ignoran en todas partes.
 
-### Documentación
-Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
-
 ## v1.1.1
 
 Actualización pequeña: una forma más rápida de abrir proyectos, más correcciones de rendimiento en el editor y las previsualizaciones dentro del juego.
@@ -582,9 +544,6 @@ Actualización pequeña: una forma más rápida de abrir proyectos, más correcc
 ### Correcciones
 - ⚡ **Rendimiento del editor** — el lienzo del mapa ya no va lento al pintar muchos tiles, tiles con propiedades de color o rotación, o autotiles, ni al trabajar en mapas muy grandes.
 - 🗺️ **Previsualizaciones de mapa más rápidas en el juego** — las pantallas de depuración "saltar a mapa" y el editor de conexiones de mapa ya no se congelan en mapas con muchos tiles con efectos.
-
-### Documentación
-Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
 
 ## v1.1.0
 
@@ -610,6 +569,3 @@ Actualización centrada en estabilidad: se corrigen varios errores del editor y 
 ### Cambios
 - 📝 El editor de eventos ahora muestra cada línea de un comando de Mostrar Texto, Comentario o Script multilínea como su propia fila, igual que el editor clásico — pero seleccionando, moviendo y borrando como un único comando.
 - 🪟 La ventana del editor de eventos ya no cambia de tamaño al cambiar de página.
-
-### Documentación
-Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
