@@ -12,9 +12,6 @@ A hotfix release: floors painted over walls are walkable again, pasted tiles kee
 - 📋 **Pasted tiles keep their graphic** — tiles pasted on a map no longer turn invisible while keeping their collision, and tiles already affected show up again when the map is opened.
 - 💥 **Fixed a game crash with extra autotiles** — a map using extra autotiles could crash the game while drawing (`undefined method '[]' for nil`). Update the integration (**Help → Check Game Integration...**) to get the fix.
 
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
-
 ## v1.8.0
 
 Projects get built-in version control: commit changes, browse the commit history and compare files, images and maps without leaving the editor. This release also keeps every tile tied to the tileset it came from, asks before discarding command edits, draws fog under in-game screen effects and fixes two game crashes.
