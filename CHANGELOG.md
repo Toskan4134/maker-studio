@@ -3,6 +3,18 @@
 User-facing changes to the Maker Studio app and its game-side plugin. Older
 releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/releases).
 
+## v1.8.1
+
+A hotfix release: floors painted over walls are walkable again, pasted tiles keep their graphic and a game crash with extra autotiles is gone.
+
+### Fixes
+- 🚶 **Floors over walls are walkable again** — a priority-0 tile painted over a blocked one decides the cell again, as in RPG Maker, so a floor laid over a wall can be walked on. Overhead tiles (priority 1 or higher, ★) still let a block below them apply. This replaces the 1.8.0 rule where a block on any layer kept the cell blocked; the collision overlay, the Game Simulator and the game all agree.
+- 📋 **Pasted tiles keep their graphic** — tiles pasted on a map no longer turn invisible while keeping their collision, and tiles already affected show up again when the map is opened.
+- 💥 **Fixed a game crash with extra autotiles** — a map using extra autotiles could crash the game while drawing (`undefined method '[]' for nil`). Update the integration (**Help → Check Game Integration...**) to get the fix.
+
+### Documentation
+User guides and mod API reference: https://makerstudio.toskan.es/
+
 ## v1.8.0
 
 Projects get built-in version control: commit changes, browse the commit history and compare files, images and maps without leaving the editor. This release also keeps every tile tied to the tileset it came from, asks before discarding command edits, draws fog under in-game screen effects and fixes two game crashes.
@@ -308,6 +320,15 @@ User guides and mod API reference: https://makerstudio.toskan.es/
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
+
+## v1.8.1
+
+Una versión de corrección: los suelos pintados sobre muros vuelven a ser transitables, los tiles pegados conservan su gráfico y desaparece un cuelgue del juego con los autotiles extra.
+
+### Correcciones
+- 🚶 **Los suelos sobre muros vuelven a ser transitables** — un tile con prioridad 0 pintado sobre uno bloqueado vuelve a decidir la casilla, como en RPG Maker, así que un suelo puesto sobre un muro se puede pisar. Los tiles por encima (prioridad 1 o superior, ★) siguen dejando que se aplique el bloqueo de debajo. Esto sustituye la regla de la 1.8.0, en la que un bloqueo en cualquier capa mantenía la casilla bloqueada; el overlay de colisión, el Simulador de juego y el juego coinciden.
+- 📋 **Los tiles pegados conservan su gráfico** — los tiles pegados en un mapa ya no se vuelven invisibles manteniendo su colisión, y los que ya estaban afectados vuelven a verse al abrir el mapa.
+- 💥 **Corregido un cuelgue del juego con autotiles extra** — un mapa con autotiles extra podía colgar el juego al dibujarse (`undefined method '[]' for nil`). Actualiza la integración (**Ayuda → Comprobar integración del juego…**) para recibir la corrección.
 
 ## v1.8.0
 

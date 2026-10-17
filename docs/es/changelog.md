@@ -2,6 +2,15 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.8.1
+
+Una versión de corrección: los suelos pintados sobre muros vuelven a ser transitables, los tiles pegados conservan su gráfico y desaparece un cuelgue del juego con los autotiles extra.
+
+### Correcciones
+- 🚶 **Los suelos sobre muros vuelven a ser transitables** — un tile con prioridad 0 pintado sobre uno bloqueado vuelve a decidir la casilla, como en RPG Maker, así que un suelo puesto sobre un muro se puede pisar. Los tiles por encima (prioridad 1 o superior, ★) siguen dejando que se aplique el bloqueo de debajo. Esto sustituye la regla de la 1.8.0, en la que un bloqueo en cualquier capa mantenía la casilla bloqueada; el overlay de colisión, el Simulador de juego y el juego coinciden.
+- 📋 **Los tiles pegados conservan su gráfico** — los tiles pegados en un mapa ya no se vuelven invisibles manteniendo su colisión, y los que ya estaban afectados vuelven a verse al abrir el mapa.
+- 💥 **Corregido un cuelgue del juego con autotiles extra** — un mapa con autotiles extra podía colgar el juego al dibujarse (`undefined method '[]' for nil`). Actualiza la integración (**Ayuda → Comprobar integración del juego…**) para recibir la corrección.
+
 ## v1.8.0
 
 Los proyectos estrenan control de versiones integrado: haz commit de los cambios, recorre el historial de commits y compara archivos, imágenes y mapas sin salir del editor. Esta versión también mantiene cada tile ligado al tileset del que viene, pregunta antes de descartar cambios en un comando, dibuja la niebla por debajo de los efectos de pantalla en el juego y corrige dos cuelgues del juego.
