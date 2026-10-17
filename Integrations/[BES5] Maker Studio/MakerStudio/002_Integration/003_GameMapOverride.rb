@@ -100,6 +100,19 @@ class Game_Map
   end
   private :ms_tile_passage
 
+  def ms_tile_priority(tid, td)
+    return td["priority"].to_i if td["priority"]
+    if td["autotile_name"]
+      resolved = ms_extra_autotile_data(td)
+      return resolved ? resolved[1] : 0
+    elsif td["tileset_id"]
+      ts = $data_tilesets[td["tileset_id"].to_i]
+      return ts ? (ts.priorities[tid] || 0) : 0
+    end
+    @priorities[tid] || 0
+  end
+  private :ms_tile_priority
+
   # Yield visible extended tiles, then native tiles top-down on this map.
   def ms_each_tile_at(x, y)
     mid = map_id
@@ -149,6 +162,7 @@ class Game_Map
       end
       passage = ms_tile_passage(tid, td)
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
+      return true if ms_tile_priority(tid, td) == 0
     end
     __mkst__playerPassable(x, y, d, self_event)
   end
@@ -166,6 +180,7 @@ class Game_Map
     ms_each_tile_at(x, y) do |tid, td|
       passage = ms_tile_passage(tid, td)
       return false if passage & bit != 0 || passage & 0x0f == 0x0f
+      return true if ms_tile_priority(tid, td) == 0
     end
     __mkst__passable(x, y, d, self_event)
   end
@@ -179,6 +194,7 @@ class Game_Map
     ms_each_tile_at(x, y) do |tid, td|
       passage = ms_tile_passage(tid, td)
       return false if passage & 0x0f != 0
+      return true if ms_tile_priority(tid, td) == 0
     end
     __mkst__passableStrict(x, y, d, self_event)
   end
