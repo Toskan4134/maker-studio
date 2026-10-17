@@ -298,6 +298,7 @@ module MakerStudio
     def get_expanded_autotile(autotile_name, tileset_id = nil)
       return nil unless autotile_name && $data_tilesets
       return expanded_autotile_index[autotile_name] if tileset_id.nil?
+      expanded_autotile_index
       (@expanded_autotile_source_index[tileset_id.to_i] || {})[autotile_name]
     end
   end

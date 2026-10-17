@@ -39,9 +39,6 @@ Projects get built-in version control: commit changes, browse the commit history
 - 🛡️ **Ask before discarding command edits** — closing a changed command form with Escape, a click outside, the close button or Cancel asks whether to **Apply & Close**, **Discard** or keep editing. Unchanged forms still close straight away.
 - 🚧 **Collision combines every layer** — a blocked direction on any native or extra layer stays blocked, even under a priority-0 tile placed on top. The collision overlay, the Game Simulator and the game all apply the same rule.
 
-### Documentation
-User guides and mod API reference: https://makerstudio.toskan.es/
-
 ## v1.7.1
 
 This update keeps Move Route actions in click order and makes large-tileset warnings easier to manage.
