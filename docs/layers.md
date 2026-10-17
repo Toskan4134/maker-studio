@@ -48,7 +48,7 @@ Above-tile groups (fog and custom groups with priority ≥ 0) are listed near th
 
 ## Collision Overlay
 
-Press C to toggle the collision overlay. This displays passage flags directly on the canvas as directional arrows and blocked/open indicators. Directional blocks combine across all occupied native and extra layers, so an upper priority-0 tile cannot erase a blocked direction from below. Passage and terrain are resolved from each tile's source tileset when it has one; bush, counter and terrain markers follow their own stack rules.
+Press C to toggle the collision overlay. This displays passage flags directly on the canvas as directional arrows and blocked/open indicators. Collision is read from the top of the stack down: a blocked direction on a tile stays blocked, a passable priority-0 tile (such as a floor painted over a wall) opens the cell and hides everything below it, and a passable priority-1+ (overhead) tile lets the check continue to the tiles below. Passage and terrain are resolved from each tile's source tileset when it has one; bush, counter and terrain markers follow their own stack rules.
 
 ## Priority and Layer Order
 

@@ -48,7 +48,7 @@ Los grupos por encima de los tiles (fog y grupos personalizados con prioridad �
 
 ## Overlay de colisión
 
-Pulsa C para alternar el overlay de colisión. Muestra las banderas de paso directamente en el lienzo como flechas direccionales e indicadores de bloqueado/abierto. Los bloqueos direccionales se combinan entre todas las capas nativas y extra ocupadas, así que un tile superior con prioridad 0 no puede borrar un bloqueo inferior. El paso y el terreno se resuelven desde el tileset de origen de cada tile cuando está indicado; los marcadores de bush, counter y terreno siguen sus propias reglas de pila.
+Pulsa C para alternar el overlay de colisión. Muestra las banderas de paso directamente en el lienzo como flechas direccionales e indicadores de bloqueado/abierto. La colisión se lee de arriba abajo: una dirección bloqueada en un tile sigue bloqueada, un tile transitable con prioridad 0 (como un suelo pintado sobre un muro) abre la casilla y oculta todo lo que hay debajo, y un tile transitable con prioridad 1 o superior (por encima) deja que la comprobación continúe con los tiles inferiores. El paso y el terreno se resuelven desde el tileset de origen de cada tile cuando está indicado; los marcadores de bush, counter y terreno siguen sus propias reglas de pila.
 
 ## Prioridad y orden de capas
 
