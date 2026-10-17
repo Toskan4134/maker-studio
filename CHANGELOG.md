@@ -5,6 +5,15 @@ releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/relea
 
 User guides and mod API reference: https://makerstudio.toskan.es/
 
+## v1.8.2
+
+A hotfix release: tiles from other tilesets and named autotiles stay visible after reopening a project, tiles with incomplete properties save correctly and switching projects no longer mixes up tileset graphics.
+
+### Fixes
+- 👻 **Tiles no longer vanish after reopening a project** — tiles painted from another tileset and named autotiles (and, before 1.8.1, pasted tiles) could turn invisible in the editor after closing and reopening a project. They were always saved correctly and showed in RPG Maker and in-game; now they show in the editor too.
+- 🎨 **Tiles with incomplete properties save correctly** — tiles whose properties were only partly set (for example by a mod) are no longer saved as fully transparent or greyscale.
+- 🔀 **Switching projects shows the right tileset graphics** — opening another project no longer shows the previous project's tileset graphics when both have tilesets with the same name.
+
 ## v1.8.1
 
 A hotfix release: floors painted over walls are walkable again, pasted tiles keep their graphic and a game crash with extra autotiles is gone.
@@ -291,6 +300,15 @@ Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
 
 Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
+
+## v1.8.2
+
+Una versión de corrección: los tiles de otros tilesets y los autotiles con nombre siguen visibles al reabrir un proyecto, los tiles con propiedades incompletas se guardan bien y cambiar de proyecto ya no mezcla los gráficos de los tilesets.
+
+### Correcciones
+- 👻 **Los tiles ya no desaparecen al reabrir un proyecto** — los tiles pintados desde otro tileset y los autotiles con nombre (y, antes de la 1.8.1, los tiles pegados) podían volverse invisibles en el editor tras cerrar y reabrir un proyecto. Siempre se guardaban bien y se veían en RPG Maker y en el juego; ahora también se ven en el editor.
+- 🎨 **Los tiles con propiedades incompletas se guardan bien** — los tiles con propiedades definidas solo en parte (por ejemplo, por un mod) ya no se guardan totalmente transparentes ni en escala de grises.
+- 🔀 **Cambiar de proyecto muestra los gráficos de tileset correctos** — al abrir otro proyecto ya no aparecen los gráficos de tileset del proyecto anterior cuando ambos tienen tilesets con el mismo nombre.
 
 ## v1.8.1
 

@@ -2,6 +2,15 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.8.2
+
+Una versión de corrección: los tiles de otros tilesets y los autotiles con nombre siguen visibles al reabrir un proyecto, los tiles con propiedades incompletas se guardan bien y cambiar de proyecto ya no mezcla los gráficos de los tilesets.
+
+### Correcciones
+- 👻 **Los tiles ya no desaparecen al reabrir un proyecto** — los tiles pintados desde otro tileset y los autotiles con nombre (y, antes de la 1.8.1, los tiles pegados) podían volverse invisibles en el editor tras cerrar y reabrir un proyecto. Siempre se guardaban bien y se veían en RPG Maker y en el juego; ahora también se ven en el editor.
+- 🎨 **Los tiles con propiedades incompletas se guardan bien** — los tiles con propiedades definidas solo en parte (por ejemplo, por un mod) ya no se guardan totalmente transparentes ni en escala de grises.
+- 🔀 **Cambiar de proyecto muestra los gráficos de tileset correctos** — al abrir otro proyecto ya no aparecen los gráficos de tileset del proyecto anterior cuando ambos tienen tilesets con el mismo nombre.
+
 ## v1.8.1
 
 Una versión de corrección: los suelos pintados sobre muros vuelven a ser transitables, los tiles pegados conservan su gráfico y desaparece un cuelgue del juego con los autotiles extra.

@@ -2,6 +2,15 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.8.2
+
+A hotfix release: tiles from other tilesets and named autotiles stay visible after reopening a project, tiles with incomplete properties save correctly and switching projects no longer mixes up tileset graphics.
+
+### Fixes
+- 👻 **Tiles no longer vanish after reopening a project** — tiles painted from another tileset and named autotiles (and, before 1.8.1, pasted tiles) could turn invisible in the editor after closing and reopening a project. They were always saved correctly and showed in RPG Maker and in-game; now they show in the editor too.
+- 🎨 **Tiles with incomplete properties save correctly** — tiles whose properties were only partly set (for example by a mod) are no longer saved as fully transparent or greyscale.
+- 🔀 **Switching projects shows the right tileset graphics** — opening another project no longer shows the previous project's tileset graphics when both have tilesets with the same name.
+
 ## v1.8.1
 
 A hotfix release: floors painted over walls are walkable again, pasted tiles keep their graphic and a game crash with extra autotiles is gone.
