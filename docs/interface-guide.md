@@ -132,8 +132,8 @@ Bottom-right panel. Shows a scaled view of the entire map (all native + extended
 ## Settings (Help → Settings…)
 
 Editor-wide preferences, separate from anything stored in your project. They are split across three
-tabs: **Editor** (how the Maker Studio window itself opens), **Appearance** (theme and colours), and
-**Game** (where the game window opens).
+tabs: **Editor** (how the Maker Studio window itself opens), **Appearance** (theme and colours),
+**Game** (where the game window opens), and **License** (supporter features such as access for AI clients).
 
 Changes are only kept when you press **Save**. If you close the dialog with unsaved changes — Cancel,
 the ×, Esc, or a click outside — Maker Studio asks first and offers **Discard** or **Save & Close**.
@@ -201,3 +201,16 @@ wins as long as the game finishes booting inside that window.
 
 On macOS and Linux the setting is shown but greyed out, and says so: there the game runs through Wine
 or Proton, which owns its window, so the editor can't place it.
+
+### License tab
+
+Supporter features, such as connecting an AI client through the MCP server, need a licence. Paste your
+**License key** and press **Activate**; the tab then shows your **Email**, **Plan**, the **Features**
+your licence unlocks, **License expiry** (or **Perpetual**) and **Next renewal**. **Deactivate this computer** frees the activation so you can use the key on another
+machine; the number of computers per key is limited.
+
+Activation needs an Internet connection once. After that the licence renews itself in the
+background, and supporter features keep working offline for up to a week between renewals. If it cannot
+renew in time, connect to the Internet and reopen this tab. When your licence includes the MCP server,
+**Copy MCP config** copies the connection settings for the project you have open (open a project first).
+

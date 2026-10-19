@@ -132,8 +132,8 @@ Panel inferior derecho. Muestra una vista a escala de todo el mapa (todas las ca
 ## Ajustes (Ayuda → Ajustes…)
 
 Preferencias del editor, aparte de todo lo que se guarda en tu proyecto. Están repartidas en tres
-pestañas: **Editor** (cómo se abre la ventana de Maker Studio), **Apariencia** (tema y colores) y
-**Juego** (dónde se abre la ventana del juego).
+pestañas: **Editor** (cómo se abre la ventana de Maker Studio), **Apariencia** (tema y colores),
+**Juego** (dónde se abre la ventana del juego) y **Licencia** (funciones para supporters, como el acceso para clientes de IA).
 
 Los cambios solo se conservan si pulsas **Guardar**. Si cierras el diálogo con cambios sin guardar
 —Cancelar, la ×, Esc o un clic fuera— Maker Studio te pregunta antes y te ofrece **Descartar** o
@@ -204,3 +204,17 @@ peleándose, y gana Maker Studio mientras el juego termine de arrancar dentro de
 
 En macOS y en Linux la opción se muestra deshabilitada, y lo explica: ahí el juego se ejecuta a
 través de Wine o Proton, que es quien controla su ventana, así que el editor no puede colocarla.
+
+### Pestaña Licencia
+
+Las funciones para supporters, como conectar un cliente de IA mediante el servidor MCP, requieren una
+licencia. Pega tu **Clave de licencia** y pulsa **Activar**; la pestaña muestra entonces tu **Correo
+electrónico**, **Plan**, las **Funciones** que desbloquea, **Caducidad de la licencia** (o
+**Permanente**) y **Próxima renovación**. **Desactivar este equipo**
+libera la activación para usar la clave en otro ordenador; el número de equipos por clave es limitado.
+
+La activación necesita conexión a Internet una vez. Después la licencia se renueva sola en segundo
+plano, y las funciones para supporters siguen funcionando sin conexión hasta una semana entre renovaciones. Si
+no puede renovarse a tiempo, conéctate a Internet y vuelve a abrir esta pestaña. Si tu licencia incluye
+el servidor MCP, **Copiar configuración MCP** copia los ajustes de conexión del proyecto que tengas abierto (abre un proyecto antes).
+
