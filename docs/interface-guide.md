@@ -155,9 +155,9 @@ A specific size can't go below **1280 × 720** — that's the smallest the windo
 Both apply the next time Maker Studio starts.
 
 **Show my activity in Discord** — on by default. While it is on and the Discord app is running, your
-Discord status shows the project and the map you have open. With a [supporter licence](#supporter-tab)
-it also carries a small supporter badge. This replaces the *Discord Rich Presence* example mod; if you
-had it installed, disable it, as the two overwrite each other.
+Discord status shows the project and the map you have open. This activity is available during the Free
+Tier trial; a [Supporter licence](#supporter-tab) adds a small badge. This replaces the *Discord Rich
+Presence* example mod; if you had it installed, disable it, as the two overwrite each other.
 
 ### Appearance tab
 
@@ -209,49 +209,59 @@ or Proton, which owns its window, so the editor can't place it.
 
 ### Supporter tab
 
-Supporter features, such as connecting an AI client through the MCP server, need a licence. Without
-one, the tab has the activation box: paste your **License key** and press **Activate**, or use
-**Start 7-day free trial** / **Buy lifetime license**. Below it, **What you get as a supporter** lists
-the extras.
+Features such as connecting an AI client through the MCP server need a licence. Without one, the tab
+has the activation box: paste your **License key** and press **Activate**, or use **Start 7-day free
+trial** / **Buy lifetime license**. Below it, **What you get as a supporter** lists every feature with
+its description and access state. The Free Tier trial includes MCP, window icon, coloured title bar
+and welcome screen personalization.
 
-With a licence, the top of the tab shows a **Supporter** badge, your plan and email, and the date the
-licence is valid until (or **Perpetual**) next to the date it next renews. **Deactivate this computer**
-frees the activation so you can use the key on another machine; the number of computers per key is
-limited.
+During the trial, the top of the tab shows **Free Tier**, the days remaining and the trial end date.
+A paid licence shows a **Supporter** badge, your plan
+and email, and the date the licence is valid until (or **Perpetual**) next to the date it next renews.
+**Deactivate this computer** frees the activation so you can use the key on another machine; the
+number of computers per key is limited.
 
 Activation needs an Internet connection once. After that the licence renews itself in the
 background, and supporter features keep working offline for up to a week between renewals. If it cannot
 renew in time, connect to the Internet and reopen this tab.
 
-Below the status, a row of buttons — one for each extra your licence includes, in the order Discord,
-Window icon, Coloured title bar, Welcome screen, MCP server and Early access — switches what is shown
-underneath (the arrow keys move between them too):
+Below the status, a compact vertical feature list keeps every feature visible, including features not
+in your licence. Select an entry to see its explanation and settings in the panel beside it; each entry
+shows whether it is **Included in this license**, **No access to this feature**, or **Temporarily
+unavailable**. Included states are green, missing access is red, partial access is amber, and unavailable
+states stay muted. The Up and Down arrow keys move between entries. Discord shows separate access states
+for the server role and the Supporter badge in Discord Rich Presence. Login and role controls appear
+only when your licence includes the Discord role feature. Supporter title and badges share one entry,
+with each access state shown separately; this same order appears in the no-license benefits list.
 
-- **MCP server** — works with any AI app that supports MCP: open your project in Maker Studio, press
-  **Copy MCP config**, then paste it into your AI app's MCP settings and restart the app. While Maker
-  Studio has the project open, the AI's edits appear live; otherwise they are written to the project
-  files.
+- **Discord** — adds the Supporter role on the Maker Studio Discord server; supporters get priority
+  when asking for help there. **Link Discord account** opens your browser to sign in with Discord when
+  your licence includes the Discord role feature; otherwise the tab shows its access state and no login control.
+  Once linked, the panel shows your Discord name and whether you are **In the server** (or **Join the
+  server**) and have the **Supporter role** (or **Get the role**); the refresh button checks again.
+  One Discord account per licence: to use another, press **Unlink** first (this also removes the
+  role). The role is also removed if the licence is revoked or expires.
+- **Welcome screen** — untick **Use the personalized welcome screen** to go back to the standard welcome screen. **Choose background…** puts a picture behind the welcome screen (the one with
+  **Open Game Folder** and your recent projects); **Background dim** darkens it so the text stays
+  readable and **Blur** softens it. **Remove** takes it away. The preview above the buttons shows the
+  result as you drag the sliders, or *No background* when none is set.
 - **Window icon** — pick one of the variants (Maker Studio, in your theme's accent colours, then Gold,
   Emerald, Sapphire, Ruby, Amethyst, Frost), or **Choose image…** to use any picture of your own;
   **Reset** goes back to the standard icon. It changes the icon of the window and the taskbar at once, and the welcome screen shows it too.
 - **Coloured title bar** — **Colour the title bar with the theme** (Windows 11) makes the window's
   own title bar take the panel colour of your current theme and follow it when you switch themes or
   light/dark mode.
-- **Welcome screen** — untick **Use the supporter welcome screen** to go back to the standard welcome screen. **Choose background…** puts a picture behind the welcome screen (the one with
-  **Open Game Folder** and your recent projects); **Background dim** darkens it so the text stays
-  readable and **Blur** softens it. **Remove** takes it away. The preview above the buttons shows the
-  result as you drag the sliders, or *No background* when none is set.
-- **Discord** — adds the Supporter role on the Maker Studio Discord server; supporters get priority
-  when asking for help there. **Link Discord account** opens your browser to sign in with Discord.
-  Once linked, the panel shows your Discord name and whether you are **In the server** (or **Join the
-  server**) and have the **Supporter role** (or **Get the role**); the refresh button checks again.
-  One Discord account per licence: to use another, press **Unlink** first (this also removes the
-  role). The role is also removed if the licence is revoked or expires.
-- **Early access** — **Receive early access builds** offers you new versions before their general
-  release.
+- **Supporter title and badges** — adds Supporter to the Maker Studio window title and welcome screen,
+  and shows a badge on the welcome screen and About dialog.
+- **MCP server** — works with any AI app that supports MCP. The panel shows the **Current project**
+  (or **No project open**) beside **Copy MCP config**; the button is unavailable until a project is
+  open. Then paste the copied config into your AI app's MCP settings and restart the app. While Maker
+  Studio has the project open, the AI's edits appear live; otherwise they are written to the project
+  files.
+- **Early access** — currently unavailable. Its tab shows **Temporarily unavailable**; saved opt-ins
+  do not select early builds, so updates stay on the stable channel.
 
-A supporter licence also renames the window to **Maker Studio Supporter** and gives the welcome
-screen its own supporter look (with a badge, also shown in **About**): **Continue** reopens your
-latest project in one click, next to **Recent** and **Most Used** tabs (Recent lists the latest
-project too).
+A Free Tier licence can use the personalized welcome screen and, when projects are available, its
+**Continue**, **Recent** and **Most Used** launcher. The paid Supporter features add the **Maker
+Studio Supporter** title and badges in the welcome screen, **About** and Discord status.
 

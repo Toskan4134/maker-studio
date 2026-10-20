@@ -157,9 +157,9 @@ Ambos se aplican la próxima vez que arranque Maker Studio.
 
 **Mostrar mi actividad en Discord** — activado por defecto. Mientras esté activado y la aplicación de
 Discord está abierta, tu estado de Discord muestra el proyecto y el mapa que tengas abiertos. Con una
-[licencia de supporter](#pestaña-supporter) lleva además una pequeña insignia de supporter. Sustituye
-al mod de ejemplo *Discord Rich Presence*; si lo tenías instalado, desactívalo, porque los dos se
-sobrescriben entre sí.
+[licencia de Supporter](#pestaña-supporter) lleva además una pequeña insignia. La actividad también
+está disponible durante el Plan gratuito. Sustituye al mod de ejemplo *Discord Rich Presence*; si lo
+tenías instalado, desactívalo, porque los dos se sobrescriben entre sí.
 
 ### Pestaña Apariencia
 
@@ -213,28 +213,45 @@ través de Wine o Proton, que es quien controla su ventana, así que el editor n
 
 ### Pestaña Supporter
 
-Las funciones para supporters, como conectar un cliente de IA mediante el servidor MCP, requieren una
-licencia. Sin ella, la pestaña muestra el cuadro de activación: pega tu **Clave de licencia** y pulsa
-**Activar**, o usa **Probar gratis 7 días** / **Comprar licencia de por vida**. Debajo, **Qué obtienes
-como supporter** enumera los extras.
+Funciones como conectar un cliente de IA mediante MCP requieren una licencia. Sin ella, la pestaña
+muestra el cuadro de activación: pega tu **Clave de licencia** y pulsa **Activar**, o usa **Probar
+gratis 7 días** / **Comprar licencia de por vida**. Debajo, **Qué obtienes como supporter** enumera
+todas las funciones con su descripción y estado de acceso. El Plan gratuito incluye MCP, icono de
+ventana, barra de título coloreada y personalización de la pantalla de inicio.
 
-Con licencia, la parte superior de la pestaña muestra una insignia **Supporter**, tu plan y tu correo,
-y la fecha hasta la que es válida la licencia (o **Permanente**) junto a la de su próxima renovación.
-**Desactivar este equipo** libera la activación para usar la clave en otro ordenador; el número de
-equipos por clave es limitado.
+Durante la prueba, la parte superior muestra **Plan gratuito**, los días que quedan y la fecha de fin.
+Una licencia de pago muestra la insignia **Supporter**, tu plan y tu correo, y la fecha hasta la que es
+válida (o **Permanente**) junto a la de su próxima renovación. **Desactivar este equipo** libera la
+activación para usar la clave en otro ordenador; el número de equipos por clave es limitado.
 
-La activación necesita conexión a Internet una vez. Después la licencia se renueva sola en segundo
-plano, y las funciones para supporters siguen funcionando sin conexión hasta una semana entre renovaciones. Si
-no puede renovarse a tiempo, conéctate a Internet y vuelve a abrir esta pestaña.
+La activación necesita conexión a Internet una vez. Después el pase se renueva solo en segundo plano,
+y las funciones incluidas en tu licencia siguen funcionando sin conexión hasta una semana entre
+renovaciones. Si no puede renovarse a tiempo, conéctate a Internet y vuelve a abrir esta pestaña.
 
-Debajo del estado hay una fila de botones, uno por cada extra que incluya tu licencia, en este orden:
-Discord, Icono de ventana, Barra de título coloreada, Pantalla de inicio, Servidor MCP y Acceso
-anticipado. Cada uno muestra debajo su contenido (también puedes moverte entre ellos con las flechas):
+Debajo del estado, una lista vertical compacta mantiene visibles todas las funciones, incluidas las que
+no incluye tu licencia. Selecciona una para ver su explicación y sus ajustes en el panel contiguo; la
+lista indica si está **Incluida en esta licencia**, **No tienes acceso a esta función con esta licencia**
+o **No disponible temporalmente**. Los estados incluidos aparecen en verde, la falta de acceso en rojo,
+el acceso parcial en ámbar y los estados no disponibles quedan atenuados. Las flechas arriba y abajo
+cambian de función. Discord muestra por
+separado el acceso al rol del servidor y a la insignia Supporter de Rich Presence. Las opciones para
+iniciar sesión y gestionar el rol solo aparecen si la licencia incluye esa función. El título y las
+insignias Supporter comparten una entrada con sus estados de acceso por separado; el orden también se
+usa en la lista de beneficios sin licencia.
 
-- **Servidor MCP** — funciona con cualquier aplicación de IA compatible con MCP: abre tu proyecto en
-  Maker Studio, pulsa **Copiar configuración MCP** y pégala en los ajustes MCP de tu aplicación de IA;
-  después, reiníciala. Mientras Maker Studio tenga el proyecto abierto, los cambios de la IA aparecen
-  al instante; si no, se escriben en los archivos del proyecto.
+- **Discord** — añade el rol de Supporter en el servidor de Discord de Maker Studio; los supporters
+  tienen prioridad al pedir ayuda allí. **Vincular cuenta de Discord** abre el navegador para que
+  inicies sesión solo si tu licencia incluye el rol; si no, la pestaña muestra su descripción y estado de acceso.
+  Una vez vinculada, el panel muestra tu nombre de Discord y si estás
+  **En el servidor** (o **Unirse al servidor**) y tienes el **Rol de Supporter** (o **Obtener el
+  rol**); el botón de actualizar vuelve a comprobarlo. Solo se puede vincular una cuenta de Discord
+  por licencia: para usar otra, pulsa antes **Desvincular** (también retira el rol). El rol se retira
+  además si la licencia se revoca o caduca.
+- **Pantalla de inicio** — desmarca **Usar la pantalla de inicio personalizada** para volver a la pantalla de inicio normal. **Elegir fondo…** pone una imagen detrás de la pantalla de inicio (la de
+  **Abrir carpeta del juego** y los proyectos recientes); **Oscurecimiento del fondo** la oscurece para
+  que el texto se siga leyendo y **Desenfoque** la suaviza. **Quitar** la elimina. La vista previa de
+  encima de los botones muestra el resultado mientras mueves los controles, o *Sin fondo* si no hay
+  ninguno.
 - **Icono de ventana** — elige una de las variantes (Maker Studio, con los colores de acento de tu
   tema, y después Oro, Esmeralda, Zafiro, Rubí, Amatista y Escarcha), o **Elegir imagen…** para
   usar cualquier imagen tuya; **Restablecer** vuelve al icono normal. Cambia a la vez el icono de la ventana y el de la barra de tareas, y la pantalla de inicio
@@ -242,22 +259,17 @@ anticipado. Cada uno muestra debajo su contenido (también puedes moverte entre 
 - **Barra de título coloreada** — **Colorear la barra de título con el tema** (Windows 11) hace que la
   barra de título de la ventana tome el color de los paneles de tu tema y lo siga al cambiar de tema o
   de modo claro/oscuro.
-- **Pantalla de inicio** — desmarca **Usar la pantalla de inicio de supporter** para volver a la pantalla de inicio normal. **Elegir fondo…** pone una imagen detrás de la pantalla de inicio (la de
-  **Abrir carpeta del juego** y los proyectos recientes); **Oscurecimiento del fondo** la oscurece para
-  que el texto se siga leyendo y **Desenfoque** la suaviza. **Quitar** la elimina. La vista previa de
-  encima de los botones muestra el resultado mientras mueves los controles, o *Sin fondo* si no hay
-  ninguno.
-- **Discord** — añade el rol de Supporter en el servidor de Discord de Maker Studio; los supporters
-  tienen prioridad al pedir ayuda allí. **Vincular cuenta de Discord** abre el navegador para que
-  inicies sesión con Discord. Una vez vinculada, el panel muestra tu nombre de Discord y si estás
-  **En el servidor** (o **Unirse al servidor**) y tienes el **Rol de Supporter** (o **Obtener el
-  rol**); el botón de actualizar vuelve a comprobarlo. Solo se puede vincular una cuenta de Discord
-  por licencia: para usar otra, pulsa antes **Desvincular** (también retira el rol). El rol se retira
-  además si la licencia se revoca o caduca.
-- **Acceso anticipado** — **Recibir versiones de acceso anticipado** te ofrece las versiones nuevas
-  antes de su lanzamiento general.
+- **Título e insignias Supporter** — añade Supporter al título de la ventana de Maker Studio y a la
+  pantalla de inicio, y muestra una insignia en la pantalla de inicio y en el cuadro Acerca de.
+- **Servidor MCP** — funciona con cualquier aplicación de IA compatible con MCP. El panel muestra el
+  **Proyecto actual** (o **No hay un proyecto abierto**) junto a **Copiar configuración MCP**; el botón
+  se activa al abrir un proyecto. Después, pega la configuración en los ajustes MCP de tu aplicación de
+  IA y reiníciala. Mientras Maker Studio tenga el proyecto abierto, los cambios aparecen al instante;
+  si no, se escriben en los archivos del proyecto.
+- **Acceso anticipado** — actualmente no está disponible. La pestaña muestra **No disponible
+  temporalmente**; las preferencias guardadas no seleccionan versiones anticipadas y las actualizaciones
+  siguen por el canal estable.
 
-Una licencia de supporter también cambia el título de la ventana a **Maker Studio Supporter** y da a
-la pantalla de inicio un aspecto propio de supporter (con una insignia, que también sale en **Acerca
-de**): **Continuar** vuelve a abrir tu último proyecto con un clic, junto a las pestañas **Recientes**
-y **Más usados** (Recientes también incluye el último proyecto).
+El Plan gratuito permite personalizar la pantalla de inicio y, cuando hay proyectos, usar el panel
+**Continuar**, **Recientes** y **Más usados**. Las funciones de Supporter añaden el título **Maker
+Studio Supporter** y sus insignias en la pantalla de inicio, **Acerca de** y el estado de Discord.
