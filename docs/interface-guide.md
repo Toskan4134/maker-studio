@@ -15,7 +15,7 @@ Every menu item now shows a small icon next to its label so you can spot command
 - **Map**: New Map, **Duplicate Map**, **Map Versions…**, Resize / Shift Map, Change Tileset, **Change Battleback…**, **Map Audio…**, Import Map from JSON, **Export Map** submenu (Export as JSON / PNG / GIF / WebP)
 - **Tools**: Tool selection (Brush/Eraser/Fill/Rectangle/Eyedropper/Select/Pan), Rotate CW/CCW, Flip Horizontal/Vertical, **Brush Editor…**, Database, Scripts
 - **Mods**: Mod Manager (+ any mod-contributed menu items and panels)
-- **Help**: **Documentation** (opens this online documentation in your browser), Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), **Show Application Warnings Again** submenu (re-enable all application warnings, or choose large tileset, game integration, or Proton prompts individually), Check for Updates (shows the version you are running next to the newest published one), Stats, About Maker Studio, **Toggle Render Diagnostics** (temporary map overlay with render timings; select it again to close), Toggle DevTools
+- **Help**: **Settings…** (see [Settings](#settings-help--settings)), **Documentation** (opens this online documentation in your browser), Keyboard Shortcuts, **Reset App** (reload the editor — your panel layout is kept; `Ctrl+R`), **Show Application Warnings Again** submenu (re-enable all application warnings, or choose large tileset, game integration, or Proton prompts individually), Check for Updates (shows the version you are running next to the newest published one), Stats, About Maker Studio, **Toggle Render Diagnostics** (temporary map overlay with render timings; select it again to close), Toggle DevTools
   - **Re-enable All Application Warnings** resets all three categories. The submenu also offers **Re-enable Large Tileset Warnings**, **Re-enable Game Integration Prompts**, and **Re-enable Proton Launch Choice** separately; all apply across projects. **Mods → Show Dependency Warnings Again** remains separate and only controls mod dependency warnings. **File → Clear Proton Preference** still clears the saved choice for the open project.
 
 ## Language
@@ -131,9 +131,9 @@ Bottom-right panel. Shows a scaled view of the entire map (all native + extended
 
 ## Settings (Help → Settings…)
 
-Editor-wide preferences, separate from anything stored in your project. They are split across three
+Editor-wide preferences, separate from anything stored in your project. They are split across four
 tabs: **Editor** (how the Maker Studio window itself opens), **Appearance** (theme and colours),
-**Game** (where the game window opens), and **License** (supporter features such as access for AI clients).
+**Game** (where the game window opens), and **Supporter** (your licence and the extras it unlocks).
 
 Changes are only kept when you press **Save**. If you close the dialog with unsaved changes — Cancel,
 the ×, Esc, or a click outside — Maker Studio asks first and offers **Discard** or **Save & Close**.
@@ -153,6 +153,11 @@ it was launched from instead of opening off in the dark.
 A specific size can't go below **1280 × 720** — that's the smallest the window can be.
 
 Both apply the next time Maker Studio starts.
+
+**Show my activity in Discord** — on by default. While it is on and the Discord app is running, your
+Discord status shows the project and the map you have open. With a [supporter licence](#supporter-tab)
+it also carries a small supporter badge. This replaces the *Discord Rich Presence* example mod; if you
+had it installed, disable it, as the two overwrite each other.
 
 ### Appearance tab
 
@@ -202,15 +207,51 @@ wins as long as the game finishes booting inside that window.
 On macOS and Linux the setting is shown but greyed out, and says so: there the game runs through Wine
 or Proton, which owns its window, so the editor can't place it.
 
-### License tab
+### Supporter tab
 
-Supporter features, such as connecting an AI client through the MCP server, need a licence. Paste your
-**License key** and press **Activate**; the tab then shows your **Email**, **Plan**, the **Features**
-your licence unlocks, **License expiry** (or **Perpetual**) and **Next renewal**. **Deactivate this computer** frees the activation so you can use the key on another
-machine; the number of computers per key is limited.
+Supporter features, such as connecting an AI client through the MCP server, need a licence. Without
+one, the tab has the activation box: paste your **License key** and press **Activate**, or use
+**Start 7-day free trial** / **Buy lifetime license**. Below it, **What you get as a supporter** lists
+the extras.
+
+With a licence, the top of the tab shows a **Supporter** badge, your plan and email, and the date the
+licence is valid until (or **Perpetual**) next to the date it next renews. **Deactivate this computer**
+frees the activation so you can use the key on another machine; the number of computers per key is
+limited.
 
 Activation needs an Internet connection once. After that the licence renews itself in the
 background, and supporter features keep working offline for up to a week between renewals. If it cannot
-renew in time, connect to the Internet and reopen this tab. When your licence includes the MCP server,
-**Copy MCP config** copies the connection settings for the project you have open (open a project first).
+renew in time, connect to the Internet and reopen this tab.
+
+Below the status, a row of buttons — one for each extra your licence includes, in the order Discord,
+Window icon, Coloured title bar, Welcome screen, MCP server and Early access — switches what is shown
+underneath (the arrow keys move between them too):
+
+- **MCP server** — works with any AI app that supports MCP: open your project in Maker Studio, press
+  **Copy MCP config**, then paste it into your AI app's MCP settings and restart the app. While Maker
+  Studio has the project open, the AI's edits appear live; otherwise they are written to the project
+  files.
+- **Window icon** — pick one of the variants (Maker Studio, in your theme's accent colours, then Gold,
+  Emerald, Sapphire, Ruby, Amethyst, Frost), or **Choose image…** to use any picture of your own;
+  **Reset** goes back to the standard icon. It changes the icon of the window and the taskbar at once, and the welcome screen shows it too.
+- **Coloured title bar** — **Colour the title bar with the theme** (Windows 11) makes the window's
+  own title bar take the panel colour of your current theme and follow it when you switch themes or
+  light/dark mode.
+- **Welcome screen** — untick **Use the supporter welcome screen** to go back to the standard welcome screen. **Choose background…** puts a picture behind the welcome screen (the one with
+  **Open Game Folder** and your recent projects); **Background dim** darkens it so the text stays
+  readable and **Blur** softens it. **Remove** takes it away. The preview above the buttons shows the
+  result as you drag the sliders, or *No background* when none is set.
+- **Discord** — adds the Supporter role on the Maker Studio Discord server; supporters get priority
+  when asking for help there. **Link Discord account** opens your browser to sign in with Discord.
+  Once linked, the panel shows your Discord name and whether you are **In the server** (or **Join the
+  server**) and have the **Supporter role** (or **Get the role**); the refresh button checks again.
+  One Discord account per licence: to use another, press **Unlink** first (this also removes the
+  role). The role is also removed if the licence is revoked or expires.
+- **Early access** — **Receive early access builds** offers you new versions before their general
+  release.
+
+A supporter licence also renames the window to **Maker Studio Supporter** and gives the welcome
+screen its own supporter look (with a badge, also shown in **About**): **Continue** reopens your
+latest project in one click, next to **Recent** and **Most Used** tabs (Recent lists the latest
+project too).
 
