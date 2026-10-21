@@ -212,8 +212,8 @@ or Proton, which owns its window, so the editor can't place it.
 Features such as connecting an AI client through the MCP server need a licence. Without one, the tab
 has the activation box: paste your **License key** and press **Activate**, or use **Start 7-day free
 trial** / **Buy lifetime license**. Below it, **What you get as a supporter** lists every feature with
-its description and access state. The Free Tier trial includes MCP, window icon, coloured title bar
-and welcome screen personalization.
+its description and access state. The Free Tier trial includes MCP, window icon, coloured title bar,
+welcome screen personalization and Favorite projects.
 
 During the trial, the top of the tab shows **Free Tier**, the days remaining and the trial end date.
 A paid licence shows a **Supporter** badge, your plan
@@ -253,6 +253,9 @@ with each access state shown separately; this same order appears in the no-licen
   light/dark mode.
 - **Supporter title and badges** — adds Supporter to the Maker Studio window title and welcome screen,
   and shows a badge on the welcome screen and About dialog.
+- **Favorite projects** — star projects from the welcome screen, drag them by the six-dot handle to
+  reorder them, and launch them from Windows taskbar and Start, the Linux app menu, or the macOS Dock.
+  Free Tier and Supporter licences both include this feature.
 - **MCP server** — works with any AI app that supports MCP. The panel shows the **Current project**
   (or **No project open**) beside **Copy MCP config**; the button is unavailable until a project is
   open. Then paste the copied config into your AI app's MCP settings and restart the app. While Maker
@@ -262,6 +265,13 @@ with each access state shown separately; this same order appears in the no-licen
   do not select early builds, so updates stay on the stable channel.
 
 A Free Tier licence can use the personalized welcome screen and, when projects are available, its
-**Continue**, **Recent** and **Most Used** launcher. The paid Supporter features add the **Maker
-Studio Supporter** title and badges in the welcome screen, **About** and Discord status.
+**Continue**, **Recent** and **Most Used** launcher. The **Favorite projects** feature is included in
+both Free Tier and Supporter licences: star projects into a separate **Favorites** list, drag them by
+the six-dot handle to reorder, and launch them from the Windows Jump List (right-click the Maker Studio
+taskbar icon or its Start menu entry), Linux app actions, or macOS Dock menu. On Windows, each favorite
+uses the project's launcher icon when available. Enable **Show recently opened items in Start, Jump
+Lists, and File Explorer** under **Settings → Personalization → Start** for favorite shortcuts to
+appear. The paid Supporter
+features add the **Maker Studio Supporter** title and badges in the welcome screen, **About** and
+Discord status.
 

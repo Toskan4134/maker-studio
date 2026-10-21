@@ -217,7 +217,7 @@ Funciones como conectar un cliente de IA mediante MCP requieren una licencia. Si
 muestra el cuadro de activación: pega tu **Clave de licencia** y pulsa **Activar**, o usa **Probar
 gratis 7 días** / **Comprar licencia de por vida**. Debajo, **Qué obtienes como supporter** enumera
 todas las funciones con su descripción y estado de acceso. El Plan gratuito incluye MCP, icono de
-ventana, barra de título coloreada y personalización de la pantalla de inicio.
+ventana, barra de título coloreada, personalización de la pantalla de inicio y proyectos favoritos.
 
 Durante la prueba, la parte superior muestra **Plan gratuito**, los días que quedan y la fecha de fin.
 Una licencia de pago muestra la insignia **Supporter**, tu plan y tu correo, y la fecha hasta la que es
@@ -261,6 +261,10 @@ usa en la lista de beneficios sin licencia.
   de modo claro/oscuro.
 - **Título e insignias Supporter** — añade Supporter al título de la ventana de Maker Studio y a la
   pantalla de inicio, y muestra una insignia en la pantalla de inicio y en el cuadro Acerca de.
+- **Proyectos favoritos** — marca proyectos en la pantalla de inicio con una estrella, arrástralos
+  desde el tirador de seis puntos para ordenarlos y ábrelos desde la barra de tareas o Inicio de
+  Windows, el menú de aplicaciones de Linux o el Dock de macOS. Está incluido tanto en Free Tier como
+  en Supporter.
 - **Servidor MCP** — funciona con cualquier aplicación de IA compatible con MCP. El panel muestra el
   **Proyecto actual** (o **No hay un proyecto abierto**) junto a **Copiar configuración MCP**; el botón
   se activa al abrir un proyecto. Después, pega la configuración en los ajustes MCP de tu aplicación de
@@ -271,5 +275,13 @@ usa en la lista de beneficios sin licencia.
   siguen por el canal estable.
 
 El Plan gratuito permite personalizar la pantalla de inicio y, cuando hay proyectos, usar el panel
-**Continuar**, **Recientes** y **Más usados**. Las funciones de Supporter añaden el título **Maker
-Studio Supporter** y sus insignias en la pantalla de inicio, **Acerca de** y el estado de Discord.
+**Continuar**, **Recientes** y **Más usados**. La función **Proyectos favoritos** está incluida tanto
+en Free Tier como en Supporter: marca proyectos, arrástralos desde el tirador de seis puntos para
+ordenarlos y ábrelos desde la Jump List de Windows (clic derecho en el icono de Maker Studio de la
+barra de tareas o su entrada en Inicio), las acciones de la aplicación en Linux o el menú del Dock de
+macOS. En Windows, cada
+favorito usa el icono del launcher del proyecto si está disponible. Activa **Mostrar elementos
+abiertos recientemente en Inicio, Jump Lists y el Explorador de archivos** en **Configuración →
+Personalización → Inicio** para que aparezcan los favoritos. Las funciones de Supporter añaden el
+título **Maker Studio Supporter** y sus insignias en la pantalla de inicio, **Acerca de** y el estado
+de Discord.
