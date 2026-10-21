@@ -253,8 +253,9 @@ with each access state shown separately; this same order appears in the no-licen
   light/dark mode.
 - **Supporter title and badges** — adds Supporter to the Maker Studio window title and welcome screen,
   and shows a badge on the welcome screen and About dialog.
-- **Favorite projects** — star projects from the welcome screen, drag them by the six-dot handle to
-  reorder them, and launch them from Windows taskbar and Start, the Linux app menu, or the macOS Dock.
+- **Favorite projects** — star projects from the personalized welcome screen, drag them by the six-dot
+  handle to reorder them, and launch them from Windows taskbar and Start, the Linux app menu, or the
+  macOS Dock.
   Free Tier and Supporter licences both include this feature.
 - **MCP server** — works with any AI app that supports MCP. The panel shows the **Current project**
   (or **No project open**) beside **Copy MCP config**; the button is unavailable until a project is
@@ -265,8 +266,10 @@ with each access state shown separately; this same order appears in the no-licen
   do not select early builds, so updates stay on the stable channel.
 
 A Free Tier licence can use the personalized welcome screen and, when projects are available, its
-**Continue**, **Recent** and **Most Used** launcher. The **Favorite projects** feature is included in
-both Free Tier and Supporter licences: star projects into a separate **Favorites** list, drag them by
+**Continue**, **Recent** and **Most Used** launcher. The classic welcome screen keeps its original
+side-by-side **Recent** and **Most Used** columns and does not show tabs or favorite controls. The
+**Favorite projects** feature is included in both Free Tier and Supporter licences: star projects into
+a separate **Favorites** list from the personalized welcome screen, drag them by
 the six-dot handle to reorder, and launch them from the Windows Jump List (right-click the Maker Studio
 taskbar icon or its Start menu entry), Linux app actions, or macOS Dock menu. On Windows, each favorite
 uses the project's launcher icon when available. Enable **Show recently opened items in Start, Jump
