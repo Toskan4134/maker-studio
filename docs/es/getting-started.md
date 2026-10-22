@@ -97,6 +97,12 @@ Moverse por el lienzo es sencillo:
 
 Pulsa Ctrl+S para guardar el mapa actual. Los cambios se escriben directamente en el archivo `.rxdata` correspondiente. Cada guardado primero respalda el archivo anterior en `Data/map-backups/` (se conservan las 10 copias más recientes por archivo), así que siempre puedes revertir si algo va mal, y las escrituras son a prueba de fallos — un cierre inesperado o un corte de luz a mitad de guardado nunca pueden dejar un archivo a medio escribir. El trabajo sin guardar también se autoguarda en segundo plano cada pocos minutos; consulta [Gestión de mapas → Autoguardado y recuperación tras fallos](map-management.md#autosave-and-crash-recovery).
 
+## Informes de fallos y registros
+
+Si un error de renderizado hace fallar la interfaz, Maker Studio muestra un resumen y los detalles completos, con botones para copiar el error o recargar la interfaz. Los demás errores no capturados siguen apareciendo como avisos.
+
+Maker Studio guarda un registro por ejecución en `%APPDATA%/maker-studio/logs/` en Windows (en la carpeta de configuración de la aplicación en macOS y Linux). Cada archivo `log-AAAAMMDD-HHMMSS-PID.txt` recoge el inicio y cierre, la carga de proyectos y recursos, las ediciones del árbol de mapas y los tilesets, las exportaciones de mapas, las acciones sobre archivos de scripts, la carga de mods y los errores. No incluye el texto de los scripts de eventos editados. Si la aplicación deja de responder durante 30 segundos, un aviso nativo permite esperar o cerrarla; al abrirla de nuevo se muestra el informe guardado. Los autotiles se animan a una velocidad constante de cuatro fotogramas por segundo, también en mapas grandes.
+
 ## Compilar desde el código fuente
 
 Si prefieres compilar el editor tú mismo:

@@ -41,7 +41,7 @@ With the **Events layer** active, you can duplicate whole events (all pages and 
 - **Right-click** an event for **Cut**, **Copy**, and **Paste** (pastes at the cell you clicked).
 - Or use **Ctrl+C** (copy) and **Ctrl+X** (cut) on the selected event, then **Ctrl+V** to paste — no need for the menu.
 
-**Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, and command from the original; only its ID, position, and generated name can change. A default name such as `EV001` is replaced with the new ID's default name. A custom name gets the next unused suffix (`Guard` → `Guard 1`; copying `Guard 1` continues with `Guard 2`). The first paste after Cut keeps the original name; later pastes use the copy naming rule.
+**Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, command, and custom name from the original. A default name such as `EV001` is replaced with the new ID's default name; every other name is copied exactly, even when another event already has that name. The first paste after Cut keeps the original name; later pastes use the same rule.
 
 > **One event per tile.** Two events cannot share a cell — the game treats overlapping events as a single occupant. Pasting onto a tile that already has an event, or dragging an event onto another event, is blocked with a *"Tile already has an event"* notice. Pick an empty tile (or delete/move the existing event first).
 
@@ -501,6 +501,8 @@ Colors follow the active editor theme — the same hue family in dark and light 
 **Long rows scroll instead of being cut off.** When a command's text is wider than the list, hovering it scrolls the text sideways so you can read all of it without widening the panel or opening the command.
 
 **Transfer Player rows say where they go.** A fixed destination reads as the map number, its name and the coordinates — `007: Pewter City (12,8)` — and a variable-driven one lists which variable holds the map, the X and the Y.
+
+The destination picker loads the selected map's own tileset atlas before drawing its preview, so connected or related maps show their actual graphics.
 
 ## Known Limitations
 

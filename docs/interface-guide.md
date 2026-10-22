@@ -216,8 +216,8 @@ its description and access state. The Free Tier trial includes MCP, window icon,
 welcome screen personalization and Favorite projects.
 
 During the trial, the top of the tab shows **Free Tier**, the days remaining and the trial end date.
-A paid licence shows a **Supporter** badge, your plan
-and email, and the date the licence is valid until (or **Perpetual**) next to the date it next renews.
+A paid licence shows a **Supporter** badge, your plan with its expiry date (or **Perpetual**) beside it,
+and your email. The date is the licence's expiry, not the short lease refresh date.
 **Deactivate this computer** frees the activation so you can use the key on another machine; the
 number of computers per key is limited.
 
@@ -232,7 +232,10 @@ unavailable**. Included states are green, missing access is red, partial access 
 states stay muted. The Up and Down arrow keys move between entries. Discord shows separate access states
 for the server role and the Supporter badge in Discord Rich Presence. Login and role controls appear
 only when your licence includes the Discord role feature. Supporter title and badges share one entry,
-with each access state shown separately; this same order appears in the no-license benefits list.
+with each access state shown separately; this same order appears in the no-license benefits list. Every
+selected feature panel uses the same heading, description and access card before its controls; features
+with multiple entitlements also show each entitlement's state. The list and panel scroll independently
+when their content exceeds the available height.
 
 - **Discord** — adds the Supporter role on the Maker Studio Discord server; supporters get priority
   when asking for help there. **Link Discord account** opens your browser to sign in with Discord when

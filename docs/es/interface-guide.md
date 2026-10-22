@@ -220,8 +220,8 @@ todas las funciones con su descripción y estado de acceso. El Plan gratuito inc
 ventana, barra de título coloreada, personalización de la pantalla de inicio y proyectos favoritos.
 
 Durante la prueba, la parte superior muestra **Plan gratuito**, los días que quedan y la fecha de fin.
-Una licencia de pago muestra la insignia **Supporter**, tu plan y tu correo, y la fecha hasta la que es
-válida (o **Permanente**) junto a la de su próxima renovación. **Desactivar este equipo** libera la
+Una licencia de pago muestra la insignia **Supporter**, el plan con su fecha de caducidad (o **De por vida**)
+al lado y tu correo. **Desactivar este equipo** libera la
 activación para usar la clave en otro ordenador; el número de equipos por clave es limitado.
 
 La activación necesita conexión a Internet una vez. Después el pase se renueva solo en segundo plano,
@@ -237,7 +237,10 @@ cambian de función. Discord muestra por
 separado el acceso al rol del servidor y a la insignia Supporter de Rich Presence. Las opciones para
 iniciar sesión y gestionar el rol solo aparecen si la licencia incluye esa función. El título y las
 insignias Supporter comparten una entrada con sus estados de acceso por separado; el orden también se
-usa en la lista de beneficios sin licencia.
+usa en la lista de beneficios sin licencia. El panel de cada función mantiene el mismo encabezado,
+descripción y tarjeta de acceso antes de mostrar sus controles; las funciones con varias prestaciones
+también muestran el estado de cada una. La lista y el panel se desplazan por separado cuando su contenido
+supera el alto disponible.
 
 - **Discord** — añade el rol de Supporter en el servidor de Discord de Maker Studio; los supporters
   tienen prioridad al pedir ayuda allí. **Vincular cuenta de Discord** abre el navegador para que

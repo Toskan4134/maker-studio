@@ -104,6 +104,12 @@ Picking a different tileset — from the list, from the Tile Palette's right-cli
 
 After saving, collision and priority overlays update immediately on all open maps that use the tileset — including tiles you placed earlier. This applies to every placed tile: normal tiles, tiles painted from another tileset, extra (named) autotiles, and tiles you rotated or flipped. Rotated and flipped tiles automatically re-apply the new passage in the correct orientation, in the editor and in-game.
 
+## Exporting and Importing Tileset Bundles
+
+Select one or more tilesets in the manager (Ctrl/Cmd-click to add or remove rows; Shift-click to select a range), then choose **Export ZIP**. The bundle includes the tileset records and their referenced graphics, including tileset images, autotiles, panoramas, fogs, and battlebacks. It preserves passage settings, priorities, terrain tags, bush/counter flags, expanded autotiles, and the other stored tileset properties.
+
+In another project, choose **Import ZIP**. Leave **Import autotile graphics** checked to copy the referenced autotile images, or clear it when those images are already in the destination project. Clearing it skips only the image files; the tileset's autotile names and properties are still imported. Maker Studio validates the archive before changing project files. If names conflict, choose one option for all conflicts: **Overwrite**, **Keep both with new names**, or **Cancel**. The editor refreshes its tileset list and previews after a successful import.
+
 ## How the Collision Overlay Reads a Stack
 
 Show Collision (View menu, or the Col toolbar button) reads the cell from the top layer down, like the game. A tile that blocks a direction decides it as blocked; a passable priority-0 tile opens the cell and ignores every tile below it; a passable priority-1+ (overhead) tile does not decide, so the check continues below. Each tile's passage, priority and terrain come from its own tileset when it has an explicit source. This includes expanded properties for a named autotile with no native slot; older map data without a stored source keeps the legacy name-based lookup.

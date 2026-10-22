@@ -41,7 +41,7 @@ Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las p�
 - **Clic derecho** en un evento para **Cut**, **Copy** y **Paste** (pega en la celda en la que hiciste clic).
 - O usa **Ctrl+C** (copiar) y **Ctrl+X** (cortar) sobre el evento seleccionado, luego **Ctrl+V** para pegar — sin necesidad del menú.
 
-**Pegar con Ctrl+V** muestra una *vista previa*: un fantasma del evento copiado sigue a tu cursor. **Haz clic** donde quieras soltar la copia; pulsa **Escape** para cancelar. Cortar copia el evento y luego lo quita. El evento pegado conserva cada página, condición, gráfico y comando del original; pueden cambiar la ID, la posición y el nombre generado. Un nombre predeterminado como `EV001` se sustituye por el nombre predeterminado de la ID nueva. Un nombre personalizado recibe el siguiente sufijo libre (`Guard` → `Guard 1`; al copiar `Guard 1` continúa con `Guard 2`). El primer pegado después de cortar conserva el nombre original; los siguientes aplican la regla de copia.
+**Pegar con Ctrl+V** muestra una *vista previa*: un fantasma del evento copiado sigue a tu cursor. **Haz clic** donde quieras soltar la copia; pulsa **Escape** para cancelar. Cortar copia el evento y luego lo quita. El evento pegado conserva cada página, condición, gráfico, comando y nombre personalizado del original. Un nombre predeterminado como `EV001` se sustituye por el nombre predeterminado de la ID nueva; cualquier otro nombre se copia tal cual, aunque ya lo tenga otro evento. El primer pegado después de cortar conserva el nombre original; los siguientes aplican la misma regla.
 
 > **Un evento por tile.** Dos eventos no pueden compartir una celda — el juego trata los eventos solapados como un único ocupante. Pegar sobre un tile que ya tiene un evento, o arrastrar un evento sobre otro, se bloquea con un aviso *"Tile already has an event"*. Elige un tile vacío (o borra/mueve primero el evento existente).
 
@@ -499,6 +499,8 @@ Los colores siguen el tema activo del editor — la misma familia de tonos en mo
 **Las filas largas se desplazan en vez de cortarse.** Cuando el texto de un comando es más ancho que la lista, al pasar el ratón por encima el texto se desplaza lateralmente para que puedas leerlo entero sin ensanchar el panel ni abrir el comando.
 
 **Las filas de Transfer Player dicen a dónde llevan.** Un destino fijo se lee como el número del mapa, su nombre y las coordenadas — `007: Ciudad Plateada (12,8)` — y uno por variables indica qué variable guarda el mapa, la X y la Y.
+
+El selector carga el atlas del tileset propio del mapa elegido antes de dibujar la previsualización, por lo que los mapas conectados o relacionados muestran sus gráficos reales.
 
 ## Limitaciones conocidas
 

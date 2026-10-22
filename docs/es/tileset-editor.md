@@ -106,6 +106,12 @@ Elegir otro tileset — desde la lista, desde **Edit Properties…** del clic de
 
 Tras guardar, los overlays de colisión y prioridad se actualizan al instante en todos los mapas abiertos que usan el tileset — incluidos los tiles que colocaste antes. Esto se aplica a cada tile colocado: tiles normales, tiles pintados desde otro tileset, autotiles extra (con nombre) y tiles que rotaste o volteaste. Los tiles rotados y volteados reaplican automáticamente el nuevo paso en la orientación correcta, en el editor y en el juego.
 
+## Exportar e importar paquetes de tilesets
+
+Selecciona uno o varios tilesets en el administrador (Ctrl/Cmd+clic para añadir o quitar filas; Mayús+clic para seleccionar un rango) y elige **Exportar ZIP**. El paquete incluye los registros de los tilesets y los gráficos que usan, como imágenes de tileset, autotiles, panoramas, nieblas y fondos de batalla. Conserva las zonas pasables, prioridades, terrain tags, indicadores de hierba y mostrador, autotiles expandidos y las demás propiedades guardadas del tileset.
+
+En otro proyecto, elige **Importar ZIP**. Deja marcada **Importar gráficos de autotiles** para copiar sus imágenes, o desmárcala si ya existen en el proyecto de destino. Al desmarcarla solo se omiten los archivos de imagen; se conservan los nombres y las propiedades de autotiles del tileset importado. Maker Studio valida el archivo antes de modificar el proyecto. Si hay nombres en conflicto, elige una opción para todos: **Sobrescribir**, **Conservar ambos con nombres nuevos** o **Cancelar**. Tras importar, el editor actualiza la lista de tilesets y las previsualizaciones.
+
 ## Cómo lee el overlay de colisión una pila de tiles
 
 Show Collision (menú View o el botón Col de la barra) lee la casilla de la capa superior hacia abajo, igual que el juego. Un tile que bloquea una dirección la deja bloqueada; un tile transitable con prioridad 0 abre la casilla e ignora todos los tiles inferiores; un tile transitable con prioridad 1 o superior (por encima) no decide, así que la comprobación continúa hacia abajo. El paso, la prioridad y el terreno de cada tile se leen de su propio tileset cuando tiene un origen explícito. Esto incluye las propiedades expandidas de un autotile con nombre aunque no tenga una ranura nativa; los mapas antiguos sin origen guardado conservan la búsqueda heredada por nombre.
