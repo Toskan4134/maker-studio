@@ -299,13 +299,13 @@ Haz clic derecho en una pestaña para cerrarla, cerrar las demás, cerrar las pe
 
 ## Cambiar de proyecto con cambios sin guardar
 
-Si eliges **File → Open Project…** o eliges un proyecto de **File → Open Recent** mientras algún mapa abierto tiene cambios sin guardar, el editor abre un diálogo Save All / Discard / Cancel antes de cambiar de proyecto:
+Si eliges **File → Open Project…**, eliges un proyecto de **File → Open Recent**, seleccionas **File → Close Project** o usas **Help → Reset App** / **Ctrl+R** mientras algún mapa abierto tiene cambios sin guardar, el editor abre un diálogo Save All / Discard / Cancel antes de salir del proyecto:
 
-- **Save All**: guarda cada mapa sucio, luego cambia al nuevo proyecto.
-- **Discard**: cambia sin guardar — las ediciones sin guardar se pierden.
+- **Save All**: guarda todos los mapas modificados y luego cambia al proyecto elegido o vuelve a la página de bienvenida.
+- **Discard**: sale sin guardar — se pierden los cambios sin guardar.
 - **Cancel**: se queda en el proyecto actual.
 
-Es el mismo aviso usado por Help → Reset App y View → Layout → Refresh Layout, así que el trabajo sin guardar no se puede perder en silencio al abrir un proyecto distinto.
+Si falla algún guardado o queda algún mapa modificado, el proyecto permanece abierto para que puedas resolver el problema e intentarlo de nuevo. Si no hay mapas modificados, **Close Project** y **Reset App** vuelven directamente a la página de bienvenida. Reset App conserva la disposición de paneles; **View → Layout → Refresh Layout** sigue pidiendo confirmación antes de descartar cambios sin guardar y restaura la disposición por defecto.
 
 ## Diálogo "Not a Project Folder"
 

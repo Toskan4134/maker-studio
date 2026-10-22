@@ -90,7 +90,7 @@ most six priorities) simply does nothing. All ten are rebindable in Help → Key
 | Ctrl+Z | Undo |
 | Ctrl+Y | Redo |
 | Ctrl+Enter | Run game |
-| Ctrl+R | Reset App — reloads the editor (your panel layout is kept; to restore the default layout use **View → Layout → Refresh Layout** instead) |
+| Ctrl+R | Reset App — reloads Maker Studio to the Welcome page (your panel layout is kept; choose a project there to reopen it; use **View → Layout → Refresh Layout** to restore the default layout) |
 
 ## Selection
 

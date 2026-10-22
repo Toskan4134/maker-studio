@@ -90,7 +90,7 @@ prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda →
 | Ctrl+Z | Deshacer |
 | Ctrl+Y | Rehacer |
 | Ctrl+Enter | Ejecutar el juego |
-| Ctrl+R | Reset App — recarga el editor (se conserva la disposición de paneles; para restaurar la disposición por defecto usa **View → Layout → Refresh Layout** en su lugar) |
+| Ctrl+R | Reset App — reinicia Maker Studio en la página de bienvenida (se conserva la disposición de paneles; elige allí un proyecto para volver a abrirlo; usa **View → Layout → Refresh Layout** para restaurar la disposición por defecto) |
 
 ## Selección
 

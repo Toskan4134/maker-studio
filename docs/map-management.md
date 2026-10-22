@@ -296,13 +296,13 @@ Right-click a tab to close it, close other tabs, close tabs to its right, close 
 
 ## Switching Projects with Unsaved Changes
 
-If you choose **File → Open Project…** or pick a project from **File → Open Recent** while any open map has unsaved changes, the editor opens a Save All / Discard / Cancel dialog before swapping projects:
+If you choose **File → Open Project…**, pick a project from **File → Open Recent**, choose **File → Close Project**, or use **Help → Reset App** / **Ctrl+R** while any open map has unsaved changes, the editor opens a Save All / Discard / Cancel dialog before leaving the project:
 
-- **Save All**: Saves every dirty map, then switches to the new project.
-- **Discard**: Switches without saving — unsaved edits are lost.
+- **Save All**: Saves every dirty map, then switches to the selected project or returns to Welcome.
+- **Discard**: Leaves without saving — unsaved edits are lost.
 - **Cancel**: Stays on the current project.
 
-This is the same prompt used by Help → Reset App and View → Layout → Refresh Layout, so unsaved work cannot be lost silently by opening a different project.
+If any save fails or a map remains dirty, the project stays open so you can resolve the problem and try again. With no dirty maps, **Close Project** and **Reset App** return directly to Welcome. Reset App preserves the panel layout; **View → Layout → Refresh Layout** still confirms before discarding unsaved work and restores the default layout.
 
 ## "Not a Project Folder" Dialog
 
