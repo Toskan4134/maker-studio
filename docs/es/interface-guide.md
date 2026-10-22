@@ -158,7 +158,7 @@ Ambos se aplican la próxima vez que arranque Maker Studio.
 **Mostrar mi actividad en Discord** — activado por defecto. Mientras esté activado y la aplicación de
 Discord está abierta, tu estado de Discord muestra el proyecto y el mapa que tengas abiertos. Con una
 [licencia de Supporter](#pestaña-supporter) lleva además una pequeña insignia. La actividad también
-está disponible durante el Plan gratuito. Sustituye al mod de ejemplo *Discord Rich Presence*; si lo
+está disponible durante la prueba gratuita. Sustituye al mod de ejemplo *Discord Rich Presence*; si lo
 tenías instalado, desactívalo, porque los dos se sobrescriben entre sí.
 
 ### Pestaña Apariencia
@@ -216,10 +216,13 @@ través de Wine o Proton, que es quien controla su ventana, así que el editor n
 Funciones como conectar un cliente de IA mediante MCP requieren una licencia. Sin ella, la pestaña
 muestra el cuadro de activación: pega tu **Clave de licencia** y pulsa **Activar**, o usa **Probar
 gratis 7 días** / **Comprar licencia de por vida**. Debajo, **Qué obtienes como supporter** enumera
-todas las funciones con su descripción y estado de acceso. El Plan gratuito incluye MCP, icono de
-ventana, barra de título coloreada, personalización de la pantalla de inicio y proyectos favoritos.
+todas las funciones con su descripción y estado de acceso. El grupo Free Trial (etiquetado **Prueba
+gratuita** en español) y Supporter incluyen todas las funciones comunes, como MCP, icono de ventana,
+barra de título coloreada, personalización de la pantalla de inicio y proyectos favoritos. Supporter
+también incluye el título e insignias Supporter, la insignia de Discord y el rol de Discord.
+Supporter puede recibir algunas funciones nuevas antes de que estén disponibles para todos.
 
-Durante la prueba, la parte superior muestra **Plan gratuito**, los días que quedan y la fecha de fin.
+Durante la prueba, la parte superior muestra **Prueba gratuita**, los días que quedan y la fecha de fin.
 Una licencia de pago muestra la insignia **Supporter**, el plan con su fecha de caducidad (o **De por vida**)
 al lado y tu correo. **Desactivar este equipo** libera la
 activación para usar la clave en otro ordenador; el número de equipos por clave es limitado.
@@ -266,20 +269,17 @@ supera el alto disponible.
   pantalla de inicio, y muestra una insignia en la pantalla de inicio y en el cuadro Acerca de.
 - **Proyectos favoritos** — marca proyectos en la pantalla de inicio con una estrella, arrástralos
   desde el tirador de seis puntos para ordenarlos y ábrelos desde la barra de tareas o Inicio de
-  Windows, el menú de aplicaciones de Linux o el Dock de macOS. Está incluido tanto en Free Tier como
+  Windows, el menú de aplicaciones de Linux o el Dock de macOS. Está incluido tanto en Free Trial como
   en Supporter.
 - **Servidor MCP** — funciona con cualquier aplicación de IA compatible con MCP. El panel muestra el
   **Proyecto actual** (o **No hay un proyecto abierto**) junto a **Copiar configuración MCP**; el botón
   se activa al abrir un proyecto. Después, pega la configuración en los ajustes MCP de tu aplicación de
   IA y reiníciala. Mientras Maker Studio tenga el proyecto abierto, los cambios aparecen al instante;
   si no, se escriben en los archivos del proyecto.
-- **Acceso anticipado** — actualmente no está disponible. La pestaña muestra **No disponible
-  temporalmente**; las preferencias guardadas no seleccionan versiones anticipadas y las actualizaciones
-  siguen por el canal estable.
 
-El Plan gratuito permite personalizar la pantalla de inicio y, cuando hay proyectos, usar el panel
+La prueba gratuita permite personalizar la pantalla de inicio y, cuando hay proyectos, usar el panel
 **Continuar**, **Recientes** y **Más usados**. La función **Proyectos favoritos** está incluida tanto
-en Free Tier como en Supporter: marca proyectos, arrástralos desde el tirador de seis puntos para
+en Free Trial como en Supporter: marca proyectos, arrástralos desde el tirador de seis puntos para
 ordenarlos y ábrelos desde la Jump List de Windows (clic derecho en el icono de Maker Studio de la
 barra de tareas o su entrada en Inicio), las acciones de la aplicación en Linux o el menú del Dock de
 macOS. En Windows, cada

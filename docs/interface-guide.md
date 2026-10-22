@@ -156,7 +156,7 @@ Both apply the next time Maker Studio starts.
 
 **Show my activity in Discord** — on by default. While it is on and the Discord app is running, your
 Discord status shows the project and the map you have open. This activity is available during the Free
-Tier trial; a [Supporter licence](#supporter-tab) adds a small badge. This replaces the *Discord Rich
+Trial; a [Supporter licence](#supporter-tab) adds a small badge. This replaces the *Discord Rich
 Presence* example mod; if you had it installed, disable it, as the two overwrite each other.
 
 ### Appearance tab
@@ -212,10 +212,12 @@ or Proton, which owns its window, so the editor can't place it.
 Features such as connecting an AI client through the MCP server need a licence. Without one, the tab
 has the activation box: paste your **License key** and press **Activate**, or use **Start 7-day free
 trial** / **Buy lifetime license**. Below it, **What you get as a supporter** lists every feature with
-its description and access state. The Free Tier trial includes MCP, window icon, coloured title bar,
-welcome screen personalization and Favorite projects.
+its description and access state. Free Trial and Supporter include all common features, including MCP,
+window icon, coloured title bar, welcome screen personalization and Favorite projects. Supporter also
+includes the Supporter title and badges, the Discord badge and the Discord role. Supporter may
+receive selected new features before they become available to everyone.
 
-During the trial, the top of the tab shows **Free Tier**, the days remaining and the trial end date.
+During the trial, the top of the tab shows **Free Trial**, the days remaining and the trial end date.
 A paid licence shows a **Supporter** badge, your plan with its expiry date (or **Perpetual**) beside it,
 and your email. The date is the licence's expiry, not the short lease refresh date.
 **Deactivate this computer** frees the activation so you can use the key on another machine; the
@@ -259,19 +261,16 @@ when their content exceeds the available height.
 - **Favorite projects** — star projects from the personalized welcome screen, drag them by the six-dot
   handle to reorder them, and launch them from Windows taskbar and Start, the Linux app menu, or the
   macOS Dock.
-  Free Tier and Supporter licences both include this feature.
+  Both Free Trial and Supporter licences include this feature.
 - **MCP server** — works with any AI app that supports MCP. The panel shows the **Current project**
   (or **No project open**) beside **Copy MCP config**; the button is unavailable until a project is
   open. Then paste the copied config into your AI app's MCP settings and restart the app. While Maker
   Studio has the project open, the AI's edits appear live; otherwise they are written to the project
   files.
-- **Early access** — currently unavailable. Its tab shows **Temporarily unavailable**; saved opt-ins
-  do not select early builds, so updates stay on the stable channel.
-
-A Free Tier licence can use the personalized welcome screen and, when projects are available, its
+The Free Trial can use the personalized welcome screen and, when projects are available, its
 **Continue**, **Recent** and **Most Used** launcher. The classic welcome screen keeps its original
 side-by-side **Recent** and **Most Used** columns and does not show tabs or favorite controls. The
-**Favorite projects** feature is included in both Free Tier and Supporter licences: star projects into
+**Favorite projects** feature is included in both Free Trial and Supporter licences: star projects into
 a separate **Favorites** list from the personalized welcome screen, drag them by
 the six-dot handle to reorder, and launch them from the Windows Jump List (right-click the Maker Studio
 taskbar icon or its Start menu entry), Linux app actions, or macOS Dock menu. On Windows, each favorite
