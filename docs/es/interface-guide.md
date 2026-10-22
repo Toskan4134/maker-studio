@@ -224,7 +224,10 @@ Supporter puede recibir algunas funciones nuevas antes de que estén disponibles
 
 Durante la prueba, la parte superior muestra **Prueba gratuita**, los días que quedan y la fecha de fin.
 Una licencia de pago muestra la insignia **Supporter**, el plan con su fecha de caducidad (o **De por vida**)
-al lado y tu correo. **Desactivar este equipo** libera la
+al lado. El correo asociado aparece tanto en la prueba como en una licencia de pago, oculto por defecto con
+el primer carácter antes de `@`, cinco asteriscos y luego `@dominio`; pulsa el botón del ojo para mostrar u
+ocultar la dirección completa.
+**Desactivar este equipo** libera la
 activación para usar la clave en otro ordenador; el número de equipos por clave es limitado.
 
 La activación necesita conexión a Internet una vez. Después el pase se renueva solo en segundo plano,
@@ -271,11 +274,14 @@ supera el alto disponible.
   desde el tirador de seis puntos para ordenarlos y ábrelos desde la barra de tareas o Inicio de
   Windows, el menú de aplicaciones de Linux o el Dock de macOS. Está incluido tanto en Free Trial como
   en Supporter.
-- **Servidor MCP** — funciona con cualquier aplicación de IA compatible con MCP. El panel muestra el
-  **Proyecto actual** (o **No hay un proyecto abierto**) junto a **Copiar configuración MCP**; el botón
-  se activa al abrir un proyecto. Después, pega la configuración en los ajustes MCP de tu aplicación de
-  IA y reiníciala. Mientras Maker Studio tenga el proyecto abierto, los cambios aparecen al instante;
-  si no, se escriben en los archivos del proyecto.
+- **Servidor MCP** — funciona con aplicaciones de IA locales compatibles con servidores MCP stdio. El
+  panel muestra el **Proyecto actual** (o **No hay un proyecto abierto**) y ofrece un comando de
+  configuración de usuario, de un solo uso, para Codex o Claude Code, además de JSON para otros clientes
+  locales stdio. Ejecuta el comando para Codex o Claude Code; pega el JSON en los ajustes MCP de usuario
+  de otro cliente. El modo de proyecto activo requiere un proyecto abierto, sigue la ventana de Maker
+  Studio enfocada e incluye cambios de mapa sin guardar; cambia el foco a otra ventana de Maker Studio
+  para usar su proyecto. El modo fijo `--project <game-dir>` sigue disponible para fijar un proyecto y
+  editar sus archivos con Maker Studio cerrado.
 
 La prueba gratuita permite personalizar la pantalla de inicio y, cuando hay proyectos, usar el panel
 **Continuar**, **Recientes** y **Más usados**. La función **Proyectos favoritos** está incluida tanto

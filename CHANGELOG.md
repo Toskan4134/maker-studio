@@ -5,6 +5,22 @@ releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/relea
 
 User guides and mod API reference: https://makerstudio.toskan.es/
 
+## v1.9.0
+
+Maker Studio adds an MCP server, a 7-day free trial and paid Supporter licence, reusable tileset bundles, project-file support, and crash recovery.
+
+### Additions
+
+- ⭐ **Free Trial and Supporter licences** — start a 7-day free trial or activate a paid Supporter licence. Both include a local MCP server, a custom window icon, a themed title bar, Welcome screen personalization and favorite-project shortcuts. Supporter adds its title and badges, the Discord activity badge and server role, and may include selected new features early.
+- 🤖 **MCP follows your active project** — set up Codex or Claude Code once at user scope, or use JSON config with another local stdio client. Active-project mode requires an open project, follows the focused Maker Studio window and includes unsaved map edits. Fixed `--project <game-dir>` mode remains available to pin a project and edit its files while Maker Studio is closed.
+- 📁 **Project files** — create or open `.mkst` files; older `.makerstudio` files still work.
+- 🎨 **Reusable tileset bundles** — export selected tilesets and their referenced graphics to a ZIP, then import them into another project with conflict options and archive validation.
+- 🧯 **Crash reports, logs and map recovery** — review editor error details, keep a session log, and restore maps autosaved before a crash.
+
+### Fixes
+- 🧱 **More reliable maps and event previews** — improve rendering stability and event-command previews, and prevent integrations from setting up maps before the game is ready.
+- 🔗 **Windows links open in the default browser** — authorization and other external URLs now open in your default browser.
+
 ## v1.8.2
 
 A hotfix release: tiles from other tilesets and named autotiles stay visible after reopening a project, tiles with incomplete properties save correctly and switching projects no longer mixes up tileset graphics.

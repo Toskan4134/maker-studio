@@ -218,8 +218,10 @@ includes the Supporter title and badges, the Discord badge and the Discord role.
 receive selected new features before they become available to everyone.
 
 During the trial, the top of the tab shows **Free Trial**, the days remaining and the trial end date.
-A paid licence shows a **Supporter** badge, your plan with its expiry date (or **Perpetual**) beside it,
-and your email. The date is the licence's expiry, not the short lease refresh date.
+A paid licence shows a **Supporter** badge and your plan with its expiry date (or **Perpetual**) beside it.
+The lease email appears for both trial and paid licences, masked by default as its first character before
+`@`, five asterisks, then `@domain`; use the eye button beside it to show or hide the full address. The
+date is the licence's expiry, not the short lease refresh date.
 **Deactivate this computer** frees the activation so you can use the key on another machine; the
 number of computers per key is limited.
 
@@ -262,11 +264,13 @@ when their content exceeds the available height.
   handle to reorder them, and launch them from Windows taskbar and Start, the Linux app menu, or the
   macOS Dock.
   Both Free Trial and Supporter licences include this feature.
-- **MCP server** — works with any AI app that supports MCP. The panel shows the **Current project**
-  (or **No project open**) beside **Copy MCP config**; the button is unavailable until a project is
-  open. Then paste the copied config into your AI app's MCP settings and restart the app. While Maker
-  Studio has the project open, the AI's edits appear live; otherwise they are written to the project
-  files.
+- **MCP server** — works with local AI apps that support stdio MCP servers. The panel shows the
+  **Current project** (or **No project open**) and offers a one-time user-scope setup command for Codex
+  or Claude Code, plus JSON config for other local stdio clients. Run the copied command for Codex or
+  Claude Code; paste the JSON into another client's user-level MCP settings. Active-project mode
+  requires an open project, follows the focused Maker Studio window and includes unsaved map edits;
+  switch focus to another Maker Studio window to target its project. Fixed `--project <game-dir>` mode
+  remains available to pin a project and edit its files while Maker Studio is closed.
 The Free Trial can use the personalized welcome screen and, when projects are available, its
 **Continue**, **Recent** and **Most Used** launcher. The classic welcome screen keeps its original
 side-by-side **Recent** and **Most Used** columns and does not show tabs or favorite controls. The
