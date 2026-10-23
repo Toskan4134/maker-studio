@@ -17,6 +17,7 @@ Maker Studio adds an MCP server, a 7-day free trial and paid Supporter licence, 
 ### Fixes
 - 🧱 **More reliable maps and event previews** — improve rendering stability and event-command previews, and prevent integrations from setting up maps before the game is ready.
 - 🔗 **Windows links open in the default browser** — authorization and other external URLs now open in your default browser.
+- 📜 **Long Conditional Branch scripts show in full** — a Conditional Branch with a Script condition now shows the whole script on one line in the event command list, using the available width instead of cutting it at 30 characters.
 
 ## v1.8.2
 

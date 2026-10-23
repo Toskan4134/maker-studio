@@ -20,6 +20,7 @@ Maker Studio adds an MCP server, a 7-day free trial and paid Supporter licence, 
 ### Fixes
 - 🧱 **More reliable maps and event previews** — improve rendering stability and event-command previews, and prevent integrations from setting up maps before the game is ready.
 - 🔗 **Windows links open in the default browser** — authorization and other external URLs now open in your default browser.
+- 📜 **Long Conditional Branch scripts show in full** — a Conditional Branch with a Script condition now shows the whole script on one line in the event command list, using the available width instead of cutting it at 30 characters.
 
 ## v1.8.2
 
@@ -316,6 +317,23 @@ Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
 
 Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
+
+## v1.9.0
+
+Maker Studio incorpora un servidor MCP, una prueba gratuita de 7 días y la licencia de pago Supporter, paquetes reutilizables de tilesets, archivos de proyecto y recuperación tras fallos.
+
+### Novedades
+
+- ⭐ **Prueba gratuita y licencia Supporter** — inicia la prueba gratuita de 7 días o activa una licencia Supporter de pago. Ambas incluyen un servidor MCP local, un icono de ventana personalizado, la barra de título con el tema, la pantalla de inicio personalizada y accesos directos a proyectos favoritos. Supporter añade su título e insignias, la insignia de actividad y el rol del servidor de Discord, y puede dar acceso anticipado a algunas funciones nuevas.
+- 🤖 **MCP sigue tu proyecto activo** — configura Codex o Claude Code una sola vez en el ámbito de usuario, o usa JSON con otro cliente local stdio. El modo activo necesita un proyecto abierto, sigue la ventana de Maker Studio enfocada e incluye cambios de mapa sin guardar. El modo fijo `--project <game-dir>` sigue disponible para fijar un proyecto y editar sus archivos con Maker Studio cerrado.
+- 📁 **Archivos de proyecto** — crea o abre archivos `.mkst`; los archivos `.makerstudio` anteriores siguen funcionando.
+- 🎨 **Paquetes reutilizables de tilesets** — exporta tilesets seleccionados y sus gráficos vinculados a un ZIP e impórtalos en otro proyecto, con opciones para resolver conflictos y validación del archivo.
+- 🧯 **Informes de fallos, registros y recuperación de mapas** — consulta los detalles de errores del editor, guarda un registro de sesión y restaura los mapas con autoguardado tras un cierre inesperado.
+
+### Correcciones
+- 🧱 **Mapas y vistas previas de eventos más fiables** — se mejora la estabilidad del renderizado y la vista previa de comandos de evento, y las integraciones esperan a que el juego termine de inicializarse antes de preparar mapas.
+- 🔗 **Los enlaces externos se abren en el navegador predeterminado en Windows** — la autorización y otras URL se abren en el navegador que uses habitualmente.
+- 📜 **Los scripts largos de Condiciones y efectos se ven completos** — una condición de Script en **Condiciones y efectos** muestra ahora el script entero en una línea de la lista de comandos del evento, aprovechando el ancho disponible en lugar de cortarse a los 30 caracteres.
 
 ## v1.8.2
 

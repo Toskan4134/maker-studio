@@ -17,6 +17,7 @@ Maker Studio incorpora un servidor MCP, una prueba gratuita de 7 días y la lice
 ### Correcciones
 - 🧱 **Mapas y vistas previas de eventos más fiables** — se mejora la estabilidad del renderizado y la vista previa de comandos de evento, y las integraciones esperan a que el juego termine de inicializarse antes de preparar mapas.
 - 🔗 **Los enlaces externos se abren en el navegador predeterminado en Windows** — la autorización y otras URL se abren en el navegador que uses habitualmente.
+- 📜 **Los scripts largos de Condiciones y efectos se ven completos** — una condición de Script en **Condiciones y efectos** muestra ahora el script entero en una línea de la lista de comandos del evento, aprovechando el ancho disponible en lugar de cortarse a los 30 caracteres.
 
 ## v1.8.2
 
