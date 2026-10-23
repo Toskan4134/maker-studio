@@ -11,7 +11,7 @@
 # exact 'MakerStudio-Build:' / 'MakerStudio-Version:' prefixes; the release
 # workflow rewrites the version line.
 # MakerStudio-Build: BES5
-# MakerStudio-Version: 1.8.2
+# MakerStudio-Version: 1.9.0
 ###############################################################################
 
 
@@ -850,6 +850,7 @@ if defined?(PokemonMapFactory) && PokemonMapFactory.method_defined?(:setMapChang
       alias_method :__mkst__setMapChanged, :setMapChanged
       def setMapChanged(prev_map)
         __mkst__setMapChanged(prev_map)
+        return unless $MapFactory.equal?(self)
         return unless MakerStudio::ENABLED
         return unless $game_map && defined?(pbRefreshLiveMapData)
         pbRefreshLiveMapData($game_map.map_id)
