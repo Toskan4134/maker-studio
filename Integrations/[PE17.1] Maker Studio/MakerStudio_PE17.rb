@@ -11,7 +11,7 @@
 # exact 'MakerStudio-Build:' / 'MakerStudio-Version:' prefixes; the release
 # workflow rewrites the version line.
 # MakerStudio-Build: PE17.1
-# MakerStudio-Version: 1.9.0
+# MakerStudio-Version: 1.9.1
 ###############################################################################
 
 
@@ -2463,6 +2463,50 @@ end
 class Game_Map
   NEUTRAL_TT = (defined?(PBTerrain) ? PBTerrain::Neutral : 13)
 
+  def ms_event_tile_passable(x, y, bit, self_event, strict)
+    return nil unless @events
+    @events.each_value do |event|
+      next if event == self_event || event.x != x || event.y != y || event.through
+      region = MakerStudio.region_tile(event)
+      tile_id = event.tile_id
+      next if !region && tile_id < 0
+      tileset, tile_id = region if region
+      passages = region ? tileset.passages : @passages
+      priorities = region ? tileset.priorities : @priorities
+      passage = passages[tile_id] || 0
+      terrain_tags = region ? tileset.terrain_tags : @terrain_tags
+      if region && self_event == $game_player && !strict
+        terrain = terrain_tags[tile_id] || 0
+        next if terrain == NEUTRAL_TT
+        terrain = terrain_tag(x, y, true) if terrain == 0
+        next if $PokemonGlobal && $PokemonGlobal.bridge == 0 && PBTerrain.isBridge?(terrain)
+        return true if $PokemonGlobal && $PokemonGlobal.surfing && PBTerrain.isPassableWater?(terrain)
+        return false if $PokemonGlobal && $PokemonGlobal.bicycle && PBTerrain.onlyWalk?(terrain)
+        if $PokemonGlobal && $PokemonGlobal.bridge > 0 && PBTerrain.isBridge?(terrain)
+          return passage & bit == 0 && passage & 0x0f != 0x0f
+        end
+        return false if passage & bit != 0 || passage & 0x0f == 0x0f
+        return true if priorities[tile_id] == 0
+        next
+      end
+      next if terrain_tags[tile_id] == PBTerrain::Neutral
+      return false if strict ? (passage & 0x0f != 0) : (passage & bit != 0 || passage & 0x0f == 0x0f)
+      return true if priorities[tile_id] == 0
+    end
+    nil
+  end
+  private :ms_event_tile_passable
+
+  def ms_each_region_event_tile(x, y)
+    return unless @events
+    @events.each_value do |event|
+      next unless event.x == x && event.y == y
+      tile = MakerStudio.region_tile(event)
+      yield tile[0], tile[1] if tile
+    end
+  end
+  private :ms_each_region_event_tile
+
   #---------------------------------------------------------------------------
   # Resolve [passage, priority, terrain] for an extra autotile from tile_data,
   # falling back to expanded_autotiles config, then any tileset that lists the
@@ -2613,6 +2657,8 @@ class Game_Map
   alias __mkst__passable passable? unless method_defined?(:__mkst__passable)
   def passable?(x, y, d, self_event = nil)
     return __mkst__passable(x, y, d, self_event) unless MakerStudio::ENABLED
+    event_result = ms_event_tile_passable(x, y, (1 << (d / 2 - 1)) & 0x0f, self_event, false)
+    return event_result unless event_result.nil?
     return playerPassable?(x, y, d, self_event) if self_event == $game_player
     bit = (1 << (d / 2 - 1)) & 0x0f
     ms_each_tile_at(x, y) do |tid, td|
@@ -2629,6 +2675,8 @@ class Game_Map
   alias __mkst__passableStrict passableStrict? unless method_defined?(:__mkst__passableStrict)
   def passableStrict?(x, y, d, self_event = nil)
     return __mkst__passableStrict(x, y, d, self_event) unless MakerStudio::ENABLED
+    event_result = ms_event_tile_passable(x, y, 0, self_event, true)
+    return event_result unless event_result.nil?
     ms_each_tile_at(x, y) do |tid, td|
       passage = ms_tile_passage(tid, td)
       return false if passage & 0x0f != 0
@@ -2644,6 +2692,12 @@ class Game_Map
   alias __mkst__terrain_tag terrain_tag unless method_defined?(:__mkst__terrain_tag)
   def terrain_tag(x, y, countBridge = false)
     return __mkst__terrain_tag(x, y, countBridge) unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      terrain = tileset.terrain_tags[tile_id] || 0
+      next if terrain == 0 || terrain == NEUTRAL_TT
+      next if !countBridge && PBTerrain.isBridge?(terrain) && $PokemonGlobal && $PokemonGlobal.bridge == 0
+      return terrain
+    end
     ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
       next if terrain == 0 || terrain == NEUTRAL_TT
@@ -2660,6 +2714,11 @@ class Game_Map
   def bush?(x, y)
     result = __mkst__bush(x, y)
     return result unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      terrain = tileset.terrain_tags[tile_id] || 0
+      return false if PBTerrain.isBridge?(terrain) && $PokemonGlobal && $PokemonGlobal.bridge > 0
+      return true if (tileset.passages[tile_id] || 0) & 0x40 == 0x40
+    end
     return true if result
     ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
@@ -2676,6 +2735,11 @@ class Game_Map
   def deepBush?(x, y)
     result = __mkst__deepBush(x, y)
     return result unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      terrain = tileset.terrain_tags[tile_id] || 0
+      return false if PBTerrain.isBridge?(terrain) && $PokemonGlobal && $PokemonGlobal.bridge > 0
+      return true if (tileset.passages[tile_id] || 0) & 0x40 == 0x40 && terrain == PBTerrain::TallGrass
+    end
     return true if result
     ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
@@ -2692,6 +2756,9 @@ class Game_Map
   def counter?(x, y)
     result = __mkst__counter(x, y)
     return result unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      return true if (tileset.passages[tile_id] || 0) & 0x80 == 0x80
+    end
     return true if result
     ms_each_tile_at(x, y) do |tid, td|
       return true if ms_tile_passage(tid, td) & 0x80 == 0x80
@@ -4770,6 +4837,26 @@ end
 #===============================================================================
 
 module MakerStudio
+  @region_tilesets = {}
+
+  def self.region_tile(event)
+    name = event && (event.instance_variable_get(:@ms_region_name) || event.character_name)
+    return nil unless name.to_s[0, 12] == "../Tilesets/"
+    rect = character_src_rect(event)
+    return nil unless rect && rect[2] == 32 && rect[3] == 32
+    x, y = rect
+    name = name.sub("../Tilesets/", "")
+    event_map = event.instance_variable_get(:@map)
+    tileset = event_map if event_map && event_map.tileset_name == name
+    unless tileset || @region_tilesets.has_key?(name)
+      tileset = $data_tilesets.find { |candidate| candidate && candidate.tileset_name == name }
+      @region_tilesets[name] = tileset
+    end
+    tileset ||= @region_tilesets[name]
+    return nil unless tileset
+    [tileset, 384 + (y / 32) * 8 + x / 32]
+  end
+
   # [x, y, w, h] or nil. A region set by a move route (41) wins over the page's,
   # so a route can re-cut the same sheet; Game_Event#refresh drops it below.
   def self.character_src_rect(character)
@@ -4816,6 +4903,36 @@ module MakerStudio
     out = Bitmap.new(w, h)
     out.blt(0, 0, src, Rect.new(x, y, w, h))
     out
+  end
+end
+
+class Game_Character
+  if method_defined?(:passableEx?)
+    alias __mkst__region_passableEx passableEx? unless method_defined?(:__mkst__region_passableEx)
+
+    def passableEx?(x, y, d, strict = false)
+      hidden = []
+      map = respond_to?(:map) ? self.map : $game_map
+      new_x = x + (d == 6 ? 1 : d == 4 ? -1 : 0)
+      new_y = y + (d == 2 ? 1 : d == 8 ? -1 : 0)
+      events = map.events.values.select do |event|
+        !event.through && event.x == new_x && event.y == new_y && MakerStudio.region_tile(event)
+      end
+      events << self if MakerStudio.region_tile(self) && !events.include?(self)
+      events.each do |event|
+        name = event.character_name
+        region_name = event.instance_variable_get(:@ms_region_name)
+        hidden << [event, name, region_name]
+        event.instance_variable_set(:@ms_region_name, name) unless region_name
+        event.instance_variable_set(:@character_name, "")
+      end
+      __mkst__region_passableEx(x, y, d, strict)
+    ensure
+      hidden.each do |event, name, region_name|
+        event.instance_variable_set(:@character_name, name)
+        event.instance_variable_set(:@ms_region_name, region_name)
+      end
+    end
   end
 end
 
@@ -4995,6 +5112,26 @@ class Game_Event
   def refresh
     @ms_src_rect = nil
     __mkst__region_refresh
+  end
+
+  if method_defined?(:screen_z)
+    alias __mkst_region_screen_z screen_z unless method_defined?(:__mkst_region_screen_z)
+    def screen_z(*args)
+      return 999 if @always_on_top
+      return MakerStudio::ALWAYS_ON_BOTTOM_Z if respond_to?(:ms_always_on_bottom?) && ms_always_on_bottom?
+      tile = MakerStudio.region_tile(self)
+      return __mkst_region_screen_z(*args) unless tile
+      tileset, tile_id = tile
+      (@real_y - self.map.display_y + 3) / 4 + 32 + tileset.priorities[tile_id] * 32
+    end
+  end
+
+  if method_defined?(:bush_depth)
+    alias __mkst_region_bush_depth bush_depth unless method_defined?(:__mkst_region_bush_depth)
+    def bush_depth
+      return 0 if MakerStudio.region_tile(self)
+      __mkst_region_bush_depth
+    end
   end
 end
 

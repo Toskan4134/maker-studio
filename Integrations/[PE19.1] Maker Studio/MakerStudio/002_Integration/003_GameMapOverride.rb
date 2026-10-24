@@ -19,6 +19,44 @@
 # original ids before resolving passage and terrain.
 #===============================================================================
 class Game_Map
+  def ms_event_tile_passable(x, y, bit, self_event, strict)
+    return nil unless @events
+    @events.each_value do |event|
+      next if event == self_event || !event.at_coordinate?(x, y) || event.through
+      tile_id = event.tile_id
+      region = MakerStudio.region_tile(event)
+      next if !region && (strict ? tile_id < 0 : tile_id <= 0)
+      tileset, tile_id = region if region
+      passages = region ? tileset.passages : @passages
+      priorities = region ? tileset.priorities : @priorities
+      terrain_tags = region ? tileset.terrain_tags : @terrain_tags
+      terrain = GameData::TerrainTag.try_get(terrain_tags[tile_id])
+      passage = passages[tile_id] || 0
+      if region && !strict && self_event == $game_player
+        terrain = terrain.id == :None ? GameData::TerrainTag.try_get(terrain_tag(x, y, true)) : terrain
+        next if terrain.bridge && $PokemonGlobal.bridge == 0
+        return true if $PokemonGlobal.surfing && terrain.can_surf && !terrain.waterfall
+        return false if $PokemonGlobal.bicycle && (terrain.must_walk || terrain.must_walk_or_run)
+        return (passage & bit == 0 && passage & 0x0f != 0x0f) if terrain.bridge && $PokemonGlobal.bridge > 0
+      end
+      next if !strict && terrain.ignore_passability
+      return false if strict ? (passage & 0x0f != 0) : (passage & bit != 0 || passage & 0x0f == 0x0f)
+      return true if priorities[tile_id] == 0
+    end
+    nil
+  end
+  private :ms_event_tile_passable
+
+  def ms_each_region_event_tile(x, y)
+    return unless @events
+    @events.each_value do |event|
+      next unless event.at_coordinate?(x, y)
+      tile = MakerStudio.region_tile(event)
+      yield tile[0], tile[1] if tile
+    end
+  end
+  private :ms_each_region_event_tile
+
   #---------------------------------------------------------------------------
   # Resolve [passage, priority, terrain] for an extra autotile from tile_data,
   # falling back to expanded_autotiles config, then any tileset that lists the
@@ -170,6 +208,8 @@ class Game_Map
   alias __mkst__passable passable? unless method_defined?(:__mkst__passable)
   def passable?(x, y, d, self_event = nil)
     return __mkst__passable(x, y, d, self_event) unless MakerStudio::ENABLED
+    event_result = ms_event_tile_passable(x, y, (1 << (d / 2 - 1)) & 0x0f, self_event, false)
+    return event_result unless event_result.nil?
     return playerPassable?(x, y, d, self_event) if self_event == $game_player
     bit = (1 << (d / 2 - 1)) & 0x0f
     ms_each_tile_at(x, y) do |tid, td|
@@ -188,6 +228,8 @@ class Game_Map
   alias __mkst__passableStrict passableStrict? unless method_defined?(:__mkst__passableStrict)
   def passableStrict?(x, y, d, self_event = nil)
     return __mkst__passableStrict(x, y, d, self_event) unless MakerStudio::ENABLED
+    event_result = ms_event_tile_passable(x, y, 0, self_event, true)
+    return event_result unless event_result.nil?
     ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
       next if terrain && terrain.ignore_passability
@@ -204,6 +246,12 @@ class Game_Map
   alias __mkst__terrain_tag terrain_tag unless method_defined?(:__mkst__terrain_tag)
   def terrain_tag(x, y, countBridge = false)
     return __mkst__terrain_tag(x, y, countBridge) unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      terrain = GameData::TerrainTag.try_get(tileset.terrain_tags[tile_id])
+      next if terrain.id == :None || terrain.ignore_passability
+      next if !countBridge && terrain.bridge && $PokemonGlobal.bridge == 0
+      return terrain
+    end
     ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
       next if !terrain || terrain.id == :None || terrain.ignore_passability
@@ -220,6 +268,11 @@ class Game_Map
   def bush?(x, y)
     result = __mkst__bush(x, y)
     return result unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      terrain = GameData::TerrainTag.try_get(tileset.terrain_tags[tile_id])
+      return false if terrain.bridge && $PokemonGlobal.bridge > 0
+      return true if (tileset.passages[tile_id] || 0) & 0x40 == 0x40
+    end
     return true if result
     ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
@@ -236,6 +289,11 @@ class Game_Map
   def deepBush?(x, y)
     result = __mkst__deepBush(x, y)
     return result unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      terrain = GameData::TerrainTag.try_get(tileset.terrain_tags[tile_id])
+      return false if terrain.bridge && $PokemonGlobal.bridge > 0
+      return true if terrain.deep_bush && (tileset.passages[tile_id] || 0) & 0x40 == 0x40
+    end
     return true if result
     ms_each_tile_at(x, y) do |tid, td|
       terrain = ms_tile_terrain(tid, td)
@@ -253,6 +311,9 @@ class Game_Map
   def counter?(x, y)
     result = __mkst__counter(x, y)
     return result unless MakerStudio::ENABLED
+    ms_each_region_event_tile(x, y) do |tileset, tile_id|
+      return true if (tileset.passages[tile_id] || 0) & 0x80 == 0x80
+    end
     return true if result
     ms_each_tile_at(x, y) do |tid, td|
       return true if ms_tile_passage(tid, td) & 0x80 == 0x80

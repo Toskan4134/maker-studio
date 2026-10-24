@@ -30,6 +30,26 @@
 #===============================================================================
 
 module MakerStudio
+  @region_tilesets = {}
+
+  def self.region_tile(event)
+    name = event && (event.instance_variable_get(:@ms_region_name) || event.character_name)
+    return nil unless name.to_s.start_with?("../Tilesets/")
+    rect = character_src_rect(event)
+    return nil unless rect && rect[2] == 32 && rect[3] == 32
+    x, y = rect
+    name = name.sub("../Tilesets/", "")
+    event_map = event.instance_variable_get(:@map)
+    tileset = event_map if event_map && event_map.tileset_name == name
+    unless tileset || @region_tilesets.key?(name)
+      tileset = $data_tilesets.find { |candidate| candidate && candidate.tileset_name == name }
+      @region_tilesets[name] = tileset
+    end
+    tileset ||= @region_tilesets[name]
+    return nil unless tileset
+    [tileset, 384 + (y / 32) * 8 + x / 32]
+  end
+
   # [x, y, w, h] or nil. A region set by a move route (41) wins over the page's,
   # so a route can re-cut the same sheet; Game_Event#refresh drops it below.
   def self.character_src_rect(character)
@@ -224,6 +244,38 @@ end
 # base keeps full control of name/hue/direction/pattern.
 #===============================================================================
 class Game_Character
+  if method_defined?(:passable?)
+    alias __mkst__region_passable passable? unless method_defined?(:__mkst__region_passable)
+
+    def passable?(x, y, d, strict = false)
+      map = respond_to?(:map) ? self.map : $game_map
+      new_x = x + (d == 6 ? 1 : d == 4 ? -1 : 0)
+      new_y = y + (d == 2 ? 1 : d == 8 ? -1 : 0)
+      hidden = []
+      events = map.events.values.select do |event|
+        !event.through && event.at_coordinate?(new_x, new_y) && MakerStudio.region_tile(event)
+      end
+      events << self if MakerStudio.region_tile(self) && !events.include?(self)
+      events.each do |event|
+        hidden << [event, event.instance_variable_get(:@character_name),
+                   event.instance_variable_defined?(:@ms_region_name),
+                   event.instance_variable_get(:@ms_region_name)]
+        event.instance_variable_set(:@ms_region_name, event.character_name)
+        event.instance_variable_set(:@character_name, "")
+      end
+      __mkst__region_passable(x, y, d, strict)
+    ensure
+      hidden&.each do |event, name, had_region_name, region_name|
+        event.instance_variable_set(:@character_name, name)
+        if had_region_name
+          event.instance_variable_set(:@ms_region_name, region_name)
+        else
+          event.remove_instance_variable(:@ms_region_name)
+        end
+      end
+    end
+  end
+
   if method_defined?(:update_move_route) || private_method_defined?(:update_move_route)
     unless method_defined?(:__mkst__region_update_move_route) ||
            private_method_defined?(:__mkst__region_update_move_route)
@@ -255,6 +307,29 @@ class Game_Event
   def refresh
     @ms_src_rect = nil
     __mkst__region_refresh
+  end
+
+  if method_defined?(:screen_z)
+    unless method_defined?(:__mkst_region_screen_z)
+      alias __mkst_region_screen_z screen_z
+    end
+
+    def screen_z(*args)
+      return 999 if @always_on_top
+      return MakerStudio::ALWAYS_ON_BOTTOM_Z if respond_to?(:ms_always_on_bottom?) && ms_always_on_bottom?
+      tile = MakerStudio.region_tile(self)
+      return __mkst_region_screen_z(*args) unless tile
+      tileset, tile_id = tile
+      screen_y_ground + tileset.priorities[tile_id] * 32
+    end
+  end
+
+  if method_defined?(:calculate_bush_depth)
+    alias __mkst_region_bush_depth calculate_bush_depth unless method_defined?(:__mkst_region_bush_depth)
+    def calculate_bush_depth
+      return @bush_depth = 0 if MakerStudio.region_tile(self)
+      __mkst_region_bush_depth
+    end
   end
 end
 
