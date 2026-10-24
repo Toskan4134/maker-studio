@@ -5,6 +5,16 @@ releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/relea
 
 User guides and mod API reference: https://makerstudio.toskan.es/
 
+## v1.9.1
+
+A hotfix release: events that show a tileset tile now block or let you pass like that tile painted on the map, the map tree keeps its order in RPG Maker XP, the "not responding" prompt no longer appears after the app sat in the background, and the free trial and Supporter links open the new store.
+
+### Fixes
+- 🧱 **Tile graphics on events act like painted tiles** — an event whose graphic is a single tileset tile now uses that tile's passability, as if it were painted on the event's cell: a walkable floor lets the player cross a wall underneath, and a blocking tile blocks a floor. **Through** still ignores it. The game and the Game Simulator agree, and it keeps working after a soft reset. Update the integration (**Help → Check Game Integration...**) to get the in-game fix.
+- 🗺️ **The map tree keeps its order in RPG Maker XP** — opening the project in RPG Maker XP after reordering or nesting maps in Maker Studio no longer scrambles its map tree.
+- ⏱️ **No more false "not responding" prompts** — leaving Maker Studio in the background or putting the computer to sleep no longer shows the "Maker Studio no responde" prompt and a crash report. A real hang is still caught 30 seconds after you come back, and the prompt now has clear **Esperar** (wait) and **Cerrar Maker Studio** (close) buttons instead of Yes/No.
+- 🛒 **Licence links open the new store** — the free trial and Supporter purchase buttons now open store.toskan.es (same products and prices).
+
 ## v1.9.0
 
 Maker Studio adds an MCP server, a 7-day free trial and paid Supporter licence, reusable tileset bundles, project-file support, and crash recovery.
@@ -317,6 +327,16 @@ Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
 
 Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
+
+## v1.9.1
+
+Una versión de corrección: los eventos que muestran un tile del tileset bloquean o dejan pasar como ese tile pintado en el mapa, el árbol de mapas conserva su orden en RPG Maker XP, el aviso de "no responde" ya no aparece tras dejar la app en segundo plano y los enlaces de la prueba gratuita y de Supporter abren la nueva tienda.
+
+### Correcciones
+- 🧱 **Los tiles como gráfico de evento actúan como tiles pintados** — un evento cuyo gráfico es un único tile del tileset usa ahora la pasabilidad de ese tile, como si estuviera pintado en la casilla del evento: un suelo transitable deja pasar al jugador aunque debajo haya un muro, y un tile que bloquea bloquea un suelo. **Atravesar** la sigue ignorando. El juego y el Simulador de juego coinciden, y sigue funcionando tras un soft reset. Actualiza la integración (**Ayuda → Comprobar integración del juego…**) para recibir la corrección en el juego.
+- 🗺️ **El árbol de mapas conserva su orden en RPG Maker XP** — abrir el proyecto en RPG Maker XP después de reordenar o anidar mapas en Maker Studio ya no desordena su árbol de mapas.
+- ⏱️ **Se acabaron los avisos falsos de "no responde"** — dejar Maker Studio en segundo plano o suspender el ordenador ya no muestra el aviso "Maker Studio no responde" ni genera un informe de fallo. Un bloqueo real se sigue detectando 30 segundos después de volver, y el aviso tiene ahora los botones **Esperar** y **Cerrar Maker Studio** en lugar de Sí/No.
+- 🛒 **Los enlaces de licencia abren la nueva tienda** — los botones de la prueba gratuita y de compra de Supporter abren ahora store.toskan.es (mismos productos y precios).
 
 ## v1.9.0
 

@@ -2,6 +2,16 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.9.1
+
+Una versión de corrección: los eventos que muestran un tile del tileset bloquean o dejan pasar como ese tile pintado en el mapa, el árbol de mapas conserva su orden en RPG Maker XP, el aviso de "no responde" ya no aparece tras dejar la app en segundo plano y los enlaces de la prueba gratuita y de Supporter abren la nueva tienda.
+
+### Correcciones
+- 🧱 **Los tiles como gráfico de evento actúan como tiles pintados** — un evento cuyo gráfico es un único tile del tileset usa ahora la pasabilidad de ese tile, como si estuviera pintado en la casilla del evento: un suelo transitable deja pasar al jugador aunque debajo haya un muro, y un tile que bloquea bloquea un suelo. **Atravesar** la sigue ignorando. El juego y el Simulador de juego coinciden, y sigue funcionando tras un soft reset. Actualiza la integración (**Ayuda → Comprobar integración del juego…**) para recibir la corrección en el juego.
+- 🗺️ **El árbol de mapas conserva su orden en RPG Maker XP** — abrir el proyecto en RPG Maker XP después de reordenar o anidar mapas en Maker Studio ya no desordena su árbol de mapas.
+- ⏱️ **Se acabaron los avisos falsos de "no responde"** — dejar Maker Studio en segundo plano o suspender el ordenador ya no muestra el aviso "Maker Studio no responde" ni genera un informe de fallo. Un bloqueo real se sigue detectando 30 segundos después de volver, y el aviso tiene ahora los botones **Esperar** y **Cerrar Maker Studio** en lugar de Sí/No.
+- 🛒 **Los enlaces de licencia abren la nueva tienda** — los botones de la prueba gratuita y de compra de Supporter abren ahora store.toskan.es (mismos productos y precios).
+
 ## v1.9.0
 
 Maker Studio incorpora un servidor MCP, una prueba gratuita de 7 días y la licencia de pago Supporter, paquetes reutilizables de tilesets, archivos de proyecto y recuperación tras fallos.

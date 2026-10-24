@@ -2,6 +2,16 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.9.1
+
+A hotfix release: events that show a tileset tile now block or let you pass like that tile painted on the map, the map tree keeps its order in RPG Maker XP, the "not responding" prompt no longer appears after the app sat in the background, and the free trial and Supporter links open the new store.
+
+### Fixes
+- 🧱 **Tile graphics on events act like painted tiles** — an event whose graphic is a single tileset tile now uses that tile's passability, as if it were painted on the event's cell: a walkable floor lets the player cross a wall underneath, and a blocking tile blocks a floor. **Through** still ignores it. The game and the Game Simulator agree, and it keeps working after a soft reset. Update the integration (**Help → Check Game Integration...**) to get the in-game fix.
+- 🗺️ **The map tree keeps its order in RPG Maker XP** — opening the project in RPG Maker XP after reordering or nesting maps in Maker Studio no longer scrambles its map tree.
+- ⏱️ **No more false "not responding" prompts** — leaving Maker Studio in the background or putting the computer to sleep no longer shows the "Maker Studio no responde" prompt and a crash report. A real hang is still caught 30 seconds after you come back, and the prompt now has clear **Esperar** (wait) and **Cerrar Maker Studio** (close) buttons instead of Yes/No.
+- 🛒 **Licence links open the new store** — the free trial and Supporter purchase buttons now open store.toskan.es (same products and prices).
+
 ## v1.9.0
 
 Maker Studio adds an MCP server, a 7-day free trial and paid Supporter licence, reusable tileset bundles, project-file support, and crash recovery.
