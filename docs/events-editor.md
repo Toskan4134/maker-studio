@@ -168,6 +168,14 @@ your selection also drives the picture's origin and zoom.
 
 Ordinary character sheets are unaffected — the tile grid only appears for tilesets.
 
+**A single picked tile behaves like that tile painted on the event's cell**, using the properties
+it has in its own tileset: passability (a walkable floor tile lets the player walk over a wall
+underneath, a blocking tile blocks a floor), priority (draw order), bush, terrain tag and counter.
+If the tile has no terrain tag, the tiles underneath supply it — water you can surf, bridges,
+no-cycling grass, encounters — while whether you can step there still comes from the tile.
+**Through** only drops the passability; the other properties still apply. A block of several tiles
+stays an ordinary character graphic. The simulator follows the same passability and draw-order rules.
+
 > Tiles-as-graphics need the **MakerStudio plugin** installed in your game (Tools -> Integration).
 > Without it the game draws the whole tileset image — the map still opens and runs, it just ignores
 > the selection.

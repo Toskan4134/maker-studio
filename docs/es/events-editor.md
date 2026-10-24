@@ -174,6 +174,15 @@ La misma selección de tiles está en la acción **Change Graphic** de la ruta d
 
 Las hojas de personaje normales no cambian: la cuadrícula de tiles solo aparece para tilesets.
 
+**Un único tile elegido se comporta como ese tile pintado en la casilla del evento**, con las
+propiedades que tiene en su propio tileset: pasabilidad (un suelo transitable deja pasar al jugador
+aunque debajo haya un muro, y un tile que bloquea bloquea un suelo), prioridad (orden de dibujo),
+bush, terrain tag y counter. Si el tile no tiene terrain tag, lo aportan los tiles de debajo (agua
+para surfear, puentes, hierba sin bici, encuentros), aunque si se puede pisar lo sigue decidiendo el
+tile. **Atravesar** solo anula la pasabilidad; el resto de propiedades se
+siguen aplicando. Un bloque de varios tiles sigue siendo un gráfico de personaje normal. El
+simulador sigue las mismas reglas de pasabilidad y de orden de dibujo.
+
 > Usar tiles como gráfico necesita el **plugin MakerStudio** instalado en tu juego
 > (Tools -> Integration). Sin él, el juego dibuja la imagen completa del tileset: el mapa sigue
 > abriendo y funcionando, simplemente ignora la selección.
