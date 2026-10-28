@@ -101,7 +101,7 @@ Pulsa Ctrl+S para guardar el mapa actual. Los cambios se escriben directamente e
 
 Si un error de renderizado hace fallar la interfaz, Maker Studio muestra un resumen y los detalles completos, con botones para copiar el error o recargar la interfaz. Los demás errores no capturados siguen apareciendo como avisos.
 
-Maker Studio guarda un registro por ejecución en `%APPDATA%/maker-studio/logs/` en Windows (en la carpeta de configuración de la aplicación en macOS y Linux). Cada archivo `log-AAAAMMDD-HHMMSS-PID.txt` recoge el inicio y cierre, la carga de proyectos y recursos, las ediciones del árbol de mapas y los tilesets, las exportaciones de mapas, las acciones sobre archivos de scripts, la carga de mods y los errores. No incluye el texto de los scripts de eventos editados. Si la aplicación deja de responder durante 30 segundos, un aviso nativo permite esperar o cerrarla; al abrirla de nuevo se muestra el informe guardado. Los autotiles se animan a una velocidad constante de cuatro fotogramas por segundo, también en mapas grandes.
+Maker Studio guarda un registro por ejecución en `%APPDATA%/maker-studio/logs/` en Windows (en la carpeta de configuración de la aplicación en macOS y Linux). Cada archivo `log-AAAAMMDD-HHMMSS-PID.txt` recoge el inicio y cierre, la carga de proyectos y recursos, las ediciones del árbol de mapas y los tilesets, las exportaciones de mapas, las acciones sobre archivos de scripts, la carga de mods y los errores. No incluye el texto de los scripts de eventos editados. Si Maker Studio se cierra inesperadamente, el siguiente inicio muestra el informe guardado. Los autotiles se animan a una velocidad constante de cuatro fotogramas por segundo, también en mapas grandes.
 
 ## Compilar desde el código fuente
 

@@ -105,7 +105,7 @@ Press Ctrl+S to save the current map. Changes are written directly to the corres
 
 If a rendering error crashes the editor interface, Maker Studio shows the error summary and full details, with buttons to copy the error or reload the interface. Other uncaught errors remain visible as error notifications.
 
-Maker Studio writes a session log to `%APPDATA%/maker-studio/logs/` on Windows (the app's configuration directory on macOS and Linux). Each run creates a `log-YYYYMMDD-HHMMSS-PID.txt` file containing startup and shutdown, project and resource loading, map and tileset edits, map exports, script-file actions, mod loading, and errors. Edited event-script text is not included. If the app stops responding for 30 seconds, a native prompt lets you wait or close it; the next launch shows the saved report. Autotiles animate at a steady four frames per second, including on large maps.
+Maker Studio writes a session log to `%APPDATA%/maker-studio/logs/` on Windows (the app's configuration directory on macOS and Linux). Each run creates a `log-YYYYMMDD-HHMMSS-PID.txt` file containing startup and shutdown, project and resource loading, map and tileset edits, map exports, script-file actions, mod loading, and errors. Edited event-script text is not included. If Maker Studio exits unexpectedly, the next launch shows the saved report. Autotiles animate at a steady four frames per second, including on large maps.
 
 ## Building from Source
 

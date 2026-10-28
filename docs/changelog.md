@@ -2,6 +2,11 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## Unreleased
+
+### Fixes
+- **Remove the 30-second not-responding alert** — pauses in WebView timers no longer appear as hangs. Unexpected process exits still produce a report for the next launch.
+
 ## v1.9.1
 
 A hotfix release: events that show a tileset tile now block or let you pass like that tile painted on the map, the map tree keeps its order in RPG Maker XP, the "not responding" prompt no longer appears after the app sat in the background, and the free trial and Supporter links open the new store.

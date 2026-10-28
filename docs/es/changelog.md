@@ -2,6 +2,11 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## Sin publicar
+
+### Correcciones
+- **Retirar el aviso de bloqueo de 30 segundos** — las pausas de los temporizadores del WebView ya no se confunden con un bloqueo. Los cierres inesperados siguen generando un informe para el siguiente inicio.
+
 ## v1.9.1
 
 Una versión de corrección: los eventos que muestran un tile del tileset bloquean o dejan pasar como ese tile pintado en el mapa, el árbol de mapas conserva su orden en RPG Maker XP, el aviso de "no responde" ya no aparece tras dejar la app en segundo plano y los enlaces de la prueba gratuita y de Supporter abren la nueva tienda.
