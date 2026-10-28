@@ -26,4 +26,8 @@ Los archivos de imagen (PNG, JPEG, BMP, GIF y WebP) muestran una vista previa de
 
 ## Ramas y remotos
 
-Elige una rama local y cámbiala desde los controles de ramas. Pull descarga cambios remotos; Push envía los commits locales al remoto configurado. Pull y el cambio de rama requieren que todo el repositorio esté limpio. Cambiar de rama recarga el proyecto, y Pull lo vuelve a abrir si ha recibido cambios. Configura un remoto y una rama upstream en Git antes de usar Pull o Push.
+Elige una rama local y cámbiala desde los controles de ramas. Configura un remoto y una rama upstream en Git antes de usar Pull o Push.
+
+**Fetch (Buscar remotos)** consulta los remotos configurados y actualiza los contadores de commits pendientes sin modificar los archivos del proyecto. Los contadores reflejan la última búsqueda; pulsa Fetch para consultar de nuevo. Esta opción está desactivada por defecto. Al activarla en **Ajustes → Git**, Maker Studio consulta los remotos del proyecto abierto cada cinco minutos. Solo actualiza las referencias remotas de Git; Pull sigue siendo manual.
+
+**Pull** necesita que todo el repositorio esté limpio. Usa el merge normal de Git sin guardar cambios automáticamente en otro sitio. Si hay conflictos, Maker Studio cancela el merge y conserva tus commits locales; resuelve el conflicto con otro cliente de Git antes de intentarlo de nuevo. El editor vuelve a abrir el proyecto solo si Pull modifica sus archivos. **Push** envía los commits locales al remoto configurado.

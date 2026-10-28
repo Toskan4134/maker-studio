@@ -2,10 +2,17 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
-## Sin publicar
+## v1.9.2
+
+Una versión de corrección: Maker Studio ya no muestra falsos bloqueos cuando se pausan los temporizadores del WebView, Pokémon Essentials BES5 ya no entra en recursión al moverse y Git puede actualizar el estado remoto con una búsqueda automática opcional, manteniendo Pull bajo control manual.
+
+### Novedades
+- 🔄 **Consultar cambios remotos de Git** — **Fetch (Buscar remotos)** actualiza los contadores de commits pendientes sin modificar los archivos del proyecto. La búsqueda automática, desactivada por defecto, comprueba los remotos cada cinco minutos al activarla; nunca hace merge ni Pull por su cuenta.
 
 ### Correcciones
-- **Retirar el aviso de bloqueo de 30 segundos** — las pausas de los temporizadores del WebView ya no se confunden con un bloqueo. Los cierres inesperados siguen generando un informe para el siguiente inicio.
+- 🧯 **Sin avisos falsos de “no responde”** — las pausas de los temporizadores del WebView ya no parecen bloqueos. Los cierres inesperados siguen generando un informe para el siguiente inicio.
+- 🚶 **BES5 ya no entra en recursión al moverse** — actualiza la integración del juego (**Ayuda → Comprobar integración del juego…**) para recibir la corrección.
+- 🔀 **Pull conserva los commits locales si hay conflictos** — necesita un repositorio limpio y cancela automáticamente un merge fallido sin perder los commits locales.
 
 ## v1.9.1
 

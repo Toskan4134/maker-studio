@@ -26,4 +26,8 @@ Image files (PNG, JPEG, BMP, GIF, WebP) show before/after previews. Click an ima
 
 ## Branches and remotes
 
-Choose a local branch and switch to it from the branch controls. Pull downloads remote changes; Push sends local commits to the configured remote. Pull and branch switching require the whole repository to be clean. Switching branches reloads the project, and a pull that changes files also reopens it so the editor reflects the new data. Configure a remote and upstream branch in Git before using Pull or Push.
+Choose a local branch and switch to it from the branch controls. Configure a remote and upstream branch in Git before using Pull or Push.
+
+**Fetch** checks the configured remotes and refreshes the ahead/behind counts without changing project files. The counts show the result of the last fetch; use Fetch to check again. This setting is off by default. When enabled under **Settings → Git**, Maker Studio checks the open project's remotes every five minutes. This only updates Git's remote references; Pull stays manual.
+
+**Pull** requires the whole repository to be clean. It uses Git's normal merge behavior without auto-stashing. If a merge conflicts, Maker Studio aborts that merge and preserves your local commits; resolve the conflict with another Git client before trying again. The editor reopens the project only when Pull changes its files. **Push** sends local commits to the configured remote.

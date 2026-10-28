@@ -2,10 +2,17 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
-## Unreleased
+## v1.9.2
+
+A hotfix release: Maker Studio no longer reports false hangs after WebView timer pauses, Pokémon Essentials BES5 no longer recurses during movement, and Git can refresh remote status with an optional automatic fetch while keeping Pull manual.
+
+### Additions
+- 🔄 **Check remote Git changes** — **Fetch** refreshes ahead/behind counts without changing project files. Optional auto-fetch is off by default and checks every five minutes when enabled; it never merges or pulls for you.
 
 ### Fixes
-- **Remove the 30-second not-responding alert** — pauses in WebView timers no longer appear as hangs. Unexpected process exits still produce a report for the next launch.
+- 🧯 **No false “not responding” alerts** — pauses in WebView timers no longer look like hangs. Unexpected process exits still produce a report for the next launch.
+- 🚶 **BES5 movement no longer recurses** — update the game integration (**Help → Check Game Integration...**) to get the fix.
+- 🔀 **Pull preserves local commits on conflicts** — Pull requires a clean repository and automatically aborts a failed merge, leaving local commits intact.
 
 ## v1.9.1
 

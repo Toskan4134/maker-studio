@@ -5,6 +5,18 @@ releases: see [GitHub Releases](https://github.com/Toskan4134/maker-studio/relea
 
 User guides and mod API reference: https://makerstudio.toskan.es/
 
+## v1.9.2
+
+A hotfix release: Maker Studio no longer reports false hangs after WebView timer pauses, Pokémon Essentials BES5 no longer recurses during movement, and Git can refresh remote status with an optional automatic fetch while keeping Pull manual.
+
+### Additions
+- 🔄 **Check remote Git changes** — **Fetch** refreshes ahead/behind counts without changing project files. Optional auto-fetch is off by default and checks every five minutes when enabled; it never merges or pulls for you.
+
+### Fixes
+- 🧯 **No false “not responding” alerts** — pauses in WebView timers no longer look like hangs. Unexpected process exits still produce a report for the next launch.
+- 🚶 **BES5 movement no longer recurses** — update the game integration (**Help → Check Game Integration...**) to get the fix.
+- 🔀 **Pull preserves local commits on conflicts** — Pull requires a clean repository and automatically aborts a failed merge, leaving local commits intact.
+
 ## v1.9.1
 
 A hotfix release: events that show a tileset tile now block or let you pass like that tile painted on the map, the map tree keeps its order in RPG Maker XP, the "not responding" prompt no longer appears after the app sat in the background, and the free trial and Supporter links open the new store.
@@ -327,6 +339,18 @@ Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del
 juego. Versiones anteriores: consulta los [Releases de GitHub](https://github.com/Toskan4134/maker-studio/releases).
 
 Guías de usuario y referencia de la API de mods: https://makerstudio.toskan.es/
+
+## v1.9.2
+
+Una versión de corrección: Maker Studio ya no muestra falsos bloqueos cuando se pausan los temporizadores del WebView, Pokémon Essentials BES5 ya no entra en recursión al moverse y Git puede actualizar el estado remoto con una búsqueda automática opcional, manteniendo Pull bajo control manual.
+
+### Novedades
+- 🔄 **Consultar cambios remotos de Git** — **Fetch (Buscar remotos)** actualiza los contadores de commits pendientes sin modificar los archivos del proyecto. La búsqueda automática, desactivada por defecto, comprueba los remotos cada cinco minutos al activarla; nunca hace merge ni Pull por su cuenta.
+
+### Correcciones
+- 🧯 **Sin avisos falsos de “no responde”** — las pausas de los temporizadores del WebView ya no parecen bloqueos. Los cierres inesperados siguen generando un informe para el siguiente inicio.
+- 🚶 **BES5 ya no entra en recursión al moverse** — actualiza la integración del juego (**Ayuda → Comprobar integración del juego…**) para recibir la corrección.
+- 🔀 **Pull conserva los commits locales si hay conflictos** — necesita un repositorio limpio y cancela automáticamente un merge fallido sin perder los commits locales.
 
 ## v1.9.1
 
