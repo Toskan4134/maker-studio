@@ -33,7 +33,7 @@ module MakerStudio
   @region_tilesets = {}
 
   def self.region_tile(event)
-    name = event && (event.instance_variable_get(:@ms_region_name) || event.character_name)
+    name = event && (event.instance_variable_get(:@ms_region_name) || event.instance_variable_get(:@character_name))
     return nil unless name.to_s.start_with?("../Tilesets/")
     rect = character_src_rect(event)
     return nil unless rect && rect[2] == 32 && rect[3] == 32
