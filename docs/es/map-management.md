@@ -77,7 +77,7 @@ Una vista previa SVG muestra dónde quedará tu contenido dentro del nuevo lienz
 
 ## Cambiar el tileset de un mapa
 
-Haz clic derecho en un mapa del árbol y elige Change Tileset, o usa Map y luego Change Tileset en el menú. Elige de la lista con búsqueda y haz clic en Apply — el mapa se repinta con los gráficos del nuevo tileset al momento, sin recargar. Cambiar el tileset solo afecta a las capas nativas, y no remapea los IDs de tile (los tiles existentes conservan sus números, así que pueden verse distintos bajo el nuevo tileset). Las capas extendidas pueden seguir usando tiles de cualquier tileset.
+Haz clic derecho en un mapa del árbol y elige Change Tileset, o usa Map y luego Change Tileset en el menú. Elige de la lista con búsqueda y haz clic en Apply — el mapa se repinta con los gráficos del nuevo tileset al momento, sin recargar. Si el mapa está activo, la paleta de tiles también cambia al nuevo tileset; al cambiar otro mapa, la paleta se mantiene como estaba. El cambio solo afecta a las capas nativas y no remapea los IDs de tile (los tiles existentes conservan sus números, así que pueden verse distintos con el nuevo tileset). Las capas extendidas pueden seguir usando tiles de cualquier tileset.
 
 ## Capas de panorama y battleback
 
