@@ -4,6 +4,8 @@
 
 Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. Overlapping event graphics draw back-to-front by depth, with event ID as the tie-breaker. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
 
+The Events panel lists the map's events. Search by name, event id, or coordinates; select a row to inspect its pages, double-click it or use **Edit** to open it, and use **New**, **Presets**, or **Delete** from the panel header.
+
 ## Creating Events
 
 - Click the + button in the Events panel.
@@ -45,6 +47,17 @@ With the **Events layer** active, you can duplicate whole events (all pages and 
 
 > **One event per tile.** Two events cannot share a cell — the game treats overlapping events as a single occupant. Pasting onto a tile that already has an event, or dragging an event onto another event, is blocked with a *"Tile already has an event"* notice. Pick an empty tile (or delete/move the existing event first).
 
+## Event Presets
+
+Right-click a cell on the Events layer and choose **Presets…** below the editing actions. The Events panel also has a **Presets** button; when an event is selected, it opens the manager with that event's name and every page ready to save as one preset. With no event selected, the button opens the library without a current event.
+
+Right-click an existing event and choose **Add to presets** to save it immediately. Choose **Project** or **Global** in the prompt; **Cancel** closes only the prompt. The preset goes in the selected library's root folder. If that name already exists, confirm before replacing it.
+
+The manager has **Project** and **Global** tabs. A preset keeps the event's pages, conditions, movement settings, graphics, and commands. It stores references to assets; it does not copy image files or remap project-specific map, switch, or variable ids. Each placement gets a new event id and an independent copy of the pages.
+
+To place a preset, open it from the right-click menu on an empty cell. Presets can only be placed on an empty cell. The editor checks again when you apply one, selects the new event, and records the insertion as one undo step. Undo removes the placed event; redo restores it.
+
+The preset detail shows the original event name, page count, page 1 graphic and trigger, and total commands. Its graphic preview reports when an asset is loading, missing, or absent.
 ## Event Editor Dialog
 
 The command list keeps script indentation visible. Long command labels stay
@@ -58,6 +71,8 @@ When inserting a new Show Choices command before another one, the new command ge
 The dialog window is resizable — drag its bottom-right corner to make it bigger, which helps when an event has many pages or a long command list.
 
 At the bottom: **OK** saves your changes and closes the editor, **Apply** saves them and leaves it open (handy for testing a long event in steps), and **Cancel** discards them — if there is anything unsaved, you are asked first.
+
+Use **Presets…** at the bottom left to browse and save presets from the current draft, including edits not yet applied to the map. Using a preset asks before replacing the draft's name and all pages. It keeps the event's id and position, selects page 1, and changes the map only when you press **Apply** or **OK**.
 
 ### General
 

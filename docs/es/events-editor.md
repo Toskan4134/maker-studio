@@ -4,6 +4,8 @@
 
 Activa los marcadores de evento desde el botón **Events** de la barra de herramientas (o **View → Show Events**). Los eventos aparecen como marcadores de color en el lienzo. Si sus gráficos se solapan, se dibujan de atrás hacia delante según su profundidad, con la ID del evento como desempate. Cuando pasas el cursor sobre un evento, la barra de estado de abajo muestra el nombre del evento. (Pulsar **V** selecciona la *capa* de eventos para editar — no alterna la visibilidad de los marcadores.)
 
+El panel Events lista los eventos del mapa. Puedes buscar por nombre, ID o coordenadas; selecciona una fila para revisar sus páginas, haz doble clic o pulsa **Edit** para abrirla y usa **New**, **Presets** o **Delete** en la cabecera del panel.
+
 ## Crear eventos
 
 - Haz clic en el botón + del panel Events.
@@ -45,6 +47,17 @@ Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las p�
 
 > **Un evento por tile.** Dos eventos no pueden compartir una celda — el juego trata los eventos solapados como un único ocupante. Pegar sobre un tile que ya tiene un evento, o arrastrar un evento sobre otro, se bloquea con un aviso *"Tile already has an event"*. Elige un tile vacío (o borra/mueve primero el evento existente).
 
+## Presets de eventos
+
+Haz clic derecho en una casilla de la capa de eventos y elige **Presets…** debajo de las acciones de edición. El panel Events también tiene un botón **Presets**; si hay un evento seleccionado, abre el gestor con su nombre y todas sus páginas listas para guardarse como un preset. Sin un evento seleccionado, abre la biblioteca sin un evento actual.
+
+Haz clic derecho sobre un evento y elige **Añadir a presets** para guardarlo al momento. Elige **Proyecto** o **Global** en la pregunta; **Cancelar** cierra solo la pregunta. El preset se guarda en la raíz de la biblioteca elegida. Si ya existe ese nombre, tendrás que confirmar antes de reemplazarlo.
+
+El gestor tiene pestañas **Proyecto** y **Global**. Cada preset conserva las páginas, condiciones, ajustes de movimiento, gráficos y comandos del evento. Guarda referencias a recursos: no copia archivos de imagen ni reasigna identificadores de mapas, interruptores o variables del proyecto. Cada colocación recibe una ID nueva y una copia independiente de las páginas.
+
+Para colocar un preset, ábrelo desde el menú contextual de una casilla vacía. Solo se pueden colocar presets en casillas vacías. Maker Studio vuelve a comprobarlo al aplicarlo, selecciona el evento nuevo y registra la inserción como un único paso de deshacer. Deshacer elimina el evento colocado; rehacer lo restaura.
+
+La ficha del preset muestra el nombre original del evento, el número de páginas, el gráfico y el trigger de la página 1, y el total de comandos. La vista del gráfico indica si el recurso está cargando, falta o no hay gráfico.
 ## Diálogo del editor de eventos
 
 La lista de comandos conserva la indentación de los scripts. Las etiquetas
@@ -59,6 +72,8 @@ Al insertar un nuevo comando Show Choices antes de otro, el nuevo comando recibe
 La ventana del diálogo se puede redimensionar — arrastra su esquina inferior derecha para agrandarla, lo que ayuda cuando un evento tiene muchas páginas o una lista de comandos larga.
 
 Abajo del todo: **Aceptar** guarda los cambios y cierra el editor, **Aplicar** los guarda y lo deja abierto (útil para probar un evento largo por partes), y **Cancelar** los descarta — si hay algo sin guardar, se te pregunta antes.
+
+Pulsa **Presets…** abajo a la izquierda para explorar y guardar presets a partir del borrador actual, incluidos los cambios aún no aplicados al mapa. Usar un preset pregunta antes de reemplazar el nombre y todas las páginas del borrador. Conserva la ID y la posición del evento, activa la página 1 y solo modifica el mapa al pulsar **Aplicar** o **Aceptar**.
 
 ### General
 

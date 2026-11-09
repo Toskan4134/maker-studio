@@ -53,10 +53,10 @@ Click **Presets…** in the Tile Properties panel header to open the preset mana
 - **Rename** an existing preset.
 - **Overwrite** a preset with the current brush values.
 - **Delete** a preset.
-- **Export…** your presets — choose a folder and each preset is saved as its own `ms_<name>_<index>_preset.json` file. **If you have presets selected, only those are exported**; with nothing selected the whole library goes out. The button tells you which it is (`Export 3…` when three are selected).
+- **Export…** your presets — choose a folder and each preset is saved as its own `ms_<name>_<index>_preset.json` file. **If you have presets selected, only those are exported**; with nothing selected the active library goes out. The button tells you which it is (`Export 3…` when three are selected).
 - **Import…** one or more preset files at once — select several files in the picker and they all merge in. Nothing you already have is deleted. Presets with a new name are added straight away, and one that arrives identical to what you already have is left alone without asking. If any imported preset shares a name with one of yours but holds *different* contents, a list opens with all of them at once: grouped by folder, everything ticked, with a checkbox per preset and per folder. Untick the few you want to keep as they are, click a preset's name to compare **Yours** against **Imported** side by side (script snippets keep the script editor's syntax colors), tick **Show diff** to collapse that into a single pane where the lines that change are marked in place (red for what goes, green for what comes in), still with the editor's syntax colors, then **Replace N** — or **Keep all mine** to leave everything untouched. Files holding a different kind of preset (e.g. shadow presets) are skipped.
 
-A preview canvas shows what the highlighted preset would look like applied to the currently selected tile. Presets are stored per-install (shared across all your projects) and remembered across sessions.
+A preview canvas shows what the highlighted preset would look like applied to the currently selected tile. With a project open, the manager has Project and Global tabs; project presets live with that game, while global presets remain shared across projects. Search spans both libraries, and each tab shows its matching count. New presets, folders, and imports go to the active tab. Copy to... keeps a preset in its current library while copying it to the other. Import files keep the existing JSON format, exports work as before, and both libraries are remembered across sessions. Folded-folder preferences stay on this computer.
 
 **Selecting several.** Click a preset to select it, **Ctrl+click** to add or remove one, **Shift+click** to take everything between. Clicking a **folder's name** selects the folder and everything inside it (the arrow beside the name folds it instead). With more than one thing selected, the right side swaps to a list of what you picked plus **Move to…**, **Export…** and **Delete** — so you can file, share or clear a handful of presets in one go instead of one at a time.
 
@@ -85,7 +85,7 @@ Open the Brush Editor from either of:
 - The **Brush tool's hover popover** in the toolbar (hover the Brush tool button).
 - **Tools → Brush Editor…** in the menu bar.
 
-The Brush hover popover also has a **quick switcher** — a dropdown listing your saved brush presets plus **Default (square)** and **Custom (unsaved)**. Pick one to activate it immediately without opening the editor.
+The Brush hover popover also has a **quick switcher**: a dropdown listing saved brush presets from both the Project and Global libraries, plus Default (square) and Custom (unsaved). Pick one to activate it immediately without opening the editor.
 
 Once you've used a custom brush, a compact indicator on the toolbar shows its **name** (its preset name, or "Custom") and works as an **on/off switch** between that brush and the default square brush. Click the toggle (or press **A**) to flip between them — the indicator stays visible, dimmed, while switched off so you can flip back. Click the **✕** to clear the brush entirely and forget it (the indicator disappears, leaving you on the default square brush).
 
