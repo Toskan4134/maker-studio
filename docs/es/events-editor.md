@@ -4,7 +4,7 @@
 
 Activa los marcadores de evento desde el botón **Events** de la barra de herramientas (o **View → Show Events**). Los eventos aparecen como marcadores de color en el lienzo. Si sus gráficos se solapan, se dibujan de atrás hacia delante según su profundidad, con la ID del evento como desempate. Cuando pasas el cursor sobre un evento, la barra de estado de abajo muestra el nombre del evento. (Pulsar **V** selecciona la *capa* de eventos para editar — no alterna la visibilidad de los marcadores.)
 
-El panel Events lista los eventos del mapa. Puedes buscar por nombre, ID o coordenadas; selecciona una fila para revisar sus páginas, haz doble clic o pulsa **Edit** para abrirla y usa **New**, **Presets** o **Delete** en la cabecera del panel.
+El panel Events lista los eventos del mapa. Puedes buscar por nombre, ID o coordenadas; selecciona una fila para revisar sus páginas, haz doble clic o pulsa **Edit** para abrirla y usa **New**, **Presets** o **Delete** en la cabecera del panel. Un clic selecciona un evento, **Ctrl+clic** alterna un evento en la selección y **Shift+clic** selecciona un rango. Es la misma selección que en el mapa. **Delete** quita todos los eventos seleccionados tras una sola confirmación; **Presets** con varios eventos seleccionados los guarda todos como presets (con uno seleccionado abre el gestor de presets).
 
 ## Crear eventos
 
@@ -19,7 +19,7 @@ Si cancelas el editor de un evento que acabas de crear (pulsa **Esc**, cierra la
 
 Con la **capa de eventos** activa, solo cuatro herramientas hacen algo; el resto aparece atenuado en la barra:
 
-- **Paint (Brush)** — **haz clic en una celda vacía para crear un evento**; haz clic en un evento existente para seleccionarlo, luego arrastra para moverlo.
+- **Paint (Brush)** — **haz clic en una celda vacía para crear un evento**; haz clic en un evento existente para seleccionarlo, **Ctrl+clic** (**Cmd** en Mac) para añadirlo o quitarlo de la selección, y arrastra un evento para moverlo (o mover toda la selección, si forma parte de ella).
 - **Erase** — haz clic en un evento para borrarlo, o **arrastra por el mapa para borrar todos los eventos por los que pases** (eliminados juntos en un solo paso de deshacer).
 - **Select** — selección de caja de eventos (ver abajo).
 - **Pan** — mueve la vista.
@@ -34,24 +34,29 @@ Elige la herramienta **Select**, luego en la capa de eventos:
 - **Ctrl+arrastrar** añade eventos a la selección; **Shift+arrastrar** los quita.
 - **Arrastra** un evento seleccionado para **mover toda la selección** junta (un paso de deshacer). Los movimientos que saldrían del mapa o caerían sobre otro evento se bloquean con un aviso.
 - **Supr** quita todos los eventos seleccionados a la vez.
+- **Ctrl+A** selecciona todos los eventos del mapa.
 - **Ctrl+D** (o **Esc**) deselecciona.
+
+La herramienta **Paint (Brush)** selecciona y mueve eventos igual (clic, Ctrl+clic, arrastrar). Al arrastrar se muestra la misma vista previa fantasma en el destino que con Select, y los movimientos bloqueados muestran un aviso.
 
 ## Copiar eventos
 
 Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las páginas y ajustes) en el mapa:
 
-- **Clic derecho** en un evento para **Cut**, **Copy** y **Paste** (pega en la celda en la que hiciste clic).
-- O usa **Ctrl+C** (copiar) y **Ctrl+X** (cortar) sobre el evento seleccionado, luego **Ctrl+V** para pegar — sin necesidad del menú.
+- **Clic derecho** en un evento para **Cortar**, **Copiar** y **Pegar** (pega en la celda en la que hiciste clic). Si el evento forma parte de la selección, **Cortar**, **Copiar**, **Eliminar** y **Añadir a presets** se aplican a toda la selección y sus etiquetas muestran el número. Si haces clic derecho en un evento fuera de la selección, actúa solo sobre ese evento.
+- O usa **Ctrl+C** (copiar) y **Ctrl+X** (cortar) sobre los eventos seleccionados, luego **Ctrl+V** para pegar — sin necesidad del menú.
 
-**Pegar con Ctrl+V** muestra una *vista previa*: un fantasma del evento copiado sigue a tu cursor. **Haz clic** donde quieras soltar la copia; pulsa **Escape** para cancelar. Cortar copia el evento y luego lo quita. El evento pegado conserva cada página, condición, gráfico, comando y nombre personalizado del original. Un nombre predeterminado como `EV001` se sustituye por el nombre predeterminado de la ID nueva; cualquier otro nombre se copia tal cual, aunque ya lo tenga otro evento. El primer pegado después de cortar conserva el nombre original; los siguientes aplican la misma regla.
+**Pegar con Ctrl+V** muestra una *vista previa*: un fantasma del evento copiado sigue a tu cursor. Con varios eventos, el fantasma muestra todo el grupo con su disposición relativa, y el cursor marca la celda superior izquierda del grupo. **Haz clic** donde quieras soltar la copia; pulsa **Escape** para cancelar. Cortar copia el evento y luego lo quita. El evento pegado conserva cada página, condición, gráfico, comando y nombre personalizado del original. Un nombre predeterminado como `EV001` se sustituye por el nombre predeterminado de la ID nueva; cualquier otro nombre se copia tal cual, aunque ya lo tenga otro evento. El primer pegado después de cortar conserva el nombre original; los siguientes aplican la misma regla.
 
-> **Un evento por tile.** Dos eventos no pueden compartir una celda — el juego trata los eventos solapados como un único ocupante. Pegar sobre un tile que ya tiene un evento, o arrastrar un evento sobre otro, se bloquea con un aviso *"Tile already has an event"*. Elige un tile vacío (o borra/mueve primero el evento existente).
+> **Un evento por tile.** Dos eventos no pueden compartir una celda — el juego trata los eventos solapados como un único ocupante. Pegar sobre un tile que ya tiene un evento, o arrastrar un evento sobre otro, se bloquea con un aviso *"Tile already has an event"*. Elige un tile vacío (o borra/mueve primero el evento existente). Pegar un grupo es todo o nada: se rechaza si algún evento saldría del mapa o caería en un tile ocupado. Cada corte, pegado o duplicado es un paso de deshacer.
 
 ## Presets de eventos
 
 Haz clic derecho en una casilla de la capa de eventos y elige **Presets…** debajo de las acciones de edición. El panel Events también tiene un botón **Presets**; si hay un evento seleccionado, abre el gestor con su nombre y todas sus páginas listas para guardarse como un preset. Sin un evento seleccionado, abre la biblioteca sin un evento actual.
 
 Haz clic derecho sobre un evento y elige **Añadir a presets** para guardarlo al momento. Elige **Proyecto** o **Global** en la pregunta; **Cancelar** cierra solo la pregunta. El preset se guarda en la raíz de la biblioteca elegida. Si ya existe ese nombre, tendrás que confirmar antes de reemplazarlo.
+
+Con varios eventos seleccionados, **Añadir a presets** pregunta Proyecto o Global una sola vez y guarda un preset por evento. Los nombres que ya existen reciben el sufijo ` (2)`, ` (3)`, y un único aviso indica el total.
 
 El gestor tiene pestañas **Proyecto** y **Global**. Cada preset conserva las páginas, condiciones, ajustes de movimiento, gráficos y comandos del evento. Guarda referencias a recursos: no copia archivos de imagen ni reasigna identificadores de mapas, interruptores o variables del proyecto. Cada colocación recibe una ID nueva y una copia independiente de las páginas.
 

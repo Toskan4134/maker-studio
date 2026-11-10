@@ -4,7 +4,7 @@
 
 Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. Overlapping event graphics draw back-to-front by depth, with event ID as the tie-breaker. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
 
-The Events panel lists the map's events. Search by name, event id, or coordinates; select a row to inspect its pages, double-click it or use **Edit** to open it, and use **New**, **Presets**, or **Delete** from the panel header.
+The Events panel lists the map's events. Search by name, event id, or coordinates; select a row to inspect its pages, double-click it or use **Edit** to open it, and use **New**, **Presets**, or **Delete** from the panel header. Click selects one event, **Ctrl+click** toggles an event in the selection, and **Shift+click** selects a range. It is the same selection as on the map. **Delete** removes every selected event after one confirmation; **Presets** with several events selected saves them all as presets (with one selected it opens the preset manager).
 
 ## Creating Events
 
@@ -19,7 +19,7 @@ If you cancel the editor of an event you just created (press **Esc**, close the 
 
 With the **Events layer** active, only four tools do anything; the rest are greyed out in the toolbar:
 
-- **Paint (Brush)** — **click an empty cell to create an event**; click an existing event to select it, then drag to move it.
+- **Paint (Brush)** — **click an empty cell to create an event**; click an existing event to select it, **Ctrl+click** (**Cmd** on Mac) to add or remove it from the selection, and drag an event to move it (or the whole selection, if it is part of it).
 - **Erase** — click an event to delete it, or **drag across the map to delete every event you pass over** (removed together in a single undo step).
 - **Select** — box-select events (see below).
 - **Pan** — move the view.
@@ -34,24 +34,29 @@ Pick the **Select** tool, then on the Events layer:
 - **Ctrl+drag** adds events to the selection; **Shift+drag** removes them.
 - **Drag** a selected event to **move the whole selection** together (one undo step). Moves that would leave the map or land on another event are blocked with a notice.
 - **Delete** removes every selected event at once.
+- **Ctrl+A** selects every event on the map.
 - **Ctrl+D** (or **Esc**) deselects.
+
+The **Paint (Brush)** tool selects and moves events the same way (click, Ctrl+click, drag). Dragging shows the same ghost preview at the destination as the Select tool, and blocked moves show a notice.
 
 ## Copying Events
 
 With the **Events layer** active, you can duplicate whole events (all pages and settings) on the map:
 
-- **Right-click** an event for **Cut**, **Copy**, and **Paste** (pastes at the cell you clicked).
-- Or use **Ctrl+C** (copy) and **Ctrl+X** (cut) on the selected event, then **Ctrl+V** to paste — no need for the menu.
+- **Right-click** an event for **Cut**, **Copy**, and **Paste** (pastes at the cell you clicked). If the event is part of the selection, **Cut**, **Copy**, **Delete**, and **Add to presets** apply to the whole selection and their labels show the count. Right-clicking an event outside the selection acts only on that event.
+- Or use **Ctrl+C** (copy) and **Ctrl+X** (cut) on the selected events, then **Ctrl+V** to paste — no need for the menu.
 
-**Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, command, and custom name from the original. A default name such as `EV001` is replaced with the new ID's default name; every other name is copied exactly, even when another event already has that name. The first paste after Cut keeps the original name; later pastes use the same rule.
+**Pasting with Ctrl+V** shows a *preview*: a ghost of the copied event follows your cursor. With several events, the ghost shows the whole group with its relative layout, and the cursor marks the group's top-left cell. **Click** where you want it to drop the copy; press **Escape** to cancel. Cut copies the event and then removes it. The pasted event keeps every page, condition, graphic, command, and custom name from the original. A default name such as `EV001` is replaced with the new ID's default name; every other name is copied exactly, even when another event already has that name. The first paste after Cut keeps the original name; later pastes use the same rule.
 
-> **One event per tile.** Two events cannot share a cell — the game treats overlapping events as a single occupant. Pasting onto a tile that already has an event, or dragging an event onto another event, is blocked with a *"Tile already has an event"* notice. Pick an empty tile (or delete/move the existing event first).
+> **One event per tile.** Two events cannot share a cell — the game treats overlapping events as a single occupant. Pasting onto a tile that already has an event, or dragging an event onto another event, is blocked with a *"Tile already has an event"* notice. Pick an empty tile (or delete/move the existing event first). A group paste is all-or-nothing: it is refused if any event would leave the map or land on an occupied tile. Each cut, paste, or duplicate is one undo step.
 
 ## Event Presets
 
 Right-click a cell on the Events layer and choose **Presets…** below the editing actions. The Events panel also has a **Presets** button; when an event is selected, it opens the manager with that event's name and every page ready to save as one preset. With no event selected, the button opens the library without a current event.
 
 Right-click an existing event and choose **Add to presets** to save it immediately. Choose **Project** or **Global** in the prompt; **Cancel** closes only the prompt. The preset goes in the selected library's root folder. If that name already exists, confirm before replacing it.
+
+With several events selected, **Add to presets** asks Project or Global once and saves one preset per event. Names that already exist get a ` (2)`, ` (3)` suffix, and a single notice reports the total.
 
 The manager has **Project** and **Global** tabs. A preset keeps the event's pages, conditions, movement settings, graphics, and commands. It stores references to assets; it does not copy image files or remap project-specific map, switch, or variable ids. Each placement gets a new event id and an independent copy of the pages.
 

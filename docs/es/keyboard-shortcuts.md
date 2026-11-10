@@ -107,7 +107,7 @@ prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda →
 | Ctrl+X | Cortar selección |
 | Ctrl+J | Duplicar — copia la selección y arma la vista previa de pegado al instante, así que el siguiente clic suelta la copia. La misma idea que Ctrl+C y luego Ctrl+V, en una sola pulsación. También **Edit → Duplicate** |
 
-En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre el evento seleccionado en su lugar — copia, corta o duplica un evento entero. Ctrl+V (y el armado de Ctrl+J) muestra un fantasma de vista previa que sigue al cursor; haz clic para soltar la copia (Escape para cancelar). Consulta [Editor de eventos](events-editor.md#copying-events).
+En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre todos los eventos seleccionados en su lugar — copia, corta o duplica eventos enteros. Ctrl+A selecciona todos los eventos del mapa. Ctrl+V (y el armado de Ctrl+J) muestra un fantasma de vista previa de todo el grupo que sigue al cursor (cursor = esquina superior izquierda del grupo); haz clic para soltar la copia (Escape para cancelar). Consulta [Editor de eventos](events-editor.md#copying-events).
 
 | Ctrl+Shift+C | Copiar todas las capas |
 | Ctrl+Shift+V | Pegar en las capas seleccionadas |
