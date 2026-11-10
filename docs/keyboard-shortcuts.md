@@ -36,7 +36,9 @@ While a modal dialog is open, global shortcuts for the editor behind it are paus
 | W | Rotate brush clockwise |
 | A | Toggle custom brush — switch between your last-used [custom brush](tools.md#custom-shape-brush) and the default square brush |
 | Ctrl + B | [Use the map selection as your brush](tools.md#turning-a-selection-into-your-brush) |
-| Shift + click | Draw line from last painted position |
+| Shift + paint | Paint without changing neighbouring autotiles |
+| Ctrl + click | Draw line from last painted position |
+| Ctrl + drag | Lock painting to one axis |
 
 ## Eraser
 
@@ -44,7 +46,8 @@ While a modal dialog is open, global shortcuts for the editor behind it are paus
 |-------------|--------|
 | [ | Decrease eraser size |
 | ] | Increase eraser size |
-| Shift + click | Draw line from last erased position |
+| Ctrl + click | Draw line from last erased position |
+| Ctrl + drag | Lock erasing to one axis |
 
 ## Layers
 

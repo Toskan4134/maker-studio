@@ -4,8 +4,8 @@
 
 | Tool | Key | Description |
 |------|-----|-------------|
-| Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
-| Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Shift+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
+| Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+paint places tiles without changing the neighbouring autotiles. Ctrl+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
+| Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Ctrl+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
 | Fill | F | Flood-fill a contiguous area with the selected tile — or with the selected multi-tile pattern, repeated across the filled area. |
 | Wand | Shift+S | Select matching tiles on the active layer. Ctrl/Meta adds matches to the current selection; Shift removes them; no modifier replaces it. Continuous selects only the connected region; turn it off to select every match on that layer. |
 | Magic Eraser | Shift+E | Erase tiles matching the tile under the cursor on every selected tile layer. Continuous limits each layer to the connected region; turn it off to erase all matches on each layer. |
@@ -66,13 +66,17 @@ A preview canvas shows what the highlighted preset would look like applied to th
 
 Use the `[` and `]` keys to decrease or increase the brush size while the brush tool is active, or the eraser size while the eraser tool is active. Alt + scroll also adjusts the active tool's size.
 
-## Line Painting (Shift+Click)
+## Painting Without Touching Neighbours (Shift)
 
-With the Brush or Eraser tool active, paint at one position, then hold Shift and paint at another position. A straight line is drawn between the two points using Bresenham's algorithm. The line width matches your current brush or eraser size. This works diagonally as well as on axis-aligned lines. A preview of the line is shown while Shift is held.
+Hold Shift while painting with the Brush and the autotiles around what you paint keep their current shape: only the cells you paint pick their borders. Use it to place a corner or edge piece next to an existing autotile without it reconnecting.
+
+## Line Painting (Ctrl+Click)
+
+With the Brush or Eraser tool active, paint at one position, then hold Ctrl and click another position. A straight line is drawn between the two points using Bresenham's algorithm. The line width matches your current brush or eraser size. This works diagonally as well as on axis-aligned lines. A preview of the line is shown while Ctrl is held.
 
 ## Axis-Locked Painting (Ctrl+Drag)
 
-With the Brush or Eraser tool active, hold Ctrl and drag. The first tile you move off the click position picks the axis (horizontal or vertical, whichever you moved farther on), and all subsequent painting snaps to that single axis. Releasing Ctrl mid-stroke unlocks and resumes free painting. Useful for clean straight lines without needing to reach for Shift+click.
+With the Brush or Eraser tool active, hold Ctrl and drag. The first tile you move off the click position picks the axis (horizontal or vertical, whichever you moved farther on), and all subsequent painting snaps to that single axis. Releasing Ctrl mid-stroke unlocks and resumes free painting. A Ctrl+click without dragging draws a line instead (see above).
 
 ## Custom Shape Brush
 

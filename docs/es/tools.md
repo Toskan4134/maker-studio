@@ -4,8 +4,8 @@
 
 | Herramienta | Tecla | Descripción |
 |------|-----|-------------|
-| Brush | B | Pinta tiles. Una vista previa translúcida del/los tile(s) que vas a colocar sigue al cursor. Admite estampas multi-tile y tamaño de pincel ajustable. Shift+clic dibuja una línea desde la última posición pintada. Ctrl+arrastrar bloquea el pintado a un solo eje. |
-| Eraser | E | Borra tiles dejándolos vacíos. Tiene su propio tamaño de borrador ajustable. Shift+clic dibuja una línea desde la última posición borrada. Ctrl+arrastrar bloquea el borrado a un solo eje. |
+| Brush | B | Pinta tiles. Una vista previa translúcida del/los tile(s) que vas a colocar sigue al cursor. Admite estampas multi-tile y tamaño de pincel ajustable. Shift+pintar coloca tiles sin cambiar los autotiles vecinos. Ctrl+clic dibuja una línea desde la última posición pintada. Ctrl+arrastrar bloquea el pintado a un solo eje. |
+| Eraser | E | Borra tiles dejándolos vacíos. Tiene su propio tamaño de borrador ajustable. Ctrl+clic dibuja una línea desde la última posición borrada. Ctrl+arrastrar bloquea el borrado a un solo eje. |
 | Fill | F | Rellena por inundación un área contigua con el tile seleccionado — o con el patrón multi-tile seleccionado, repetido por toda el área. |
 | Wand | Shift+S | Selecciona los tiles coincidentes en la capa activa. Ctrl/Meta añade las coincidencias a la selección actual; Shift las elimina; sin modificador, la reemplaza. Con Continuo, selecciona solo la región conectada; desactívalo para seleccionar todas las coincidencias de esa capa. |
 | Borrador mágico | Shift+E | Borra los tiles que coinciden con el situado bajo el cursor en todas las capas de tiles seleccionadas. Con Continuo, limita cada capa a la región conectada; desactívalo para borrar todas las coincidencias de cada capa. |
@@ -66,13 +66,17 @@ Un lienzo de vista previa muestra cómo quedaría el preset resaltado aplicado a
 
 Usa las teclas `[` y `]` para reducir o aumentar el tamaño del pincel mientras la herramienta Brush está activa, o el tamaño del borrador mientras la herramienta Eraser está activa. Alt + rueda también ajusta el tamaño de la herramienta activa.
 
-## Pintado de líneas (Shift+Clic)
+## Pintar sin tocar los vecinos (Shift)
 
-Con la herramienta Brush o Eraser activa, pinta en una posición, luego mantén Shift y pinta en otra. Se dibuja una línea recta entre los dos puntos usando el algoritmo de Bresenham. El grosor de la línea coincide con tu tamaño actual de pincel o borrador. Funciona tanto en diagonal como en líneas alineadas con los ejes. Se muestra una vista previa de la línea mientras se mantiene Shift.
+Mantén Shift mientras pintas con el Brush y los autotiles de alrededor conservan su forma actual: solo las celdas que pintas eligen sus bordes. Sirve para colocar una esquina o un borde junto a un autotile existente sin que se reconecte.
+
+## Pintado de líneas (Ctrl+Clic)
+
+Con la herramienta Brush o Eraser activa, pinta en una posición, luego mantén Ctrl y haz clic en otra. Se dibuja una línea recta entre los dos puntos usando el algoritmo de Bresenham. El grosor de la línea coincide con tu tamaño actual de pincel o borrador. Funciona tanto en diagonal como en líneas alineadas con los ejes. Se muestra una vista previa de la línea mientras se mantiene Ctrl.
 
 ## Pintado bloqueado por eje (Ctrl+Arrastrar)
 
-Con la herramienta Brush o Eraser activa, mantén Ctrl y arrastra. El primer tile que muevas fuera de la posición del clic elige el eje (horizontal o vertical, según en cuál te hayas movido más), y todo el pintado posterior se ajusta a ese único eje. Soltar Ctrl a mitad de trazo desbloquea y reanuda el pintado libre. Útil para líneas rectas limpias sin recurrir a Shift+clic.
+Con la herramienta Brush o Eraser activa, mantén Ctrl y arrastra. El primer tile que muevas fuera de la posición del clic elige el eje (horizontal o vertical, según en cuál te hayas movido más), y todo el pintado posterior se ajusta a ese único eje. Soltar Ctrl a mitad de trazo desbloquea y reanuda el pintado libre. Un Ctrl+clic sin arrastrar dibuja una línea (ver arriba).
 
 ## Custom Shape Brush
 

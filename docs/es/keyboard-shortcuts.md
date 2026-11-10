@@ -36,7 +36,9 @@ Mientras haya un diálogo modal abierto, se pausan los atajos globales del edito
 | W | Rotar pincel en sentido horario |
 | A | Alternar pincel personalizado — cambia entre tu último [pincel personalizado](tools.md#custom-shape-brush) usado y el pincel cuadrado por defecto |
 | Ctrl + B | [Usar la selección del mapa como pincel](tools.md#convertir-una-selección-en-tu-pincel) |
-| Shift + clic | Dibujar línea desde la última posición pintada |
+| Shift + pintar | Pintar sin cambiar los autotiles vecinos |
+| Ctrl + clic | Dibujar línea desde la última posición pintada |
+| Ctrl + arrastrar | Bloquear el pintado a un eje |
 
 ## Eraser
 
@@ -44,7 +46,8 @@ Mientras haya un diálogo modal abierto, se pausan los atajos globales del edito
 |-------------|--------|
 | [ | Reducir tamaño de borrador |
 | ] | Aumentar tamaño de borrador |
-| Shift + clic | Dibujar línea desde la última posición borrada |
+| Ctrl + clic | Dibujar línea desde la última posición borrada |
+| Ctrl + arrastrar | Bloquear el borrado a un eje |
 
 ## Capas
 
