@@ -9,6 +9,8 @@ Pestañas:
 - **Animations** — animaciones de batalla/mapa (ver abajo).
 - Las pestañas restantes de RPG Maker XP (Actors, Items, …) se muestran pero están desactivadas por ahora.
 
+Al cerrar y volver a abrir la ventana vuelves a la pestaña en la que estabas, con la misma entrada seleccionada en cada pestaña (hasta que cierres la app). En la pestaña Tilesets, un tileset que modificaste y aplicaste o guardaste también se reabre en la posición de scroll en la que estaba al aplicarlo o guardarlo; uno que solo miraste empieza arriba del todo.
+
 > Cada editor tiene su propio botón **Aplicar**. Cambiar de pestaña o cerrar la ventana con cambios sin guardar te pide confirmar primero — y en la pestaña Tilesets, cambiar de tileset también. Cada guardado respalda el `.rxdata` original en una carpeta `map-backups` junto a él.
 
 ## Copiar, cortar y pegar registros

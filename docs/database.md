@@ -9,6 +9,8 @@ Tabs:
 - **Animations** — battle/overworld animations (see below).
 - The remaining RPG Maker XP tabs (Actors, Items, …) are shown but disabled for now.
 
+Closing and reopening the window brings you back to the tab you were on, with the same entry selected in each tab (until you close the app). In the Tilesets tab, a tileset you changed and applied or saved also reopens scrolled to where it was when you applied or saved it; one you only looked at starts at the top.
+
 > Each editor has its own **Apply** button. Switching tabs or closing the window while you have unsaved changes asks you to confirm first — and in the Tilesets tab, so does switching to a different tileset. Every save backs up the original `.rxdata` to a `map-backups` folder beside it.
 
 ## Copying, Cutting, and Pasting Records
