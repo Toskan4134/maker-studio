@@ -4,7 +4,7 @@
 
 Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. Overlapping event graphics draw back-to-front by depth, with event ID as the tie-breaker. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
 
-The Events panel lists the map's events. Search by name, event id, or coordinates; select a row to inspect its pages, double-click it or use **Edit** to open it, and use **New**, **Presets**, or **Delete** from the panel header. Click selects one event, **Ctrl+click** toggles an event in the selection, and **Shift+click** selects a range. It is the same selection as on the map. **Delete** removes every selected event after one confirmation; **Presets** with several events selected saves them all as presets (with one selected it opens the preset manager).
+The Events panel lists the map's events. Search by name, event id, or coordinates; select a row to inspect its pages, double-click it or use **Edit** to open it, and use **New**, **Presets**, **Deselect**, or **Delete** from the panel header. Click selects one event, **Ctrl+click** toggles an event in the selection, and **Shift+click** selects a range. It is the same selection as on the map. **Deselect** clears the event selection and closes its detail view; the action is disabled when nothing is selected. **Delete** removes every selected event after one confirmation; **Presets** with several events selected saves them all as presets (with one selected it opens the preset manager).
 
 ## Creating Events
 
@@ -36,6 +36,8 @@ Pick the **Select** tool, then on the Events layer:
 - **Delete** removes every selected event at once.
 - **Ctrl+A** selects every event on the map.
 - **Ctrl+D** (or **Esc**) deselects.
+- With the Events list focused, **Esc** also clears a simple or multiple selection, closes the selected event's detail view, and removes its highlight from the map. The header's **Deselect** button does the same.
+- With exactly one event selected and the Events list focused, press **F2** to rename it. The name dialog starts with the current name, and the rename can be undone with the map's undo history.
 
 The **Paint (Brush)** tool selects and moves events the same way (click, Ctrl+click, drag). Dragging shows the same ghost preview at the destination as the Select tool, and blocked moves show a notice.
 

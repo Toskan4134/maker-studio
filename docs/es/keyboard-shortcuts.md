@@ -1,7 +1,7 @@
 # Atajos de teclado
 
 Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A continuación se listan los valores por defecto.
-Mientras haya un diálogo modal abierto, se pausan los atajos globales del editor que queda detrás; los controles y atajos propios del diálogo siguen funcionando. Los formularios de comandos de evento con cambios preguntan antes de cerrarse; consulta el [Editor de eventos](events-editor.md).
+Mientras haya un diálogo modal abierto, se pausan los atajos del editor que queda detrás; los controles y atajos propios del diálogo siguen funcionando. **Ctrl+R** (Reset App) y **F12** (Alternar DevTools) siguen siendo globales y reasignables, también en diálogos, campos de texto y el simulador. **Escape** y **Ctrl+Enter** siguen cerrando o confirmando el diálogo superior. Los formularios de comandos de evento con cambios preguntan antes de cerrarse; consulta el [Editor de eventos](events-editor.md).
 
 ## Herramientas
 
@@ -94,6 +94,9 @@ prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda →
 | Ctrl+Y | Rehacer |
 | Ctrl+Enter | Ejecutar el juego |
 | Ctrl+R | Reset App — reinicia Maker Studio en la página de bienvenida (se conserva la disposición de paneles; elige allí un proyecto para volver a abrirlo; usa **View → Layout → Refresh Layout** para restaurar la disposición por defecto) |
+| F12 | Alternar DevTools |
+
+Si pulsas **Ctrl+R** mientras hay un diálogo o el simulador abierto, un aviso nativo explica que se perderán los cambios del diálogo aún sin aplicar. Si hay mapas sin guardar, puedes elegir **Guardar todo y reiniciar**, **Descartar y reiniciar** o **Cancelar**. Cancelar conserva el editor y los borradores abiertos; si falla el guardado, se detiene el reinicio. Si no hay mapas sin guardar, confirma **Reiniciar aplicación** o **Cancelar**.
 
 ## Selección
 
@@ -230,7 +233,11 @@ Consulta la [guía del editor de scripts](scripts.md#finding-things) para más d
 | Tecla por defecto | Acción |
 |-------------|--------|
 | Delete | Borrar el evento seleccionado (o todos los eventos seleccionados por caja) |
-| Ctrl+D / Escape | Deseleccionar evento(s) — Escape borra también cualquier selección de tiles |
+| Ctrl+D | Deseleccionar evento(s) |
+| Escape | Cancelar una acción activa; con la lista de Events enfocada, deselecciona los eventos y quita su resaltado del mapa |
+| F2 | Renombrar el único evento seleccionado |
+
+F2 y Escape se aplican cuando la lista de Events tiene el foco; F2 no hace nada con varios eventos seleccionados o si el foco está en un campo editable. Escape limpia la selección del evento y su resaltado en el mapa. El botón **Deseleccionar** del panel hace lo mismo.
 
 En la **capa de eventos**, la herramienta **Select** hace selección de caja de eventos: arrastra un marco (Ctrl+arrastrar añade, Shift+arrastrar quita), arrastra la selección para mover el grupo, Delete los quita todos. Consulta [Editor de eventos](events-editor.md#selecting-and-moving-events).
 
@@ -242,8 +249,9 @@ En la **capa de eventos**, la herramienta **Select** hace selección de caja de 
 | Ctrl+V | Pegar el mapa copiado en este proyecto como un mapa nuevo, colocado justo debajo del mapa seleccionado |
 | Ctrl+J | Duplicar el mapa seleccionado (igual que clic derecho → Duplicate Map) |
 | Delete | Borrar el mapa seleccionado (pide confirmación, igual que clic derecho → Delete Map) |
+| F2 | Renombrar en línea el único mapa seleccionado o el mapa activo si no hay filas seleccionadas |
 
-En el panel Mapas, **Ctrl+clic** alterna filas y **Shift+clic** selecciona el rango visible. Arrastra una fila seleccionada para mover juntas todas las raíces seleccionadas con sus descendientes. Delete permite conservar los descendientes en las posiciones de los mapas borrados o borrarlos también; la confirmación avisa de mapas abiertos con cambios sin guardar. Estos atajos solo se activan cuando el panel Mapas tiene el foco, así que no entran en conflicto con la copia de tiles en el lienzo. Para pegar un mapa **entre dos ventanas de Maker Studio**, activa primero **Edit → Cross-Project Clipboard**: la copia se refleja entonces en el portapapeles del SO y el pegado lo lee de ahí. Con el conmutador desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana** (la copia se queda en memoria). El mapa pegado cae justo debajo del mapa seleccionado (en la raíz si no hay ningún mapa seleccionado). Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
+En el panel Mapas, **Ctrl+clic** alterna filas y **Shift+clic** selecciona el rango visible. Arrastra una fila seleccionada para mover juntas todas las raíces seleccionadas con sus descendientes. Delete permite conservar los descendientes en las posiciones de los mapas borrados o borrarlos también; la confirmación avisa de mapas abiertos con cambios sin guardar. F2 renombra el único mapa seleccionado o, si no hay filas seleccionadas, el mapa activo. No hace nada si hay varios mapas seleccionados, si no hay selección ni mapa activo o si se está editando el filtro. Estos atajos solo se activan cuando el panel Mapas tiene el foco, así que no entran en conflicto con la copia de tiles en el lienzo. Para pegar un mapa **entre dos ventanas de Maker Studio**, activa primero **Edit → Cross-Project Clipboard**: la copia se refleja entonces en el portapapeles del SO y el pegado lo lee de ahí. Con el conmutador desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana** (la copia se queda en memoria). El mapa pegado cae justo debajo del mapa seleccionado (en la raíz si no hay ningún mapa seleccionado). Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
 
 ## Panel de capas (lista de capas)
 
@@ -255,11 +263,15 @@ Haz clic en una fila del panel de capas para darle el foco. **Ctrl/Meta+clic** a
 | Ctrl+X | Cortar la capa activa — la copia y luego la vacía (igual que clic derecho → Cortar capa) |
 | Ctrl+V | Pegar la capa copiada — siempre pregunta si quieres reemplazar la capa activa o pegar en una capa nueva (igual que clic derecho → Pegar capa) |
 | Ctrl+J | Duplicar la capa activa, tiles incluidos — también funciona en capas nativas, y la copia siempre se convierte en una capa extendida nueva (igual que clic derecho → Duplicar capa) |
+| Delete | Borrar las capas extendidas de tiles seleccionadas si todas se pueden eliminar |
+| F2 | Renombrar en línea la única capa seleccionada |
 
 Estos solo se activan mientras el panel de capas tiene el foco, así que no entran en conflicto con la
-copia de tiles en el lienzo. Funciona en cualquier capa, incluidas las nativas — una copia, corte o
-duplicado que no tenga otro sitio donde ir acaba en una capa extendida nueva, ya que una capa nativa
-es una ranura fija. Consulta [Capas](layers.md#panel-de-capas).
+copia de tiles en el lienzo. F2 no hace nada con varias filas seleccionadas o si el foco está en un
+campo editable. Delete solo está disponible cuando todas las filas seleccionadas son capas
+extendidas de tiles que se pueden quitar. Funciona en cualquier capa, incluidas las nativas — una
+copia, corte o duplicado que no tenga otro sitio donde ir acaba en una capa extendida nueva, ya que
+una capa nativa es una ranura fija. Consulta [Capas](layers.md#panel-de-capas).
 
 ## Simulador de juego
 

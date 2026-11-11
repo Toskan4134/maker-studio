@@ -1,7 +1,7 @@
 # Keyboard Shortcuts
 
 All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defaults are listed below.
-While a modal dialog is open, global shortcuts for the editor behind it are paused; controls and shortcuts owned by the dialog continue to work. Changed event-command forms ask before closing — see [Events Editor](events-editor.md).
+While a modal dialog is open, editor shortcuts for the workspace behind it are paused; dialog controls and shortcuts continue to work. **Ctrl+R** (Reset App) and **F12** (Toggle DevTools) remain global and reconfigurable, including in dialogs, text fields, and the simulator. **Escape** and **Ctrl+Enter** continue to close or confirm the topmost dialog. Changed event-command forms ask before closing — see [Events Editor](events-editor.md).
 
 ## Tools
 
@@ -94,6 +94,9 @@ most six priorities) simply does nothing. All ten are rebindable in Help → Key
 | Ctrl+Y | Redo |
 | Ctrl+Enter | Run game |
 | Ctrl+R | Reset App — reloads Maker Studio to the Welcome page (your panel layout is kept; choose a project there to reopen it; use **View → Layout → Refresh Layout** to restore the default layout) |
+| F12 | Toggle DevTools |
+
+If you press **Ctrl+R** while a dialog or the simulator is open, a native warning explains that unapplied dialog edits will be lost. If maps have unsaved changes, choose **Save All & Reset**, **Discard and Reset**, or **Cancel**. Cancel keeps the editor and drafts open; a failed save prevents the reset. With no unsaved maps, confirm Reset or Cancel.
 
 ## Selection
 
@@ -228,7 +231,11 @@ See the [Scripts editor guide](scripts.md#finding-things) for details.
 | Default Key | Action |
 |-------------|--------|
 | Delete | Delete selected event (or all box-selected events) |
-| Ctrl+D / Escape | Deselect event(s) — Escape also clears any tile selection |
+| Ctrl+D | Deselect event(s) |
+| Escape | Cancel an active operation; with the Events list focused, deselect events and clear their map highlight |
+| F2 | Rename the one selected event |
+
+F2 and Escape apply while the Events list has focus; F2 does nothing when several events are selected or an editable field has focus. Escape clears the event selection and its map highlight. The panel's **Deselect** button performs the same action.
 
 On the **Events layer**, the **Select** tool box-selects events: drag a marquee (Ctrl+drag adds, Shift+drag removes), drag the selection to move the group, Delete removes them all. See [Events Editor](events-editor.md#selecting-and-moving-events).
 
@@ -240,8 +247,9 @@ On the **Events layer**, the **Select** tool box-selects events: drag a marquee 
 | Ctrl+V | Paste the copied map into this project as a new map, placed directly below the selected map |
 | Ctrl+J | Duplicate the selected map (same as right-click → Duplicate Map) |
 | Delete | Delete the selected map (asks for confirmation, same as right-click → Delete Map) |
+| F2 | Rename the one selected map inline, or the active map when no map row is selected |
 
-In the Maps panel, **Ctrl+click** toggles rows and **Shift+click** selects the visible range. Drag a selected row to move all selected roots together with their descendants. Delete opens choices to keep descendants in the deleted maps' positions or delete them too; the confirmation warns about unsaved open maps. These shortcuts only fire while the Maps panel has focus, so they don't conflict with copying tiles on the canvas. To paste a map **between two Maker Studio windows**, turn on **Edit → Cross-Project Clipboard** first: copy then mirrors to your OS clipboard, and paste reads from it. With the toggle off, copy/paste still works **within the same window** (the copy stays in memory). The pasted map lands directly below the selected map (at the root if no map is selected). See [Map Management](map-management.md#copying-a-map-between-projects).
+In the Maps panel, **Ctrl+click** toggles rows and **Shift+click** selects the visible range. Drag a selected row to move all selected roots together with their descendants. Delete opens choices to keep descendants in the deleted maps' positions or delete them too; the confirmation warns about unsaved open maps. F2 renames the only selected map, or the active map when no map row is selected. It does nothing with multiple maps selected, when there is no selection and no active map, or while the filter field is being edited. These shortcuts only fire while the Maps panel has focus, so they don't conflict with copying tiles on the canvas. To paste a map **between two Maker Studio windows**, turn on **Edit → Cross-Project Clipboard** first: copy then mirrors to your OS clipboard, and paste reads from it. With the toggle off, copy/paste still works **within the same window** (the copy stays in memory). The pasted map lands directly below the selected map (at the root if no map is selected). See [Map Management](map-management.md#copying-a-map-between-projects).
 
 ## Layer Panel (Layer List)
 
@@ -253,10 +261,14 @@ Click a row in the Layer Panel to give it focus. **Ctrl/Meta+click** toggles row
 | Ctrl+X | Cut the active layer — copies it, then clears it (same as right-click → Cut Layer) |
 | Ctrl+V | Paste the copied layer — always asks whether to replace the active layer or paste into a new layer (same as right-click → Paste Layer) |
 | Ctrl+J | Duplicate the active layer, tiles included — works on native layers too, and the copy always lands as a new extended layer (same as right-click → Duplicate Layer) |
+| Delete | Delete selected extended tile layers when every selected row is removable |
+| F2 | Rename the one selected layer inline |
 
 These fire only while the Layer Panel has focus, so they don't conflict with copying tiles on the
-canvas. Works on any layer, native included — a copy, cut, or duplicate that has nowhere else to go
-lands in a new extended layer, since a native layer is a fixed slot. See [Layers](layers.md#layer-panel).
+canvas. F2 does nothing with multiple rows selected or while an editable field has focus. Delete is
+available only when all selected rows are removable extended tile layers. Works on any layer,
+native included — a copy, cut, or duplicate that has nowhere else to go lands in a new extended
+layer, since a native layer is a fixed slot. See [Layers](layers.md#layer-panel).
 
 ## Game Simulator
 

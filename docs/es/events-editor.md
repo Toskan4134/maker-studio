@@ -4,7 +4,7 @@
 
 Activa los marcadores de evento desde el botón **Events** de la barra de herramientas (o **View → Show Events**). Los eventos aparecen como marcadores de color en el lienzo. Si sus gráficos se solapan, se dibujan de atrás hacia delante según su profundidad, con la ID del evento como desempate. Cuando pasas el cursor sobre un evento, la barra de estado de abajo muestra el nombre del evento. (Pulsar **V** selecciona la *capa* de eventos para editar — no alterna la visibilidad de los marcadores.)
 
-El panel Events lista los eventos del mapa. Puedes buscar por nombre, ID o coordenadas; selecciona una fila para revisar sus páginas, haz doble clic o pulsa **Edit** para abrirla y usa **New**, **Presets** o **Delete** en la cabecera del panel. Un clic selecciona un evento, **Ctrl+clic** alterna un evento en la selección y **Shift+clic** selecciona un rango. Es la misma selección que en el mapa. **Delete** quita todos los eventos seleccionados tras una sola confirmación; **Presets** con varios eventos seleccionados los guarda todos como presets (con uno seleccionado abre el gestor de presets).
+El panel Events lista los eventos del mapa. Puedes buscar por nombre, ID o coordenadas; selecciona una fila para revisar sus páginas, haz doble clic o pulsa **Edit** para abrirla y usa **New**, **Presets**, **Deseleccionar** o **Delete** en la cabecera del panel. Un clic selecciona un evento, **Ctrl+clic** alterna un evento en la selección y **Shift+clic** selecciona un rango. Es la misma selección que en el mapa. **Deseleccionar** limpia la selección de eventos y cierra su vista de detalle; el botón se desactiva cuando no hay nada seleccionado. **Delete** quita todos los eventos seleccionados tras una sola confirmación; **Presets** con varios eventos seleccionados los guarda todos como presets (con uno seleccionado abre el gestor de presets).
 
 ## Crear eventos
 
@@ -36,6 +36,8 @@ Elige la herramienta **Select**, luego en la capa de eventos:
 - **Supr** quita todos los eventos seleccionados a la vez.
 - **Ctrl+A** selecciona todos los eventos del mapa.
 - **Ctrl+D** (o **Esc**) deselecciona.
+- Con la lista de Events enfocada, **Esc** también limpia una selección simple o múltiple, cierra el detalle del evento seleccionado y quita su resaltado del mapa. El botón **Deseleccionar** de la cabecera hace lo mismo.
+- Con un solo evento seleccionado y la lista de Events enfocada, pulsa **F2** para renombrarlo. El diálogo empieza con el nombre actual y el cambio se puede deshacer con el historial del mapa.
 
 La herramienta **Paint (Brush)** selecciona y mueve eventos igual (clic, Ctrl+clic, arrastrar). Al arrastrar se muestra la misma vista previa fantasma en el destino que con Select, y los movimientos bloqueados muestran un aviso.
 
