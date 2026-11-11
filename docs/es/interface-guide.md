@@ -62,9 +62,10 @@ Si la ventana es demasiado estrecha para mostrar todos los grupos de la barra a 
 
 ## Árbol de mapas (panel izquierdo)
 
-El Árbol de mapas muestra una vista jerárquica de todos los mapas de tu proyecto. La cabecera del panel tiene un botón **+** que crea un mapa nuevo en blanco. Puedes:
+El Árbol de mapas muestra una vista jerárquica de todos los mapas de tu proyecto. La cabecera tiene botones de **Añadir** y **Eliminar**; Eliminar usa la misma confirmación que el menú contextual. Borra los mapas seleccionados explícitamente y también el mapa activo si no estaba seleccionado. Si no hay selección explícita, solo borra el mapa activo. El botón solo se desactiva cuando no hay selección ni mapa activo. Puedes:
 
 - Hacer doble clic en el nombre de un mapa para renombrarlo.
+- Pulsar **F2** para renombrar en línea el único mapa seleccionado o el mapa activo si no hay filas seleccionadas. F2 no hace nada con varios mapas seleccionados, si no hay selección ni mapa activo o mientras editas el filtro.
 - Clic derecho para un menú contextual: Open, Rename, Change Tileset, Resize/Shift, Delete.
 - Usa **Ctrl+clic** para alternar filas del mapa o **Shift+clic** para seleccionar un rango visible. Arrastra una fila seleccionada para mover juntas todas las raíces seleccionadas y sus descendientes, conservando el orden.
 - Borra los mapas seleccionados con Delete o desde el menú contextual. Si tienen descendientes, elige colocarlos en las posiciones de los mapas borrados o eliminar también los subárboles. La confirmación avisa de mapas abiertos con cambios sin guardar y se hacen copias de seguridad de los archivos borrados.
@@ -81,7 +82,11 @@ Cada mapa abierto tiene su propia pestaña en la parte superior del área del ed
 - El menú contextual permite cerrar la pestaña pulsada, las demás, las pestañas a su derecha, las guardadas o todas las normales. Los cierres en grupo conservan las fijadas; puedes cerrar una fijada desde su propia pestaña.
 - Haz clic en el botón x o clic central en una pestaña para cerrarla.
 - **Arrastra una pestaña para reordenarla.** Una línea marca dónde va a caer, y la pestaña se coloca en esa posición.
-- Al volver a abrir un proyecto, **vuelven todos los mapas que tenías abiertos**, incluidas las pestañas fijadas, y el mapa que estabas editando se vuelve el activo. Una barra de pestañas que dejaste vacía sigue vacía. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue abriendo solo ese mapa.) Esto se recuerda por proyecto y solo en este ordenador.
+- Al volver a abrir un proyecto, **vuelven las pestañas guardadas en orden**, incluidas las fijadas, y se activa el último mapa si todavía existe. Se omiten los mapas eliminados; si el mapa activo ya no existe, se activa la última pestaña recuperada. Si no se puede restaurar ninguna pestaña, se abre el primer mapa disponible. Una barra de pestañas que dejaste vacía sigue vacía. Las sesiones antiguas que solo guardaban el mapa activo siguen restaurándolo. (Abrir un archivo de mapa directamente —con doble clic desde el explorador de archivos— sigue abriendo solo ese mapa.) Esto se recuerda por proyecto y solo en este ordenador.
+
+Mapas, Capas, Events, Paleta de tiles y Propiedades de tile usan cabeceras coherentes con botones de acción compactos y accesibles con el teclado. Las acciones de presets usan una estrella junto a la etiqueta **Presets**; en paneles estrechos puede quedar solo el icono. La cabecera de Mapas permite **Añadir** y **Eliminar**; Eliminar incluye el mapa activo junto con los mapas seleccionados explícitamente, o actúa solo sobre el mapa activo si no hay selección en el árbol. La cabecera de Capas permite **Añadir** y cada capa extendida que se pueda quitar tiene su propia acción para eliminarla. La cabecera de Events ofrece **Añadir**, **Presets**, **Deseleccionar** y **Eliminar** con el icono de papelera para los eventos seleccionados.
+
+Pulsa **F2** para renombrar en línea una sola capa seleccionada.
 
 ## Barra de estado (inferior)
 

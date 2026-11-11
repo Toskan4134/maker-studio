@@ -62,9 +62,10 @@ If the window is too narrow to show every toolbar group at once, the groups that
 
 ## Map Tree (left panel)
 
-The Map Tree shows a hierarchical view of every map in your project. The panel header has a **+** button that creates a new blank map. You can:
+The Map Tree shows a hierarchical view of every map in your project. Its header has **Add** and **Delete** buttons; Delete uses the same confirmation as the context menu. It deletes explicitly selected maps plus the active map if it is not already selected; with no explicit selection, it deletes only the active map. The button is disabled only when there is neither a selection nor an active map. You can:
 
 - Double-click a map name to rename it.
+- Press **F2** to rename the one selected map inline, or the active map when no map rows are selected. F2 does nothing with multiple maps selected, when there is no selection and no active map, or while the filter field is being edited.
 - Right-click for a context menu: Open, Rename, Change Tileset, Resize/Shift, Delete.
 - Use **Ctrl+click** to toggle map rows or **Shift+click** to select a visible range. Drag a selected row to move all selected roots and their descendants together while preserving order.
 - Delete selected maps with Delete or the context menu. If maps have descendants, choose to promote them into the deleted maps' positions or delete the subtrees too. The confirmation warns about open maps with unsaved changes, and deleted map files are backed up.
@@ -81,7 +82,11 @@ Each open map gets its own tab along the top of the editor area.
 - The context menu can close the clicked tab, other tabs, tabs to its right, saved tabs, or all regular tabs. Group actions leave pinned tabs open; close the clicked tab directly to close a pinned one.
 - Click the x button or middle-click a tab to close it.
 - **Drag a tab to reorder it.** A line marks where it will land, and the tab drops into that slot.
-- When you reopen a project, **every map you had open comes back**, with pinned tabs restored, and the map you were last editing becomes the active one. An intentionally empty tab bar remains empty. (Opening a map file directly — by double-clicking it in your file manager — still opens just that one map.) This is remembered per project, on this computer only.
+- When you reopen a project, **the saved map tabs come back in order**, with pinned tabs restored, and the last active map is selected if it still exists. Removed maps are skipped; if the active map was removed, the last recovered tab becomes active. If no saved tab can be restored, the first available map opens. An intentionally empty tab bar remains empty. Older sessions that saved only the active map still restore it. (Opening a map file directly — by double-clicking it in your file manager — still opens just that one map.) This is remembered per project, on this computer only.
+
+Maps, Layers, Events, Tile Palette, and Tile Properties use a consistent panel header with compact, keyboard-focusable action buttons. Preset actions use a star icon with the **Presets** label; in narrow panels the label can collapse to the icon. The Map header provides **Add** and **Delete**; Delete includes the active map along with explicitly selected maps, or acts on only the active map when the tree selection is empty. The Layer header provides **Add**, and each removable extended tile layer has its own delete action. The Events header provides **Add**, **Presets**, **Deselect**, and a trash-can **Delete** action for selected events.
+
+Press **F2** to rename one selected layer inline.
 
 ## Status Bar (bottom)
 
