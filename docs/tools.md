@@ -204,9 +204,11 @@ outside again.
 
 For the Rectangle and Select tools, you can start or finish a drag in the empty area beside the map — the selection / rectangle clamps to the nearest border tile instead of being cancelled. The drag also keeps going if your cursor leaves the canvas entirely (e.g. wanders into another panel); release the mouse button anywhere to finish. Moving a selection is unaffected: clicking outside the map always begins a fresh selection rather than triggering a move, even if the clamped border tile happens to fall inside your current selection.
 
-## Undo / Redo with Moved Selections
+## Undo / Redo with Selections
 
-When you move a selection with the Select tool, the selection marquee now follows the move on Undo / Redo — undoing puts both the tiles and the selection back where they were before the move, and redoing reapplies both. Previously, undoing a move left the selection in its post-move position even though the tiles snapped back.
+Selections share the map's Undo / Redo history. Making a selection with Select or Wand, adding to it (Ctrl) or removing from it (Shift), Select All, Deselect and Esc are each one step: Ctrl+Z brings back the previous selection, Ctrl+Y reapplies it. Clicking Deselect when nothing is selected adds no step.
+
+When you move a selection, the marquee follows the move on Undo / Redo — undoing puts both the tiles and the selection back where they were before the move, and redoing reapplies both.
 
 ## Copy and Paste
 

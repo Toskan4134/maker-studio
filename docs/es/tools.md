@@ -202,9 +202,11 @@ cuando quieras volver a pintar fuera.
 
 Para las herramientas Rectangle y Select, puedes empezar o terminar un arrastre en el área vacía junto al mapa — la selección / rectángulo se ajusta al tile de borde más cercano en lugar de cancelarse. El arrastre también continúa si tu cursor sale del lienzo por completo (p. ej. entra en otro panel); suelta el botón del ratón en cualquier sitio para terminar. Mover una selección no se ve afectado: hacer clic fuera del mapa siempre inicia una selección nueva en lugar de provocar un movimiento, aunque el tile de borde ajustado caiga dentro de tu selección actual.
 
-## Deshacer / Rehacer con selecciones movidas
+## Deshacer / Rehacer con selecciones
 
-Cuando mueves una selección con la herramienta Select, el marco de selección ahora sigue el movimiento al Deshacer / Rehacer — deshacer devuelve tanto los tiles como la selección a donde estaban antes del movimiento, y rehacer reaplica ambos. Antes, deshacer un movimiento dejaba la selección en su posición posterior al movimiento aunque los tiles volvieran a su sitio.
+Las selecciones comparten el historial de Deshacer / Rehacer del mapa. Hacer una selección con Select o Wand, ampliarla (Ctrl) o recortarla (Shift), Select All, Deselect y Esc cuentan cada uno como un paso: Ctrl+Z recupera la selección anterior y Ctrl+Y la vuelve a aplicar. Deselect sin nada seleccionado no añade ningún paso.
+
+Cuando mueves una selección, el marco de selección sigue el movimiento al Deshacer / Rehacer — deshacer devuelve tanto los tiles como la selección a donde estaban antes del movimiento, y rehacer reaplica ambos.
 
 ## Copiar y pegar
 
