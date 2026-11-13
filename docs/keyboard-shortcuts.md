@@ -129,7 +129,7 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J act on all selected e
 | Scroll wheel | Pan viewport |
 | Shift + scroll | Pan horizontally |
 | Ctrl + scroll | Zoom |
-| Alt + click | Eyedropper (without switching tool) |
+| Alt + click | Eyedropper, then switches to Brush (Fill and Rectangle stay active) |
 
 ## Tileset Property Editor
 

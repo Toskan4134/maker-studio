@@ -129,7 +129,7 @@ En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre todos
 | Rueda del ratón | Desplazar viewport |
 | Shift + rueda | Desplazar en horizontal |
 | Ctrl + rueda | Zoom |
-| Alt + clic | Eyedropper (sin cambiar de herramienta) |
+| Alt + clic | Cuentagotas y cambia a Pincel (Relleno y Rectángulo se mantienen) |
 
 ## Editor de propiedades de tileset
 
