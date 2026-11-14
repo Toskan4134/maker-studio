@@ -2,6 +2,35 @@
 
 Cambios de cara al usuario en la app de Maker Studio y su plugin del lado del juego.
 
+## v1.10.0
+
+Maker Studio 1.10.0 añade preajustes de eventos y selección de varios eventos, permite sacar paneles a sus propias ventanas, incluye las selecciones en el historial de deshacer y deja pintar con Shift sin cambiar la forma de los autotiles de alrededor. También corrige varios problemas en el juego con las sombras, los NPC y los tiles de otros tilesets.
+
+### Novedades
+- ⭐ **Preajustes de eventos** — guarda cualquier evento como preajuste, con todas sus páginas, condiciones, gráficos y comandos, en la biblioteca del proyecto o en una global compartida por todos tus proyectos. Colócalo en cualquier casilla vacía desde el menú contextual (**Preajustes…**) o el panel **Eventos**; haz clic derecho en un evento y elige **Añadir a presets** para guardarlo de un paso. El editor de eventos también puede cargar un preajuste en el evento que estás editando. Los preajustes de propiedades de tile y de pincel tienen las mismas bibliotecas **Proyecto** / **Global**.
+- 👥 **Selecciona varios eventos a la vez** — **Ctrl+clic** en eventos con el **Pincel**, **Ctrl+A** para todos los eventos del mapa, o Ctrl/Shift+clic en las filas del panel **Eventos**. Muévelos, córtalos, cópialos, pégalos, elimínalos o guárdalos como preajustes juntos: un grupo pegado conserva su disposición y cada acción es un único paso de deshacer.
+- 🪟 **Saca paneles a sus propias ventanas** — clic derecho en una pestaña y elige **Pop out to window**, o arrastra una pestaña fuera del editor. Útil en un segundo monitor; las ventanas aparte se guardan con tu distribución y se reabren donde las dejaste.
+- 🖌️ **Pinta sin cambiar la forma de los autotiles** — mantén **Shift** mientras pintas con el **Pincel** y los autotiles de alrededor conservan su forma (coloca una esquina junto a un camino existente sin que se vuelva a conectar). Dibujar una línea pasa a **Ctrl+clic**; Ctrl+arrastrar sigue bloqueando el pintado a un solo eje.
+- ↩️ **Las selecciones se pueden deshacer** — hacer una selección con **Selección** o **Varita**, ampliarla o recortarla, **Seleccionar todo**, **Deseleccionar** y Esc cuentan cada uno como un paso de deshacer. El historial de deshacer guarda ahora 200 pasos en lugar de 100.
+- 📌 **Vuelves a donde lo dejaste** — la **Base de datos** se reabre en la última pestaña y entrada que tenías seleccionadas, un tileset que aplicaste o guardaste se reabre en la misma posición de desplazamiento, y las pestañas de mapas vuelven en orden, saltándose los mapas eliminados.
+- 🏷️ **Cabeceras de panel con acciones rápidas** — **Mapas**, **Capas**, **Eventos**, **Paleta de tiles** y **Propiedades de tile** comparten una cabecera con botones **Añadir**, **Eliminar** y **Preajustes**, y **F2** renombra el mapa, la capa o el evento seleccionado.
+- 🤖 **Más herramientas de mapa por MCP** — los asistentes de IA conectados por MCP pueden redimensionar mapas y crear capas de sombra, niebla y panorama.
+- 🧩 **Para quien hace mods**: Mod API **1.0.3** — los paneles siguen funcionando al sacarlos a su propia ventana (`ui.popupDocument()`), los atajos de teclado pueden limitarse a una parte de la interfaz (`registerShortcut` con un `scope`) y desaparece el modo de mezcla multiplicar en las capas gráficas.
+
+### Correcciones
+- 🎮 **Correcciones en el juego** — las sombras ya no dibujan las capas inferiores por encima de las superiores; un evento que muestra un tile del tileset más allá de las filas de su entrada en la base de datos ya no cuelga el juego al entrar en el mapa; en Pokémon Essentials 17.1 y BES5, cambiar de mapa ya no devuelve los NPC a su posición inicial ni hace reaparecer los eventos borrados; los tiles de otros tilesets ya no desaparecen ni pierden su colisión tras Continuar o una recarga en vivo; y las huellas de La Base de Sky ya no aparecen en un tile cubierto por otro tile de suelo. Actualiza la integración (**Ayuda → Comprobar integración del juego…**) para recibir estas correcciones.
+- 🌫️ **Las imágenes de niebla y panorama se recargan en vivo** — editar una imagen de niebla o panorama en disco actualiza ahora el lienzo del mapa y una prueba de juego en marcha.
+- 🧱 **El editor de eventos ya no se cierra con un error** al abrir o editar un evento con un bloque plegado.
+- 🗂️ **Cambiar el tileset del mapa activo cambia también la paleta de tiles**, en lugar de dejar en ella el tileset anterior.
+- 🧹 **Pulido de la interfaz** — los nombres largos del árbol de mapas se recortan con puntos suspensivos y se desplazan al pasar el ratón, la paleta de tiles ya no está limitada a 300 px de ancho, el tirador para redimensionar los autotiles se arrastra con suavidad, soltar un favorito en la pantalla de bienvenida ya no abre ese proyecto, el **Pincel** ya no muestra una vista previa de línea durante un Ctrl+arrastrar y el diálogo de recuperación tras un cierre inesperado ya no muestra un `\n` literal.
+
+### Cambios
+- 🎯 **Alt+clic toma un tile y cambia al Pincel** — **Relleno** y **Rectángulo** siguen activos tras tomar el tile.
+- 👁️ **Submenú Vista → Eventos** — **Mostrar eventos** y **Mostrar casilla de los eventos** se agrupan en **Vista → Eventos**; **Crear eventos con doble clic** pasa al menú **Herramientas**.
+- 🌗 **Se elimina el modo multiplicar de las capas de niebla y panorama** — ningún motor de juego puede dibujarlo; las capas que lo usaban se muestran ahora en Normal, que es lo que el juego mostraba siempre.
+- ⌨️ **Ctrl+R y F12 funcionan en todas partes** — **Reiniciar aplicación** y **Alternar DevTools** funcionan ahora dentro de diálogos, campos de texto y el simulador. Ctrl+R pregunta si guardar, descartar o cancelar cuando hay mapas con cambios sin guardar.
+- 🎨 **Controles renovados** — los desplegables combinan con los menús de la app, las pestañas activas llevan una barra de acento, las casillas e interruptores siguen el tema y los botones de añadir llevan un icono verde.
+
 ## v1.9.2
 
 Una versión de corrección: Maker Studio ya no muestra falsos bloqueos cuando se pausan los temporizadores del WebView, Pokémon Essentials BES5 ya no entra en recursión al moverse y Git puede actualizar el estado remoto con una búsqueda automática opcional, manteniendo Pull bajo control manual.

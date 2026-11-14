@@ -2,6 +2,35 @@
 
 User-facing changes to the Maker Studio app and its game-side plugin.
 
+## v1.10.0
+
+Maker Studio 1.10.0 adds event presets and multi-event selection, lets you pop panels out into their own windows, makes selections part of the undo history, and lets Shift paint without reshaping the autotiles around it. It also fixes several in-game issues with shadows, NPCs and tiles from other tilesets.
+
+### Additions
+- ⭐ **Event presets** — save any event as a preset, with every page, condition, graphic and command, in the project's library or in a global one shared by all your projects. Place it on any empty cell from the right-click menu (**Presets…**) or the Events panel; right-click an event and pick **Add to presets** to save it in one step. The event editor can also load a preset into the event you are editing. Tile property and brush presets get the same **Project** / **Global** libraries.
+- 👥 **Select several events at once** — **Ctrl+click** events with the Brush, press **Ctrl+A** for every event on the map, or Ctrl/Shift+click rows in the Events panel. Move, cut, copy, paste, delete or save them as presets together: a pasted group keeps its layout, and each action is one undo step.
+- 🪟 **Pop panels out into their own windows** — right-click a tab and pick **Pop out to window**, or drag a tab outside the editor. Handy on a second monitor; popouts are saved with your layout and reopen where you left them.
+- 🖌️ **Paint without reshaping autotiles** — hold **Shift** while painting with the Brush and the autotiles around it keep their shape (place a corner piece next to an existing path without it reconnecting). Drawing a line moves to **Ctrl+click**; Ctrl+drag still locks painting to one axis.
+- ↩️ **Selections can be undone** — making a selection with Select or Wand, adding to it or removing from it, Select All, Deselect and Esc are each one undo step. The undo history now keeps 200 steps instead of 100.
+- 📌 **Back where you left off** — the Database reopens on the last tab and entry you had selected, a tileset you applied or saved reopens at the same scroll position, and map tabs come back in order, skipping maps that were deleted.
+- 🏷️ **Panel headers with quick actions** — Maps, Layers, Events, Tile Palette and Tile Properties share one header with **Add**, **Delete** and **Presets** buttons, and **F2** renames the selected map, layer or event.
+- 🤖 **More MCP map tools** — AI assistants connected through MCP can resize maps and create shadow, fog and panorama layers.
+- 🧩 **For mod developers**: Mod API **1.0.3** — panels keep working when popped out into their own window (`ui.popupDocument()`), keyboard shortcuts can be limited to one part of the UI (`registerShortcut` with a `scope`), and the multiply blend on graphic layers is gone.
+
+### Fixes
+- 🎮 **In-game fixes** — shadows no longer draw lower layers above upper ones; an event showing a tileset tile beyond the tileset's database rows no longer crashes the game on entering the map; in Pokémon Essentials 17.1 and BES5, changing maps no longer puts NPCs back at their start or brings back erased events; tiles from other tilesets no longer vanish and lose their collision after Continue or a live reload; and La Base de Sky footprints no longer appear on a tile covered by another ground tile. Update the integration (**Help → Check Game Integration...**) to get these fixes.
+- 🌫️ **Fog and panorama images reload live** — editing a fog or panorama image on disk now updates the map canvas and a running playtest.
+- 🧱 **The event editor no longer crashes** when opening or editing an event with a collapsed block.
+- 🗂️ **Changing the active map's tileset switches the tile palette too**, instead of leaving the old tileset in it.
+- 🧹 **Interface polish** — long map names in the map tree are cut with an ellipsis and scroll on hover, the tile palette is no longer capped at 300 px wide, the autotiles resize grip drags smoothly, dropping a favourite on the Welcome screen no longer opens that project, the Brush no longer shows a line preview during a Ctrl+drag, and the crash recovery dialog no longer shows a literal `\n`.
+
+### Changes
+- 🎯 **Alt+click picks a tile and switches to the Brush** — Fill and Rectangle stay active after the pick.
+- 👁️ **View → Events submenu** — **Show Events** and **Show Event Cells** are grouped under **View → Events**; **Create Events on Double-Click** moves to the **Tools** menu.
+- 🌗 **Multiply blend removed from fog and panorama layers** — no game engine can draw it; layers that used it now show as Normal, which is what the game always showed.
+- ⌨️ **Ctrl+R and F12 work everywhere** — Reset App and DevTools now work inside dialogs, text fields and the simulator. Ctrl+R asks to save, discard or cancel when maps have unsaved changes.
+- 🎨 **Refreshed controls** — dropdowns match the app's menus, active tabs get an accent bar, checkboxes and switches follow the theme, and add buttons get a green icon.
+
 ## v1.9.2
 
 A hotfix release: Maker Studio no longer reports false hangs after WebView timer pauses, Pokémon Essentials BES5 no longer recurses during movement, and Git can refresh remote status with an optional automatic fetch while keeping Pull manual.
