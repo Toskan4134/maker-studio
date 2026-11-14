@@ -105,6 +105,9 @@ Cada panel del editor se puede arrastrar, flotar como ventana aparte y reorganiz
 - **Separar un panel**: clic derecho en una pestaña o en una zona vacía de la cabecera y elige **Detach to floating window**. El panel sale como una ventana flotante arrastrable y redimensionable dentro del editor.
 - **Las ventanas flotantes se quedan en pantalla**: si una ventana flotante se arrastra o redimensiona más allá de los límites del editor, vuelve a encajar dentro al soltarla.
 - **Reacoplar**: arrastra la pestaña de la ventana flotante de vuelta a una zona de acople, o cierra el panel.
+- **Sacar a una ventana aparte**: clic derecho en una pestaña y elige **Pop out to window**, o arrastra una pestaña (o un grupo entero) y suéltala fuera de la ventana del editor. Los paneles se abren en su propia ventana sin barra de título, útil para un segundo monitor. Arrastra el icono de agarre o la zona vacía de la barra de pestañas para moverla, arrastra los bordes para redimensionar y usa la **✕** para cerrarla. Puedes arrastrar pestañas de vuelta al editor, o del editor a la ventana aparte (suelta sobre una pestaña o el centro; sus bordes no dividen). Map Editor y Autotile Detail no se pueden sacar.
+- **Cerrar una ventana aparte**: sus paneles vuelven a donde estaban si ese lugar sigue existiendo; si no, se cierran (reábrelos desde **View → Panels**). Las ventanas aparte se guardan con tu disposición y se reabren en el mismo sitio al iniciar (las configuraciones importadas las mantienen acopladas).
+- **En una ventana aparte**: los atajos funcionan igual; **F5** / **Ctrl+R** recargan todo el editor y **F12** abre las DevTools de esa ventana. El tema y los estilos de mods también se aplican.
 - **Enfocar desde el menú**: **View → Panels** trae un panel al frente (o lo reabre flotando si lo cerraste) — nunca cierra paneles.
 
 ### Redimensionar diálogos

@@ -105,6 +105,9 @@ Every panel in the editor can be dragged, floated as a separate window, and rear
 - **Detach a panel**: right-click a tab or empty header area and pick **Detach to floating window**. The panel pops out as a draggable, resizable floating window inside the editor.
 - **Floating windows stay on-screen**: if a floating panel is dragged or resized past the editor bounds, it auto-snaps back inside on release.
 - **Reattach**: drag the floating window's tab back onto a dock zone, or close the panel.
+- **Pop out to a separate window**: right-click a tab and pick **Pop out to window**, or drag a tab (or a whole group) and drop it outside the editor window. The panels open in their own window with no title bar, which is handy for a second monitor. Drag the grip or the empty tab bar to move it, drag the edges to resize, and use the **✕** to close it. You can drag tabs back into the editor, or from the editor into the popout (drop on a tab or the centre; its edges cannot split). Map Editor and Autotile Detail cannot be popped out.
+- **Closing a popout**: its panels return to where they came from if that spot still exists; otherwise they close (reopen them from **View → Panels**). Popouts are saved with your layout and reopen in the same place on startup (imported configurations keep them docked).
+- **In a popout**: shortcuts work as usual; **F5** / **Ctrl+R** reload the whole editor, and **F12** opens that window's DevTools. Theme and mod styles apply there too.
 - **Focus from the menu**: **View → Panels** brings a panel to the front (or reopens it floating if you closed it) — it never closes panels.
 
 ### Resizing dialogs
