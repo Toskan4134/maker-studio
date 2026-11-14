@@ -180,6 +180,7 @@ def pbRefreshLiveMapData(map_id)
   end
   # Reload extended layers (now reads from embedded @extended_layers in fresh_map)
   MakerStudio.load_extended_layers_for_map(map_id, $game_map)
+  MakerStudio.refresh_fog_graphics if MakerStudio.respond_to?(:refresh_fog_graphics)
   # Re-apply per-map panorama / battleback + native-fog suppression after reload.
   if MakerStudio.respond_to?(:apply_map_background_overrides)
     MakerStudio.apply_map_background_overrides($game_map, map_id)

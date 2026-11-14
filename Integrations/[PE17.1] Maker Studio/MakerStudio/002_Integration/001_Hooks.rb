@@ -110,6 +110,7 @@ def pbRefreshLiveMapData(map_id)
     end
   end
   MakerStudio.load_extended_layers_for_map(map_id, $game_map)
+  MakerStudio.refresh_fog_graphics if MakerStudio.respond_to?(:refresh_fog_graphics)
   # Re-apply per-map panorama / battleback + native-fog suppression after reload.
   if MakerStudio.respond_to?(:apply_map_background_overrides)
     MakerStudio.apply_map_background_overrides($game_map, map_id)
@@ -195,6 +196,7 @@ class Game_Map
     alias_method :__mkst__setup, :setup
     def setup(map_id)
       __mkst__setup(map_id)
+      @ms_session = ($ms_session ||= Object.new)
       # Parse the map's extended-layer JSON only if not already cached. setup runs
       # on every transfer AND for each connected map each time it (re)enters the
       # factory; re-parsing the (large) JSON through the Ruby-1.8 char parser every
@@ -215,6 +217,12 @@ end
 # therefore never appeared until a manual hot-reload. Re-reading the map's
 # .rxdata here is the same refresh the "Reload Map Data" debug command runs.
 #
+# setMapChanged also runs on every transfer and connection crossing. Refreshing
+# there re-created every Game_Event (NPCs back to their start, temporary erases
+# undone), so only a map that did not come from disk this session refreshes:
+# Game_Map#setup tags it with $ms_session, and a save round-trip turns that tag
+# into a different object.
+#
 # The class is PokemonMapFactory — the SCRIPT is named MapFactory, the class is
 # not. `class MapFactory` would silently define a brand-new empty class and the
 # alias would NameError at load. Guarded so a base without it just skips.
@@ -228,7 +236,10 @@ if defined?(PokemonMapFactory) && PokemonMapFactory.method_defined?(:setMapChang
         return unless $MapFactory.equal?(self)
         return unless MakerStudio::ENABLED
         return unless $game_map && defined?(pbRefreshLiveMapData)
+        session = ($ms_session ||= Object.new)
+        return if $game_map.instance_variable_get(:@ms_session).equal?(session)
         pbRefreshLiveMapData($game_map.map_id)
+        $game_map.instance_variable_set(:@ms_session, session)
       end
     end
   end

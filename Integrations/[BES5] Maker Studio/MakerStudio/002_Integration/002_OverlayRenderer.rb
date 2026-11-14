@@ -375,6 +375,7 @@ module MakerStudio
         x = 0
         while x < w
           tid = rpg.data[x, y, layer]
+          tid = original_native_tile_id(map.map_id, x, y, layer, tid) if tid == 0
           if tid && tid != 0
             entry = lp ? lp["#{x},#{y}"] : nil
             if native_cell_priority(map, tid, entry) == 0
@@ -453,6 +454,21 @@ module MakerStudio
     false
   end
 
+  # The record lives on the RPG::Map whose Table it describes. Blanking edits
+  # that Table in place and the Table outlives this module's state: the save
+  # Marshals $MapFactory with it, and a connected map keeps it across a cache
+  # flush. Re-blanking it without its record stored 0 as the "original" id,
+  # which hid the tile and dropped its collision for the rest of the session.
+  def blank_record(map)
+    rpg = map.instance_variable_get(:@map)
+    rec = rpg.instance_variable_get(:@ms_blanked)
+    unless rec
+      rec = {}
+      rpg.instance_variable_set(:@ms_blanked, rec)
+    end
+    @blanked_cells[map.map_id] = rec
+  end
+
   def apply_native_blanks(map)
     ext = @extended_data_cache[map.map_id]
     return unless ext
@@ -460,7 +476,7 @@ module MakerStudio
     return unless native_props
     rpg = map.instance_variable_get(:@map)
     return unless rpg && rpg.data
-    record = (@blanked_cells[map.map_id] ||= {})
+    record = blank_record(map)
     MakerStudio::NATIVE_LAYERS.times do |layer|
       props = native_props[layer]
       next unless props
@@ -499,7 +515,7 @@ module MakerStudio
     caps = c[:caps]
     w = c[:w]
     h = rpg.data.ysize
-    record = (@blanked_cells[map.map_id] ||= {})
+    record = blank_record(map)
     plain = []
     MakerStudio::NATIVE_LAYERS.times do |layer|
       lp = native_props ? native_props[layer] : nil
@@ -550,7 +566,7 @@ module MakerStudio
     c = cell_caps_for(map)
     caps = c[:caps]
     w = c[:w]
-    record = (@blanked_cells[map.map_id] ||= {})
+    record = blank_record(map)
     cov = (@covered_plain_cells[map.map_id] = {})
     covered = []
     (MakerStudio::NATIVE_LAYERS - 1).times do |layer|
@@ -722,7 +738,9 @@ class Overlay
       MakerStudio.load_extended_layers_for_map(@map_id, @map)
     end
     # Cap MUST be computed from the un-blanked Table (cross-tileset tiles still
-    # present), so do it before any blanking.
+    # present), so do it before any blanking. A save-restored Table arrives
+    # blanked; binding its record first lets the cap recover those ids.
+    MakerStudio.blank_record(@map)
     MakerStudio.cell_caps_for(@map)
     MakerStudio.apply_native_blanks(@map)
     demoted = MakerStudio.blank_demoted_native_priority(@map)

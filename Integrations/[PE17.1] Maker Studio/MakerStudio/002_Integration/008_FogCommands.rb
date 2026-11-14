@@ -374,6 +374,22 @@ module MakerStudio
     end
   end
 
+  def refresh_fog_graphics
+    return unless @fog_sprites_cache
+    @fog_sprites_cache.each do |map_id, sprites|
+      ext = get_extended_data_for(map_id)
+      next unless ext && sprites
+      plane_groups_for(ext).each do |group|
+        group[3].each do |layer|
+          sprite = find_group_sprite(map_id, group[0], layer["id"])
+          next unless sprite
+          config = layer["config"] || {}
+          apply_fog_graphic(sprite, config["graphicName"], config["hue"])
+        end
+      end
+    end
+  end
+
   def update_fog_transitions
     return unless @fog_sprites_cache
     @fog_sprites_cache.each do |map_id, sprites|

@@ -350,9 +350,9 @@ module MakerStudio
   end
 
   #---------------------------------------------------------------------------
-  # Shadow environment for one map: does it have visible shadows, and which
-  # cells are shadow sources? Ground tiles that are a shadow source (or are
-  # impassable) draw ABOVE the shadow; passable ground draws below it.
+  # Shadow environment for one map: does it have visible shadows, which
+  # (cell, layer) pairs are shadow sources, and the lazily filled per-cell
+  # shadow cut (see shadow_cut_layer).
   #---------------------------------------------------------------------------
   def shadow_env_for(map)
     cached = @shadow_env_cache[map.map_id]
@@ -361,12 +361,13 @@ module MakerStudio
     shadows = ext_data ? (ext_data["shadowLayers"] || []) : []
     shadows = [ext_data["shadowLayer"]].compact if ext_data && shadows.empty?
     visible = shadows.select { |s| s && s["visible"] }
-    env = { :has_shadows => !visible.empty?, :source_keys => {} }
+    env = { :has_shadows => !visible.empty?, :source_keys => {}, :cut => {} }
     if env[:has_shadows]
       map_w = map.width
       visible.each do |shadow|
+        sz = (shadow["sourceLayerIndex"] || 0).to_i
         (shadow["sourceTiles"] || []).each do |st|
-          env[:source_keys][st["y"].to_i * map_w + st["x"].to_i] = st["tileId"].to_i
+          env[:source_keys][(st["y"].to_i * map_w + st["x"].to_i) * NATIVE_LAYERS + sz] = true
         end
       end
     end
@@ -707,7 +708,7 @@ class TilemapRenderer
     # priority is >= 1 AND its layer sits above the cell's highest ground tile.
     own_pri = props ? resolve_tile_priority(tile.tile_id, props, map) : tile.priority
     tile.cell_band = (own_pri >= 1 && layer > MakerStudio.cell_ground_cap(map, tile_x, tile_y)) ? own_pri : 0
-    tile.ms_ground_z = ground_band_z(map, idx, tile.tile_id, props)
+    tile.ms_ground_z = ground_band_z(map, idx, layer)
     refresh_tile_coordinates(tile, x, y)
     refresh_tile_z(tile, map, y, layer, tile_id)
     # set_bitmap re-arms need_refresh; leaving it armed would make the engine
@@ -790,14 +791,35 @@ class TilemapRenderer
     tile.bridge = data ? !!data.bridge : false
   end
 
-  # Ground-band z for a cell: shadow sources and impassable tiles sit ABOVE the
-  # map's shadows (z=2), passable ground below them (z=0).
-  def ground_band_z(map, idx, tile_id, props)
+  # Ground-band z for a native tile: above the map's shadows (2) from the cell's
+  # shadow cut upward, below them (0) under it.
+  def ground_band_z(map, idx, layer)
     env = MakerStudio.shadow_env_for(map)
     return 0 unless env[:has_shadows]
-    return 2 if env[:source_keys][idx] == tile_id
-    p = resolve_shadow_tile_passage(tile_id, props, map.passages)
-    (p && (p & 0x0F) == 0x0F) ? 2 : 0
+    cut = (env[:cut][idx] ||= shadow_cut_layer(map, idx, env))
+    layer >= cut ? 2 : 0
+  end
+
+  # Lowest native layer at the cell holding a shadow source or a fully
+  # impassable tile (NATIVE_LAYERS if none) — the editor's computeShadowCut.
+  # A layer prefix, not a per-tile test: testing each tile alone lifted an
+  # impassable layer-1 tile over the passable tiles stacked on layers 2-3.
+  def shadow_cut_layer(map, idx, env)
+    layers = MakerStudio::NATIVE_LAYERS
+    rpg = map.instance_variable_get(:@map)
+    return layers unless rpg
+    x = idx % map.width
+    y = idx / map.width
+    layers.times do |l|
+      tid = rpg.data[x, y, l] || 0
+      entry = MakerStudio.native_props_at(map.map_id, map.width, l, idx)
+      props = entry ? entry[0] : nil
+      next if tid == 0 && !(props && props["autotile_name"])
+      return l if env[:source_keys][idx * layers + l]
+      p = resolve_shadow_tile_passage(tid, props, map.passages)
+      return l if p && (p & 0x0F) == 0x0F
+    end
+    layers
   end
 
   # Map-cell offset of screen cell (0, 0) for one map. Recomputed only when that

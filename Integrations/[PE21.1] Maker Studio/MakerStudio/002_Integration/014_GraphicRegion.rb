@@ -320,7 +320,7 @@ class Game_Event
       tile = MakerStudio.region_tile(self)
       return __mkst_region_screen_z(*args) unless tile
       tileset, tile_id = tile
-      screen_y_ground + tileset.priorities[tile_id] * 32
+      screen_y_ground + (tileset.priorities[tile_id] || 0) * 32
     end
   end
 

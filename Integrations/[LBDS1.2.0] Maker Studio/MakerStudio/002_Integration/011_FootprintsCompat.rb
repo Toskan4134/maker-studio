@@ -9,9 +9,8 @@
 # carry another tileset's terrain, and extended layers aren't in the Table at
 # all — so sand painted with Maker Studio never produced footprints.
 #
-# This replaces update_footsteps_aux with the same logic, but the terrain
-# check goes through Game_Map#terrain_tag — patched by 003_GameMapOverride to
-# resolve extended layers / extra autotiles / cross-tileset top-down. The
+# This replaces update_footsteps_aux with the same logic, but checks terrain on
+# the top-most ground tile so footprints cannot appear under a covering tile. The
 # footprint sprite also gets z=1 (was 0) so it can't tie with Maker Studio's
 # ground tile sprites at z=0 (a z tie leaves stacking to insertion order).
 #
@@ -20,6 +19,35 @@
 # footprints) and 1.2.1+ (footprints) — without per-version builds.
 #===============================================================================
 if defined?(FootprintsSettings) && Sprite_Character.method_defined?(:update_footsteps_aux)
+  class Game_Map
+    def ms_footprint_ground_terrain_tag(x, y)
+      cap = MakerStudio.cell_ground_cap(self, x, y)
+      return terrain_tag(x, y) if cap < 0
+      if cap < MakerStudio::NATIVE_LAYERS
+        layer = cap
+        tile_id = @map.data[x, y, layer]
+        ext_data = MakerStudio.get_extended_data_for(@map_id)
+        props = ext_data && ext_data["nativeProperties"]
+        tile_data = props && (props[layer] || {})["#{x},#{y}"]
+      else
+        layer = cap - MakerStudio::NATIVE_LAYERS
+        tile_data = MakerStudio.get_extended_tile(layer, x, y)
+        tile_id = tile_data && tile_data["tile_id"].to_i
+      end
+      if tile_data && tile_data["autotile_name"]
+        tag = tile_data["terrain_tag"]
+        resolved = resolve_extra_autotile_data(tile_data)
+        tag = resolved && resolved[2] unless tag && tag.to_i != 0
+      elsif tile_data && tile_data["tileset_id"]
+        tileset = $data_tilesets[tile_data["tileset_id"].to_i]
+        tag = tileset && tileset.terrain_tags[tile_id]
+      else
+        tag = @terrain_tags && @terrain_tags[tile_id]
+      end
+      GameData::TerrainTag.try_get(tag || 0)
+    end
+  end
+
   class Sprite_Character
     def update_footsteps_aux
       @old_x ||= @character.x
@@ -37,11 +65,7 @@ if defined?(FootprintsSettings) && Sprite_Character.method_defined?(:update_foot
           end
         elsif (!@character.respond_to?(:name) || !FootprintsSettings::EVENTNAME_MAY_NOT_INCLUDE.include?(@character.name)) &&
                !FootprintsSettings::FILENAME_MAY_NOT_INCLUDE.include?(@character.character_name)
-          # MakerStudio-aware terrain: Game_Map#terrain_tag (patched in
-          # 003_GameMapOverride) resolves extended layers, extra autotiles and
-          # cross-tileset tiles top-down — the base's raw Table scan
-          # (terrain_tags[map.data[...]] == 3) can't see any of those.
-          terrain = @character.map.terrain_tag(@old_x, @old_y)
+          terrain = @character.map.ms_footprint_ground_terrain_tag(@old_x, @old_y)
           make_steps = !terrain.nil? && terrain.id_number == 3
         end
         if make_steps

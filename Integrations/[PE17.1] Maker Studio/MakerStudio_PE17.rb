@@ -11,7 +11,7 @@
 # exact 'MakerStudio-Build:' / 'MakerStudio-Version:' prefixes; the release
 # workflow rewrites the version line.
 # MakerStudio-Build: PE17.1
-# MakerStudio-Version: 1.9.2
+# MakerStudio-Version: 1.10.0
 ###############################################################################
 
 
@@ -751,6 +751,7 @@ def pbRefreshLiveMapData(map_id)
     end
   end
   MakerStudio.load_extended_layers_for_map(map_id, $game_map)
+  MakerStudio.refresh_fog_graphics if MakerStudio.respond_to?(:refresh_fog_graphics)
   # Re-apply per-map panorama / battleback + native-fog suppression after reload.
   if MakerStudio.respond_to?(:apply_map_background_overrides)
     MakerStudio.apply_map_background_overrides($game_map, map_id)
@@ -836,6 +837,7 @@ class Game_Map
     alias_method :__mkst__setup, :setup
     def setup(map_id)
       __mkst__setup(map_id)
+      @ms_session = ($ms_session ||= Object.new)
       # Parse the map's extended-layer JSON only if not already cached. setup runs
       # on every transfer AND for each connected map each time it (re)enters the
       # factory; re-parsing the (large) JSON through the Ruby-1.8 char parser every
@@ -856,6 +858,12 @@ end
 # therefore never appeared until a manual hot-reload. Re-reading the map's
 # .rxdata here is the same refresh the "Reload Map Data" debug command runs.
 #
+# setMapChanged also runs on every transfer and connection crossing. Refreshing
+# there re-created every Game_Event (NPCs back to their start, temporary erases
+# undone), so only a map that did not come from disk this session refreshes:
+# Game_Map#setup tags it with $ms_session, and a save round-trip turns that tag
+# into a different object.
+#
 # The class is PokemonMapFactory — the SCRIPT is named MapFactory, the class is
 # not. `class MapFactory` would silently define a brand-new empty class and the
 # alias would NameError at load. Guarded so a base without it just skips.
@@ -869,7 +877,10 @@ if defined?(PokemonMapFactory) && PokemonMapFactory.method_defined?(:setMapChang
         return unless $MapFactory.equal?(self)
         return unless MakerStudio::ENABLED
         return unless $game_map && defined?(pbRefreshLiveMapData)
+        session = ($ms_session ||= Object.new)
+        return if $game_map.instance_variable_get(:@ms_session).equal?(session)
         pbRefreshLiveMapData($game_map.map_id)
+        $game_map.instance_variable_set(:@ms_session, session)
       end
     end
   end
@@ -996,6 +1007,7 @@ module MakerStudio
        fresh.instance_variable_get(:@height) == rpg.instance_variable_get(:@height)
       rpg.instance_variable_set(:@data, fresh.instance_variable_get(:@data))
       # Blanking records point at the OLD Table's ids — drop them.
+      rpg.instance_variable_set(:@ms_blanked, nil)
       @blanked_cells.delete(map_id)       if @blanked_cells
       @covered_plain_cells.delete(map_id) if @covered_plain_cells
     end
@@ -1324,6 +1336,7 @@ module MakerStudio
         x = 0
         while x < w
           tid = rpg.data[x, y, layer]
+          tid = original_native_tile_id(map.map_id, x, y, layer, tid) if tid == 0
           if tid && tid != 0
             entry = lp ? lp["#{x},#{y}"] : nil
             if native_cell_priority(map, tid, entry) == 0
@@ -1415,6 +1428,21 @@ module MakerStudio
     false
   end
 
+  # The record lives on the RPG::Map whose Table it describes. Blanking edits
+  # that Table in place and the Table outlives this module's state: the save
+  # Marshals $MapFactory with it, and a connected map keeps it across a cache
+  # flush. Re-blanking it without its record stored 0 as the "original" id,
+  # which hid the tile and dropped its collision for the rest of the session.
+  def blank_record(map)
+    rpg = map.instance_variable_get(:@map)
+    rec = rpg.instance_variable_get(:@ms_blanked)
+    unless rec
+      rec = {}
+      rpg.instance_variable_set(:@ms_blanked, rec)
+    end
+    @blanked_cells[map.map_id] = rec
+  end
+
   def apply_native_blanks(map)
     ext = @extended_data_cache[map.map_id]
     return unless ext
@@ -1422,7 +1450,7 @@ module MakerStudio
     return unless native_props
     rpg = map.instance_variable_get(:@map)
     return unless rpg && rpg.data
-    record = (@blanked_cells[map.map_id] ||= {})
+    record = blank_record(map)
     MakerStudio::NATIVE_LAYERS.times do |layer|
       props = native_props[layer]
       next unless props
@@ -1461,7 +1489,7 @@ module MakerStudio
     caps = c[:caps]
     w = c[:w]
     h = rpg.data.ysize
-    record = (@blanked_cells[map.map_id] ||= {})
+    record = blank_record(map)
     plain = []
     MakerStudio::NATIVE_LAYERS.times do |layer|
       lp = native_props ? native_props[layer] : nil
@@ -1512,7 +1540,7 @@ module MakerStudio
     c = cell_caps_for(map)
     caps = c[:caps]
     w = c[:w]
-    record = (@blanked_cells[map.map_id] ||= {})
+    record = blank_record(map)
     cov = (@covered_plain_cells[map.map_id] = {})
     covered = []
     (MakerStudio::NATIVE_LAYERS - 1).times do |layer|
@@ -1695,7 +1723,9 @@ class Overlay
       MakerStudio.load_extended_layers_for_map(@map_id, @map)
     end
     # Cap MUST be computed from the un-blanked Table (cross-tileset tiles still
-    # present), so do it before any blanking.
+    # present), so do it before any blanking. A save-restored Table arrives
+    # blanked; binding its record first lets the cap recover those ids.
+    MakerStudio.blank_record(@map)
     MakerStudio.cell_caps_for(@map)
     MakerStudio.apply_native_blanks(@map)
     demoted = MakerStudio.blank_demoted_native_priority(@map)
@@ -3606,6 +3636,22 @@ module MakerStudio
     end
   end
 
+  def refresh_fog_graphics
+    return unless @fog_sprites_cache
+    @fog_sprites_cache.each do |map_id, sprites|
+      ext = get_extended_data_for(map_id)
+      next unless ext && sprites
+      plane_groups_for(ext).each do |group|
+        group[3].each do |layer|
+          sprite = find_group_sprite(map_id, group[0], layer["id"])
+          next unless sprite
+          config = layer["config"] || {}
+          apply_fog_graphic(sprite, config["graphicName"], config["hue"])
+        end
+      end
+    end
+  end
+
   def update_fog_transitions
     return unless @fog_sprites_cache
     @fog_sprites_cache.each do |map_id, sprites|
@@ -5122,7 +5168,7 @@ class Game_Event
       tile = MakerStudio.region_tile(self)
       return __mkst_region_screen_z(*args) unless tile
       tileset, tile_id = tile
-      (@real_y - self.map.display_y + 3) / 4 + 32 + tileset.priorities[tile_id] * 32
+      (@real_y - self.map.display_y + 3) / 4 + 32 + (tileset.priorities[tile_id] || 0) * 32
     end
   end
 

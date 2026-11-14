@@ -29,7 +29,7 @@
 # aliased below to advance in-progress tone/opacity fades each frame).
 #
 # Written to stay Ruby 1.8-compatible so the SAME file works in every framework
-# build (BES5 / LBDS / PE21).
+# build (BES5 / PE17 / LBDS / PE21).
 #===============================================================================
 module MakerStudio
   module_function
@@ -370,6 +370,22 @@ module MakerStudio
         tdur -= 1
         sprite.tone = Tone.new(tgt.red, tgt.green, tgt.blue, tgt.gray) if tdur == 0
         sprite.instance_variable_set(:@ms_tone_dur, tdur)
+      end
+    end
+  end
+
+  def refresh_fog_graphics
+    return unless @fog_sprites_cache
+    @fog_sprites_cache.each do |map_id, sprites|
+      ext = get_extended_data_for(map_id)
+      next unless ext && sprites
+      plane_groups_for(ext).each do |group|
+        group[3].each do |layer|
+          sprite = find_group_sprite(map_id, group[0], layer["id"])
+          next unless sprite
+          config = layer["config"] || {}
+          apply_fog_graphic(sprite, config["graphicName"], config["hue"])
+        end
       end
     end
   end

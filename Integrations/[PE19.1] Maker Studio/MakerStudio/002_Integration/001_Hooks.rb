@@ -153,6 +153,7 @@ def pbRefreshLiveMapData(map_id)
     end
   end
   MakerStudio.load_extended_layers_for_map(map_id, $game_map)
+  MakerStudio.refresh_fog_graphics if MakerStudio.respond_to?(:refresh_fog_graphics)
   # Re-apply per-map panorama / battleback + native-fog suppression after reload.
   if MakerStudio.respond_to?(:apply_map_background_overrides)
     MakerStudio.apply_map_background_overrides($game_map, map_id)
