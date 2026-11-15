@@ -24,7 +24,7 @@ With the **Events layer** active, only four tools do anything; the rest are grey
 - **Select** — box-select events (see below).
 - **Pan** — move the view.
 
-Double-clicking an event opens the editor; double-clicking does **not** create events (use the Brush). **Fill**, **Rectangle**, and **Eyedropper** are disabled here — you place one event per cell, not tiles. Switching to the Events layer while one of them is active falls back to the Brush automatically. **Brush size** has no effect on this layer, and the cursor preview shows a **single tile** (the first one selected), never a multi-tile group — you create one event at a time. The created event uses default settings regardless of the previewed tile.
+Double-clicking an event opens the editor; double-clicking does **not** create events (use the Brush). **Fill**, **Rectangle**, **Ellipse**, **Line**, and **Eyedropper** are disabled here — you place one event per cell, not tiles. Switching to the Events layer while one of them is active falls back to the Brush automatically. **Brush size** has no effect on this layer, and the cursor preview shows a **single tile** (the first one selected), never a multi-tile group — you create one event at a time. The created event uses default settings regardless of the previewed tile.
 
 ## Selecting and Moving Events
 

@@ -4,23 +4,25 @@
 
 | Tool | Key | Description |
 |------|-----|-------------|
-| Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+paint places tiles without changing the neighbouring autotiles. Ctrl+click draws a line from the last painted position. Ctrl+drag locks painting to a single axis. |
-| Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Ctrl+click draws a line from the last erased position. Ctrl+drag locks erasing to a single axis. |
+| Brush | B | Paint tiles. A translucent preview of the tile(s) you're about to place follows the cursor. Supports multi-tile stamps and adjustable brush size. Shift+paint places tiles without changing the neighbouring autotiles. Ctrl+drag locks painting to a single axis. |
+| Eraser | E | Erase tiles back to empty. Has its own adjustable eraser size. Ctrl+drag locks erasing to a single axis. |
 | Fill | F | Flood-fill a contiguous area with the selected tile — or with the selected multi-tile pattern, repeated across the filled area. |
 | Wand | Shift+S | Select matching tiles on the active layer. Ctrl/Meta adds matches to the current selection; Shift removes them; no modifier replaces it. Continuous selects only the connected region; turn it off to select every match on that layer. |
 | Magic Eraser | Shift+E | Erase tiles matching the tile under the cursor on every selected tile layer. Continuous limits each layer to the connected region; turn it off to erase all matches on each layer. |
-| Rectangle | R | Click and drag to fill a rectangular area. Tile pattern preview shown while dragging. |
+| Rectangle | R | Click and drag to fill a rectangular area. Tile pattern preview shown while dragging. Turn off **Filled** in the toolbar to draw only a 1-tile outline. Hold Shift while dragging for a square. |
+| Ellipse | O | Click and drag to paint an ellipse inside the dragged box. Works like Rectangle, including the **Filled** option. Hold Shift while dragging for a circle. |
+| Line | L | Click and drag to paint a straight 1-tile-thick line, diagonals included. Brush size does not apply. |
 | Eyedropper | I | Pick a tile and its properties from the canvas. |
 | Select | S | Click and drag to select an area. Drag the selection to move tiles. Ctrl+drag to add tiles, Shift+drag to remove tiles from selection. |
 | Pan | Space (hold) | Pan the viewport. |
 
-Wand and Magic Eraser use the same **Continuous** option as Fill. Matching compares tile ID and autotile name. The Wand builds its selection on the active layer, and that selection limits painting across all selected tile layers. Brush, Eraser, Fill, Rectangle, and Magic Eraser apply to selected tile layers as one action, so one Undo restores all of them. The toolbar shows only the options used by the active tool.
+Wand and Magic Eraser use the same **Continuous** option as Fill. Matching compares tile ID and autotile name. The Wand builds its selection on the active layer, and that selection limits painting across all selected tile layers. Brush, Eraser, Fill, Rectangle, Ellipse, Line, and Magic Eraser apply to selected tile layers as one action, so one Undo restores all of them. Rectangle, Ellipse, and Line share one toolbar button; a multi-tile pattern repeats from the shape's top-left corner. The toolbar shows only the options used by the active tool.
 
 > **Switching layers clears the selection** whenever you cross into or out of the Events layer: a tile selection is dropped when you go to Events, and selected events are dropped when you go back to a normal layer.
 
-> **On the Events layer**, only **Brush**, **Eraser**, **Select**, and **Pan** apply — Fill, Rectangle, and Eyedropper are disabled, and brush size has no effect. Select box-selects events for group move/delete. See [Events Editor](events-editor.md#tools-on-the-events-layer).
+> **On the Events layer**, only **Brush**, **Eraser**, **Select**, and **Pan** apply — Fill, Rectangle, Ellipse, Line, and Eyedropper are disabled, and brush size has no effect. Select box-selects events for group move/delete. See [Events Editor](events-editor.md#tools-on-the-events-layer).
 
-> **Autotile previews:** when an autotile is selected, the Brush hover preview and the Rectangle drag preview show it fully edge-bordered — corners, edges and interior render just as they will be placed, and the preview connects to matching autotile already on the map. A locked autotile detail part previews as the exact part you picked. The placed result matches the preview.
+> **Autotile previews:** when an autotile is selected, the Brush hover preview and the Rectangle, Ellipse, and Line drag previews show it fully edge-bordered — corners, edges and interior render just as they will be placed, and the preview connects to matching autotile already on the map. A locked autotile detail part previews as the exact part you picked. The placed result matches the preview.
 
 ## Brush Properties
 
@@ -72,17 +74,13 @@ Use the `[` and `]` keys to decrease or increase the brush size while the brush 
 
 Hold Shift while painting with the Brush and the autotiles around what you paint keep their current shape: only the cells you paint pick their borders. Use it to place a corner or edge piece next to an existing autotile without it reconnecting.
 
-## Line Painting (Ctrl+Click)
-
-With the Brush or Eraser tool active, paint at one position, then hold Ctrl and click another position. A straight line is drawn between the two points using Bresenham's algorithm. The line width matches your current brush or eraser size. This works diagonally as well as on axis-aligned lines. A preview of the line is shown while Ctrl is held.
-
 ## Axis-Locked Painting (Ctrl+Drag)
 
-With the Brush or Eraser tool active, hold Ctrl and drag. The first tile you move off the click position picks the axis (horizontal or vertical, whichever you moved farther on), and all subsequent painting snaps to that single axis. Releasing Ctrl mid-stroke unlocks and resumes free painting. A Ctrl+click without dragging draws a line instead (see above).
+With the Brush or Eraser tool active, hold Ctrl and drag. The first tile you move off the click position picks the axis (horizontal or vertical, whichever you moved farther on), and all subsequent painting snaps to that single axis. Releasing Ctrl mid-stroke unlocks and resumes free painting.
 
 ## Custom Shape Brush
 
-A Custom Shape Brush lets you build a reusable brush from a shape, a weighted pool of tiles, and a set of paint properties. It works with the Brush, Eraser, Fill, and Rectangle tools.
+A Custom Shape Brush lets you build a reusable brush from a shape, a weighted pool of tiles, and a set of paint properties. It works with the Brush, Eraser, Fill, Rectangle, Ellipse, and Line tools.
 
 ### Opening the editor
 
@@ -117,7 +115,7 @@ Click **Apply** to save the brush, or **Close** to discard your changes.
 - **Brush size**: drag the size slider in the Brush hover popover, or use `[` / `]`, or **Alt + scroll**. The size is clamped to the brush's Min/Max range. A "Brush N×N" hint flashes on the canvas as you resize.
 - **Eraser**: while a custom brush is active, the Eraser uses the same **shape** but keeps its **own size** (separate from the brush size, also clamped to the brush's Min/Max). Resize it the same way — `[` / `]` or Alt+scroll while the Eraser tool is active. An "Eraser N×N" hint flashes. The tile pool is ignored — erasing always clears to empty. (Custom mask shapes have no scalar size, so resizing is a no-op for them.)
 - **Fill**: flood-fill matches the clicked region (same tile / autotile) but writes tiles from the brush's weighted pool into each filled cell.
-- **Rectangle**: each cell in the dragged rectangle takes a tile from the brush's weighted pool. A seeded preview ghosts the pool tiles across the rect while dragging.
+- **Rectangle / Ellipse / Line**: each cell of the dragged shape takes a tile from the brush's weighted pool. A seeded preview ghosts the pool tiles across the shape while dragging.
 
 ### Saving and sharing
 
@@ -151,7 +149,7 @@ Below the tileset grid, the **Autotiles** section lists every named autotile fro
 
 - **Search**: type in the search box above the autotiles grid to filter the list by name (case-insensitive, matches any part of the name). Click the **×** button to clear the search and show every autotile again.
 - **Names on hover**: hover over any autotile in the grid and a small tooltip shows its name.
-- **Select to paint**: click an autotile to select it for the Brush, Fill, and Rectangle tools.
+- **Select to paint**: click an autotile to select it for the Brush, Fill, Rectangle, Ellipse, and Line tools.
 - **Open detail**: double-click an autotile (or right-click it and choose **Open Autotile**) to open its detail panel, where you can pick an individual piece of the autotile to stamp as a fixed part.
 - **Resize the list**: drag the bottom edge of the autotiles grid to make the section taller or shorter. The height you pick is remembered, like your panel layout.
 - **Follows your selection**: the section opens on its own whenever an autotile becomes selected — including picking one off the map with the Eyedropper or ALT+click — and collapses again as soon as you select a plain tile.
@@ -197,14 +195,14 @@ still **Ctrl+D**.
 ### Painting Inside a Selection
 
 A selection now **stays** when you switch to another tool and start painting, and it acts as a stencil:
-Brush, Eraser, Fill and Rectangle only write inside the selected cells, so you can paint freely over the
+Brush, Eraser, Fill, Rectangle, Ellipse and Line only write inside the selected cells, so you can paint freely over the
 edges without touching anything outside. Fill stops at the selection border too — it fills the part of
 the matching region that falls inside it. Press **Esc** (or Edit → Deselect) when you want to paint
 outside again.
 
 ### Dragging Off the Map
 
-For the Rectangle and Select tools, you can start or finish a drag in the empty area beside the map — the selection / rectangle clamps to the nearest border tile instead of being cancelled. The drag also keeps going if your cursor leaves the canvas entirely (e.g. wanders into another panel); release the mouse button anywhere to finish. Moving a selection is unaffected: clicking outside the map always begins a fresh selection rather than triggering a move, even if the clamped border tile happens to fall inside your current selection.
+For the Rectangle, Ellipse, Line and Select tools, you can start or finish a drag in the empty area beside the map — the selection / shape clamps to the nearest border tile instead of being cancelled. The drag also keeps going if your cursor leaves the canvas entirely (e.g. wanders into another panel); release the mouse button anywhere to finish. Moving a selection is unaffected: clicking outside the map always begins a fresh selection rather than triggering a move, even if the clamped border tile happens to fall inside your current selection.
 
 ## Undo / Redo with Selections
 

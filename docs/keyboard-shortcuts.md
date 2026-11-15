@@ -11,6 +11,8 @@ While a modal dialog is open, editor shortcuts for the workspace behind it are p
 | E | Eraser |
 | F | Fill |
 | R | Rectangle |
+| O | Ellipse |
+| L | Line |
 | I | Eyedropper |
 | S | Select |
 | Shift+S | Wand |
@@ -37,7 +39,7 @@ While a modal dialog is open, editor shortcuts for the workspace behind it are p
 | A | Toggle custom brush — switch between your last-used [custom brush](tools.md#custom-shape-brush) and the default square brush |
 | Ctrl + B | [Use the map selection as your brush](tools.md#turning-a-selection-into-your-brush) |
 | Shift + paint | Paint without changing neighbouring autotiles |
-| Ctrl + click | Draw line from last painted position |
+| Shift + drag (Rectangle / Ellipse) | Keep width and height equal (square / circle) |
 | Ctrl + drag | Lock painting to one axis |
 
 ## Eraser
@@ -46,7 +48,6 @@ While a modal dialog is open, editor shortcuts for the workspace behind it are p
 |-------------|--------|
 | [ | Decrease eraser size |
 | ] | Increase eraser size |
-| Ctrl + click | Draw line from last erased position |
 | Ctrl + drag | Lock erasing to one axis |
 
 ## Layers
@@ -129,7 +130,7 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J act on all selected e
 | Scroll wheel | Pan viewport |
 | Shift + scroll | Pan horizontally |
 | Ctrl + scroll | Zoom |
-| Alt + click | Eyedropper, then switches to Brush (Fill and Rectangle stay active) |
+| Alt + click | Eyedropper, then switches to Brush (Fill, Rectangle, Ellipse, and Line stay active) |
 
 ## Tileset Property Editor
 

@@ -4,23 +4,25 @@
 
 | Herramienta | Tecla | Descripción |
 |------|-----|-------------|
-| Brush | B | Pinta tiles. Una vista previa translúcida del/los tile(s) que vas a colocar sigue al cursor. Admite estampas multi-tile y tamaño de pincel ajustable. Shift+pintar coloca tiles sin cambiar los autotiles vecinos. Ctrl+clic dibuja una línea desde la última posición pintada. Ctrl+arrastrar bloquea el pintado a un solo eje. |
-| Eraser | E | Borra tiles dejándolos vacíos. Tiene su propio tamaño de borrador ajustable. Ctrl+clic dibuja una línea desde la última posición borrada. Ctrl+arrastrar bloquea el borrado a un solo eje. |
+| Brush | B | Pinta tiles. Una vista previa translúcida del/los tile(s) que vas a colocar sigue al cursor. Admite estampas multi-tile y tamaño de pincel ajustable. Shift+pintar coloca tiles sin cambiar los autotiles vecinos. Ctrl+arrastrar bloquea el pintado a un solo eje. |
+| Eraser | E | Borra tiles dejándolos vacíos. Tiene su propio tamaño de borrador ajustable. Ctrl+arrastrar bloquea el borrado a un solo eje. |
 | Fill | F | Rellena por inundación un área contigua con el tile seleccionado — o con el patrón multi-tile seleccionado, repetido por toda el área. |
 | Wand | Shift+S | Selecciona los tiles coincidentes en la capa activa. Ctrl/Meta añade las coincidencias a la selección actual; Shift las elimina; sin modificador, la reemplaza. Con Continuo, selecciona solo la región conectada; desactívalo para seleccionar todas las coincidencias de esa capa. |
 | Borrador mágico | Shift+E | Borra los tiles que coinciden con el situado bajo el cursor en todas las capas de tiles seleccionadas. Con Continuo, limita cada capa a la región conectada; desactívalo para borrar todas las coincidencias de cada capa. |
-| Rectangle | R | Haz clic y arrastra para rellenar un área rectangular. Se muestra una vista previa del patrón de tiles mientras arrastras. |
+| Rectangle | R | Haz clic y arrastra para rellenar un área rectangular. Se muestra una vista previa del patrón de tiles mientras arrastras. Desactiva **Relleno** en la barra para dibujar solo un contorno de 1 tile. Mantén Shift mientras arrastras para un cuadrado. |
+| Elipse | O | Haz clic y arrastra para pintar una elipse dentro del recuadro arrastrado. Funciona como Rectangle, incluida la opción **Relleno**. Mantén Shift mientras arrastras para un círculo. |
+| Línea | L | Haz clic y arrastra para pintar una línea recta de 1 tile de grosor, también en diagonal. El tamaño de pincel no se aplica. |
 | Eyedropper | I | Toma un tile y sus propiedades desde el lienzo. |
 | Select | S | Haz clic y arrastra para seleccionar un área. Arrastra la selección para mover tiles. Ctrl+arrastrar para añadir tiles, Shift+arrastrar para quitar tiles de la selección. |
 | Pan | Espacio (mantener) | Desplaza el viewport. |
 
-Wand y Borrador mágico usan la misma opción **Continuo** que Fill. La comparación usa el ID del tile y el nombre del autotile. Wand crea la selección en la capa activa, y esa selección limita el pintado en todas las capas de tiles seleccionadas. Brush, Eraser, Fill, Rectangle y Borrador mágico actúan sobre las capas de tiles seleccionadas como una sola acción, así que un único Deshacer las restaura todas. La barra solo muestra las opciones de la herramienta activa.
+Wand y Borrador mágico usan la misma opción **Continuo** que Fill. La comparación usa el ID del tile y el nombre del autotile. Wand crea la selección en la capa activa, y esa selección limita el pintado en todas las capas de tiles seleccionadas. Brush, Eraser, Fill, Rectangle, Elipse, Línea y Borrador mágico actúan sobre las capas de tiles seleccionadas como una sola acción, así que un único Deshacer las restaura todas. Rectangle, Elipse y Línea comparten un botón en la barra; un patrón multi-tile se repite desde la esquina superior izquierda de la forma. La barra solo muestra las opciones de la herramienta activa.
 
 > **Cambiar de capa quita la selección** siempre que entras o sales de la capa de eventos: la selección de tiles se descarta al pasar a Eventos, y los eventos seleccionados se descartan al volver a una capa normal.
 
-> **En la capa de eventos**, solo se aplican **Brush**, **Eraser**, **Select** y **Pan** — Fill, Rectangle y Eyedropper están desactivados, y el tamaño de pincel no tiene efecto. Select hace selección de caja de eventos para mover/borrar en grupo. Consulta [Editor de eventos](events-editor.md#tools-on-the-events-layer).
+> **En la capa de eventos**, solo se aplican **Brush**, **Eraser**, **Select** y **Pan** — Fill, Rectangle, Elipse, Línea y Eyedropper están desactivados, y el tamaño de pincel no tiene efecto. Select hace selección de caja de eventos para mover/borrar en grupo. Consulta [Editor de eventos](events-editor.md#tools-on-the-events-layer).
 
-> **Vistas previas de autotiles:** cuando se selecciona un autotile, la vista previa del Brush y la del arrastre del Rectangle lo muestran totalmente bordeado — esquinas, bordes e interior se dibujan tal como quedarán colocados, y la vista previa se conecta con los autotiles coincidentes que ya hay en el mapa. Una parte de detalle de autotile bloqueada se previsualiza como la parte exacta que elegiste. El resultado colocado coincide con la vista previa.
+> **Vistas previas de autotiles:** cuando se selecciona un autotile, la vista previa del Brush y la del arrastre de Rectangle, Elipse y Línea lo muestran totalmente bordeado — esquinas, bordes e interior se dibujan tal como quedarán colocados, y la vista previa se conecta con los autotiles coincidentes que ya hay en el mapa. Una parte de detalle de autotile bloqueada se previsualiza como la parte exacta que elegiste. El resultado colocado coincide con la vista previa.
 
 ## Propiedades del pincel
 
@@ -72,17 +74,13 @@ Usa las teclas `[` y `]` para reducir o aumentar el tamaño del pincel mientras 
 
 Mantén Shift mientras pintas con el Brush y los autotiles de alrededor conservan su forma actual: solo las celdas que pintas eligen sus bordes. Sirve para colocar una esquina o un borde junto a un autotile existente sin que se reconecte.
 
-## Pintado de líneas (Ctrl+Clic)
-
-Con la herramienta Brush o Eraser activa, pinta en una posición, luego mantén Ctrl y haz clic en otra. Se dibuja una línea recta entre los dos puntos usando el algoritmo de Bresenham. El grosor de la línea coincide con tu tamaño actual de pincel o borrador. Funciona tanto en diagonal como en líneas alineadas con los ejes. Se muestra una vista previa de la línea mientras se mantiene Ctrl.
-
 ## Pintado bloqueado por eje (Ctrl+Arrastrar)
 
-Con la herramienta Brush o Eraser activa, mantén Ctrl y arrastra. El primer tile que muevas fuera de la posición del clic elige el eje (horizontal o vertical, según en cuál te hayas movido más), y todo el pintado posterior se ajusta a ese único eje. Soltar Ctrl a mitad de trazo desbloquea y reanuda el pintado libre. Un Ctrl+clic sin arrastrar dibuja una línea (ver arriba).
+Con la herramienta Brush o Eraser activa, mantén Ctrl y arrastra. El primer tile que muevas fuera de la posición del clic elige el eje (horizontal o vertical, según en cuál te hayas movido más), y todo el pintado posterior se ajusta a ese único eje. Soltar Ctrl a mitad de trazo desbloquea y reanuda el pintado libre.
 
 ## Custom Shape Brush
 
-Un Custom Shape Brush te deja construir un pincel reutilizable a partir de una forma, un grupo ponderado de tiles y un conjunto de propiedades de pintado. Funciona con las herramientas Brush, Eraser, Fill y Rectangle.
+Un Custom Shape Brush te deja construir un pincel reutilizable a partir de una forma, un grupo ponderado de tiles y un conjunto de propiedades de pintado. Funciona con las herramientas Brush, Eraser, Fill, Rectangle, Elipse y Línea.
 
 ### Abrir el editor
 
@@ -117,7 +115,7 @@ Haz clic en **Apply** para guardar el pincel, o **Close** para descartar tus cam
 - **Brush size**: arrastra el deslizador de tamaño en el popover del Brush, o usa `[` / `]`, o **Alt + rueda**. El tamaño se limita al rango Min/Max del pincel. Un aviso "Brush N×N" parpadea en el lienzo al redimensionar.
 - **Eraser**: mientras hay un pincel personalizado activo, el Eraser usa la misma **forma** pero mantiene su **propio tamaño** (separado del tamaño del pincel, también limitado al Min/Max del pincel). Redimensiónalo de la misma forma — `[` / `]` o Alt+rueda mientras la herramienta Eraser está activa. Parpadea un aviso "Eraser N×N". El grupo de tiles se ignora — borrar siempre deja vacío. (Las formas de máscara personalizada no tienen tamaño escalar, así que redimensionar no hace nada para ellas.)
 - **Fill**: el relleno por inundación coincide con la región pulsada (mismo tile / autotile) pero escribe tiles del grupo ponderado del pincel en cada celda rellenada.
-- **Rectangle**: cada celda del rectángulo arrastrado toma un tile del grupo ponderado del pincel. Una vista previa con semilla fantasmea los tiles del grupo por el rectángulo mientras arrastras.
+- **Rectangle / Elipse / Línea**: cada celda de la forma arrastrada toma un tile del grupo ponderado del pincel. Una vista previa con semilla fantasmea los tiles del grupo por la forma mientras arrastras.
 
 ### Guardar y compartir
 
@@ -152,7 +150,7 @@ Debajo de la cuadrícula del tileset, la sección **Autotiles** lista cada autot
 
 - **Búsqueda**: escribe en el cuadro de búsqueda encima de la cuadrícula de autotiles para filtrar la lista por nombre (sin distinguir mayúsculas, coincide con cualquier parte del nombre). Haz clic en el botón **×** para limpiar la búsqueda y mostrar todos los autotiles de nuevo.
 - **Nombres al pasar el ratón**: pasa sobre cualquier autotile de la cuadrícula y un pequeño tooltip muestra su nombre.
-- **Seleccionar para pintar**: haz clic en un autotile para seleccionarlo para las herramientas Brush, Fill y Rectangle.
+- **Seleccionar para pintar**: haz clic en un autotile para seleccionarlo para las herramientas Brush, Fill, Rectangle, Elipse y Línea.
 - **Abrir detalle**: haz doble clic en un autotile (o clic derecho y elige **Open Autotile**) para abrir su panel de detalle, donde puedes elegir una pieza individual del autotile para estampar como parte fija.
 - **Redimensionar la lista**: arrastra el borde inferior de la cuadrícula de autotiles para hacer la sección más alta o más baja. La altura que elijas se recuerda, como tu disposición de paneles.
 - **Sigue tu selección**: la sección se abre sola cuando se selecciona un autotile — incluido al cogerlo del mapa con el Eyedropper o con ALT+clic — y se pliega de nuevo en cuanto seleccionas un tile normal.
@@ -195,14 +193,14 @@ sigue siendo **Ctrl+D**.
 ### Pintar dentro de una selección
 
 La selección ahora **se mantiene** al cambiar de herramienta y empezar a pintar, y actúa como plantilla:
-Brush, Eraser, Fill y Rectangle solo escriben dentro de las celdas seleccionadas, así que puedes pintar
+Brush, Eraser, Fill, Rectangle, Elipse y Línea solo escriben dentro de las celdas seleccionadas, así que puedes pintar
 sin cuidado sobre los bordes sin tocar nada de fuera. El Fill también se detiene en el borde de la
 selección — rellena la parte de la región coincidente que cae dentro. Pulsa **Esc** (o Edit → Deselect)
 cuando quieras volver a pintar fuera.
 
 ### Arrastrar fuera del mapa
 
-Para las herramientas Rectangle y Select, puedes empezar o terminar un arrastre en el área vacía junto al mapa — la selección / rectángulo se ajusta al tile de borde más cercano en lugar de cancelarse. El arrastre también continúa si tu cursor sale del lienzo por completo (p. ej. entra en otro panel); suelta el botón del ratón en cualquier sitio para terminar. Mover una selección no se ve afectado: hacer clic fuera del mapa siempre inicia una selección nueva en lugar de provocar un movimiento, aunque el tile de borde ajustado caiga dentro de tu selección actual.
+Para las herramientas Rectangle, Elipse, Línea y Select, puedes empezar o terminar un arrastre en el área vacía junto al mapa — la selección / forma se ajusta al tile de borde más cercano en lugar de cancelarse. El arrastre también continúa si tu cursor sale del lienzo por completo (p. ej. entra en otro panel); suelta el botón del ratón en cualquier sitio para terminar. Mover una selección no se ve afectado: hacer clic fuera del mapa siempre inicia una selección nueva en lugar de provocar un movimiento, aunque el tile de borde ajustado caiga dentro de tu selección actual.
 
 ## Deshacer / Rehacer con selecciones
 

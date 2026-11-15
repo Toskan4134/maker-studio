@@ -24,7 +24,7 @@ Con la **capa de eventos** activa, solo cuatro herramientas hacen algo; el resto
 - **Select** — selección de caja de eventos (ver abajo).
 - **Pan** — mueve la vista.
 
-Hacer doble clic en un evento abre el editor; el doble clic **no** crea eventos (usa el Brush). **Fill**, **Rectangle** y **Eyedropper** están desactivados aquí — colocas un evento por celda, no tiles. Cambiar a la capa de eventos mientras una de ellas está activa vuelve al Brush automáticamente. El **tamaño de pincel** no tiene efecto en esta capa, y la vista previa del cursor muestra un **solo tile** (el primero seleccionado), nunca un grupo multi-tile — creas un evento a la vez. El evento creado usa ajustes por defecto independientemente del tile previsualizado.
+Hacer doble clic en un evento abre el editor; el doble clic **no** crea eventos (usa el Brush). **Fill**, **Rectangle**, **Elipse**, **Línea** y **Eyedropper** están desactivados aquí — colocas un evento por celda, no tiles. Cambiar a la capa de eventos mientras una de ellas está activa vuelve al Brush automáticamente. El **tamaño de pincel** no tiene efecto en esta capa, y la vista previa del cursor muestra un **solo tile** (el primero seleccionado), nunca un grupo multi-tile — creas un evento a la vez. El evento creado usa ajustes por defecto independientemente del tile previsualizado.
 
 ## Seleccionar y mover eventos
 

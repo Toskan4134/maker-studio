@@ -11,6 +11,8 @@ Mientras haya un diálogo modal abierto, se pausan los atajos del editor que que
 | E | Eraser |
 | F | Fill |
 | R | Rectangle |
+| O | Elipse |
+| L | Línea |
 | I | Eyedropper |
 | S | Select |
 | Shift+S | Wand |
@@ -37,7 +39,7 @@ Mientras haya un diálogo modal abierto, se pausan los atajos del editor que que
 | A | Alternar pincel personalizado — cambia entre tu último [pincel personalizado](tools.md#custom-shape-brush) usado y el pincel cuadrado por defecto |
 | Ctrl + B | [Usar la selección del mapa como pincel](tools.md#convertir-una-selección-en-tu-pincel) |
 | Shift + pintar | Pintar sin cambiar los autotiles vecinos |
-| Ctrl + clic | Dibujar línea desde la última posición pintada |
+| Shift + arrastrar (Rectangle / Elipse) | Mantener ancho y alto iguales (cuadrado / círculo) |
 | Ctrl + arrastrar | Bloquear el pintado a un eje |
 
 ## Eraser
@@ -46,7 +48,6 @@ Mientras haya un diálogo modal abierto, se pausan los atajos del editor que que
 |-------------|--------|
 | [ | Reducir tamaño de borrador |
 | ] | Aumentar tamaño de borrador |
-| Ctrl + clic | Dibujar línea desde la última posición borrada |
 | Ctrl + arrastrar | Bloquear el borrado a un eje |
 
 ## Capas
@@ -129,7 +130,7 @@ En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre todos
 | Rueda del ratón | Desplazar viewport |
 | Shift + rueda | Desplazar en horizontal |
 | Ctrl + rueda | Zoom |
-| Alt + clic | Cuentagotas y cambia a Pincel (Relleno y Rectángulo se mantienen) |
+| Alt + clic | Cuentagotas y cambia a Pincel (Relleno, Rectángulo, Elipse y Línea se mantienen) |
 
 ## Editor de propiedades de tileset
 
