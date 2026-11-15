@@ -13,6 +13,12 @@ Al cerrar y volver a abrir la ventana vuelves a la pestaña en la que estabas, c
 
 > Cada editor tiene su propio botón **Aplicar**. Cambiar de pestaña o cerrar la ventana con cambios sin guardar te pide confirmar primero — y en la pestaña Tilesets, cambiar de tileset también. Cada guardado respalda el `.rxdata` original en una carpeta `map-backups` junto a él.
 
+## Eliminar y renumerar tilesets
+
+En la pestaña Tilesets, **Eliminar** y **Cortar** actúan sobre todos los tilesets seleccionados con Ctrl/Shift+clic. Eliminar siempre pide confirmación: lista los mapas que usan los tilesets (esos mapas mostrarán tiles de sustitución después) o indica que ningún mapa los usa. Deshacer los restaura todos. Un mapa cuyo tileset falta se abre igualmente, con tiles de sustitución y un aviso.
+
+La fila **ID:** tiene un botón de edición para cambiar el ID de un tileset, actualizando todos los mapas que lo usan. Se rechaza si el ID ya está en uso, o si la base de datos o algún mapa abierto tiene cambios sin guardar. Los mapas abiertos afectados se recargan y el cambio se puede deshacer.
+
 ## Copiar, cortar y pegar registros
 
 **Haz clic derecho en una fila** de Tilesets, Common Events o Animations para copiar o cortar el

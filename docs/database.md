@@ -13,6 +13,12 @@ Closing and reopening the window brings you back to the tab you were on, with th
 
 > Each editor has its own **Apply** button. Switching tabs or closing the window while you have unsaved changes asks you to confirm first — and in the Tilesets tab, so does switching to a different tileset. Every save backs up the original `.rxdata` to a `map-backups` folder beside it.
 
+## Deleting and Renumbering Tilesets
+
+In the Tilesets tab, **Delete** and **Cut** act on every tileset you've selected with Ctrl/Shift-click. Delete always asks first: the confirmation lists the maps that use the tilesets (those maps will show placeholder tiles afterwards) or tells you no map uses them. Undo restores them all. A map whose tileset is missing still opens, with placeholder tiles and a warning.
+
+The **ID:** row has an edit button to change a tileset's ID, updating every map that uses it. It's refused if the ID is already taken, or if the database or any open map has unsaved changes. Open maps affected are reloaded, and the change can be undone.
+
 ## Copying, Cutting, and Pasting Records
 
 **Right-click a row** in Tilesets, Common Events, or Animations to copy or cut the whole record and
