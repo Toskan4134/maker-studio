@@ -131,6 +131,12 @@ es 160 ya no te pelea desde el primer dígito. Un campo que se deja vacío cae a
 
 Los paneles añadidos por [mods](marketplace.md) mantienen su lugar en tu disposición. Si un mod está desactivado, desinstalado o recargándose, su hueco de panel se queda donde lo acoplaste y muestra un marcador de posición ("Panel provided by mod … — not loaded") hasta que el mod vuelva; cierra el marcador si no quieres conservar el hueco. Las configuraciones de disposición exportadas (**View → Layout → Export Configuration**) también registran qué mods aportaron qué paneles — importar una disposición que usa paneles de mods que no tienes instalados te avisa con la lista de mods que faltan y mantiene esos paneles como marcadores. Las configuraciones exportadas antiguas siguen importándose bien.
 
+## Tile Info
+
+Describe el tile seleccionado en la paleta: una vista previa, su nombre (los autotiles muestran el nombre del archivo de su gráfico) y una brújula de cuatro flechas que indica qué direcciones son transitables (verde) o están bloqueadas (rojo). Debajo: **Prioridad**, **Terreno**, el **Tileset** y, para tiles normales, el **Gráfico** del tileset y la **Posición** (columna, fila) del tile en esa imagen. **Arbusto** y **Mostrador** aparecen como etiquetas cuando están activos.
+
+Al seleccionar varios tiles se añade una fila **Selección** (tamaño y número de tiles); cualquier valor que difiera entre ellos aparece como **Mixto**, y una flecha de la brújula se vuelve ámbar cuando solo algunos de los tiles bloquean esa dirección.
+
 ## Minimapa
 
 Panel inferior derecho. Muestra una vista a escala de todo el mapa (todas las capas nativas + extendidas + sombras) con un rectángulo amarillo de viewport. Haz clic o arrastra para recentrar el lienzo principal.

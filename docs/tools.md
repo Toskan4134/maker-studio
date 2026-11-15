@@ -33,6 +33,8 @@ When a tool is active you can adjust per-tile properties before painting. These 
 - **Lighting**: -255 to 255 (brightness).
 - **Flip H / Flip V**: Flip the tile horizontally or vertically.
 
+A slider whose value differs from its default shows its label in the accent colour; click the label to reset just that property. The circular-arrow button in the panel header resets them all, and **Apply to Selection** (next to the preview) applies the current values to the selected tiles.
+
 Rotation and flipping do not apply to autotiles: an autotile picks its pattern from the tiles around it, so a rotated or mirrored one would no longer match the edge it was chosen for. While an autotile is selected the four transform controls are greyed out ("Autotiles cannot be rotated or flipped — their pattern depends on the surrounding tiles"), and the Edit menu items and Q / W keys do nothing.
 
 ### Lock

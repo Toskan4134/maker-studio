@@ -33,6 +33,8 @@ Cuando una herramienta está activa puedes ajustar propiedades por tile antes de
 - **Lighting**: -255 a 255 (brillo).
 - **Flip H / Flip V**: voltea el tile horizontal o verticalmente.
 
+Si un deslizador tiene un valor distinto del predeterminado, su etiqueta aparece en el color de acento; haz clic en ella para restablecer solo esa propiedad. El botón de flecha circular de la cabecera del panel las restablece todas, y **Apply to Selection** (junto a la vista previa) aplica los valores actuales a los tiles seleccionados.
+
 La rotación y el volteo no se aplican a los autotiles: un autotile elige su patrón según los tiles de alrededor, así que uno rotado o reflejado ya no encajaría con el borde para el que se eligió. Mientras hay un autotile seleccionado, los cuatro controles de transformación aparecen atenuados ("Los autotiles no se pueden rotar ni voltear — su patrón depende de los tiles de alrededor"), y las opciones del menú Edit y las teclas Q / W no hacen nada.
 
 ### Bloqueo (Lock)
