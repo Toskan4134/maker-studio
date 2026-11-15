@@ -400,14 +400,14 @@ parte de la ruta y no como comandos propios.
 
 Construir un paseo pulsando **Move Up** doce veces cansa rápido. **Dibujar ruta…** (junto a Test Move Route) abre el propio mapa y te deja trazar la ruta encima.
 
-- **Arrastra por las casillas** para caminar — cada casilla que cruzas se convierte en una acción Move, diagonales incluidas.
-- **Haz clic en una casilla lejana** para añadir un **Jump** directo hasta ahí.
-- **Clic derecho** recorta la ruta hasta el paso donde has hecho clic.
-- Los botones **Girar** y **Añadir Wait…** añaden las acciones que no mueven; doble clic en una fila de Wait para cambiar sus fotogramas (20 fotogramas = 1 segundo).
-- **Fijar inicio** elige la casilla desde la que arranca la ruta. El editor la calcula a partir de los comandos anteriores de la misma página y el mismo objetivo, incluidos cambios directos de posición, intercambios conocidos y rutas anteriores. Si una ruta puede seguir ejecutándose o la posición depende de una variable o una rama, se indica que es estimada. Fijar inicio sigue teniendo prioridad como ajuste manual y se recuerda al volver a abrir esa ruta.
-- **Deshacer / Rehacer** con `Ctrl+Z` / `Ctrl+Y`. Selecciona filas de la lista de pasos para borrarlas: el clic derecho elimina todo lo posterior al paso marcado, `Delete` elimina exactamente los que hayas seleccionado — ambos preguntan antes, y `Ctrl+Y` los recupera.
-- El **teclado** también dibuja: las flechas dan un paso, `Ctrl`+flechas giran, `Backspace` (o `Shift+←`) deshace el último paso y `Shift+→` lo rehace. Todos son reasignables en **Editor de rutas de movimiento** dentro de los ajustes de atajos.
-- Desplaza con arrastre del botón central o `Shift`+arrastrar, y haz zoom con `Ctrl`+rueda — igual que en el lienzo del mapa.
+- Elige **Caminar**, **Saltar** o **Fijar inicio** en la barra de herramientas. Con **Caminar**, haz clic o arrastra por las tiles; al hacer clic en una tile lejana, el camino llega hasta ella, con diagonales incluidas. Al arrastrar por una esquina también se pueden crear pasos diagonales, y al volver sobre tiles anteriores se añaden pasos de regreso.
+- Con **Saltar**, haz clic en una tile para añadir una acción Jump; si es una tile adyacente, se añade un único Move. El editor calcula la tile de inicio a partir de los comandos anteriores de la misma página y el mismo objetivo, incluidos cambios directos de posición, intercambios conocidos y rutas anteriores; si una ruta puede seguir ejecutándose o la posición depende de una variable o una rama, el pie la marca como **Estimada**. Con **Fijar inicio**, haz clic en una tile para cambiarla (esto limpia la ruta y vuelve a Caminar); el ajuste se guarda al aplicar la ruta y se recuerda al volver a abrirla.
+- **Clic derecho** quita el último paso. El botón **Controles** de la barra de herramientas muestra todos los controles de ratón y teclado.
+- En **Secuencia**, usa **Deshacer**, **Rehacer**, **Subir/Bajar**, **Eliminar** y **Limpiar** para editar los pasos. Haz clic en las filas o usa Shift / Ctrl junto con el clic para seleccionar; arrastra filas para reordenarlas, también con varias seleccionadas. Haz doble clic en una fila Wait para cambiar sus fotogramas (20 fotogramas = 1 segundo).
+- Usa **Añadir** para añadir un **Girar** en cualquier dirección o un **Esperar** con el número de fotogramas que quieras.
+- Las flechas añaden pasos, `Ctrl`+flechas añaden giros, `Backspace` quita el último paso y `Ctrl+Z` / `Ctrl+Y` deshacen y rehacen cambios. Un trazo completo de arrastre se deshace como un solo paso; reordenar también cuenta como uno. `Delete` elimina los pasos seleccionados y pide confirmación si hay más de uno; se pueden restaurar con deshacer. Estos controles se pueden reasignar en **Editor de rutas de movimiento**, dentro de los ajustes de atajos.
+- Desplaza manteniendo la tecla de paneo (Space por defecto) mientras arrastras, o arrastra con el botón central. La rueda del ratón hace zoom sin Ctrl.
+- En el mapa, las tiles de la ruta se resaltan con un pequeño triángulo entre ellas que indica la dirección de cada paso; un Jump se dibuja como una línea discontinua hasta una tile discontinua. El inicio usa el mismo marcador verde **Start** que el Player Start, y las filas seleccionadas en **Secuencia** se resaltan en el mapa.
 
 **Aplicar como ruta de movimiento** sustituye las acciones de la ruta por el trazado que has dibujado. Si el comando ya tenía una ruta, el editor la muestra al abrirse, así que puedes extenderla o recortarla en vez de empezar de cero.
 

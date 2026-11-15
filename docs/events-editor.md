@@ -399,14 +399,14 @@ than as commands of their own.
 
 Building a walk by clicking **Move Up** twelve times gets old fast. **Draw path…** (next to Test Move Route) opens the map itself and lets you draw the route on it.
 
-- **Drag across tiles** to walk — each tile you cross becomes a Move action, diagonals included.
-- **Click a tile far away** to add a **Jump** straight there.
-- **Right-click** cuts the route back to the step you clicked.
-- **Turn** and **Add Wait…** buttons add the non-moving actions; double-click a Wait row to change its frame count (20 frames = 1 second).
-- **Set Start** picks the tile the route starts from. The editor derives it from earlier commands on the same page for the same target, including direct location changes, known swaps, and earlier move routes. When a route may still be running or the position depends on a variable or branch, the position is marked as estimated. Set Start remains a manual override and is remembered the next time you open the editor for that route.
-- **Undo / Redo** with `Ctrl+Z` / `Ctrl+Y`. Select rows in the step list to delete them: right-click removes everything after the marked step, `Delete` removes exactly the ones you selected — both ask first, and `Ctrl+Y` brings them back.
-- The **keyboard** draws too: arrow keys step, `Ctrl`+arrows turn, `Backspace` (or `Shift+←`) undoes the last step and `Shift+→` redoes it. All of these are rebindable under **Move Route Editor** in the shortcut settings.
-- Pan with middle-drag or `Shift`+drag, zoom with `Ctrl`+scroll — the same as the map canvas.
+- Choose **Walk**, **Jump**, or **Set Start** from the toolbar. **Walk** by clicking or dragging across tiles; clicking a distant tile walks there, diagonal steps included. Dragging across a corner can also create diagonal steps, and dragging back over earlier tiles adds return steps.
+- With **Jump** selected, click a tile to add one Jump action; clicking an adjacent tile adds a single Move instead. The editor derives the start tile from earlier commands on the same page for the same target, including direct location changes, known swaps, and earlier move routes; when a route may still be running or the position depends on a variable or branch, the footer marks it **Estimated**. With **Set Start**, click a tile to override it (this clears the route and returns to Walk); the override is saved when you apply the route and remembered the next time you open it.
+- **Right-click** removes the last step. Use the **Controls** button in the toolbar to see every mouse and keyboard control.
+- In **Sequence**, use **Undo**, **Redo**, **Move up**, **Move down**, **Delete**, and **Clear** to edit steps. Click rows, or use Shift / Ctrl with clicks, to select steps; drag rows to reorder them, with multi-selections moving together. Double-click a Wait row to change its frame count (20 frames = 1 second).
+- Use **Add** to add a **Turn** in any direction or a **Wait** with a chosen frame count.
+- Arrow keys add steps, `Ctrl`+arrows add turns, `Backspace` removes the last step, and `Ctrl+Z` / `Ctrl+Y` undo and redo edits. A whole drag stroke undoes as one step; reordering is also one step. `Delete` removes selected steps and asks first when more than one is selected; undo restores them. These controls can be rebound under **Move Route Editor** in the shortcut settings.
+- Pan by holding Space (the default pan key) and dragging, or by middle-dragging. The mouse wheel zooms without Ctrl.
+- On the map, route tiles are highlighted with a small triangle between them showing the direction of each step; a Jump is drawn as a dashed line to a dashed tile. The start uses the same green **Start** marker as the Player Start, and rows selected in **Sequence** are highlighted on the map.
 
 **Apply as Move Route** replaces the route's actions with the path you drew. If the command already had a route, the editor opens showing it, so you can extend or trim rather than start over.
 

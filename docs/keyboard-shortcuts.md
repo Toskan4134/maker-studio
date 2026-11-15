@@ -211,11 +211,11 @@ These only apply while the visual route editor is open, which is why they can us
 |-------------|--------|
 | ↑ / ↓ / ← / → | Add a step in that direction |
 | Ctrl + ↑ / ↓ / ← / → | Add a Turn in that direction |
-| Backspace | Undo the last step |
-| Shift + ← | Undo the last step (alternative) |
-| Shift + → | Redo the last undone step |
+| Backspace | Remove the last step |
 | Delete | Remove the selected steps |
-| Ctrl+Z / Ctrl+Y | Undo / redo any edit in the path editor |
+| Ctrl+Z / Ctrl+Y | Undo / redo any edit in the path editor (a whole drag stroke is one undo step) |
+
+The **Controls** button in the editor's toolbar lists every control.
 
 ## Scripts Editor
 

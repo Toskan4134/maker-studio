@@ -213,11 +213,11 @@ Solo se aplican mientras el editor visual de rutas está abierto, por eso pueden
 |-------------|--------|
 | ↑ / ↓ / ← / → | Añadir un paso en esa dirección |
 | Ctrl + ↑ / ↓ / ← / → | Añadir un Turn en esa dirección |
-| Backspace | Deshacer el último paso |
-| Shift + ← | Deshacer el último paso (alternativa) |
-| Shift + → | Rehacer el último paso deshecho |
+| Backspace | Quitar último paso |
 | Delete | Eliminar los pasos seleccionados |
-| Ctrl+Z / Ctrl+Y | Deshacer / rehacer cualquier edición en el editor de rutas |
+| Ctrl+Z / Ctrl+Y | Deshacer / rehacer cualquier edición en el editor de rutas (un trazo completo de arrastre cuenta como un paso) |
+
+El botón **Controles** de la barra de herramientas del editor muestra todos los controles.
 
 ## Editor de scripts
 
