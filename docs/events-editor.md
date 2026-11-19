@@ -548,11 +548,12 @@ Maker Studio lets you narrow it:
 | Option | Waits for |
 |--------|-----------|
 | **Any Event (RPG Maker default)** | Every character — the original behaviour. Chosen for new commands, and what happens without the plugin |
+| **Player** | The route this event assigned to the player |
 | **This Event** | The Set Move Routes *this event* ran, whoever they moved — including one it set on the player |
 | A specific event | Just the route this event set on that one |
 
-"This Event" is the one you want after moving the player through a door: the event itself is standing
-still, so what matters is the route it started, not its own movement.
+Choose **Player** after assigning a route that moves the player through a door. Use **This Event**
+when the event also assigned routes to other characters and should wait for them all.
 
 Anything other than *Any Event* needs the **Maker Studio plugin** in your game (the badge on the
 form says so). Without it the game falls back to waiting for every character — never a crash, just

@@ -547,11 +547,12 @@ puede retener al tuyo. Maker Studio permite acotarlo:
 | Opción | Espera a |
 |--------|----------|
 | **Cualquier evento (por defecto en RPG Maker)** | Todos los personajes — el comportamiento original. Es lo que se elige en comandos nuevos y lo que ocurre sin el plugin |
+| **Jugador** | La ruta que este evento ha asignado al jugador |
 | **Este evento** | Las rutas que ha lanzado *este evento*, muevan a quien muevan — incluida una que le haya puesto al jugador |
 | Un evento concreto | Solo la ruta que este evento le puso a ese |
 
-"Este evento" es lo que quieres tras mover al jugador por una puerta: el propio evento está parado,
-así que lo que importa es la ruta que lanzó, no su movimiento.
+Elige **Jugador** tras asignarle una ruta para atravesar una puerta. Usa **Este evento** si también
+has asignado rutas a otros personajes desde el mismo evento y quieres esperar a que terminen todas.
 
 Cualquier opción distinta de *Cualquier evento* necesita el **plugin de Maker Studio** en tu juego
 (el distintivo del formulario lo indica). Sin él, el juego vuelve a esperar a todos los personajes —
