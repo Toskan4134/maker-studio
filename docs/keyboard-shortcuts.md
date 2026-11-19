@@ -244,13 +244,13 @@ On the **Events layer**, the **Select** tool box-selects events: drag a marquee 
 
 | Default Key | Action |
 |-------------|--------|
-| Ctrl+C | Copy the selected map (whole map, including layers, events, and versions) |
-| Ctrl+V | Paste the copied map into this project as a new map, placed directly below the selected map |
+| Ctrl+V | Paste the last tiles or map you copied or cut |
 | Ctrl+J | Duplicate the selected map (same as right-click → Duplicate Map) |
 | Delete | Delete the selected map (asks for confirmation, same as right-click → Delete Map) |
 | F2 | Rename the one selected map inline, or the active map when no map row is selected |
 
-In the Maps panel, **Ctrl+click** toggles rows and **Shift+click** selects the visible range. Drag a selected row to move all selected roots together with their descendants. Delete opens choices to keep descendants in the deleted maps' positions or delete them too; the confirmation warns about unsaved open maps. F2 renames the only selected map, or the active map when no map row is selected. It does nothing with multiple maps selected, when there is no selection and no active map, or while the filter field is being edited. These shortcuts only fire while the Maps panel has focus, so they don't conflict with copying tiles on the canvas. To paste a map **between two Maker Studio windows**, turn on **Edit → Cross-Project Clipboard** first: copy then mirrors to your OS clipboard, and paste reads from it. With the toggle off, copy/paste still works **within the same window** (the copy stays in memory). The pasted map lands directly below the selected map (at the root if no map is selected). See [Map Management](map-management.md#copying-a-map-between-projects).
+In the Maps panel, **Ctrl+click** toggles rows and **Shift+click** selects the visible range. Drag a selected row to move all selected roots together with their descendants. Delete opens choices to keep descendants in the deleted maps' positions or delete them too; the confirmation warns about unsaved open maps. F2 renames the only selected map, or the active map when no map row is selected. It does nothing with multiple maps selected, when there is no selection and no active map, or while the filter field is being edited. Ctrl+C and Ctrl+X still use the editor actions while the list has focus. Use **Cut Map** or **Copy Map** in the context menu for whole maps. **Paste Map** in that menu always looks for a whole map, even after a more recent tile copy. See [Map Management](map-management.md#copying-a-map-between-projects).
+
 
 ## Layer Panel (Layer List)
 

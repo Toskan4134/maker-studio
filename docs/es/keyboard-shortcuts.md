@@ -246,13 +246,13 @@ En la **capa de eventos**, la herramienta **Select** hace selección de caja de 
 
 | Tecla por defecto | Acción |
 |-------------|--------|
-| Ctrl+C | Copiar el mapa seleccionado (mapa entero, incluyendo capas, eventos y versiones) |
-| Ctrl+V | Pegar el mapa copiado en este proyecto como un mapa nuevo, colocado justo debajo del mapa seleccionado |
+| Ctrl+V | Pegar los últimos tiles o el último mapa copiado o cortado |
 | Ctrl+J | Duplicar el mapa seleccionado (igual que clic derecho → Duplicate Map) |
 | Delete | Borrar el mapa seleccionado (pide confirmación, igual que clic derecho → Delete Map) |
 | F2 | Renombrar en línea el único mapa seleccionado o el mapa activo si no hay filas seleccionadas |
 
-En el panel Mapas, **Ctrl+clic** alterna filas y **Shift+clic** selecciona el rango visible. Arrastra una fila seleccionada para mover juntas todas las raíces seleccionadas con sus descendientes. Delete permite conservar los descendientes en las posiciones de los mapas borrados o borrarlos también; la confirmación avisa de mapas abiertos con cambios sin guardar. F2 renombra el único mapa seleccionado o, si no hay filas seleccionadas, el mapa activo. No hace nada si hay varios mapas seleccionados, si no hay selección ni mapa activo o si se está editando el filtro. Estos atajos solo se activan cuando el panel Mapas tiene el foco, así que no entran en conflicto con la copia de tiles en el lienzo. Para pegar un mapa **entre dos ventanas de Maker Studio**, activa primero **Edit → Cross-Project Clipboard**: la copia se refleja entonces en el portapapeles del SO y el pegado lo lee de ahí. Con el conmutador desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana** (la copia se queda en memoria). El mapa pegado cae justo debajo del mapa seleccionado (en la raíz si no hay ningún mapa seleccionado). Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
+En el panel Mapas, **Ctrl+clic** alterna filas y **Shift+clic** selecciona el rango visible. Arrastra una fila seleccionada para mover juntas todas las raíces seleccionadas con sus descendientes. Delete permite conservar los descendientes en las posiciones de los mapas borrados o borrarlos también; la confirmación avisa de mapas abiertos con cambios sin guardar. F2 renombra el único mapa seleccionado o, si no hay filas seleccionadas, el mapa activo. No hace nada si hay varios mapas seleccionados, si no hay selección ni mapa activo o si se está editando el filtro. Ctrl+C y Ctrl+X siguen las acciones del editor con el panel enfocado. Para cortar o copiar un mapa entero, usa **Cortar mapa** o **Copiar mapa** en el menú contextual. **Pegar mapa** en ese menú siempre busca un mapa entero, aunque la última copia haya sido de tiles. Consulta [Gestión de mapas](map-management.md#copiar-un-mapa-entre-proyectos).
+
 
 ## Panel de capas (lista de capas)
 

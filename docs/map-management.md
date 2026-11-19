@@ -42,12 +42,14 @@ The copy is named *"<original> (copy)"*, placed under the same parent, and opene
 
 ## Copying a Map Between Projects
 
-You can copy a whole map from one project to another with **Ctrl+C / Ctrl+V** in the map list, the same way RPG Maker XP does:
+Use the Maps panel context menu to copy an entire map, including its layers, events, and versions.
 
 1. Turn on **Edit → Cross-Project Clipboard** (it's off by default). With it off, copy/paste still works **within the same window**, but the copy is not mirrored to your OS clipboard, so a second window can't see it.
 2. Open two Maker Studio windows on the two projects (File → Open Project… in a second window).
-3. In the source project's map list, click the map you want to copy and press **Ctrl+C**. The whole map — tiles on every layer, events, shadows/fog/panorama layers, and any map versions — is serialized to your OS clipboard.
-4. In the destination project's map list, click a map that will sit above the new one (this both focuses the panel and picks the landing spot) and press **Ctrl+V**. The map is imported as a **new map placed directly below the selected map** (at the root of the tree if no map is selected) and opened automatically.
+3. In the source project, right-click the map and choose **Copy Map**.
+4. In the destination project, right-click a map and choose **Paste Map** to insert the new map directly below it. To paste at the end of the root, right-click an empty area of the list. The new map opens automatically.
+
+**Cut Map** asks for confirmation, saves a snapshot to the clipboard, and removes the original. Its descendants stay in the tree. The disk backup contains the changes that were already saved.
 
 Tips:
 

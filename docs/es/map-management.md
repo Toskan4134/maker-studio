@@ -42,12 +42,14 @@ La copia se llama *"<original> (copy)"*, se coloca bajo el mismo padre y se abre
 
 ## Copiar un mapa entre proyectos
 
-Puedes copiar un mapa entero de un proyecto a otro con **Ctrl+C / Ctrl+V** en la lista de mapas, igual que RPG Maker XP:
+Usa el menú contextual del panel Mapas para copiar un mapa entero, incluidas sus capas, eventos y versiones.
 
 1. Activa **Edit → Cross-Project Clipboard** (está desactivado por defecto). Con él desactivado, copiar/pegar sigue funcionando **dentro de la misma ventana**, pero la copia no se refleja en el portapapeles del SO, así que una segunda ventana no puede verla.
 2. Abre dos ventanas de Maker Studio en los dos proyectos (File → Open Project… en una segunda ventana).
-3. En la lista de mapas del proyecto de origen, haz clic en el mapa que quieres copiar y pulsa **Ctrl+C**. El mapa entero — tiles de cada capa, eventos, capas de sombras/fog/panorama y cualquier versión de mapa — se serializa al portapapeles del SO.
-4. En la lista de mapas del proyecto de destino, haz clic en un mapa que quedará por encima del mapa nuevo (esto da foco al panel y elige dónde caerá) y pulsa **Ctrl+V**. El mapa se importa como un **mapa nuevo colocado justo debajo del mapa seleccionado** (en la raíz del árbol si no hay ningún mapa seleccionado) y se abre automáticamente.
+3. En el proyecto de origen, haz clic derecho en el mapa y elige **Copiar mapa**.
+4. En el proyecto de destino, haz clic derecho en un mapa y elige **Pegar mapa** para insertar el nuevo mapa justo debajo. Para pegar al final de la raíz, haz clic derecho en un espacio vacío de la lista. El mapa nuevo se abre automáticamente.
+
+**Cortar mapa** pide confirmación, guarda una copia del mapa en el portapapeles y retira el original. Sus descendientes se conservan en el árbol. La copia de seguridad en disco contiene los cambios que ya estaban guardados.
 
 Consejos:
 
