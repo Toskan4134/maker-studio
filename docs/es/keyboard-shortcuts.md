@@ -134,6 +134,8 @@ En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre todos
 
 ## Editor de propiedades de tileset
 
+En el editor y la paleta de tiles, mantén el atajo **Pan** (Espacio por defecto) o el botón central del ratón y arrastra. Funciona aunque otro control tenga el foco.
+
 | Tecla por defecto | Acción |
 |-------------|--------|
 | Ctrl+S | Guardar tileset (mantiene el editor abierto) |

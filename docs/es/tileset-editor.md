@@ -34,6 +34,14 @@ antigua ranura.
 
 El editor de tilesets te permite modificar las propiedades base de cada tile de un tileset. Son los mismos ajustes que encuentras en RPG Maker XP bajo Database y luego Tilesets. Los cambios hechos aquí se aplican a todos los mapas que usan este tileset.
 
+## Dimensiones de los gráficos
+
+La paleta abre en modo **Ajustar** para los tilesets que todavía no tienen un zoom guardado. Usa **−**, **+** o **Ctrl + rueda** (**Cmd** en macOS) para cambiar el tamaño. **Ajustar** responde al ancho del panel mientras lo redimensionas. Los cuadros del fondo de transparencia conservan su tamaño a cualquier zoom. Vuelve a pulsar **Ajustar** para fijar el tamaño actual. La paleta guarda el modo y el zoom por tileset en este dispositivo. Las celdas miden al menos 16 px, por lo que los tilesets anchos pueden seguir teniendo desplazamiento horizontal. En ambas vistas, mantén pulsado el atajo de **Pan** (Espacio por defecto) o el botón central del ratón y arrastra para moverte, aunque el foco esté en otro control. Ensancha el panel para ver más columnas o arrastra una selección hasta cualquier borde para desplazarla. En el editor de tilesets de la base de datos, usa **Shift + rueda** para desplazarte en horizontal y **Ctrl + rueda** (**Cmd** en macOS) para hacer zoom alrededor del puntero. Cada paso cambia el zoom en la misma proporción, tanto en la paleta como en el editor.
+
+Los tilesets usan las celdas completas de 32×32 del gráfico en su disposición original. Una imagen de 160 px tiene cinco columnas y una de 512 px tiene dieciséis. Si sustituyes un gráfico por otro con distinto número de columnas, los IDs guardados pueden mostrar otros tiles. Instala la integración actualizada de Maker Studio para usar estos gráficos en el juego.
+
+Los autotiles animados usan tiras horizontales de fotogramas de 32×32 o 96×128. El editor y el simulador reproducen la tira completa. La exportación animada admite hasta 384 fotogramas.
+
 ## Modos de edición
 
 ### Passage (paso)

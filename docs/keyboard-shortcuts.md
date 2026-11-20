@@ -134,6 +134,8 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J act on all selected e
 
 ## Tileset Property Editor
 
+In the editor and tile palette, hold the **Pan** shortcut (Space by default) or the middle mouse button and drag. It works when another control has focus.
+
 | Default Key | Action |
 |-------------|--------|
 | Ctrl+S | Save tileset (keeps the editor open) |

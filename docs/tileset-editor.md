@@ -32,6 +32,14 @@ used everywhere else in the editor, instead of its own custom popup — and dele
 
 The Tileset Editor lets you modify base properties for every tile in a tileset. These are the same settings you find in RPG Maker XP under Database then Tilesets. Changes made here apply to every map that uses this tileset.
 
+## Graphic dimensions
+
+The palette opens in **Fit** mode for tilesets without a saved zoom. Use **−**, **+**, or **Ctrl + mouse wheel** (**Cmd** on macOS) to change their size. **Fit** follows the panel width as you resize it. The transparency checkerboard keeps the same square size at every zoom. Click **Fit** again to lock the current size. The palette saves the mode and zoom per tileset on this device. Cells stay at least 16 px wide, so wide sheets can still scroll horizontally in Fit mode. In either view, hold the **Pan** shortcut (Space by default) or the middle mouse button and drag to move the view, even when another control has focus. Widen the panel to reveal more columns, or drag a selection to any edge to scroll. In the Database Tileset Editor, use **Shift + mouse wheel** to scroll horizontally and **Ctrl + mouse wheel** (**Cmd** on macOS) to zoom around the pointer. Each step uses the same zoom ratio in the palette and the editor.
+
+Tileset graphics use complete 32×32 cells in their original layout. A 160 px sheet has five columns and a 512 px sheet has sixteen. Replacing an existing graphic with a different column count can change which sprite its saved tile IDs display. Install the updated Maker Studio game integration for variable-width graphics.
+
+Autotile animations use horizontal strips of 32×32 or 96×128 frames. The editor and simulator play the full strip. Animated exports are limited to 384 output frames.
+
 ## Editing Modes
 
 ### Passage
