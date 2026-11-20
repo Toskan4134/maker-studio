@@ -89,7 +89,11 @@ Así puedes traducir un nombre por defecto (por ejemplo renombrar "Grass" a "Hie
 
 ## Editar propiedades de autotiles
 
-El paso/prioridad/terreno de los autotiles se edita por separado de los tilesets normales. En el Tileset Manager, elige la entrada **Autotiles** (mostrada como `000: Autotiles` en lo alto de la lista) y haz clic en **Edit Properties...**. Esto abre una cuadrícula dedicada de cada autotile (ranuras nativas + autotiles extra con nombre). Editar una propiedad para un autotile la aplica a los 48 tiles de patrón de ese autotile a la vez.
+El interruptor de **Autotiles** está activado por defecto y muestra los autotiles de todo el proyecto. Desactívalo para ver los autotiles nativos del tileset seleccionado. Maker Studio recuerda esta elección por proyecto en este equipo. Puedes pintar en una capa nativa si el gráfico está asignado al tileset del mapa. Al cambiar de mapa se borra la selección del autotile.
+
+Con la agrupación desactivada, abre **Base de datos → Tilesets**, selecciona un tileset y pulsa **Autotiles**. También puedes abrir esa vista directamente con **Editar propiedades…** en el menú contextual de la paleta. En **Modo**, pulsa **Reemplazar gráfico del autotile** y luego elige una ranura en la cuadrícula para asignar, reemplazar o quitar su gráfico. Edita sus propiedades y pulsa **Aplicar** o **Guardar**. Reemplazar o vaciar una ranura afecta a las casillas que ya la usan. Reactiva la agrupación para recuperar la entrada virtual **Autotiles**.
+
+Con la agrupación activada, selecciona la entrada virtual **Autotiles** (mostrada como `000: Autotiles` al principio de la lista) o pulsa **Autotiles** desde un tileset normal. Esto abre una cuadrícula dedicada de cada autotile (ranuras nativas + autotiles extra con nombre). Editar una propiedad para un autotile la aplica a los 48 tiles de patrón de ese autotile a la vez.
 
 Las propiedades de autotile son **por gráfico**: la cuadrícula muestra los valores actuales de cada autotile leídos del tileset que lo contiene de forma nativa, y al guardar esos valores se aplican a todos los tilesets que usan ese gráfico (emparejado por su nombre de archivo). Los tilesets que no contienen el gráfico no se tocan, así que el resto de ajustes de autotiles de cada tileset se conservan.
 
