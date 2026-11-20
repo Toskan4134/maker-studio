@@ -240,7 +240,7 @@ Haz clic en Insert (o pulsa Insert / Enter) para abrir el Command Picker. Tambi�
 - **Movimiento** — trasladar al jugador, fijar/desplazar y rutas de movimiento.
 - **Pantalla e imágenes** — tonos de pantalla, destellos, temblores, clima e imágenes.
 - **Audio** — música de fondo, efectos de sonido y demás audio.
-- **Héroes** — stats, habilidades, equipo, nombre, clase y gráficos de actor.
+- **Actores** — stats, habilidades, equipo, nombre, clase y gráficos de actor.
 - **Combate** — procesamiento de batalla, tienda y comandos de enemigo.
 - **Sistema** — windowskin, acceso a menú/guardado/encuentros, scripts y ajustes de sistema.
 
