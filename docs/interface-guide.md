@@ -131,6 +131,10 @@ digit. An empty field left as-is falls back to that field's minimum.
 
 Panels added by [mods](marketplace.md) keep their place in your layout. If a mod is disabled, uninstalled, or reloading, its panel slot stays where you docked it and shows a placeholder ("Panel provided by mod … — not loaded") until the mod is back; close the placeholder if you don't want to keep the slot. Exported layout configurations (**View → Layout → Export Configuration**) also record which mods provided which panels — importing a layout that uses panels from mods you don't have installed warns you with the list of missing mods and keeps those panels as placeholders. Older exported configurations still import fine.
 
+### Tile Palette
+
+In by-tileset mode, the expanded **Autotiles** section follows the panel width as you drag the divider. The checkerboard squares stay the same size.
+
 ## Tile Info
 
 Describes the tile selected in the palette: a preview, its name (autotiles show their graphic's file name), and a compass of four arrows showing which directions are passable (green) or blocked (red). Below it: **Priority**, **Terrain**, the **Tileset**, and for ordinary tiles the tileset **Graphic** and the tile's **Position** (column, row) in that image. **Bush** and **Counter** appear as chips when set.
