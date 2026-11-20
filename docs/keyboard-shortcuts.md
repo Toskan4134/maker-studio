@@ -174,9 +174,15 @@ history from the command list below it.
 | Ctrl+Z | Undo page edit — now also undoes adding, deleting, or cloning a page |
 | Ctrl+Y | Redo page edit |
 
-## Database (Tilesets / Common Events / Animations / Switches / Variables)
+## Database
 
-Click a row in any Database list to give it focus, then these act on the whole record — a separate
+Use the configured **Save** shortcut, **Ctrl+S** by default, to apply changes in the active XP, Animations, Common Events, or Tileset editor.
+
+With a tab focused, press **Alt+Shift+Left** or **Alt+Shift+Right** to move it one position.
+
+In the Actors, Classes, Skills, Items, Weapons, Armors, Enemies, Troops, and States lists, focus a record and press **F4** or **F5** to select the previous or next record. The configured Copy, Cut, Paste, Duplicate, and Delete shortcuts work while the list has focus. The Undo and Redo shortcuts, **Ctrl+Z** and **Ctrl+Y** by default, also work in the form fields of the XP database tabs, including System. Search and the event command editor keep their own shortcuts.
+
+In Tilesets, Common Events, Animations, Switches, and Variables, click a row to give it focus, then these act on the whole record — a separate
 undo history per list. See [Database](database.md#copying-cutting-and-pasting-records).
 
 | Default Key | Action |

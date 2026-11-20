@@ -175,9 +175,15 @@ de abajo.
 | Ctrl+Z | Deshacer edición de página — ahora también deshace añadir, borrar o clonar una página |
 | Ctrl+Y | Rehacer edición de página |
 
-## Database (Tilesets / Common Events / Animations / Switches / Variables)
+## Base de datos
 
-Haz clic en una fila de cualquier lista de Database para darle el foco; a partir de ahí estas teclas
+Usa el atajo configurado para **Guardar**, **Ctrl+S** por defecto, para aplicar cambios en el editor activo de XP, Animaciones, Eventos comunes o tilesets.
+
+Con una pestaña enfocada, pulsa **Alt+Mayús+Izquierda** o **Alt+Mayús+Derecha** para moverla una posición.
+
+En las listas de Actores, Clases, Habilidades, Objetos, Armas, Armaduras, Enemigos, Tropas y Estados, enfoca un registro y pulsa **F4** o **F5** para seleccionar el registro anterior o siguiente. Con el foco en la lista funcionan los atajos configurados para Copiar, Cortar, Pegar, Duplicar y Eliminar. Deshacer y Rehacer, **Ctrl+Z** y **Ctrl+Y** de forma predeterminada, funcionan también en los formularios de las pestañas de XP, incluido Sistema. El buscador y el editor de comandos de evento conservan sus propios atajos.
+
+En Tilesets, Eventos comunes, Animaciones, Interruptores y Variables, haz clic en una fila para darle el foco; a partir de ahí estas teclas
 actúan sobre todo el registro — un historial de deshacer por lista. Consulta
 [Database](database.md#copiar-cortar-y-pegar-registros).
 
