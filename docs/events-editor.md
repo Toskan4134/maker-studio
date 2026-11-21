@@ -4,6 +4,10 @@ Advanced Conditions and text-code help animate when expanded or collapsed. Text-
 
 ## Viewing Events
 
+Under **View → Animate Map Editor**, toggle **Autotiles** and **Events** independently.
+
+With **Stop Animation** enabled on the displayed event page, its character sprite loops through all configured columns in the selected row. The preview uses the movement speed configured on that page. The simulator and the game use the same column count. To see the change in an existing game, update its Maker Studio integration.
+
 Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. Overlapping event graphics draw back-to-front by depth, with event ID as the tie-breaker. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
 
 The Events panel lists the map's events. Search by name, event id, or coordinates; select a row to inspect its pages, double-click it or use **Edit** to open it, and use **New**, **Presets**, **Deselect**, or **Delete** from the panel header. Click selects one event, **Ctrl+click** toggles an event in the selection, and **Shift+click** selects a range. It is the same selection as on the map. **Deselect** clears the event selection and closes its detail view; the action is disabled when nothing is selected. **Delete** removes every selected event after one confirmation; **Presets** with several events selected saves them all as presets (with one selected it opens the preset manager).

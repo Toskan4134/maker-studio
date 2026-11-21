@@ -4,6 +4,10 @@ Las condiciones avanzadas y la ayuda de códigos de texto se animan al plegarse 
 
 ## Ver eventos
 
+En **Ver → Animar el editor de mapas**, puedes activar **Autotiles** y **Eventos** por separado.
+
+Al activar **Animación al parar** en la página que se muestra en el mapa, el sprite recorre en bucle todas las columnas configuradas en su fila. La vista previa usa la velocidad de movimiento configurada en esa página. El simulador y el juego usan el mismo número de columnas. Para ver el cambio en un juego existente, actualiza su integración de Maker Studio.
+
 Activa los marcadores de evento desde el botón **Events** de la barra de herramientas (o **View → Show Events**). Los eventos aparecen como marcadores de color en el lienzo. Si sus gráficos se solapan, se dibujan de atrás hacia delante según su profundidad, con la ID del evento como desempate. Cuando pasas el cursor sobre un evento, la barra de estado de abajo muestra el nombre del evento. (Pulsar **V** selecciona la *capa* de eventos para editar — no alterna la visibilidad de los marcadores.)
 
 El panel Events lista los eventos del mapa. Puedes buscar por nombre, ID o coordenadas; selecciona una fila para revisar sus páginas, haz doble clic o pulsa **Edit** para abrirla y usa **New**, **Presets**, **Deseleccionar** o **Delete** en la cabecera del panel. Un clic selecciona un evento, **Ctrl+clic** alterna un evento en la selección y **Shift+clic** selecciona un rango. Es la misma selección que en el mapa. **Deseleccionar** limpia la selección de eventos y cierra su vista de detalle; el botón se desactiva cuando no hay nada seleccionado. **Delete** quita todos los eventos seleccionados tras una sola confirmación; **Presets** con varios eventos seleccionados los guarda todos como presets (con uno seleccionado abre el gestor de presets).
