@@ -61,7 +61,7 @@ Haz clic para recorrer los niveles de prioridad 0 a 5:
 
 **Cada nivel tiene su propio color.** La prioridad 1 es amarilla, la 2 naranja, la 3 rosa, la 4 morada y la 5 azul; la estrella y el número dibujados sobre cada tile usan ese color, y el desplegable de prioridad muestra un cuadrito del color junto a cada valor. La prioridad 0 se queda en blanco neutro. Así distingues de un vistazo una franja de nivel 1 de un tejado de nivel 3 en vez de tener que leer números. (Los niveles añadidos por [mods](marketplace.md) reutilizan esos cinco colores en orden, salvo que el mod le dé a su nivel un color propio. Un mod también puede recolorear todas las marcas — las de passage, bush, counter y terrain-tag además de las de prioridad.)
 
-La prioridad controla la **oclusión del jugador en el juego**, no el orden de dibujo del editor — en el lienzo del editor los tiles siempre se dibujan en orden de capa (ver [Capas](layers.md)). En el juego y en el Simulador la oclusión se decide **por tile** según su propia prioridad, salvo que un tile de suelo en una capa superior tapa a los que hay debajo en esa casilla. Ver [Capas](layers.md#priority-and-layer-order).
+La prioridad positiva sitúa el tile encima de los de prioridad 0, aunque estén en una capa superior. Consulta [Capas](layers.md#prioridad-y-orden-de-capas).
 
 ### Bush Flag
 

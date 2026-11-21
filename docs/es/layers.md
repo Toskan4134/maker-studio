@@ -52,8 +52,4 @@ Pulsa C para alternar el overlay de colisión. Muestra las banderas de paso dire
 
 ## Prioridad y orden de capas
 
-En el lienzo del editor, los tiles se dibujan puramente en **orden de capa** — un tile en una capa superior siempre cubre a uno en una capa inferior, sin importar su prioridad — y los eventos se dibujan por encima de todos los tiles. Esto coincide con el propio editor de mapas de RPG Maker XP, donde la prioridad nunca cambia lo que se dibuja encima.
-
-La **prioridad** solo controla la **oclusión en el juego y en el Simulador**: un tile con prioridad 1 o superior (un tile "por encima", como la copa de un árbol) se dibuja delante del jugador cuando este pasa por detrás. La prioridad que se aplica en una casilla se toma del tile **superior** colocado ahí. Los tiles de suelo (prioridad 0) nunca ocultan al jugador.
-
-Así que la prioridad ya no sube ni pone un tile delante de los eventos en el editor — usa las **capas** para controlar qué se dibuja encima, y la **prioridad** (en el Editor de Tilesets) para decidir tras qué puede caminar el jugador en el juego.
+Un tile con prioridad positiva se dibuja encima de cualquier tile de prioridad 0 en la misma casilla, aunque esté en una capa inferior. Esto se aplica a capas nativas y extendidas en el editor, las imágenes del mapa, el simulador y el juego. En el editor y las imágenes, la capa desempata entre tiles con la misma prioridad. En el simulador y el juego, la prioridad de cada tile también determina cómo se cruza con los personajes.

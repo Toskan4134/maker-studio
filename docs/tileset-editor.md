@@ -59,7 +59,7 @@ Click to cycle through priority levels 0 through 5:
 
 **Each level has its own colour.** Priority 1 is yellow, 2 orange, 3 pink, 4 purple and 5 blue; the star and number drawn on every tile use that colour, and the priority dropdown shows a matching colour chip next to each value. Priority 0 stays plain white. So you can now tell a level-1 fringe from a level-3 roof at a glance instead of counting numbers. (Levels added by [mods](marketplace.md) reuse the same five colours in order, unless the mod gives its level a colour of its own. A mod can also restyle the markers wholesale — the passage, bush, counter and terrain colours as well as the priority ones.)
 
-Priority controls **player occlusion in-game**, not editor draw order — on the editor canvas tiles are always drawn in layer order (see [Layers](layers.md)). In-game and in the Game Simulator, occlusion is decided **per tile** by its own priority, except that a ground tile on a higher layer covers the tiles beneath it on that square. See [Layers](layers.md#priority-and-layer-order) for details.
+Positive priority places the tile above priority-0 tiles, even when they occupy a higher layer. See [Layers](layers.md#priority-and-layer-order).
 
 ### Bush Flag
 
