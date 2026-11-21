@@ -107,6 +107,10 @@ If a rendering error crashes the editor interface, Maker Studio shows the error 
 
 Maker Studio writes a session log to `%APPDATA%/maker-studio/logs/` on Windows (the app's configuration directory on macOS and Linux). Each run creates a `log-YYYYMMDD-HHMMSS-PID.txt` file containing startup and shutdown, project and resource loading, map and tileset edits, map exports, script-file actions, mod loading, and errors. Edited event-script text is not included. If Maker Studio exits unexpectedly, the next launch shows the saved report. Autotiles animate at a steady four frames per second, including on large maps.
 
+## Credits
+
+Thanks to **DPertierra** for contributing to Maker Studio's development.
+
 ## Building from Source
 
 If you prefer to build the editor yourself:

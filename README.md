@@ -84,3 +84,7 @@ release per app version — the plugin buttons at the top download the current o
 
 This repository hosts **documentation, integrations, and releases** only. The application source
 code is maintained in a private repository.
+
+## Credits
+
+Thanks to **DPertierra** for helping develop Maker Studio.

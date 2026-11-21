@@ -103,6 +103,10 @@ Si un error de renderizado hace fallar la interfaz, Maker Studio muestra un resu
 
 Maker Studio guarda un registro por ejecución en `%APPDATA%/maker-studio/logs/` en Windows (en la carpeta de configuración de la aplicación en macOS y Linux). Cada archivo `log-AAAAMMDD-HHMMSS-PID.txt` recoge el inicio y cierre, la carga de proyectos y recursos, las ediciones del árbol de mapas y los tilesets, las exportaciones de mapas, las acciones sobre archivos de scripts, la carga de mods y los errores. No incluye el texto de los scripts de eventos editados. Si Maker Studio se cierra inesperadamente, el siguiente inicio muestra el informe guardado. Los autotiles se animan a una velocidad constante de cuatro fotogramas por segundo, también en mapas grandes.
 
+## Créditos
+
+Gracias a **DPertierra** por contribuir al desarrollo de Maker Studio.
+
 ## Compilar desde el código fuente
 
 Si prefieres compilar el editor tú mismo:
