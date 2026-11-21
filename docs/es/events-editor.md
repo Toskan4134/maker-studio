@@ -1,5 +1,7 @@
 # Editor de eventos
 
+Las condiciones avanzadas y la ayuda de códigos de texto se animan al plegarse y desplegarse. Las sugerencias de códigos y los menús contextuales se animan al abrirse.
+
 ## Ver eventos
 
 Activa los marcadores de evento desde el botón **Events** de la barra de herramientas (o **View → Show Events**). Los eventos aparecen como marcadores de color en el lienzo. Si sus gráficos se solapan, se dibujan de atrás hacia delante según su profundidad, con la ID del evento como desempate. Cuando pasas el cursor sobre un evento, la barra de estado de abajo muestra el nombre del evento. (Pulsar **V** selecciona la *capa* de eventos para editar — no alterna la visibilidad de los marcadores.)
@@ -227,6 +229,8 @@ Activa banderas individuales: Animación al moverse, Animación al parar, Fijar 
 Elige qué activa el evento: Action Button, Player Touch, Event Touch, Autorun o Parallel Process.
 
 ## Lista de comandos
+
+Usa la flecha junto a un comando de bloque para plegar o desplegar sus filas.
 
 La lista de comandos es donde construyes la lógica del evento. Puedes añadir, editar, borrar y reordenar comandos.
 

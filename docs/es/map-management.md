@@ -1,5 +1,7 @@
 # Gestión de mapas
 
+Las ramas del árbol de mapas se animan al plegarse y desplegarse. El selector de mapa padre y los menús contextuales se animan al abrirse.
+
 ## Crear un mapa nuevo
 
 Elige Mapa y luego Nuevo mapa en el menú, o haz clic en el botón **+** de la **cabecera del panel Mapas** (junto a la lista de mapas, reflejando el **+** de añadir capa del panel Capas). Rellena los datos:

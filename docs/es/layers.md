@@ -1,5 +1,7 @@
 # Guía de capas
 
+Los desplegables se animan al abrirse. Los grupos de capas y los detalles de mods también se animan al cerrarse. El editor respeta la preferencia del sistema de reducir el movimiento.
+
 ## Capas nativas (0–2)
 
 El editor ofrece tres capas nativas totalmente compatibles con RPG Maker XP. Estas capas usan el tileset asignado al mapa y los IDs de tile estándar. Las capas nativas son exactamente lo que RMXP lee y renderiza, así que cualquier cosa que pintes aquí aparecerá correctamente cuando el juego corra solo en RMXP.

@@ -1,5 +1,7 @@
 # Map Management
 
+Map tree branches animate when expanded or collapsed. The parent-map picker and context menus animate on open.
+
 ## Creating a New Map
 
 Choose Map then New Map from the menu, or click the **+** button in the **Maps panel header** (next to the map list, mirroring the add-layer **+** in the Layers panel). Fill in the details:

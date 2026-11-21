@@ -1,5 +1,7 @@
 # Events Editor
 
+Advanced Conditions and text-code help animate when expanded or collapsed. Text-code suggestions and context menus animate on open.
+
 ## Viewing Events
 
 Toggle event markers from the **Events** button in the toolbar (or **View → Show Events**). Events appear as colored markers on the canvas. Overlapping event graphics draw back-to-front by depth, with event ID as the tie-breaker. When you hover your cursor over an event, the status bar at the bottom shows the event's name. (Pressing **V** selects the Events *layer* for editing — it does not toggle marker visibility.)
@@ -226,6 +228,8 @@ Toggle individual flags: Move Animation, Stop Animation, Direction Fix, Through 
 Choose what activates the event: Action Button, Player Touch, Event Touch, Autorun, or Parallel Process.
 
 ## Command List
+
+Use the chevron next to a block command to expand or collapse its rows.
 
 The command list is where you build the event's logic. You can add, edit, delete, and reorder commands.
 

@@ -1,5 +1,7 @@
 # Marketplace de mods
 
+Los desplegables se animan al abrirse. Los grupos de capas y los detalles de mods también se animan al cerrarse. El editor respeta la preferencia del sistema de reducir el movimiento.
+
 El Marketplace es donde descubres, instalas y actualizas mods de la comunidad sin salir del editor. Los mods son extensiones JS que añaden herramientas, paneles, exportadores, elementos de menú y más — consulta la [documentación de desarrollo de mods](https://github.com/Toskan4134/maker-studio-mods) para ver lo que pueden hacer, o [Publicar un mod](https://github.com/Toskan4134/maker-studio-mods/blob/main/PUBLISHING.md) si quieres compartir uno.
 
 ## Abrir el Marketplace

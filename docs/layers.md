@@ -1,5 +1,7 @@
 # Layers Guide
 
+Dropdowns animate when opened. Layer groups and mod details also animate when closed. The editor respects your system's reduced motion preference.
+
 ## Native Layers (0--2)
 
 The editor provides three native layers that are fully compatible with RPG Maker XP. These layers use the map's assigned tileset and standard tile IDs. Native layers are exactly what RMXP reads and renders, so anything you paint here will appear correctly when the game runs in RMXP alone.
