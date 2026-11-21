@@ -358,7 +358,9 @@ The same star works everywhere, so a character you favourite on an event's page 
 
 ### Fog and Panorama Commands, and Multiple Layers
 
-Because a Maker Studio map can have **several fog and panorama layers** (not just the single tileset fog and panorama of stock RPG Maker XP), these event commands let you pick **which layer** to affect:
+Turn off **Tools → Maker Studio Autotiles and Effects** to edit the native event commands. **Change Map Settings** offers the engine's panorama graphic and hue, native fog settings, or battleback graphic. In Pokémon Essentials the battleback selection applies to the next battle. **Change Fog Color Tone** and **Change Fog Opacity** affect the native fog. To edit an existing command created in the other mode, switch back to that mode. Its saved parameters are preserved when you save the event.
+
+With the setting on, fog and panorama commands can target individual Maker Studio layers.
 
 - **Change Map Settings** (type **Fog** or **Panorama**) — pick the layer, then edit the full property set: graphic, hue, opacity, blend type, zoom, scroll X/Y, follow-camera and parallax. Picking a layer pre-fills every field with that layer's current values, so you start from what the map actually looks like and change only what you want. Type **Battleback** just picks the backdrop, as in stock RPG Maker XP.
 - **Change Fog Color Tone** — pick the fog layer, then set the tone. The **Frames** field fades the tone in gradually over that many frames (0 = instant).

@@ -85,11 +85,15 @@ Right-click a map in the Map Tree and choose Change Tileset, or use Map then Cha
 
 ## Panorama Layers and Battleback
 
-In RPG Maker XP the **panorama** (the scrolling background image behind a map) and the **battleback** (the battle background) belong to the *tileset*, so every map sharing a tileset shares one of each. Maker Studio replaces the single panorama with **panorama layers** edited from the Layer panel, and makes the battleback **a property of the map itself**.
+Use **Tools → Maker Studio Autotiles and Effects** or the autotile palette switch to choose how you edit backgrounds. The setting is saved per project. Turning it off shows a warning about existing content that may need the integration in-game.
+
+With the setting off, fog and panorama belong to the tileset. Use **Change Fog…** or **Change Panorama…** in the Map menu, or edit the native entry in the Layers panel. Applying a change saves it immediately for every map that uses the tileset. **Map → Change Battleback…** sets the tileset graphic in standard RPG Maker XP or the map's `BattleBack` metadata in Pokémon Essentials and its derivatives. An empty selection restores the engine default. If the editor reports that the PBS change is pending, compile the PBS data in Essentials before testing.
+
+With the setting on, use the options below to edit multiple layers and set battlebacks per map or version.
 
 ### Panoramas — the "Panorama Layers" group
 
-Panoramas are edited in the **Layer panel**, in the **Panorama Layers** group — exactly like fog layers. (The old **Change Panorama…** menu items are gone; there is no separate panorama dialog anymore.)
+In grouped mode, edit panoramas in the **Panorama Layers** group in the Layer panel.
 
 - Click the group's **+** to add a panorama layer; use a layer's sub-row to edit or delete it. The group's eye icon shows/hides all panorama layers at once.
 - The edit popup picks the image from `Graphics/Panoramas/` with the same image picker used everywhere else (live preview, favourites, Browse), and offers per-layer **hue**, **opacity**, **blend mode**, **zoom**, **scroll** speeds, **Follow camera**, and a **Parallax** slider (0–1): `1` moves 1:1 with the map, `0.5` matches RPG Maker XP's classic half-speed panorama scrolling, and `0` stays fixed on screen. The slider hides while **Follow camera** is checked (that already means fully screen-locked). New panorama layers default to full opacity and parallax `0.5`.

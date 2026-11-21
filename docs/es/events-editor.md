@@ -357,7 +357,9 @@ La misma estrella funciona en todas partes, así que un personaje que marcas en 
 
 ### Comandos de fog y panorama, y múltiples capas
 
-Como un mapa de Maker Studio puede tener **varias capas de fog y de panorama** (no solo el fog y el panorama únicos del tileset de RPG Maker XP estándar), estos comandos de evento te dejan elegir **qué capa** afectar:
+Desactiva **Herramientas → Autotiles y efectos de Maker Studio** para editar los comandos de evento nativos. **Cambiar ajustes del mapa** ofrece el gráfico y tono de panorama, los ajustes nativos de niebla o el gráfico de fondo de batalla. En Pokémon Essentials, la selección de fondo se aplica al siguiente combate. Los comandos de tono y opacidad afectan a la niebla nativa. Para editar un comando existente del otro modo, vuelve a ese modo. Sus parámetros se conservan al guardar el evento.
+
+Con el ajuste activado, puedes dirigir los comandos de niebla y panorama a capas concretas de Maker Studio.
 
 - **Change Map Settings** (tipo **Fog** o **Panorama**) — elige la capa y edita el conjunto completo de propiedades: gráfico, hue, opacidad, tipo de mezcla, zoom, scroll X/Y, follow-camera y paralaje. Al elegir una capa se rellenan todos los campos con sus valores actuales, así que partes de cómo se ve el mapa realmente y cambias solo lo que quieras. El tipo **Battleback** solo elige el fondo de batalla, igual que en RPG Maker XP estándar.
 - **Change Fog Color Tone** — elige la capa de fog, luego define el tono. El campo **Frames** funde el tono gradualmente durante ese número de frames (0 = instantáneo).

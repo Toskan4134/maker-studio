@@ -32,6 +32,8 @@ The Layer Panel lists every layer -- native, extended, and shadow layers alike, 
 
 Besides tile layers, the Layer Panel hosts **image layer groups** — full-screen graphics drawn above or below your tiles. Two groups are always there:
 
+In native mode, use the fog and panorama rows to edit the tileset's single fog or panorama. The panorama has a graphic and hue. The fog also has opacity, blend mode, zoom and X/Y scroll speed. Use **Tools → Maker Studio Autotiles and Effects** to access the grouped controls below.
+
 - **Fog Layers** — drawn *above* all tiles, like RPG Maker XP's fog, but you can stack as many as you want. Images come from `Graphics/Fogs/`. New fog layers start at 20% opacity.
 - **Panorama Layers** — drawn *beneath* all tiles, replacing the tileset's single panorama. Images come from `Graphics/Panoramas/`. New panorama layers start at full opacity. See [Map Management](map-management.md#panorama-layers-and-battleback) for how existing tileset panoramas are picked up automatically.
 

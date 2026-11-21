@@ -32,6 +32,8 @@ El panel de capas lista cada capa — nativas, extendidas y de sombra por igual,
 
 Además de las capas de tiles, el panel de capas alberga **grupos de capa de imagen** — gráficos a pantalla completa dibujados encima o debajo de tus tiles. Dos grupos siempre están presentes:
 
+En modo nativo, usa las filas de niebla y panorama para editar la niebla o el panorama del tileset. El panorama tiene gráfico y tono. La niebla también admite opacidad, modo de mezcla, zoom y velocidad de desplazamiento en X e Y. Activa **Herramientas → Autotiles y efectos de Maker Studio** para acceder a los controles de grupos siguientes.
+
 - **Fog Layers** — dibujados *encima* de todos los tiles, como el fog de RPG Maker XP, pero puedes apilar tantos como quieras. Las imágenes vienen de `Graphics/Fogs/`. Las nuevas capas de fog empiezan al 20% de opacidad.
 - **Panorama Layers** — dibujados *debajo* de todos los tiles, reemplazando el panorama único del tileset. Las imágenes vienen de `Graphics/Panoramas/`. Las nuevas capas de panorama empiezan a opacidad completa. Consulta [Gestión de mapas](map-management.md#panorama-layers-and-battleback) para saber cómo se captan automáticamente los panoramas de tileset existentes.
 

@@ -85,11 +85,15 @@ Haz clic derecho en un mapa del árbol y elige Change Tileset, o usa Map y luego
 
 ## Capas de panorama y battleback
 
-En RPG Maker XP el **panorama** (la imagen de fondo desplazable detrás de un mapa) y el **battleback** (el fondo de batalla) pertenecen al *tileset*, así que cada mapa que comparte un tileset comparte uno de cada. Maker Studio reemplaza el panorama único por **capas de panorama** editadas desde el panel de capas, y convierte el battleback en **una propiedad del mapa en sí**.
+Usa **Herramientas → Autotiles y efectos de Maker Studio** o el interruptor de la paleta de autotiles para elegir cómo editas los fondos. El ajuste se guarda por proyecto. Al desactivarlo, aparece un aviso sobre el contenido existente que puede requerir la integración en el juego.
+
+Con el ajuste desactivado, la niebla y el panorama pertenecen al tileset. Usa **Cambiar niebla…** o **Cambiar panorama…** en el menú Mapa, o edita la entrada nativa del panel Capas. Aplicar guarda el cambio enseguida para todos los mapas que usan ese tileset. **Mapa → Cambiar fondo de batalla…** cambia el gráfico del tileset en RPG Maker XP estándar o los metadatos `BattleBack` del mapa en Pokémon Essentials y sus derivados. Dejar la selección vacía recupera el fondo predeterminado del motor. Si el editor indica que el cambio de PBS está pendiente, compila los datos PBS en Essentials antes de probarlo.
+
+Con el ajuste activado, usa las opciones siguientes para editar varias capas y configurar fondos de batalla por mapa o versión.
 
 ### Panoramas — el grupo "Panorama Layers"
 
-Los panoramas se editan en el **panel de capas**, en el grupo **Panorama Layers** — exactamente como las capas de fog. (Los antiguos elementos de menú **Change Panorama…** han desaparecido; ya no hay un diálogo de panorama aparte.)
+En modo agrupado, edita los panoramas en el grupo **Panorama Layers** del panel Capas.
 
 - Haz clic en el **+** del grupo para añadir una capa de panorama; usa la sub-fila de una capa para editarla o borrarla. El icono de ojo del grupo muestra/oculta todas las capas de panorama a la vez.
 - El popup de edición elige la imagen de `Graphics/Panoramas/` con el mismo selector de imágenes usado en todas partes (vista previa en vivo, favoritos, Browse), y ofrece por capa **hue**, **opacidad**, **modo de mezcla**, **zoom**, velocidades de **scroll**, **Follow camera** y un deslizador **Parallax** (0–1): `1` se mueve 1:1 con el mapa, `0.5` iguala el clásico desplazamiento de panorama a media velocidad de RPG Maker XP, y `0` queda fijo en pantalla. El deslizador se oculta mientras **Follow camera** está marcado (eso ya significa totalmente fijado a pantalla). Las nuevas capas de panorama usan por defecto opacidad completa y parallax `0.5`.
