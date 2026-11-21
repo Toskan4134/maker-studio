@@ -98,6 +98,10 @@ Al dibujar un mapa cuyo tileset supera los 16.064 píxeles de alto, aparece un d
 
 Elige **Help → Alternar diagnóstico de renderizado** para ver la frecuencia de repintado, las dimensiones del atlas y los tiempos de renderizado de JavaScript. Esos tiempos no incluyen el trabajo gráfico/compositor de macOS.
 
+## Notificaciones
+
+Los avisos aparecen por encima de los diálogos y normalmente se cierran a los 8 segundos. Si mantienes el puntero encima, el aviso sigue visible. La barra inferior muestra el tiempo restante. Se llena mientras el puntero está encima y comienza a vaciarse al retirarlo. Los errores y los avisos de recuperación de mapas siguen visibles hasta que los cierres o elijas una acción. En el aviso de recuperación, Restaurar usa el color de acento del tema y Descartar aparece en rojo.
+
 ## Paneles acoplables
 
 Cada panel del editor se puede arrastrar, flotar como ventana aparte y reorganizar a tu gusto. Si alguna vez quieres empezar de cero, usa **View → Layout → Refresh Layout** para restaurar la disposición por defecto. (Para solo recargar el editor *conservando* tu disposición, usa **Help → Reset App** / `Ctrl+R`.)

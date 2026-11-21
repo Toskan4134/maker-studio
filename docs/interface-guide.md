@@ -98,6 +98,10 @@ When you draw a map whose tileset image is taller than 16,064 pixels, a dialog s
 
 Choose **Help → Toggle Render Diagnostics** to see repaint frequency, atlas dimensions, and JavaScript render timings. The timings do not include macOS graphics/compositor work.
 
+## Notifications
+
+Toasts appear above dialogs and usually close after 8 seconds. Hover over one to keep it visible. The bar along the bottom shows the remaining time. It fills while you hover and starts counting down again when you move the pointer away. Error and map recovery toasts remain visible until you dismiss them or choose an action. In the recovery prompt, Restore uses the theme accent and Discard is red.
+
 ## Dockable Panels
 
 Every panel in the editor can be dragged, floated as a separate window, and rearranged to suit your workflow. If you ever want to start fresh, use **View → Layout → Refresh Layout** to restore the default arrangement. (To just reload the editor while *keeping* your layout, use **Help → Reset App** / `Ctrl+R`.)
