@@ -21,6 +21,8 @@ The Marketplace shows a card for each available mod with an icon, name, author, 
 - The count on the right (`12 of 340`) tells you how much the filters are hiding, and **Clear filters** puts everything back.
 - The two small buttons next to the sort order switch between **cards** and a **compact list** that fits many more mods on screen. Your choice and the sort order are remembered.
 
+By default, **Updated** shows the most recently published catalog releases first. **Refresh** checks GitHub for updated release notes and verifies the ZIPs on visible cards again.
+
 Long lists load in batches — click **Show N more** at the bottom to reveal the next ones.
 
 Click **Changelog** on a card to open the release notes for that mod's latest version in a dialog. The notes are shown as formatted Markdown (headings, lists, links, and code render the way they do on GitHub).
@@ -76,6 +78,10 @@ When an update is available you get a toast that says "N mod updates available" 
 In the **Installed** tab, expand any mod that was installed from the Marketplace and click **Uninstall**. The mod's folder is deleted and the editor reloads. The Marketplace card returns to the **Install** state.
 
 You can also uninstall from the Marketplace tab — same button on the card.
+
+## Reloading installed mods
+
+Use **Reload** on an expanded row to reload that mod. If it fails, the row keeps its position and shows the reason. Fix the issue and click **Reload** again. A disabled mod stays disabled. **Rescan** looks for changes across all installed mods. Both actions show progress on the button and report the result when finished.
 
 ## Reading the status badge
 

@@ -25,6 +25,8 @@ Las listas largas se cargan por tandas: pulsa **Mostrar N más** al final para v
 
 Haz clic en **Changelog** en una tarjeta para abrir las notas de la versión más reciente de ese mod en un diálogo. Las notas se muestran como Markdown formateado (encabezados, listas, enlaces y código se renderizan como en GitHub).
 
+Por defecto, **Actualizado** muestra primero las publicaciones más recientes del catálogo. **Actualizar** consulta GitHub de nuevo y vuelve a verificar los ZIP de las fichas visibles.
+
 ## Mods Verified vs Tampered vs Unverified
 
 Cada tarjeta muestra un chip junto al nombre del mod que refleja la comprobación de integridad SHA-256 contra el hash fijado en el registro:
@@ -76,6 +78,10 @@ Cuando hay una actualización disponible recibes un toast que dice "N mod update
 En la pestaña **Installed**, expande cualquier mod que se instaló desde el Marketplace y haz clic en **Uninstall**. La carpeta del mod se borra y el editor se recarga. La tarjeta del Marketplace vuelve al estado **Install**.
 
 También puedes desinstalar desde la pestaña Marketplace — mismo botón en la tarjeta.
+
+## Recargar mods instalados
+
+Pulsa **Recargar** en una fila expandida para recargar ese mod. Si falla, conserva su posición y muestra el motivo. Corrige el problema y vuelve a pulsar **Recargar**. Un mod desactivado sigue desactivado. **Reescanear** busca cambios en todos los mods instalados. Las dos acciones indican en el botón que están en curso y muestran un aviso al terminar.
 
 ## Leer la insignia de estado
 
