@@ -80,10 +80,19 @@ integration is also published as a `.zip` in a
 release per app version — the plugin buttons at the top download the current one. See the
 [installation guide](docs/getting-started.md#installation) for step-by-step instructions.
 
-## About this repository
+## Licensing
 
-This repository hosts **documentation, integrations, and releases** only. The application source
-code is maintained in a private repository.
+- **Desktop editor.** Maker Studio is available as a compiled download. The editor's source code
+  is currently private. Releases that include the [desktop editor license](EDITOR-LICENSE.txt)
+  allow personal and commercial use under those terms. The GitHub release notes through v1.10.0
+  did not specify a license for the editor downloads.
+- **Documentation and game integrations.** The [GPLv3 license](LICENSE) in this repository
+  covers its original documentation and game integration source. Third-party materials follow
+  their own license notices.
+- **Mods.** New Marketplace listings use the
+  [Maker Studio Mod Free Distribution License](https://github.com/Toskan4134/maker-studio-mods/blob/main/templates/MOD-LICENSE.txt).
+  It requires free access to the mod and its source wherever copies are distributed under
+  those terms. For other mods, check the terms published by the author.
 
 ## Credits
 

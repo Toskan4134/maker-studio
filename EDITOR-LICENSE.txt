@@ -1,0 +1,11 @@
+Maker Studio Desktop Editor License
+
+Copyright (c) 2026 Toskan4134. All rights reserved.
+
+You may install and use the Maker Studio desktop editor obtained from an
+official distribution channel for personal and commercial purposes. Paid
+features are subject to the terms of your purchase.
+
+You may redistribute the editor only with prior written permission or as
+permitted by applicable law. These terms preserve rights granted by applicable
+law and by the licenses of third-party components.

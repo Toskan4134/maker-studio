@@ -6,6 +6,10 @@ Necesitas una carpeta de proyecto de RPG Maker XP — en concreto, un directorio
 
 ## Instalación
 
+El código fuente del editor de escritorio es privado por ahora. Consulta la
+[información sobre licencias](https://github.com/Toskan4134/maker-studio#licensing)
+del editor, la documentación, las integraciones y los mods.
+
 Maker Studio tiene dos partes, y te interesan las dos:
 
 1. **La app del editor** — el programa de escritorio (Windows / macOS / Linux) con el que haces los mapas.
@@ -106,12 +110,3 @@ Maker Studio guarda un registro por ejecución en `%APPDATA%/maker-studio/logs/`
 ## Créditos
 
 Gracias a **DPertierra** por contribuir al desarrollo de Maker Studio.
-
-## Compilar desde el código fuente
-
-Si prefieres compilar el editor tú mismo:
-
-```bash
-npx tauri build              # Compilación de producción
-npm run tauri:dev            # Modo desarrollo con recarga en caliente
-```

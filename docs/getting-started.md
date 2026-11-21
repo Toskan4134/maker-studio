@@ -6,6 +6,10 @@ You need an RPG Maker XP project folder -- specifically, a directory that contai
 
 ## Installation
 
+The desktop editor's source code is currently private. See the
+[licensing information](https://github.com/Toskan4134/maker-studio#licensing) for the
+editor, documentation, game integrations, and mods.
+
 Maker Studio has two parts, and you want both:
 
 1. **The editor app** — the desktop program (Windows / macOS / Linux) you make maps with.
@@ -110,12 +114,3 @@ Maker Studio writes a session log to `%APPDATA%/maker-studio/logs/` on Windows (
 ## Credits
 
 Thanks to **DPertierra** for contributing to Maker Studio's development.
-
-## Building from Source
-
-If you prefer to build the editor yourself:
-
-```bash
-npx tauri build              # Production build
-npm run tauri:dev            # Dev mode with hot reload
-```
