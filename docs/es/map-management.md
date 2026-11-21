@@ -197,6 +197,8 @@ Un marcador verde **Start** aparece en ese tile, y la posición se guarda en tu 
 
 Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego Run Game). El editor lanza `Game.exe` en modo depuración desde la carpeta de tu proyecto.
 
+En **Ayuda → Ajustes → Juego**, escribe una ruta relativa en **Ejecutable del juego** o pulsa **…** para buscar desde la carpeta del proyecto. Déjala en blanco para usar la detección automática. El cambio se aplica en la próxima ejecución.
+
 Si algún mapa abierto tiene cambios sin guardar, primero te pregunta — el editor ya no los guarda por su cuenta:
 
 - **Guardar y ejecutar** — guarda todos los mapas con cambios sin guardar y luego lanza el juego.

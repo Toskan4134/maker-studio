@@ -197,6 +197,8 @@ A green **Start** marker appears on that tile, and the position is saved to your
 
 Click the green Run button in the toolbar (or use File then Run Game). The editor launches `Game.exe` in debug mode from your project folder.
 
+In **Help → Settings → Game**, enter a project-relative path in **Game executable** or click **…** to browse from the project folder. Leave it blank for automatic detection. The change applies the next time you run the game.
+
 If any open map has unsaved changes, you are asked first — the editor no longer saves them for you:
 
 - **Save & Run** — saves every map with unsaved changes, then launches.
