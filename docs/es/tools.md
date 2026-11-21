@@ -200,7 +200,7 @@ cuando quieras volver a pintar fuera.
 
 ### Arrastrar fuera del mapa
 
-Para las herramientas Rectangle, Elipse, Línea y Select, puedes empezar o terminar un arrastre en el área vacía junto al mapa — la selección / forma se ajusta al tile de borde más cercano en lugar de cancelarse. El arrastre también continúa si tu cursor sale del lienzo por completo (p. ej. entra en otro panel); suelta el botón del ratón en cualquier sitio para terminar. Mover una selección no se ve afectado: hacer clic fuera del mapa siempre inicia una selección nueva en lugar de provocar un movimiento, aunque el tile de borde ajustado caiga dentro de tu selección actual.
+Con Rectángulo, Elipse y Línea puedes empezar o terminar el arrastre en el área vacía junto al mapa. El arrastre completo define la forma y solo se pintan los tiles que quedan dentro del mapa. También puedes mantener Shift para trazar círculos y cuadrados. Con Select, el arrastre se ajusta al tile de borde más cercano y hacer clic fuera del mapa inicia una selección nueva. En las cuatro herramientas puedes terminar un arrastre activo soltando el botón del ratón fuera del lienzo. Pulsa Escape antes de soltar el botón para cancelar el arrastre y conservar la selección anterior.
 
 ## Deshacer / Rehacer con selecciones
 

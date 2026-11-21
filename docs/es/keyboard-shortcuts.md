@@ -119,7 +119,7 @@ En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre todos
 | Ctrl + clic/arrastrar | Añadir tiles a la selección |
 | Shift + clic/arrastrar | Quitar tiles de la selección |
 | Delete | Borrar selección |
-| Escape | Cancelar selección / cancelar vista previa de pegado |
+| Escape | Cancelar un arrastre de forma o selección antes de soltar el ratón, cancelar la vista previa de pegado o quitar la selección |
 
 ## Navegación
 

@@ -202,7 +202,7 @@ outside again.
 
 ### Dragging Off the Map
 
-For the Rectangle, Ellipse, Line and Select tools, you can start or finish a drag in the empty area beside the map — the selection / shape clamps to the nearest border tile instead of being cancelled. The drag also keeps going if your cursor leaves the canvas entirely (e.g. wanders into another panel); release the mouse button anywhere to finish. Moving a selection is unaffected: clicking outside the map always begins a fresh selection rather than triggering a move, even if the clamped border tile happens to fall inside your current selection.
+Rectangle, Ellipse, and Line can start or end in the empty area beside the map. The full drag defines the shape, and only tiles inside the map are painted. This also works with Shift for circles and squares. Select drags snap to the nearest border tile, and clicking outside the map starts a new selection. For all four tools, you can finish an active drag by releasing the mouse button outside the canvas. Press Escape before releasing the mouse to cancel the drag and keep your previous selection.
 
 ## Undo / Redo with Selections
 

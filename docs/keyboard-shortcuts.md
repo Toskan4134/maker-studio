@@ -119,7 +119,7 @@ On the **Events layer**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J act on all selected e
 | Ctrl + click/drag | Add tiles to selection |
 | Shift + click/drag | Remove tiles from selection |
 | Delete | Delete selection |
-| Escape | Cancel selection / cancel paste preview |
+| Escape | Cancel a shape or selection drag before releasing the mouse, cancel paste preview, or clear the selection |
 
 ## Navigation
 
