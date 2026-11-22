@@ -1,5 +1,7 @@
 # Keyboard Shortcuts
 
+Use the keyboard button in the workspace toolbar, panels, and dialogs to see the shortcuts for that surface and their current assignments. Available commands follow the active editor mode. The list opens next to the button and can extend beyond a narrow panel.
+
 All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defaults are listed below.
 While a modal dialog is open, editor shortcuts for the workspace behind it are paused; dialog controls and shortcuts continue to work. **Ctrl+R** (Reset App) and **F12** (Toggle DevTools) remain global and reconfigurable, including in dialogs, text fields, and the simulator. **Escape** and **Ctrl+Enter** continue to close or confirm the topmost dialog. Changed event-command forms ask before closing — see [Events Editor](events-editor.md).
 
@@ -312,6 +314,8 @@ layer, since a native layer is a fixed slot. See [Layers](layers.md#layer-panel)
 | Arrow keys | Move player (map simulation) |
 
 ## Tabs
+
+In Snippets and Mods, the same Next Tab and Previous Tab bindings work from within the dialog. The defaults are **Ctrl+Tab** and **Ctrl+Shift+Tab**.
 
 | Key | Action |
 |-----|--------|

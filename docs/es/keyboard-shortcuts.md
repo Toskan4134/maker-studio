@@ -1,5 +1,7 @@
 # Atajos de teclado
 
+Pulsa el botón de teclado de la barra de herramientas, los paneles y los diálogos para ver sus atajos y las teclas configuradas. La lista se abre junto al botón y puede extenderse fuera de un panel estrecho.
+
 Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A continuación se listan los valores por defecto.
 Mientras haya un diálogo modal abierto, se pausan los atajos del editor que queda detrás; los controles y atajos propios del diálogo siguen funcionando. **Ctrl+R** (Reset App) y **F12** (Alternar DevTools) siguen siendo globales y reasignables, también en diálogos, campos de texto y el simulador. **Escape** y **Ctrl+Enter** siguen cerrando o confirmando el diálogo superior. Los formularios de comandos de evento con cambios preguntan antes de cerrarse; consulta el [Editor de eventos](events-editor.md).
 
@@ -315,6 +317,8 @@ una capa nativa es una ranura fija. Consulta [Capas](layers.md#panel-de-capas).
 | Flechas | Mover al jugador (simulación de mapa) |
 
 ## Pestañas
+
+En Snippets y Mods se usan los mismos atajos de pestaña siguiente y anterior desde dentro del diálogo. Por defecto son **Ctrl+Tab** y **Ctrl+Mayús+Tab**.
 
 | Tecla | Acción |
 |-----|--------|

@@ -44,6 +44,8 @@ El panel del simulador contiene:
 
 ## Controles
 
+El botón de teclado de la barra muestra los controles del simulador, incluidos los atajos del diálogo activo.
+
 | Acción | Tecla | Descripción |
 |--------|-----|-------------|
 | Play/Pause | Espacio | Alterna la reproducción de la simulación |

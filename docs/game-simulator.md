@@ -44,6 +44,8 @@ The simulator panel contains:
 
 ## Controls
 
+The keyboard button in the toolbar opens simulator controls, including shortcuts for the active dialogue.
+
 | Action | Key | Description |
 |--------|-----|-------------|
 | Play/Pause | Space | Toggle simulation playback |

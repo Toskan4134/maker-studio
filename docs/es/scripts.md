@@ -13,8 +13,8 @@ El editor de **Scripts** te permite ver, reordenar, renombrar, añadir, borrar y
 
 Usa los botones pequeños encima de la lista:
 
-- **＋** — añade un script nuevo debajo del seleccionado (escribe su nombre, luego empieza a editar a la derecha).
-- **🗑** — borra el script seleccionado.
+- **Añadir** — añade un script nuevo debajo del seleccionado (escribe su nombre, luego empieza a editar a la derecha).
+- **Eliminar** — borra el script seleccionado.
 - **▲ / ▼** — mueve el script seleccionado arriba o abajo. El orden importa: los scripts se ejecutan de arriba a abajo.
 - **Arrastra** un script arriba o abajo en la lista para reordenarlo — una línea muestra dónde caerá.
 - **Doble clic** en el nombre de un script para renombrarlo.
@@ -22,6 +22,8 @@ Usa los botones pequeños encima de la lista:
 Un punto (•) en la barra de título significa que tienes cambios sin guardar.
 
 ## Encontrar cosas
+
+Abre el botón de teclado de la barra de Scripts para consultar los atajos de búsqueda, guardado y edición.
 
 - **Buscar en el script actual** — pulsa `Ctrl+F` para abrir una barra de buscar y reemplazar en lo alto del editor de código. Admite distinguir mayúsculas, expresiones regulares, coincidencia de palabra completa y reemplazar / reemplazar todo, y sigue el idioma y tema del editor.
 - **Buscar en todos los scripts** — pulsa `Ctrl+Shift+F` para abrir un panel de búsqueda que recorre el título y el código de **cada** script a la vez. Los resultados aparecen agrupados por script con números de línea y la coincidencia resaltada; haz clic en un resultado para saltar directo a esa línea, incluso en otro script. Activa **Aa** para coincidencia sensible a mayúsculas o **.*** para expresiones regulares (un patrón inválido simplemente no muestra resultados). Las búsquedas muy amplias se detienen en 500 resultados — acota la consulta para ver el resto.
@@ -54,7 +56,8 @@ guarda su propio lugar, así que cambiar entre ellos no pierde nada.
 
 Desde aquí también puedes gestionar la carpeta:
 
-- **+** crea un **archivo nuevo** o una **carpeta nueva** — junto al archivo que tengas abierto, o en
+- **Eliminar** usa la selección de archivos y carpetas y pide confirmación.
+- **Nuevo** crea un **archivo nuevo** o una **carpeta nueva** — junto al archivo que tengas abierto, o en
   el nivel superior.
 - **Clic derecho en una carpeta** para crear un archivo o una carpeta *dentro de ella*, renombrarla o
   borrarla (al borrarla te dice cuántos archivos se van con ella).

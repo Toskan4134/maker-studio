@@ -20,7 +20,7 @@ Open it from the **Scripts** button on the toolbar (next to **Database**) or **T
 Use the small buttons above the list:
 
 - **＋** — add a new script below the selected one (type its name, then start editing on the right).
-- **🗑** — delete the selected script.
+- **Delete** — delete the selected script.
 - **▲ / ▼** — move the selected script up or down. Order matters: scripts run top to bottom.
 - **Drag** a script up or down the list to reorder it — a line shows where it will drop.
 - **Double-click** a script's name to rename it.
@@ -28,6 +28,8 @@ Use the small buttons above the list:
 A dot (•) in the title bar means you have unsaved changes.
 
 ## Finding things
+
+Open the keyboard button in the Scripts toolbar to see the current shortcuts for search, save, and editing.
 
 - **Find in the current script** — press `Ctrl+F` to open a find & replace bar at the top of the code
   editor. It supports match case, regular expressions, whole-word matching, and replace / replace all,
@@ -65,7 +67,8 @@ back loses nothing.
 
 You can manage the folder from here too:
 
-- **+** creates a **new file** or **new folder** — next to whatever file is open, or at the top level.
+- **Add** creates a **new file** or **new folder** — next to whatever file is open, or at the top level.
+- **Delete** uses the current file and folder selection and asks for confirmation.
 - **Right-click a folder** to create a file or folder *inside it*, rename it, or delete it (deleting
   tells you how many files go with it first).
 - **Right-click a file** to rename or delete it. Double-clicking its name renames it too.

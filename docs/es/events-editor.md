@@ -170,6 +170,8 @@ editor lo señala ahí mismo. Un grupo **Cumplir TODAS** vacío es inofensivo: n
 
 ### Gráfico
 
+Usa el botón de teclado junto a **Ajustar** en la vista previa del gráfico para consultar sus controles.
+
 Define la apariencia visual del evento:
 
 - Gráfico de personaje o gráfico de tile.

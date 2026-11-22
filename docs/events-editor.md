@@ -166,6 +166,8 @@ editor flags it inline. An empty **Match ALL** group is harmless — nothing to 
 
 ### Graphic
 
+Use the keyboard button next to **Fit** in the graphic preview to see its controls.
+
 Set the event's visual appearance:
 
 - Character graphic or tile graphic.
