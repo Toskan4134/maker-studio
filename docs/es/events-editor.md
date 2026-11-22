@@ -2,6 +2,8 @@
 
 Las condiciones avanzadas y la ayuda de códigos de texto se animan al plegarse y desplegarse. Las sugerencias de códigos y los menús contextuales se animan al abrirse.
 
+Usa **Ctrl+Tab / Ctrl+Shift+Tab** para recorrer las páginas del evento y **Cerrar diálogo** (**Escape** por defecto) para cerrar el editor con la confirmación habitual si hay cambios.
+
 ## Ver eventos
 
 En **Ver → Animar el editor de mapas**, puedes activar **Autotiles** y **Eventos** por separado.

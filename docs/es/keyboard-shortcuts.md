@@ -3,6 +3,10 @@
 Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A continuación se listan los valores por defecto.
 Mientras haya un diálogo modal abierto, se pausan los atajos del editor que queda detrás; los controles y atajos propios del diálogo siguen funcionando. **Ctrl+R** (Reset App) y **F12** (Alternar DevTools) siguen siendo globales y reasignables, también en diálogos, campos de texto y el simulador. **Escape** y **Ctrl+Enter** siguen cerrando o confirmando el diálogo superior. Los formularios de comandos de evento con cambios preguntan antes de cerrarse; consulta el [Editor de eventos](events-editor.md).
 
+En **Atajos de teclado**, las acciones se agrupan por tarea y editor. Puedes buscar por acción, categoría o atajo asignado.
+
+En Aplicación puedes reasignar **Cerrar diálogo**, que usa **Escape** de forma predeterminada y también cierra el simulador.
+
 ## Herramientas
 
 | Tecla por defecto | Herramienta |
@@ -76,6 +80,18 @@ pantalla que esté abierta. Un dígito más allá del final de la lista (un tile
 prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda → Atajos de teclado, en
 *Editor de tilesets*.
 
+## Crear y reabrir
+
+| Atajo | Acción |
+|---|---|
+| Ctrl+T | Abrir el diálogo Nuevo mapa en la raíz del proyecto |
+| Ctrl+Shift+T | Reabrir el último mapa cerrado en esta sesión del proyecto. Repite para recuperar cierres anteriores. |
+| Ctrl+W | Cerrar la pestaña del mapa activo. Pide confirmación si hay cambios sin guardar. |
+| Ctrl+Tab / Ctrl+Shift+Tab | Ir a la pestaña de mapa siguiente / anterior, recorriendo la lista de forma circular. |
+| Ctrl+N | Añadir una capa extendida al mapa activo |
+
+**Ctrl+Tab / Ctrl+Shift+Tab** recorren las páginas de eventos, las secciones que se muestran en la Base de datos o las pestañas de Detalles de autotiles cuando este panel tiene el foco. En la Base de datos incluyen las pestañas ocultas que hayas revelado y funcionan desde un campo. **Cerrar diálogo** (**Escape** por defecto) cierra el Editor de eventos o la Base de datos. **Ctrl+W** cierra la pestaña activa de autotiles mientras ese panel tiene el foco.
+
 ## Zoom
 
 | Tecla por defecto | Acción |
@@ -83,6 +99,7 @@ prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda →
 | + | Acercar |
 | - | Alejar |
 | Ctrl + rueda | Zoom |
+| Ctrl+0 | Restablecer el zoom del mapa activo al 100 % |
 
 ## Archivo
 

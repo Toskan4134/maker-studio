@@ -3,6 +3,10 @@
 All shortcuts are customizable via **Help → Keyboard Shortcuts...**. The defaults are listed below.
 While a modal dialog is open, editor shortcuts for the workspace behind it are paused; dialog controls and shortcuts continue to work. **Ctrl+R** (Reset App) and **F12** (Toggle DevTools) remain global and reconfigurable, including in dialogs, text fields, and the simulator. **Escape** and **Ctrl+Enter** continue to close or confirm the topmost dialog. Changed event-command forms ask before closing — see [Events Editor](events-editor.md).
 
+In **Keyboard Shortcuts**, actions are grouped by task and editor. Search by action, category, or current shortcut.
+
+In the App section, **Close Dialog** is reassignable and defaults to **Escape**.
+
 ## Tools
 
 | Default Key | Tool |
@@ -76,6 +80,18 @@ time, and whichever surface is open owns them. A digit past the end of the list 
 most six priorities) simply does nothing. All ten are rebindable in Help → Keyboard Shortcuts under
 *Tileset Editor*.
 
+## Creating and reopening
+
+| Shortcut | Action |
+|---|---|
+| Ctrl+T | Open the New Map dialog at the project root |
+| Ctrl+Shift+T | Reopen the most recently closed map in this project session. Repeat to reopen earlier maps. |
+| Ctrl+W | Close the active map tab. Prompts if there are unsaved changes. |
+| Ctrl+Tab / Ctrl+Shift+Tab | Switch to the next / previous open map tab, wrapping at either end. |
+| Ctrl+N | Add an extended layer to the active map |
+
+**Ctrl+Tab / Ctrl+Shift+Tab** cycle through event pages, displayed Database sections, or open tabs in a focused Autotile Detail panel. In the Database this includes revealed hidden tabs and works from focused fields. **Close Dialog** (default **Escape**) closes the Event Editor or Database. **Ctrl+W** closes the active autotile tab while the panel has focus.
+
 ## Zoom
 
 | Default Key | Action |
@@ -83,6 +99,7 @@ most six priorities) simply does nothing. All ten are rebindable in Help → Key
 | + | Zoom in |
 | - | Zoom out |
 | Ctrl + scroll | Zoom |
+| Ctrl+0 | Reset the active map zoom to 100% |
 
 ## File
 
@@ -288,7 +305,7 @@ layer, since a native layer is a fixed slot. See [Layers](layers.md#layer-panel)
 | Space | Play / Pause |
 | . | Step one frame |
 | R | Restart |
-| Esc | Close simulator |
+| Esc (default for Close Dialog) | Close simulator |
 | C | OK / action button |
 | X | Cancel |
 | Y | Toggle camera mode |

@@ -2,6 +2,8 @@
 
 Advanced Conditions and text-code help animate when expanded or collapsed. Text-code suggestions and context menus animate on open.
 
+Use **Ctrl+Tab / Ctrl+Shift+Tab** to cycle through event pages and **Close Dialog** (default **Escape**) to close the editor through its usual unsaved-changes flow.
+
 ## Viewing Events
 
 Under **View → Animate Map Editor**, toggle **Autotiles** and **Events** independently.
