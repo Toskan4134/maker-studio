@@ -32,6 +32,8 @@ When you reopen a project, Maker Studio restores the saved map tabs in left-to-r
 
 To rename a map, select its row in the Map Tree and press **F2**, or double-click its name. The name is edited inline. F2 renames the only selected map, or the active map when no rows are explicitly selected. It does nothing with multiple rows selected, when there is no selection and no active map, or unless the tree has focus.
 
+To revert a map to its last saved state, right-click its tab and choose **Discard Changes**, then confirm. The tab stays open.
+
 ## Duplicating a Map
 
 To make a full copy of a map as a **brand-new map** (a separate `map_id`, not a version):

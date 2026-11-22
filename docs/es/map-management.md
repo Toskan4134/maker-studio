@@ -32,6 +32,8 @@ Al volver a abrir un proyecto, Maker Studio restaura las pestañas guardadas en 
 
 Para renombrar un mapa, selecciona su fila en el Árbol de mapas y pulsa **F2**, o haz doble clic en su nombre. El nombre se edita en línea. F2 renombra el único mapa seleccionado o, si no hay filas seleccionadas explícitamente, el mapa activo. No hace nada con varias filas seleccionadas, si no hay selección ni mapa activo o si el árbol no tiene el foco.
 
+Para volver al último estado guardado de un mapa, haz clic derecho en su pestaña, elige **Descartar cambios** y confirma. La pestaña sigue abierta.
+
 ## Duplicar un mapa
 
 Para hacer una copia completa de un mapa como un **mapa totalmente nuevo** (un `map_id` separado, no una versión):
