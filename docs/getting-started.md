@@ -43,12 +43,14 @@ To install by hand instead, download the integration that matches your project:
 
 | Your project | Direct download |
 |--------------|-----------------|
+| Pokémon Essentials **v22** (vanilla) | Select `[PE22] Maker Studio` in Help → Check Game Integration… |
 | Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
 | Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
 | Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
 | Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
 | La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
 | La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.3.x** | Select `[LBDS1.3.0] Maker Studio` in Help → Check Game Integration… |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/BES5.Maker.Studio.v1.10.0.zip) |
 
 > **Note on v19.1, v17.1 and BES v5:** these engines' older tile renderers mean per-tile passage/priority/terrain overrides on a plain (non-extended) tile don't affect in-game collision. Extended layers, extra autotiles, and cross-tileset tiles all work normally.
@@ -64,6 +66,10 @@ Each zip also ships its own `README.md` with engine-specific notes, in case anyt
 To check it worked: start your game in **Debug mode**, open the Debug menu (F9), and look for **Maker Studio…** — from there you can launch the editor directly (if the app isn't installed yet, that menu shows the download link).
 
 ### Keeping the plugin up to date
+
+To change an installed folder integration, open **Help → Check Game Integration…**, select the new build, and click **Replace**. The editor preserves `003_Editor/`.
+
+After upgrading La Base de Sky from 1.2.x to 1.3.x, close the game and select `[LBDS1.3.0] Maker Studio`. For manual installation, use `LBDS1.3.0.Maker.Studio.v<version>.zip` from the integrations release.
 
 The plugin ships alongside the editor, so a project can end up running an older one than the app — usually after you update the editor and forget to re-copy the folder. Symptoms are subtle: the game renders something differently from the editor, or a fix you read about in the changelog doesn't apply in-game.
 
@@ -86,6 +92,16 @@ One caveat for existing projects: integrations installed before this check exist
 Run the editor executable. On first launch you will see a welcome screen prompting you to select a game folder. Click **Browse** and navigate to your RPG Maker XP project root (the folder containing `Game.exe`).
 
 The editor remembers your last-opened project, so subsequent launches go straight to the map tree.
+
+When working with the MCP, `edit_map` applies and saves by default. Use `mode: "preview"` to review the changes first. If the map already has unsaved changes, use `includeUnsaved: true` only when you want to save them together.
+
+Run `validate_project` to audit saved maps and versions for broken transfers and missing local assets. Request `includeDependencies: true` for project-relative asset paths. The simulator accepts starting switch and variable values and can check the final state of a scenario.
+
+In active-project mode, the MCP follows the focused Maker Studio window. Use `project_session` with `action: "list"` to see open projects, then `action: "select"` with the listed `path` to keep working on that project in the background. Use `action: "followFocus"` to switch back automatically.
+
+For a closed project, the MCP can rename or move maps, edit tile properties, update existing map versions, and edit supported database records and compressed script sections. With the editor open, it can select a map tab, adjust its tile layers, control the game process and run a short simulator scenario. Git writes and local integration installation require a separate confirmation call.
+
+Use an existing `MakerStudioTransfer` directory at the project root to transfer maps or assets, archive a resource or export a ZIP of selected files. Map imports preserve IDs used by the source map, so check its tileset, event destinations and assets in the destination project.
 
 ## Opening a Map
 
