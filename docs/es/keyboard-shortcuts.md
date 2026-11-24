@@ -2,12 +2,9 @@
 
 Pulsa el botón de teclado de la barra de herramientas, los paneles y los diálogos para ver sus atajos y las teclas configuradas. La lista se abre junto al botón y puede extenderse fuera de un panel estrecho.
 
-Todos los atajos son personalizables en **Help → Keyboard Shortcuts...**. A continuación se listan los valores por defecto.
-Mientras haya un diálogo modal abierto, se pausan los atajos del editor que queda detrás; los controles y atajos propios del diálogo siguen funcionando. **Ctrl+R** (Reset App) y **F12** (Alternar DevTools) siguen siendo globales y reasignables, también en diálogos, campos de texto y el simulador. **Escape** y **Ctrl+Enter** siguen cerrando o confirmando el diálogo superior. Los formularios de comandos de evento con cambios preguntan antes de cerrarse; consulta el [Editor de eventos](events-editor.md).
+Abre **Ayuda → Atajos de teclado…** para consultar y reasignar las acciones integradas. Puedes buscar por acción, categoría o atajo actual. En las tablas, `Ctrl` también admite `Comando` en macOS para las acciones reasignables. Los controles fijos y los gestos del ratón se indican donde corresponden.
 
-En **Atajos de teclado**, las acciones se agrupan por tarea y editor. Puedes buscar por acción, categoría o atajo asignado.
-
-En Aplicación puedes reasignar **Cerrar diálogo**, que usa **Escape** de forma predeterminada y también cierra el simulador.
+Cuando hay un diálogo abierto, sus atajos tienen prioridad sobre los del espacio de trabajo. **Reiniciar aplicación** (Ctrl+R) y **Alternar DevTools** (F12) siguen disponibles en diálogos, campos de texto y el simulador. **Cerrar diálogo** (Escape) se puede reasignar en **Aplicación** y cierra el diálogo o la ventana superpuesta que esté encima. **Ctrl/Comando+Enter** es un atajo fijo que confirma el diálogo superior cuando ofrece una acción de confirmación. Enter puede enviar un diálogo de una sola línea y añade un salto de línea en un campo multilínea. Los formularios de comandos de evento con cambios sin guardar piden confirmación al cerrarse. Consulta el [Editor de eventos](events-editor.md).
 
 ## Herramientas
 
@@ -32,6 +29,7 @@ En Aplicación puedes reasignar **Cerrar diálogo**, que usa **Escape** de forma
 | G | Grid |
 | C | Overlay de colisión |
 | D | Modo Dim |
+| Shift+C | Alternar la visualización de las casillas de eventos |
 
 ## Brush
 
@@ -39,14 +37,14 @@ En Aplicación puedes reasignar **Cerrar diálogo**, que usa **Escape** de forma
 |-------------|--------|
 | [ | Reducir tamaño de pincel/borrador |
 | ] | Aumentar tamaño de pincel/borrador |
-| Alt + rueda | Ajustar tamaño de pincel/borrador |
+| Alt + rueda | Ajustar tamaño de pincel/borrador (gesto fijo) |
 | Q | Rotar pincel en sentido antihorario |
 | W | Rotar pincel en sentido horario |
 | A | Alternar pincel personalizado — cambia entre tu último [pincel personalizado](tools.md#custom-shape-brush) usado y el pincel cuadrado por defecto |
 | Ctrl + B | [Usar la selección del mapa como pincel](tools.md#convertir-una-selección-en-tu-pincel) |
-| Shift + pintar | Pintar sin cambiar los autotiles vecinos |
-| Shift + arrastrar (Rectangle / Elipse) | Mantener ancho y alto iguales (cuadrado / círculo) |
-| Ctrl + arrastrar | Bloquear el pintado a un eje |
+| Shift + pintar | Pintar sin cambiar los autotiles vecinos (gesto fijo) |
+| Shift + arrastrar (Rectángulo / Elipse) | Mantener ancho y alto iguales (gesto fijo) |
+| Ctrl + arrastrar | Bloquear el pintado a un eje (gesto fijo) |
 
 ## Eraser
 
@@ -54,19 +52,20 @@ En Aplicación puedes reasignar **Cerrar diálogo**, que usa **Escape** de forma
 |-------------|--------|
 | [ | Reducir tamaño de borrador |
 | ] | Aumentar tamaño de borrador |
-| Ctrl + arrastrar | Bloquear el borrado a un eje |
+| Ctrl + arrastrar | Bloquear el borrado a un eje (gesto fijo) |
 
 ## Capas
 
 | Tecla por defecto | Acción |
 |-------------|--------|
-| 1–9 | Seleccionar la 1.ª–9.ª capa de tiles (contadas de arriba a abajo, saltando las filas de grupo Shadows/Fog/Panorama — así **4** siempre selecciona la capa mostrada como "Layer 4") |
+| 1–9 | Seleccionar la 1.ª–9.ª capa de tiles por orden de capa, empezando por la inferior |
 | V | Seleccionar la capa de eventos |
-| ↑ | Capa anterior (salta las sombras) |
-| ↓ | Capa siguiente (salta las sombras) |
-| Alt+1–9 | Alternar visibilidad de capa |
+| ↑ / ↓ | Seleccionar la capa de tiles anterior o siguiente, con vuelta al llegar al extremo |
+| Alt+1–9 | Alternar la visibilidad por índice de capa (1 para el índice 0 y así hasta 9 para el índice 8) |
 | Alt+V | Alternar visibilidad de la capa de eventos |
-| Alt + Clic en el icono de ojo de una capa | Mostrar solo esa capa; Alt+Clic otra vez restaura las demás (ver [Capas](layers.md#panel-de-capas)) |
+| Alt + clic en el icono de ojo de una capa | Mostrar solo esa capa. Alt+clic de nuevo restaura las demás (gesto fijo). |
+
+La navegación entre capas de tiles omite Eventos, Sombras, Niebla, Panorama y grupos gráficos personalizados. Al borrar capas extendidas pueden quedar huecos entre sus índices, así que los números seleccionan por orden de capa y las combinaciones con Alt usan el índice. Consulta [Capas](layers.md#panel-de-capas).
 
 ## Editor de tilesets
 
@@ -100,15 +99,17 @@ prioridades) simplemente no hace nada. Los diez se pueden reasignar en Ayuda →
 |-------------|--------|
 | + | Acercar |
 | - | Alejar |
-| Ctrl + rueda | Zoom |
+| Ctrl + rueda | Zoom (gesto fijo) |
 | Ctrl+0 | Restablecer el zoom del mapa activo al 100 % |
+
+El atajo predeterminado `+` reconoce una pulsación de más sin Shift. Si tu distribución usa Shift para escribir `+`, usa el `+` del teclado numérico, Ctrl+rueda o reasigna **Acercar**.
 
 ## Archivo
 
 | Tecla por defecto | Acción |
 |-------------|--------|
 | Ctrl+S | Guardar el mapa actual |
-| Ctrl+Shift+S | Guardar todos los mapas abiertos |
+| Ctrl+Shift+S | Guardar todos los mapas abiertos con cambios sin guardar |
 | Ctrl+Alt+S | Crear sombra a partir de la selección |
 | Ctrl+Z | Deshacer |
 | Ctrl+Y | Rehacer |
@@ -125,26 +126,29 @@ Si pulsas **Ctrl+R** mientras hay un diálogo o el simulador abierto, un aviso n
 | Ctrl+A | Seleccionar todo |
 | Ctrl+D | Deseleccionar (tiles, cualquier sombra seleccionada y evento[s] seleccionado[s]) |
 | Ctrl+Shift+D | Quitar la selección de la Paleta de tiles — descarta la estampa y el autotile actuales, dejando nada elegido. No toca la selección del mapa. |
-| Ctrl+C | Copiar selección (capa activa) |
-| Ctrl+V | Pegar (modo vista previa — clic para confirmar) |
-| Ctrl+X | Cortar selección |
-| Ctrl+J | Duplicar — copia la selección y arma la vista previa de pegado al instante, así que el siguiente clic suelta la copia. La misma idea que Ctrl+C y luego Ctrl+V, en una sola pulsación. También **Edit → Duplicate** |
-
-En la **capa de eventos**, Ctrl+C / Ctrl+V / Ctrl+X / Ctrl+J actúan sobre todos los eventos seleccionados en su lugar — copia, corta o duplica eventos enteros. Ctrl+A selecciona todos los eventos del mapa. Ctrl+V (y el armado de Ctrl+J) muestra un fantasma de vista previa de todo el grupo que sigue al cursor (cursor = esquina superior izquierda del grupo); haz clic para soltar la copia (Escape para cancelar). Consulta [Editor de eventos](events-editor.md#copying-events).
-
+| Ctrl+C | Copiar las casillas seleccionadas de las capas de tiles seleccionadas |
+| Ctrl+V | Mostrar la vista previa de pegado en la capa de tiles activa. Haz clic para colocarla. |
+| Ctrl+X | Cortar las casillas seleccionadas de las capas de tiles seleccionadas |
+| Ctrl+J | Duplicar la selección y activar la vista previa de pegado. Haz clic para colocar la copia. |
 | Ctrl+Shift+C | Copiar todas las capas |
 | Ctrl+Shift+V | Pegar en las capas seleccionadas |
 | Ctrl+Shift+X | Cortar todas las capas |
-| Ctrl + clic/arrastrar | Añadir tiles a la selección |
-| Shift + clic/arrastrar | Quitar tiles de la selección |
-| Delete | Borrar selección |
-| Escape | Cancelar un arrastre de forma o selección antes de soltar el ratón, cancelar la vista previa de pegado o quitar la selección |
+| Ctrl + clic/arrastrar | Añadir tiles a la selección (gesto fijo) |
+| Shift + clic/arrastrar | Quitar tiles de la selección (gesto fijo) |
+| Delete | Vaciar las casillas seleccionadas de las capas de tiles seleccionadas |
+| Escape | Cancelar un arrastre de forma o selección, cancelar la vista previa de pegado o quitar la selección |
+
+Puedes reasignar **Cancelar**. Escape también funciona como alternativa fija durante un arrastre de forma o selección. Si el portapapeles contiene varias capas de origen, Pegar usa la que coincide con el índice de la capa activa. Consulta [Herramientas](tools.md#copiar-y-pegar).
+
+En la **capa de eventos**, Copiar, Pegar, Cortar y Duplicar actúan sobre los eventos seleccionados. Seleccionar todo selecciona cada evento del mapa. Pegar y Duplicar muestran una vista previa que sigue al cursor desde la esquina superior izquierda del grupo. Haz clic para colocarla o usa Cancelar para descartarla. Consulta el [Editor de eventos](events-editor.md#copiar-eventos).
 
 ## Navegación
 
+Puedes reasignar **Desplazar (mantener)**. El lienzo del mapa usa la tecla principal asignada e ignora sus modificadores. Si cambias la tecla con el lienzo del mapa abierto, vuelve a abrir ese mapa para usar el nuevo atajo en su lienzo. La paleta de tiles y el editor de tilesets usan la combinación completa. Los demás gestos de esta tabla son fijos.
+
 | Tecla | Acción |
 |-----|--------|
-| Espacio (mantener) + arrastrar | Pan |
+| Espacio (mantener) + arrastrar | Desplazar |
 | Arrastrar con clic central | Pan |
 | Rueda del ratón | Desplazar viewport |
 | Shift + rueda | Desplazar en horizontal |
@@ -161,13 +165,13 @@ En el editor y la paleta de tiles, mantén el atajo **Pan** (Espacio por defecto
 | Ctrl+Z | Deshacer edición de tileset |
 | Ctrl+Y | Rehacer edición de tileset |
 | Ctrl+A | Seleccionar todos los tiles |
-| Escape | Deseleccionar tiles |
+| Ctrl+D | Deseleccionar tiles |
 
 ## Editor de eventos (lista de comandos)
 
 | Tecla por defecto | Acción |
 |-------------|--------|
-| Space | Editar el comando seleccionado |
+| Espacio | Editar el comando seleccionado |
 | Delete | Borrar comando |
 | Insert | Insertar nuevo comando |
 | Ctrl+C | Copiar comando |
@@ -175,11 +179,13 @@ En el editor y la paleta de tiles, mantén el atajo **Pan** (Espacio por defecto
 | Ctrl+X | Cortar comando |
 | Ctrl+J | Duplicar el/los comando(s) seleccionado(s) — pega una copia ahí mismo, sin tocar lo que tengas copiado |
 | Ctrl+A | Seleccionar todos los comandos de la lista (la fila End final de la página queda fuera) |
-| Escape | Cancelar el Command Picker o el formulario de parámetros abierto — desde un formulario vuelve al selector, en la página desde la que elegiste |
+| Ctrl+Z / Ctrl+Y | Deshacer o rehacer cambios en los comandos |
+| Escape | Cerrar el selector de comandos o el formulario de parámetros con **Cerrar diálogo**. Al insertar un comando nuevo, cerrar el formulario vuelve al selector. |
 | Alt + ↑ | Mover comando arriba |
 | Alt + ↓ | Mover comando abajo |
 | ↑ | Comando anterior (salta las líneas extra de un Show Text / Comment / Script multilínea) |
 | ↓ | Comando siguiente (igual) |
+| Shift+↑ / Shift+↓ | Ampliar la selección al comando anterior o siguiente (fijo) |
 
 ## Editor de eventos (pestañas de página)
 
@@ -192,17 +198,17 @@ de abajo.
 | Ctrl+C | Copiar página |
 | Ctrl+X | Cortar página |
 | Ctrl+V | Pegar página (añade una página nueva tras la pestaña en la que estás) |
-| Ctrl+J | Clonar la página actual (igual que el botón **+** de pestaña / clic derecho → Clone Page) |
-| Ctrl+Z | Deshacer edición de página — ahora también deshace añadir, borrar o clonar una página |
+| Ctrl+J | Clonar la página actual (igual que el botón **+** de pestaña / clic derecho → Clonar página) |
+| Ctrl+Z | Deshacer una edición de página, incluida la creación, eliminación o clonación de páginas |
 | Ctrl+Y | Rehacer edición de página |
 
 ## Base de datos
 
 Usa el atajo configurado para **Guardar**, **Ctrl+S** por defecto, para aplicar cambios en el editor activo de XP, Animaciones, Eventos comunes o tilesets.
 
-Con una pestaña enfocada, pulsa **Alt+Mayús+Izquierda** o **Alt+Mayús+Derecha** para moverla una posición.
+Con una pestaña enfocada, pulsa **Alt+Shift+←** o **Alt+Shift+→** para moverla una posición. Estos controles son fijos.
 
-En las listas de Actores, Clases, Habilidades, Objetos, Armas, Armaduras, Enemigos, Tropas y Estados, enfoca un registro y pulsa **F4** o **F5** para seleccionar el registro anterior o siguiente. Con el foco en la lista funcionan los atajos configurados para Copiar, Cortar, Pegar, Duplicar y Eliminar. Deshacer y Rehacer, **Ctrl+Z** y **Ctrl+Y** de forma predeterminada, funcionan también en los formularios de las pestañas de XP, incluido Sistema. El buscador y el editor de comandos de evento conservan sus propios atajos.
+En las listas de Actores, Clases, Habilidades, Objetos, Armas, Armaduras, Enemigos, Tropas y Estados, **F4** y **F5** son controles fijos para seleccionar el registro anterior o siguiente con el foco en la lista. En Windows, WebView2 puede interceptar F5 antes de que llegue a la lista. Si ocurre, haz clic en el registro para seleccionarlo. Con el foco en la lista funcionan los atajos configurados para Copiar, Cortar, Pegar, Duplicar y Eliminar. Deshacer y Rehacer, **Ctrl+Z** y **Ctrl+Y** de forma predeterminada, funcionan también en los formularios de las pestañas de XP, incluido Sistema. El buscador y el editor de comandos de evento conservan sus propios atajos.
 
 En Tilesets, Eventos comunes, Animaciones, Interruptores y Variables, haz clic en una fila para darle el foco; a partir de ahí estas teclas
 actúan sobre todo el registro — un historial de deshacer por lista. Consulta
@@ -215,22 +221,24 @@ actúan sobre todo el registro — un historial de deshacer por lista. Consulta
 | Ctrl+V | Pegar (reemplazar) sobre el registro seleccionado |
 | Ctrl+J | Duplicar el registro seleccionado — añade una copia en una ranura nueva al final de la lista |
 | Ctrl+Z | Deshacer la última edición de esa lista — pegar, cortar, reemplazar, duplicar, añadir, borrar y Change Maximum… cuentan todas, incluidas las escrituras a disco de Tilesets |
-| Ctrl+Y | Rehacerlo |
+| Ctrl+Y | Rehacer la última edición de esa lista |
+
+Fuera de la lista de registros de Animaciones, el editor usa Copiar, Pegar, Cortar, Deshacer y Rehacer para las celdas y los fotogramas. Usa **Delete** o la alternativa fija **Backspace** para borrar la celda seleccionada. En el selector de interruptores o variables, **↑ / ↓** seleccionan la entrada visible anterior o siguiente.
 
 ## Editor de eventos (ruta de movimiento)
 
-La lista de acciones de movimiento en **Set Move Route** admite las mismas teclas de edición que la lista de comandos principal. Un clic selecciona una sola acción; **Shift+clic** extiende la selección y **Ctrl+clic** alterna — copiar, cortar, borrar y arrastrar actúan todos sobre toda la selección.
+En **Establecer ruta de movimiento**, haz clic para seleccionar una acción. **Shift+clic** amplía la selección y **Ctrl+clic** alterna una fila. Copiar, Cortar, Borrar y arrastrar actúan sobre las acciones seleccionadas.
 
 | Tecla por defecto | Acción |
 |-------------|--------|
-| Space / Enter | Editar la acción de movimiento seleccionada |
+| Espacio / Enter | Editar la acción seleccionada. Espacio es la tecla predeterminada de **Editar comando**. Enter es una alternativa fija. |
 | Ctrl+C / Ctrl+V / Ctrl+X | Copiar / Pegar / Cortar acciones de movimiento (portapapeles separado de los comandos de evento) |
 | Ctrl+Z | Deshacer edición de ruta de movimiento |
 | Ctrl+Y | Rehacer edición de ruta de movimiento |
 | Delete | Borrar comando de movimiento |
 | ↑ / ↓ | Acción de movimiento anterior / siguiente |
 | Alt + ↑ / ↓ | Mover la acción seleccionada arriba / abajo |
-| ← / → (con el separador de secuencia enfocado) | Cambiar el ancho del panel de secuencia de la ruta |
+| ← / → (con el separador de secuencia enfocado) | Cambiar el ancho del panel de secuencia de la ruta (fijo) |
 
 ## Editor de rutas de movimiento (Dibujar ruta…)
 
@@ -241,6 +249,7 @@ Solo se aplican mientras el editor visual de rutas está abierto, por eso pueden
 | ↑ / ↓ / ← / → | Añadir un paso en esa dirección |
 | Ctrl + ↑ / ↓ / ← / → | Añadir un Turn en esa dirección |
 | Backspace | Quitar último paso |
+| Espacio (mantener) + arrastrar | Desplazar el mapa con **Desplazar (mantener)** |
 | Delete | Eliminar los pasos seleccionados |
 | Ctrl+Z / Ctrl+Y | Deshacer / rehacer cualquier edición en el editor de rutas (un trazo completo de arrastre cuenta como un paso) |
 
@@ -252,9 +261,10 @@ El botón **Controles** de la barra de herramientas del editor muestra todos los
 |-------------|--------|
 | Ctrl+F | Buscar (y reemplazar) en el script actual |
 | Ctrl+Shift+F | Buscar en todos los scripts |
-| Ctrl+S | Guardar todos los scripts en Scripts.rxdata |
+| Ctrl+S | Guardar en la fuente de scripts actual. Si es un archivo de scripts, escribe en `Scripts.rxdata`. |
+| Ctrl+Z / Ctrl+Y | Deshacer o rehacer dentro del editor de código |
 
-Consulta la [guía del editor de scripts](scripts.md#finding-things) para más detalles.
+Escape cierra el panel de búsqueda en todos los scripts cuando tiene el foco. Con la búsqueda del script actual abierta, CodeMirror usa **F3 / Shift+F3** para ir al resultado siguiente o anterior y Escape para cerrar la búsqueda. **Tab / Shift+Tab** cambian la sangría en el editor de código. Estos controles son fijos. Consulta la [guía del editor de scripts](scripts.md#encontrar-cosas).
 
 ## Panel de eventos
 
@@ -262,12 +272,12 @@ Consulta la [guía del editor de scripts](scripts.md#finding-things) para más d
 |-------------|--------|
 | Delete | Borrar el evento seleccionado (o todos los eventos seleccionados por caja) |
 | Ctrl+D | Deseleccionar evento(s) |
-| Escape | Cancelar una acción activa; con la lista de Events enfocada, deselecciona los eventos y quita su resaltado del mapa |
+| Escape | Deseleccionar los eventos y quitar su resaltado del mapa con la lista de Eventos enfocada (fijo) |
 | F2 | Renombrar el único evento seleccionado |
 
-F2 y Escape se aplican cuando la lista de Events tiene el foco; F2 no hace nada con varios eventos seleccionados o si el foco está en un campo editable. Escape limpia la selección del evento y su resaltado en el mapa. El botón **Deseleccionar** del panel hace lo mismo.
+F2 requiere un solo evento seleccionado y el foco en la lista fuera de un campo editable. Usa el botón **Deseleccionar** del panel para limpiar la selección con el ratón.
 
-En la **capa de eventos**, la herramienta **Select** hace selección de caja de eventos: arrastra un marco (Ctrl+arrastrar añade, Shift+arrastrar quita), arrastra la selección para mover el grupo, Delete los quita todos. Consulta [Editor de eventos](events-editor.md#selecting-and-moving-events).
+En la **capa de eventos**, la herramienta **Select** hace selección de caja de eventos: arrastra un marco (Ctrl+arrastrar añade, Shift+arrastrar quita), arrastra la selección para mover el grupo, Delete los quita todos. Consulta [Editor de eventos](events-editor.md#seleccionar-y-mover-eventos).
 
 ## Panel Mapas (lista de mapas)
 
@@ -296,29 +306,24 @@ Haz clic en una fila del panel de capas para darle el foco. **Ctrl/Meta+clic** a
 | Delete | Borrar las capas extendidas de tiles seleccionadas si todas se pueden eliminar |
 | F2 | Renombrar en línea la única capa seleccionada |
 
-Estos solo se activan mientras el panel de capas tiene el foco, así que no entran en conflicto con la
-copia de tiles en el lienzo. F2 no hace nada con varias filas seleccionadas o si el foco está en un
-campo editable. Delete solo está disponible cuando todas las filas seleccionadas son capas
-extendidas de tiles que se pueden quitar. Funciona en cualquier capa, incluidas las nativas — una
-copia, corte o duplicado que no tenga otro sitio donde ir acaba en una capa extendida nueva, ya que
-una capa nativa es una ranura fija. Consulta [Capas](layers.md#panel-de-capas).
+Estas acciones usan la selección o la capa activa del panel de capas cuando tiene el foco. El portapapeles funciona con capas de tiles nativas y extendidas. F2 requiere una sola capa de tiles seleccionada y el foco fuera de un campo editable. Delete requiere que todas las filas seleccionadas sean capas de tiles extendidas que se puedan borrar. Con el foco en la lista, Shift+↑ y Shift+↓ amplían la selección de filas visibles. Consulta [Capas](layers.md#panel-de-capas).
 
 ## Simulador de juego
 
 | Tecla por defecto | Acción |
 |-------------|--------|
-| Space | Play / Pause |
+| Espacio | Reproducir o pausar |
 | . | Avanzar un frame |
 | R | Reiniciar |
-| Esc | Cerrar el simulador |
+| Escape | Cerrar el simulador con **Cerrar diálogo**. Si están abiertos los ajustes del simulador, la primera pulsación cierra los ajustes. |
 | C | Botón OK / acción |
 | X | Cancelar |
 | Y | Alternar modo de cámara |
-| Flechas | Mover al jugador (simulación de mapa) |
+| Flechas | Mover al jugador en la simulación de mapas. Arriba y Abajo también recorren las opciones o ajustan un valor numérico. |
 
 ## Pestañas
 
-En Snippets y Mods se usan los mismos atajos de pestaña siguiente y anterior desde dentro del diálogo. Por defecto son **Ctrl+Tab** y **Ctrl+Mayús+Tab**.
+En Fragmentos y Mods, **Siguiente pestaña** (Ctrl+Tab) y **Anterior pestaña** (Ctrl+Shift+Tab) usan la misma asignación que en las pestañas de mapa. En Fragmentos, **← / →** también cambian de biblioteca con el foco en una pestaña de biblioteca. Estas flechas y los gestos de pestañas del mapa son fijos.
 
 | Tecla | Acción |
 |-----|--------|
@@ -326,12 +331,27 @@ En Snippets y Mods se usan los mismos atajos de pestaña siguiente y anterior de
 | Clic central en pestaña | Cerrar pestaña |
 | Doble clic en pestaña de vista previa | Promover a pestaña permanente |
 
+## Otros controles fijos
+
+| Pantalla | Teclas y acciones |
+|----------|------------------|
+| Pantalla de bienvenida | **← / →** cambian de pestaña con el foco en la barra. **Alt+↑ / Alt+↓** mueven el proyecto enfocado en una lista que admite reordenación. |
+| Ajustes de la aplicación | En la lista de funciones de Supporter, **↑ / ↓** recorren las funciones. **Inicio / Fin** van a la primera o la última. |
+| Paleta de tiles | En la búsqueda de tilesets, **↑ / ↓** recorren las opciones, **Enter** elige la resaltada y **Escape** cierra la lista. |
+| Selector de gráficos | En la lista, **↑ / ↓** recorren los gráficos. En la vista previa, **Espacio+arrastrar** desplaza y **Ctrl+rueda** cambia el zoom. |
+| Selector de ubicación | **Espacio+arrastrar**, **Shift+arrastrar** y arrastrar con el botón central desplazan. **Ctrl+rueda** cambia el zoom. |
+| Códigos de texto de eventos | Con las sugerencias abiertas, **↑ / ↓** recorren la lista, **Enter / Tab** insertan la sugerencia y **Escape** cierra la lista. |
+| Campos en línea | En los campos compatibles, **Enter** confirma y **Escape** cancela la edición en curso. |
+| Diálogo de Git | Con el foco en un separador de columnas del gráfico, **← / →** ajustan el ancho y **Shift** amplía el ajuste. El separador del historial usa **↑ / ↓ / Inicio / Fin**. **Shift+F10** o la tecla Menú abren el menú de un archivo del commit. |
+| Vista previa de imágenes de Git | **Inicio** restablece la vista, **+ / −** cambian el zoom y las flechas desplazan la imagen. |
+| Diagnóstico del lienzo | **Ctrl+Alt+Shift+P** alterna el diagnóstico de renderizado con el lienzo visible y sin diálogos modales abiertos. |
+
 ## Personalizar atajos
 
-Abre **Help → Keyboard Shortcuts...** para reasignar cualquier acción. Haz clic en una fila, luego pulsa la nueva combinación de teclas. Si la tecla ya está en uso, puedes intercambiar o cancelar.
+Haz clic en una acción de **Ayuda → Atajos de teclado…** y pulsa la nueva combinación. Si ya está en uso, **Mantener** comparte la nueva tecla, **Intercambiar** asigna tu tecla anterior a las otras acciones en conflicto y **Cancelar** recupera tu asignación anterior. Si otras acciones siguen usando la tecla anterior, **Actualizar todo** también las cambia y **Solo este** conserva sus asignaciones.
 
-Los atajos específicos de contexto (Tileset, editor de eventos) comparten algunas teclas por defecto con atajos globales (p. ej. Ctrl+Z para deshacer). Funcionan según qué panel tiene el foco. Reasignar un atajo específico de contexto solo afecta a ese contexto.
+Dos acciones pueden compartir tecla cuando funcionan en contextos distintos. Por ejemplo, `1` selecciona una capa del mapa o un valor del tileset. Acciones compartidas como **Deshacer** tienen una única asignación que se usa en todos los editores compatibles. Usa el botón de restablecer de cada fila para recuperar su valor predeterminado o **Restablecer todo** para recuperar los de las acciones integradas y los menús de mods. Las asignaciones se conservan entre sesiones.
 
 ## Atajos de mods
 
-Los mods instalados pueden añadir sus propios elementos de menú con atajos de teclado. Aparecen en el diálogo de Keyboard Shortcuts bajo una sección **Mods**, y puedes reasignarlos igual que los atajos integrados. Los conflictos entre un atajo de mod y uno integrado (u otro mod) se detectan al asignar la tecla, así que puedes intercambiar o cancelar. Tus asignaciones personalizadas de atajos de mod persisten entre sesiones, y **Reset All** las restaura a los valores por defecto del mod junto con todo lo demás.
+Los mods instalados pueden añadir atajos de menú. Reasígnalos en la sección **Mods** de **Atajos de teclado**, con las mismas opciones en caso de conflicto que las acciones integradas. Un mod también puede definir controles para su propio panel o diálogo. Consulta esos controles en la ayuda contextual del botón de teclado.

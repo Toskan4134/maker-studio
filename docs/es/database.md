@@ -122,7 +122,7 @@ Cada frame se compone de *celdas* — piezas de la spritesheet colocadas sobre e
 - Con una celda seleccionada, ajusta **X / Y / Zoom / Angle / Opacity / Blend / Mirror** y su **Pattern** (qué imagen de la hoja muestra). Usa **Add / Dup / Del** para las celdas.
 - Avanza por los frames con **◀ / ▶** o la tira numerada de frames. Activa **Onion** para ver el frame anterior tenue detrás del actual.
 - **▶ Play** previsualiza la animación (frames + destellos de pantalla). **↶ / ↷** deshacen/rehacen tus ediciones.
-- Teclado: **Ctrl+C / Ctrl+V / Ctrl+X** copian/pegan/cortan celdas, **Supr** quita la celda seleccionada, **Ctrl+Z / Ctrl+Y** deshacer/rehacer.
+- Fuera de la lista de animaciones, los atajos compartidos de Copiar, Pegar, Cortar, Deshacer y Rehacer se aplican a las celdas y los fotogramas. Supr o Retroceso elimina la celda seleccionada. Consulta [Atajos de teclado](keyboard-shortcuts.md#base-de-datos).
 
 **Herramientas de frame**
 

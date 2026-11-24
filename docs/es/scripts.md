@@ -7,7 +7,7 @@ El editor de **Scripts** te permite ver, reordenar, renombrar, añadir, borrar y
 ## La ventana
 
 - **Izquierda:** la lista de scripts, en el orden en que RPG Maker XP los ejecuta. Los divisores de sección (títulos hechos de signos `=`) aparecen atenuados.
-- **Derecha:** el código del script seleccionado, con resaltado de sintaxis Ruby, números de línea y buscar y reemplazar (`Ctrl+F` — consulta [Encontrar cosas](#finding-things)). Edítalo como cualquier editor de código; el deshacer/rehacer estándar `Ctrl+Z` / `Ctrl+Y` funciona dentro de él. Haz cuatro clics seguidos en el código para seleccionar todo el script.
+- **Derecha:** el código del script seleccionado, con resaltado de sintaxis Ruby, números de línea y búsqueda con reemplazo (Ctrl+F por defecto). El editor de código usa los atajos compartidos de Deshacer y Rehacer (Ctrl+Z y Ctrl+Y por defecto). Haz cuatro clics seguidos en el código para seleccionar todo el script. Consulta [Encontrar cosas](#encontrar-cosas).
 
 ## Gestionar scripts
 
@@ -28,7 +28,7 @@ Abre el botón de teclado de la barra de Scripts para consultar los atajos de b�
 - **Buscar en el script actual** — pulsa `Ctrl+F` para abrir una barra de buscar y reemplazar en lo alto del editor de código. Admite distinguir mayúsculas, expresiones regulares, coincidencia de palabra completa y reemplazar / reemplazar todo, y sigue el idioma y tema del editor.
 - **Buscar en todos los scripts** — pulsa `Ctrl+Shift+F` para abrir un panel de búsqueda que recorre el título y el código de **cada** script a la vez. Los resultados aparecen agrupados por script con números de línea y la coincidencia resaltada; haz clic en un resultado para saltar directo a esa línea, incluso en otro script. Activa **Aa** para coincidencia sensible a mayúsculas o **.*** para expresiones regulares (un patrón inválido simplemente no muestra resultados). Las búsquedas muy amplias se detienen en 500 resultados — acota la consulta para ver el resto.
 
-Ambos atajos son reasignables en **Help → Keyboard Shortcuts...** (la sección "Scripts").
+Puedes reasignar ambas acciones de búsqueda en la sección **Scripts** de **Ayuda → Atajos de teclado…**. El guardado usa el atajo compartido **Guardar**. Consulta [Atajos de teclado](keyboard-shortcuts.md#editor-de-scripts).
 
 ## De dónde sale el código
 
@@ -86,7 +86,7 @@ como se describe en la [guía del editor de eventos](events-editor.md#fragmentos
 
 ## Guardar
 
-Haz clic en **Save** (o pulsa `Ctrl+S`) para escribir todo de vuelta en `Data/Scripts.rxdata`. Tu archivo anterior se respalda primero en `Data/Scripts.rxdata.bak`, así que siempre puedes revertir. Cerrar la ventana con cambios sin guardar te pide confirmar.
+Haz clic en **Guardar** o usa el atajo configurado (Ctrl+S por defecto). Si editas el archivo de scripts, los cambios se escriben en `Data/Scripts.rxdata`. Tu archivo anterior se respalda primero en `Data/Scripts.rxdata.bak`, así que siempre puedes revertir. Cerrar la ventana con cambios sin guardar te pide confirmar.
 
 > **Consejo:** tras guardar, ejecuta tu juego para asegurarte de que tus ediciones compilan — un error de sintaxis en un script impedirá que el juego arranque, igual que en RPG Maker XP.
 

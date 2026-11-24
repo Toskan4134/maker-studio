@@ -115,7 +115,7 @@ Each frame is made of *cells* — pieces of the spritesheet placed over the targ
 - With a cell selected, adjust **X / Y / Zoom / Angle / Opacity / Blend / Mirror** and its **Pattern** (which sheet image it shows). Use **Add / Dup / Del** for cells.
 - Step through frames with **◀ / ▶** or the numbered frame strip. Turn on **Onion** to see the previous frame faintly behind the current one.
 - **▶ Play** previews the animation (frames + screen flashes). **↶ / ↷** undo/redo your edits.
-- Keyboard: **Ctrl+C / Ctrl+V / Ctrl+X** copy/paste/cut cells, **Delete** removes the selected cell, **Ctrl+Z / Ctrl+Y** undo/redo.
+- Outside the animation record list, the shared Copy, Paste, Cut, Undo, and Redo shortcuts apply to cells and frames. Delete or Backspace removes the selected cell. See [Keyboard Shortcuts](keyboard-shortcuts.md#database).
 
 **Frame tools**
 

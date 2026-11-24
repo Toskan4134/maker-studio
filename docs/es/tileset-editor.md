@@ -107,7 +107,7 @@ archivos que añadas o cambies ahí se detectan automáticamente; no hace falta 
 
 El editor tiene dos botones:
 
-- **Aplicar** — escribe tus cambios en `Tilesets.rxdata` y **deja el editor abierto**, así puedes seguir ajustando propiedades. Está gris cuando no hay nada que guardar. **Ctrl+S** (o **Cmd+S** en macOS) hace lo mismo.
+- **Aplicar** — escribe tus cambios en `Tilesets.rxdata` y **deja el editor abierto**, así puedes seguir ajustando propiedades. Está gris cuando no hay nada que guardar. El atajo **Guardar** también aplica los cambios (Ctrl+S o Comando+S por defecto). Consulta [Atajos de teclado](keyboard-shortcuts.md#editor-de-propiedades-de-tileset).
 - **Guardar** — escribe tus cambios y **cierra** la ventana de la Database, igual que el OK del Editor de eventos.
 
 Se crea una copia de seguridad del archivo original automáticamente en el primer guardado. Si cierras con cambios sin guardar, se te preguntará si guardar, descartar o cancelar.

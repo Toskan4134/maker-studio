@@ -12,8 +12,7 @@ Open it from the **Scripts** button on the toolbar (next to **Database**) or **T
 - **Left:** the list of scripts, in the order RPG Maker XP runs them. Section dividers (titles made of
   `=` signs) appear dimmed.
 - **Right:** the selected script's code, with Ruby syntax highlighting, line numbers, and find &
-  replace (`Ctrl+F` — see [Finding things](#finding-things)). Edit it like any code editor; standard
-  `Ctrl+Z` / `Ctrl+Y` undo/redo work inside it. Click four times in the code to select the whole script.
+  replace (Ctrl+F by default). The code editor uses the shared Undo and Redo bindings (Ctrl+Z and Ctrl+Y by default). Click four times in the code to select the whole script. See [Finding things](#finding-things).
 
 ## Managing scripts
 
@@ -40,7 +39,7 @@ Open the keyboard button in the Scripts toolbar to see the current shortcuts for
   for case-sensitive matching or **.*** for regular expressions (an invalid pattern simply shows no
   results). Very broad searches stop at 500 results — narrow the query to see the rest.
 
-Both shortcuts are rebindable under **Help → Keyboard Shortcuts...** (the "Scripts" section).
+Reassign both Find actions in the **Scripts** section of **Help → Keyboard Shortcuts…**. Save uses the shared **Save** action. See [Keyboard Shortcuts](keyboard-shortcuts.md#scripts-editor).
 
 ## Where the code comes from
 
@@ -95,7 +94,7 @@ script. Folders, import and export work exactly as described in the
 
 ## Saving
 
-Click **Save** (or press `Ctrl+S`) to write everything back to `Data/Scripts.rxdata`. Your previous file is backed up to
+Click **Save** or use the configured Save shortcut (Ctrl+S by default). For the archive source, this writes the scripts to `Data/Scripts.rxdata`. Your previous file is backed up to
 `Data/Scripts.rxdata.bak` first, so you can always roll back. Closing the window with unsaved changes
 asks you to confirm.
 

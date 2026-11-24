@@ -105,7 +105,7 @@ automatically; there is no need to reopen the editor.
 
 The editor has two buttons:
 
-- **Apply** — writes your changes to `Tilesets.rxdata` and **stays open**, so you can keep adjusting properties. It's greyed out when there is nothing to save. **Ctrl+S** (or **Cmd+S** on macOS) does the same thing.
+- **Apply** — writes your changes to `Tilesets.rxdata` and **stays open**, so you can keep adjusting properties. It's greyed out when there is nothing to save. The configured **Save** shortcut also applies changes (Ctrl+S or Command+S by default). See [Keyboard Shortcuts](keyboard-shortcuts.md#tileset-property-editor).
 - **Save** — writes your changes and **closes** the Database window, the way OK works in the Event Editor.
 
 A backup of the original file is created automatically on first save. If you close with unsaved changes, you'll be asked whether to save, discard, or cancel.

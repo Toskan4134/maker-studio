@@ -44,7 +44,7 @@ The simulator panel contains:
 
 ## Controls
 
-The keyboard button in the toolbar opens simulator controls, including shortcuts for the active dialogue.
+The keyboard button in the toolbar shows the current simulator assignments, including input for the active dialogue. **Close Dialog** (Escape by default) closes the simulator settings first if they are open. See [Keyboard Shortcuts](keyboard-shortcuts.md#game-simulator).
 
 | Action | Key | Description |
 |--------|-----|-------------|

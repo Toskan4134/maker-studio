@@ -44,7 +44,7 @@ El panel del simulador contiene:
 
 ## Controles
 
-El botón de teclado de la barra muestra los controles del simulador, incluidos los atajos del diálogo activo.
+El botón de teclado de la barra muestra las asignaciones del simulador, incluidos los controles del diálogo activo. **Cerrar diálogo** (Escape por defecto) cierra primero los ajustes del simulador si están abiertos. Consulta [Atajos de teclado](keyboard-shortcuts.md#simulador-de-juego).
 
 | Acción | Tecla | Descripción |
 |--------|-----|-------------|
