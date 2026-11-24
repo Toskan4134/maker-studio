@@ -27,6 +27,8 @@ Descarga la versión para tu sistema (estos enlaces siempre apuntan a la última
 
 Todas las versiones (la actual y las anteriores) están también en la página de [Releases](https://github.com/Toskan4134/maker-studio/releases). Una vez instalada, la app se mantiene actualizada sola.
 
+Si quieres apoyar el proyecto, puedes hacerlo con [Maker Studio Supporter](supporter.md), una licencia de pago que incluye pequeñas ventajas en el editor.
+
 Los instaladores **aún no están firmados digitalmente**, así que tu sistema muestra un aviso único durante la instalación:
 
 - **Windows** — ejecuta el `.exe` y, cuando SmartScreen diga "Windows protegió su PC", haz clic en **Más información → Ejecutar de todas formas** y sigue el instalador.

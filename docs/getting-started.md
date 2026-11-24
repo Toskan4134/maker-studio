@@ -27,6 +27,8 @@ Download the build for your system (these links always point to the latest versi
 
 Every build (current and previous versions) is also on the [Releases](https://github.com/Toskan4134/maker-studio/releases) page. Once installed, the app checks for updates when it starts and shows an available update before asking about a project's integration.
 
+If you’d like to support the project, [Maker Studio Supporter](supporter.md) is a paid license that includes a few extra perks in the editor.
+
 The installers are **not code-signed** yet, so your OS shows a one-time warning on install:
 
 - **Windows** — run the `.exe` and when SmartScreen says "Windows protected your PC", click **More info → Run anyway**, then follow the installer.
