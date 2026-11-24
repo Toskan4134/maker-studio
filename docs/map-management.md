@@ -83,6 +83,8 @@ You can also shift content manually by overriding the computed shift values.
 
 An SVG preview shows where your content will sit inside the new canvas before you commit. The resize is a single undo step — press Ctrl+Z afterward to restore the original size and content.
 
+[![Resize Map dialog previewing a 16 × 11 map reduced to 12 × 10, with the center anchor and Wrap enabled.](../docs-site/public/guide-media/map-resize-en.webp)](../docs-site/public/guide-media/map-resize-en.webp)
+
 ## Changing a Map's Tileset
 
 Right-click a map in the Map Tree and choose Change Tileset, or use Map then Change Tileset from the menu. Pick from the searchable list and click Apply — the map repaints with the new tileset's graphics right away, no reload needed. If the map is active, the tile palette also switches to the new tileset; changing an inactive map leaves the palette as it is. Changing the tileset only affects the native layers, and does not remap tile IDs (existing tiles keep their numbers, so they may look different under the new tileset). Extended layers can continue to use tiles from any tileset.
@@ -203,7 +205,7 @@ A green **Start** marker appears on that tile, and the position is saved to your
 
 ## Running the Game
 
-Click the green Run button in the toolbar (or use File then Run Game). The editor launches `Game.exe` in debug mode from your project folder.
+Click **Run Game** in the toolbar or choose **File → Run Game** to launch the project in debug mode. Automatic detection checks for `Game.exe`, `mkxp-z.exe` and `mkxp.exe`.
 
 In **Help → Settings → Game**, enter a project-relative path in **Game executable** or click **…** to browse from the project folder. Leave it blank for automatic detection. The change applies the next time you run the game.
 

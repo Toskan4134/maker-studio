@@ -20,7 +20,7 @@ Wand y Borrador mágico usan la misma opción **Continuo** que Fill. La comparac
 
 > **Cambiar de capa quita la selección** siempre que entras o sales de la capa de eventos: la selección de tiles se descarta al pasar a Eventos, y los eventos seleccionados se descartan al volver a una capa normal.
 
-> **En la capa de eventos**, solo se aplican **Brush**, **Eraser**, **Select** y **Pan** — Fill, Rectangle, Elipse, Línea y Eyedropper están desactivados, y el tamaño de pincel no tiene efecto. Select hace selección de caja de eventos para mover/borrar en grupo. Consulta [Editor de eventos](events-editor.md#tools-on-the-events-layer).
+> **En la capa de eventos**, solo se aplican **Brush**, **Eraser**, **Select** y **Pan** — Fill, Rectangle, Elipse, Línea y Eyedropper están desactivados, y el tamaño de pincel no tiene efecto. Select hace selección de caja de eventos para mover/borrar en grupo. Consulta [Editor de eventos](events-editor.md#herramientas-en-la-capa-de-eventos).
 
 > **Vistas previas de autotiles:** cuando se selecciona un autotile, la vista previa del Brush y la del arrastre de Rectangle, Elipse y Línea lo muestran totalmente bordeado — esquinas, bordes e interior se dibujan tal como quedarán colocados, y la vista previa se conecta con los autotiles coincidentes que ya hay en el mapa. Una parte de detalle de autotile bloqueada se previsualiza como la parte exacta que elegiste. El resultado colocado coincide con la vista previa.
 
@@ -94,6 +94,8 @@ El popover del Brush tambén tiene un **conmutador rápido**: un desplegable que
 Una vez que has usado un pincel personalizado, un indicador compacto en la barra muestra su **nombre** (su nombre de preset, o "Custom") y funciona como **interruptor on/off** entre ese pincel y el pincel cuadrado por defecto. Haz clic en el conmutador (o pulsa **A**) para alternar entre ellos — el indicador permanece visible, atenuado, mientras está apagado para que puedas volver. Haz clic en la **✕** para limpiar el pincel por completo y olvidarlo (el indicador desaparece, dejándote con el pincel cuadrado por defecto).
 
 ### Construir un pincel
+
+[![Editor de pinceles con la forma personalizada seleccionada y una cruz dibujada en la cuadrícula.](../../docs-site/public/guide-media/brush-es.webp)](../../docs-site/public/guide-media/brush-es.webp)
 
 El editor tiene tres secciones:
 

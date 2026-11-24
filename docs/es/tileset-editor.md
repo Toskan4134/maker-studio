@@ -10,7 +10,7 @@ del gráfico abre el selector de gráficos normal, así ves la imagen a la que v
 zoom, desplazamiento y favoritos— en lugar de elegir a ciegas de una lista de nombres.
 
 Una vía más rápida para un tile que ya tienes a la vista: **clic derecho en ese tile en la
-Paleta de tiles → Edit Properties…**. El editor se abre desplazado hasta ese tile exacto y
+Paleta de tiles → Editar tileset…**. El editor se abre desplazado hasta ese tile exacto y
 con él ya seleccionado, en vez de al principio de una hoja larga. Pulsa **Esc** para cerrar
 el editor (sigue preguntando por los cambios sin guardar).
 
@@ -51,6 +51,8 @@ Haz clic en un tile para alternar entre totalmente transitable (todas las direcc
 ### Passage (4 direcciones)
 
 Haz clic en uno de los cuatro cuadrantes dentro de un tile para bloquear o desbloquear esa dirección concreta (Arriba, Abajo, Izquierda, Derecha). Cada dirección se puede alternar de forma independiente, dándote control fino sobre exactamente cómo puede moverse el jugador a través de un tile.
+
+[![Editor de tilesets en el modo Paso (4 direcciones). Las flechas verdes indican las direcciones permitidas y las cruces rojas, las bloqueadas.](../../docs-site/public/guide-media/tileset-passage-es.webp)](../../docs-site/public/guide-media/tileset-passage-es.webp)
 
 ### Priority (prioridad)
 

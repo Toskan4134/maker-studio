@@ -52,6 +52,7 @@ async function getModVersions() {
 }
 
 const versions = await getModVersions();
+const isSpanish = Astro.currentLocale === 'es';
 const CURRENT = process.env.DOCS_MODS_VERSION || 'latest';
 const SITE_PREFIX = (process.env.SITE_PREFIX || '').replace(/\/+$/, '');
 const base = import.meta.env.BASE_URL;
@@ -63,19 +64,21 @@ const rest = (
 
 const options = versions.map((v) => {
 	const vBase = SITE_PREFIX + (v.id === 'latest' ? '/' : `/mods-${v.id}/`);
-	return { value: vBase + rest, selected: v.id === CURRENT, label: v.label };
+	return { value: vBase + rest, selected: v.id === CURRENT, label: isSpanish && v.id === 'latest' ? 'Actual' : v.label };
 });
 ---
 
 {
 	options.length > 0 && (
 		<starlight-mod-version-select>
-			<Select icon="puzzle" label="Mod API version" options={options} width="9em" />
+			<Select icon="puzzle" label={isSpanish ? 'Versión de la API de mods' : 'Mod API version'} options={options} width="9em" />
 		</starlight-mod-version-select>
 	)
 }
 
 <script>
+	import { navigateToVersion } from '../lib/version-navigation';
+
 	class StarlightModVersionSelect extends HTMLElement {
 		constructor() {
 			super();
@@ -83,7 +86,7 @@ const options = versions.map((v) => {
 			if (!select) return;
 			select.addEventListener('change', (e) => {
 				if (e.currentTarget instanceof HTMLSelectElement) {
-					window.location.pathname = e.currentTarget.value;
+					void navigateToVersion(e.currentTarget);
 				}
 			});
 			window.addEventListener('pageshow', (event) => {

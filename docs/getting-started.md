@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-You need an RPG Maker XP project folder -- specifically, a directory that contains `Game.exe` and a `Data/` subdirectory with your map and tileset files. The editor reads and writes `.rxdata` files directly, so no export or conversion step is required.
+Choose the root of an RPG Maker XP project containing `Data/MapInfos.rxdata`, your maps and your tilesets. To playtest from the editor, you also need a [game executable](map-management.md#running-the-game). The editor reads and writes `.rxdata` files directly, so no export or conversion step is required.
 
 ## Installation
 
@@ -41,19 +41,21 @@ The installers are **not code-signed** yet, so your OS shows a one-time warning 
 
 The two paste-in builds — **Essentials v17.1** and **BES v5** — cannot be installed automatically, because they are a single script rather than a folder. Picking one turns the button into **Download**; once it finishes, **Open Folder** takes you to the zip so you can paste the `.rb` into the Script Editor yourself.
 
-To install by hand instead, download the integration that matches your project:
+For a manual installation, choose the build that matches your engine. The ZIP must come from the integrations release for your editor version.
 
-| Your project | Direct download |
+| Your project | Integration ZIP or in-app option |
 |--------------|-----------------|
 | Pokémon Essentials **v22** (vanilla) | Select `[PE22] Maker Studio` in Help → Check Game Integration… |
-| Pokémon Essentials **v21** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v20** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v19** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v17** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.1** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.2** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.3** | Select `[LBDS1.3] Maker Studio` in Help → Check Game Integration… |
+| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.3.x** | Select `[LBDS1.3] Maker Studio` in Help → Check Game Integration… |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/BES5.Maker.Studio.v1.10.0.zip) |
+
+> **Pokémon Essentials v22 and La Base de Sky 1.3.x** require an editor release that includes their integration builds. Check the [integration releases](https://github.com/Toskan4134/maker-studio/releases?q=integrations) for the ZIPs available for your editor version.
 
 > **Note on v19.1, v17.1 and BES v5:** these engines' older tile renderers mean per-tile passage/priority/terrain overrides on a plain (non-extended) tile don't affect in-game collision. Extended layers, extra autotiles, and cross-tileset tiles all work normally.
 
@@ -81,7 +83,7 @@ The editor checks the integration when you open a project. If it is older than t
 - **Download Manually** — opens the release page so you can copy the folder in yourself.
 - **Later** — dismisses it for this project until the next editor update.
 
-You can run the check any time from **Help → Check Game Integration…**, which also tells you which build the project has (`PE21.1`, `LBDS1.2.0`, …) and its version next to the newest one available.
+You can run the check any time from **Help → Check Game Integration…**, which also tells you which build the project has (`PE21`, `LBDS1.2`, …) and its version next to the newest one available.
 
 **BES v5 and v17.1 projects are covered too.** Those builds are one pasted script rather than a folder, so they carry their version as a comment in the script itself. The editor finds it in `Data/Scripts/` or `Scripts.rxdata` and, on **Update Now**, replaces that single script in place — no other script is touched, and the script bank is backed up first.
 
@@ -91,9 +93,15 @@ One caveat for existing projects: integrations installed before this check exist
 
 ## Launching
 
-Run the editor executable. On first launch you will see a welcome screen prompting you to select a game folder. Click **Browse** and navigate to your RPG Maker XP project root (the folder containing `Game.exe`).
+Run the editor executable. On first launch you will see a welcome screen prompting you to select a game folder. Click **Open Game Folder** and navigate to your RPG Maker XP project root (the folder containing `Data/MapInfos.rxdata`).
+
+[![Welcome screen with the Open Game Folder button.](../docs-site/public/guide-media/welcome-en.webp)](../docs-site/public/guide-media/welcome-en.webp)
 
 The editor remembers your last-opened project, so subsequent launches go straight to the map tree.
+
+## Using Maker Studio with an MCP client
+
+In **Help → Settings → Supporter → MCP server**, copy a setup command for Codex or Claude Code, or copy the JSON configuration for another local client. This feature requires MCP access in your [Supporter license](supporter.md).
 
 When working with the MCP, `edit_map` applies and saves by default. Use `mode: "preview"` to review the changes first. If the map already has unsaved changes, use `includeUnsaved: true` only when you want to save them together.
 
@@ -127,7 +135,7 @@ Press Ctrl+S to save the current map. Changes are written directly to the corres
 
 If a rendering error crashes the editor interface, Maker Studio shows the error summary and full details, with buttons to copy the error or reload the interface. Other uncaught errors remain visible as error notifications.
 
-Maker Studio writes a session log to `%APPDATA%/maker-studio/logs/` on Windows (the app's configuration directory on macOS and Linux). Each run creates a `log-YYYYMMDD-HHMMSS-PID.txt` file containing startup and shutdown, project and resource loading, map and tileset edits, map exports, script-file actions, mod loading, and errors. Edited event-script text is not included. If Maker Studio exits unexpectedly, the next launch shows the saved report. Autotiles animate at a steady four frames per second, including on large maps.
+Maker Studio writes a session log to `%APPDATA%/maker-studio/logs/` on Windows (the app's configuration directory on macOS and Linux). Each run creates a `log-YYYYMMDD-HHMMSS-PID.txt` file containing startup and shutdown, project and resource loading, map and tileset edits, map exports, script-file actions, mod loading, and errors. Edited event-script text is not included. If Maker Studio exits unexpectedly, the next launch shows the saved report.
 
 ## Credits
 

@@ -105,6 +105,7 @@ const GUIDE_ORDER = [
 	"game-simulator",
 	"map-management",
 	"map-versions",
+	"git",
 	"marketplace",
 	"keyboard-shortcuts",
 	"supporter",
@@ -156,7 +157,7 @@ const REPO_DOCS: RepoDoc[] = LOCALES.flatMap(({ path }): RepoDoc[] => {
 	}));
 	const mods = MOD_ORDER.map<RepoDoc>((slug) => ({
 		repo: "maker-studio-mods",
-		// The root overview comes from the repo README; localized overviews from es/overview.md etc.
+		// The English overview is docs/README.md; translations use <locale>/overview.md.
 		docRelPath: slug === "overview" && isRoot ? "README.md" : `${pfx}${slug}.md`,
 		id: `${pfx}mods/${slug}`,
 		section: "mods",
@@ -221,29 +222,75 @@ function relRoot(locale?: string): string {
 	return "../".repeat((locale ? 1 : 0) + 2);
 }
 
+// Published tags still contain links to these headings under their old names.
+const spanishAnchorAliases = new Map([
+	["panorama-layers-and-battleback", "capas-de-panorama-y-battleback"],
+	["graphic", "gráfico"],
+	["autosave-and-crash-recovery", "autoguardado-y-recuperación-tras-fallos"],
+	["fog-panorama-and-custom-layer-groups", "grupos-de-capa-de-fog-panorama-y-personalizados"],
+	["running-the-game", "ejecutar-el-juego"],
+	["copying-events", "copiar-eventos"],
+	["finding-things", "encontrar-cosas"],
+	["selecting-and-moving-events", "seleccionar-y-mover-eventos"],
+	["ms-exclusive-feature-indicators", "indicadores-de-funciones-exclusivas-de-ms"],
+	["priority-and-layer-order", "prioridad-y-orden-de-capas"],
+	["tools-on-the-events-layer", "herramientas-en-la-capa-de-eventos"],
+	["available-tauri-commands-for-mods", "comandos-de-tauri-disponibles-para-mods"],
+	["5--publicar-una-actualizacin", "5--publicar-una-actualización"],
+	["2--convencin-de-release", "2--convención-de-release"],
+]);
+
 /** Rewrite a single link target for a doc section + optional locale. */
 function rewriteTarget(target: string, section: "guides" | "mods", locale?: string): string {
-	// Special repo files rewrite to an external URL regardless of how the doc
-	// authored the link — including a leading "/" (e.g. the ES docs write
-	// "/mod-api.d.ts"), which the absolute-path guard below would otherwise pass
-	// through unchanged and 404 against the site root.
-	if (/mod-api\.d\.ts$/.test(target)) return `${RAW_BASE}/maker-studio-mods/${MODS_REF}/docs/mod-api.d.ts`;
-	if (/app-strings\.json$/.test(target)) return `${RAW_BASE}/maker-studio-mods/${MODS_REF}/docs/app-strings.json`;
-	if (/examples\/mods\/?$/.test(target)) return `${MODS_REPO}/tree/main/examples/mods`;
-	if (/PUBLISHING\.md$/.test(target)) return `${MODS_REPO}/blob/main/PUBLISHING.md`;
-	if (/^(https?:|mailto:|#|\/)/.test(target)) return target;
+	const root = `${relRoot(locale)}${locale ? `${locale}/` : ""}`;
+	if (section === "guides" && /^(?:\.\/)?mods\/(?:README|publishing)\.md$/.test(target)) {
+		return `${root}mods/${target.endsWith("README.md") ? "overview" : "publishing"}/`;
+	}
+	if (target === `${MODS_REPO}/blob/main/PUBLISHING.md` ||
+		target === `${MODS_REPO}/blob/main/docs/publishing.md` ||
+		target === `${MODS_REPO}/blob/main/docs/es/publishing.md`) {
+		return `${root}mods/publishing/`;
+	}
+
+	if (section === "mods") {
+		const repoPath = target.replace(/^(?:\.\.?\/)+|^\//, "");
+		if (/^(?:mod-api\.d\.ts|app-strings\.json)$/.test(repoPath)) {
+			return `${RAW_BASE}/maker-studio-mods/${MODS_REF}/docs/${repoPath}`;
+		}
+		if (/^examples\/mods(?:\/[\w.-]+)?\/?$/.test(repoPath)) {
+			return `${MODS_REPO}/tree/${MODS_REF}/${repoPath.replace(/\/$/, "")}`;
+		}
+		if (/^(?:templates\/[\w.-]+|index\.json|README\.md#marketplace-listing-terms)$/.test(repoPath)) {
+			return `${MODS_REPO}/blob/main/${repoPath}`;
+		}
+		if (repoPath === "PUBLISHING.md") return `${MODS_REPO}/blob/main/docs/publishing.md`;
+	}
+	if (/^(https?:|mailto:|\/)/.test(target)) return target;
+	if (locale === "es") {
+		target = target.replace(/#(.+)$/, (_fragment, anchor) => `#${spanishAnchorAliases.get(anchor) ?? anchor}`);
+	}
+	if (target.startsWith("#")) return target;
 	const m = target.match(/^(?:\.\/|\.\.\/)*([\w.-]+)\.md(#.*)?$/);
 	if (m) {
 		let base = m[1];
 		const anchor = m[2] || "";
 		if (base.toLowerCase() === "readme") base = section === "mods" ? "overview" : "getting-started";
-		return `${relRoot(locale)}${locale ? `${locale}/` : ""}${section}/${base}/${anchor}`;
+		return `${root}${section}/${base}/${anchor}`;
 	}
 	return target;
 }
 
-function rewriteLinks(md: string, section: "guides" | "mods", locale?: string): string {
-	return md.replace(/\]\(([^)\s]+)\)/g, (_full, t) => `](${rewriteTarget(t, section, locale)})`);
+function rewriteLinks(md: string, section: "guides" | "mods", locale: string | undefined, base: string): string {
+	return md.replace(/\]\(([^)\s]+)\)/g, (_full, target: string) => {
+		const image = section === "guides"
+			? /^(?:\.\.\/)+docs-site\/public\/(guide-media\/[a-z0-9-]+\.webp)$/.exec(target)?.[1]
+			: undefined;
+		if (!image) return `](${rewriteTarget(target, section, locale)})`;
+		const mediaRoot = SOURCE === "remote"
+			? `${RAW_BASE}/maker-studio/${APP_REF}/docs-site/public`
+			: base.replace(/\/$/, "");
+		return `](${mediaRoot}/${image})`;
+	});
 }
 
 async function loadRepoDocs(context: LoaderContext): Promise<void> {
@@ -263,7 +310,7 @@ async function loadRepoDocs(context: LoaderContext): Promise<void> {
 		const description = toDescription(md);
 
 		let body = md.replace(/^#\s+.+$/m, "").replace(/^\n+/, "");
-		body = rewriteLinks(body, doc.section, doc.locale);
+		body = rewriteLinks(body, doc.section, doc.locale, config.base);
 
 		const sidebar: Record<string, unknown> = { order: doc.order };
 		if (doc.label) sidebar.label = doc.label;
@@ -278,7 +325,7 @@ async function loadRepoDocs(context: LoaderContext): Promise<void> {
 			body,
 			rendered,
 			filePath: `${doc.locale ? `${doc.locale}/` : ""}${doc.section}/${doc.slug}.md`,
-			digest: generateDigest(md),
+			digest: generateDigest({ md, body }),
 		});
 		count++;
 	}
@@ -385,7 +432,7 @@ function buildSplashHtml(key: string, resolve: (href: string) => string): string
 	return [
 		`<h2 class="dl-heading">${t(dl.heading)}</h2>`,
 		`<div class="card-grid dl-grid">${dl.platforms.map(dlCard).join("")}</div>`,
-		`<p class="dl-links">${dl.links.map((l) => `<a href="${resolve(l.href)}">${t(l.text)}</a>`).join(" · ")}</p>`,
+		`<ul class="dl-links">${dl.links.map((l) => `<li><a class="sl-link-button secondary" href="${resolve(l.href)}">${t(l.text)}${ARROW_SVG}</a></li>`).join("")}</ul>`,
 		`<h2>${t(splash.sections.whatIs.heading)}</h2>`,
 		`<p>${t(splash.intro)}</p>`,
 		`<div class="card-grid">${splash.features.map(featureCard).join("")}</div>`,

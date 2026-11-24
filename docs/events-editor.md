@@ -245,6 +245,8 @@ The command list is where you build the event's logic. You can add, edit, delete
 
 Click Insert (or press Insert / Enter) to open the Command Picker. You can also **double-click the blank last row** of the list (or the empty space below it) to open the picker and append at the end. The picker sorts commands into several specific named categories, each with a one-line description under the active tab:
 
+[![Command picker with the Messages tab active and the Show Text command highlighted.](../docs-site/public/guide-media/event-commands-en.webp)](../docs-site/public/guide-media/event-commands-en.webp)
+
 - **Messages** — show text, choices, and other message commands.
 - **Logic** — conditions, switches, variables, loops, labels, and flow control.
 - **Party & Items** — gold, items, weapons, armor, and party members.

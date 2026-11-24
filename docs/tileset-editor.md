@@ -10,7 +10,7 @@ graphic name opens the normal graphic picker, so you see the image you are switc
 with zoom, pan and favourites — instead of picking blind from a list of filenames.
 
 A faster route for a tile you can already see: **right-click that tile in the Tile
-Palette → Edit Properties…**. The editor opens scrolled to that exact tile with it
+Palette → Edit Tileset…**. The editor opens scrolled to that exact tile with it
 already selected, instead of at the top of a long sheet. Press **Esc** to close the
 editor (it still asks about unsaved changes).
 
@@ -49,6 +49,8 @@ Click a tile to toggle between fully passable (all directions open) and fully bl
 ### Passage (4 Direction)
 
 Click one of the four quadrants within a tile to block or unblock that specific direction (Up, Down, Left, Right). Each direction can be toggled independently, giving you fine control over exactly how the player can move through a tile.
+
+[![Tileset Editor in Passage (4 dir) mode. Green arrows mark allowed directions and red crosses mark blocked directions.](../docs-site/public/guide-media/tileset-passage-en.webp)](../docs-site/public/guide-media/tileset-passage-en.webp)
 
 ### Priority
 

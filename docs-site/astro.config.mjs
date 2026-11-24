@@ -4,9 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import { readFileSync } from "node:fs";
 
-// Override at build time for GitHub Pages under the maker-studio repo, e.g.:
-//   SITE_URL=https://toskan4134.github.io SITE_BASE=/maker-studio npm run build
-const SITE_URL = process.env.SITE_URL || "https://toskan4134.github.io";
+const SITE_URL = process.env.SITE_URL || "https://makerstudio.toskan.es";
 const SITE_BASE = process.env.SITE_BASE || undefined;
 // Multi-version builds set OUT_DIR per version so outputs don't clobber each
 // other (Astro cleans outDir at the start of each build), then CI merges them.
@@ -65,6 +63,7 @@ export default defineConfig({
         Search: "./src/components/Search.astro",
         Footer: "./src/components/Footer.astro",
         Header: "./src/components/Header.astro",
+        MarkdownContent: "./src/components/GuideImageViewer.astro",
         // Appends OG / Twitter Card / theme-color / JSON-LD to Starlight's own head.
         Head: "./src/components/Head.astro",
       },

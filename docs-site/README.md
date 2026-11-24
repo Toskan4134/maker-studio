@@ -7,36 +7,39 @@ with [Astro Starlight](https://starlight.astro.build/). It lives inside the publ
 - **User Guide** — end-user guides for map makers (sourced live from this repo's `../docs`).
 - **Mod Development** — the mod API reference (sourced live from `../../maker-studio-mods/docs`).
 
-Each version (`latest` = `main`, plus every `vX.Y.Z` release tag) is built separately and served side by
-side with a version switcher in the header.
+The header shows the editor version on guide pages and the API version on mod pages.
 
-The theme mirrors the editor's own palette (navy `#1e1e2e`, periwinkle `#7c8aff` accent, Segoe UI),
-ships full-text search (Pagefind), and renders a Spanish locale at `/es/`.
+| URL base | Guide source | Mod API source |
+|---|---|---|
+| `/` | App `main` | Mods `main` |
+| `/vX.Y.Z/` | App tag | Mods `main` |
+| `/mods-vX.Y.Z/` | App `main` | Mod API tag |
+
+Each build includes Pagefind search and Spanish routes under its `es/` path.
+When the selected version predates a page, the selector opens that version's home page in the same language.
 
 ## Quick start
 
 ```bash
-npm install
+npm ci
 npm run dev        # local dev server at http://localhost:4321
 npm run build      # static build into dist/
 npm run preview    # serve the built dist/ locally
 ```
 
-`npm run dev` / `npm run build` just work — no separate "port" step.
+## How content is loaded
 
-## How content is sourced (no generated files)
-
-**Nothing** is written to disk, and there are **no hand-authored pages on disk** either. A custom
-Starlight content loader ([`src/lib/docs-loader.ts`](src/lib/docs-loader.ts)) — wired in via
-[`src/content.config.ts`](src/content.config.ts) — feeds every page to Astro's content collection
-**in memory** at build/dev time. `src/content/docs/` is empty.
+The Starlight loader feeds the source Markdown directly into Astro's content collection at build
+and dev time. Edit the docs in their source repos. [Loader](src/lib/docs-loader.ts) · [Content configuration](src/content.config.ts)
 
 The loader produces two kinds of entries:
 
 1. **Guide + mod pages** (every locale) — read from the two source repos and rendered through Astro's
    markdown pipeline. For each it adds Starlight frontmatter (title, description, sidebar order/label)
    and rewrites internal links to be relative (Astro does not base-prefix links inside Markdown
-   bodies, so relative links work under any base — root for `latest`, `/vX.Y.Z` for tagged builds).
+   bodies, so relative links work under each build's base). Links to examples and downloads use
+   the selected Mod API ref. Links to submission templates, listing terms, and the registry file
+   use the current registry on `main`.
 2. **The splash/home page per locale** — synthesized from [`src/data/splash.json`](src/data/splash.json):
    the hero is emitted as Starlight `hero` frontmatter (rendered by Starlight), and the body is built
    as raw HTML mirroring Starlight's CardGrid/LinkCard markup. The matching layout CSS lives in
@@ -52,26 +55,30 @@ The loader produces two kinds of entries:
 
 A 404 in remote mode (a page that didn't exist at an old tag) is skipped, not fatal.
 
+Guide screenshots live in `public/guide-media/` as WebP files. Link to them relative to the
+source guide so the image also opens on GitHub. Use `../docs-site/public/guide-media/` from
+`docs/` and `../../docs-site/public/guide-media/` from `docs/es/`. The loader serves local images
+under the build's base path and uses the app ref's GitHub Raw URL in remote builds.
+Wrap each screenshot in a link to the same file to enable the site's image viewer.
+
 ### Versioning env (set per build by CI)
 
 ```
-DOCS_SOURCE, DOCS_APP_REF, DOCS_MODS_REF   # local | remote  +  git refs (default "main")
-DOCS_VERSION                               # version id ("latest" | "vX.Y.Z")
-DOCS_VERSIONS_JSON                         # [{id,label}] list for the header switcher
-SITE_PREFIX, SITE_BASE, OUT_DIR            # "" (custom-domain root) or /vX.Y.Z, per-version output dir
+DOCS_SOURCE                          # local or remote
+DOCS_APP_REF, DOCS_MODS_REF           # git refs (default: main)
+DOCS_VERSION, DOCS_MODS_VERSION       # latest or vX.Y.Z
+DOCS_VERSIONS_JSON, DOCS_MODS_VERSIONS_JSON  # [{id,label}] for the two selectors
+SITE_URL, SITE_BASE, OUT_DIR          # canonical origin, URL base, output directory
 ```
 
-`mod-api.d.ts` is not hosted locally — its download link points straight at the mods repo on GitHub at
-the build's mods ref.
-
-> Do **not** hand-edit guide/mod pages — they aren't files. Fix the **source** docs (`../docs`,
-> `../../maker-studio-mods/docs`, and their `es/` subfolders) and the next build picks them up.
+`mod-api.d.ts` and `app-strings.json` are served from the mods repository at the build's mods ref.
 
 ## Translations (Español)
 
 Spanish is a first-class source locale: its raw pages live as plain Markdown in `docs/es/` (this repo's
 user guides) and `../../maker-studio-mods/docs/es/` (mod API), mirroring the English layout. The loader
-reads them and prefixes internal links with `/es`, so editing Spanish is just editing those raw files.
+rewrites relative Markdown links to the matching locale. Use the translated heading's anchor in
+each translation and check both versions of the built page after changing a heading.
 
 Pages without a Spanish version fall back to English at their `/es/…` URL via Starlight's built-in
 "not translated" notice.
@@ -102,17 +109,23 @@ list logs an `unlisted doc (won't be built)` warning so a forgotten entry is cau
 
 ## Deploying (GitHub Pages)
 
-The workflow at the **repo root** `.github/workflows/docs-pages.yml` builds every version and publishes
-to GitHub Pages on each push to `main` that touches `docs/**` or `docs-site/**`, on a daily schedule,
-and on manual dispatch. It queries the GitHub tags API, then builds one Starlight site per version
-(`latest` at the site root, each tag under `/vX.Y.Z/`) and merges them into a single `dist/`.
+The [Pages workflow](../.github/workflows/docs-pages.yml) runs on pushes to `main` affecting the
+docs, site, or workflow, on a daily schedule, and on manual dispatch. Scheduled runs skip publication
+when the source trees and tag lists match the deployed build. CI merges its root, app-version, and
+API-version builds into a single `dist/` for GitHub Pages.
 
 One-time setup: in the repo's **Settings → Pages**, set **Source = GitHub Actions** and the custom
 domain `makerstudio.toskan.es` (Cloudflare CNAME `makerstudio` → `toskan4134.github.io`, DNS only).
 The site publishes at `https://makerstudio.toskan.es/` (latest at the root; older versions under
 `/vX.Y.Z/`); the old `toskan4134.github.io/maker-studio` URLs 301-redirect there.
 
-The output is a plain static `dist/` — it can also be hosted on Netlify, Cloudflare Pages, S3, etc.
+## Theme
+
+The website maps the desktop editor's default light and dark palettes, typography, control radii,
+and hover surfaces to Starlight tokens. The 4 px control radius and 6 px panel radius follow the
+editor's shared UI. Text on accent-filled web buttons uses a contrasting foreground in each mode.
+Check links, tables, and keyboard focus at desktop and mobile widths when updating the theme.
+[`src/styles/theme.css`](src/styles/theme.css)
 
 ## Project layout
 
@@ -130,7 +143,8 @@ docs-site/
     ├── components/
     │   ├── Search.astro          # search override: suggested links before typing
     │   ├── Header.astro          # override: adds the version switcher
-    │   └── VersionSelect.astro   # version dropdown (latest + vX.Y.Z tags)
+    │   ├── VersionSelect.astro   # editor version dropdown
+    │   └── ModVersionSelect.astro # Mod API version dropdown
     ├── styles/theme.css          # editor-matching palette (dark + light) + splash card layout
     └── content/docs/             # empty — all pages are loaded in memory
 ```

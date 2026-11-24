@@ -1,5 +1,9 @@
 # Guía de la interfaz
 
+[![Interfaz de Maker Studio con cuatro marcadores: 1 barra de herramientas, 2 árbol de mapas, 3 lienzo, 4 panel de capas.](../../docs-site/public/guide-media/editor-es.webp)](../../docs-site/public/guide-media/editor-es.webp)
+
+**1.** Barra de herramientas · **2.** Árbol de mapas · **3.** Lienzo · **4.** Panel de capas
+
 ## Barra de menús
 
 Cuando hay un proyecto abierto, el botón independiente **Git** abre la [integración con Git](git.md) para revisar cambios, explorar el grafo de commits, comparar archivos y gestionar ramas.
@@ -47,7 +51,7 @@ De izquierda a derecha, los grupos de la barra son:
 `Save · Run · Saves · Sim Map` | `Brush · Eraser/Borrador mágico · Fill · Rectangle/Elipse/Línea · Eyedropper · Select/Wand · Pan` | `opciones de herramienta` | `Zoom` | `Database · Scripts` | `Versions` | `Grid · Col · Dim` | `Theme`
 
 - **Save, Run** — **Save** escribe el mapa actual (Shift+Click guarda todos los mapas abiertos); **Run** lanza el juego (en Linux, Shift+Click te deja elegir el prefijo Proton/Wine o, si está disponible, una build nativa de Linux). (Crear un mapa nuevo ahora está en la cabecera del panel Maps — ver el Árbol de mapas más abajo.)
-- **Saves** — aparece tras el primer Run; abre la carpeta donde el juego guarda sus partidas. En Windows es la carpeta de guardado nativa; en macOS y Linux es la carpeta dentro del prefijo Wine/Proton en el que se ejecutó el juego, o — tras una ejecución con la build nativa de Linux — la propia carpeta de guardado de Linux del juego. Consulta [Ejecutar el juego](map-management.md#running-the-game).
+- **Saves** — aparece tras el primer Run; abre la carpeta donde el juego guarda sus partidas. En Windows es la carpeta de guardado nativa; en macOS y Linux es la carpeta dentro del prefijo Wine/Proton en el que se ejecutó el juego, o — tras una ejecución con la build nativa de Linux — la propia carpeta de guardado de Linux del juego. Consulta [Ejecutar el juego](map-management.md#ejecutar-el-juego).
 - **Sim Map** — abre el [Simulador de juego](game-simulator.md) en el mapa actual con la entrada del jugador activada.
 - **Tools** — las herramientas de dibujo aparecen en botones del mismo ancho, con el icono centrado. Select/Wand y Eraser/Borrador mágico comparten un botón que conserva el icono de la herramienta elegida; un chevrón enmarcado junto al icono indica que hay más herramientas. Al pasar el cursor se abre un menú con el icono, nombre y atajo de cada opción. Brush también muestra un chevrón enmarcado para indicar sus opciones. El tamaño y las demás opciones aparecen junto a la herramienta activa. **Continuo** solo aparece con Fill, Wand y Borrador mágico.
 - **Herramienta Brush** — su popover tiene un **conmutador rápido de pinceles** (presets guardados de Custom Shape Brush más Default/Custom) y un acceso **Brush Editor…**. El control de tamaño de la herramienta activa aparece junto a las herramientas. Cuando hay un pincel personalizado activo, un indicador compacto junto a las herramientas muestra el nombre del pincel con una ✕ para limpiarlo. Consulta [Custom Shape Brush](tools.md#custom-shape-brush).

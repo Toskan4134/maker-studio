@@ -1,8 +1,6 @@
 # Mod Marketplace
 
-Dropdowns animate when opened. Layer groups and mod details also animate when closed. The editor respects your system's reduced motion preference.
-
-The Marketplace is where you discover, install, and update community mods without leaving the editor. Mods are JS extensions that add tools, panels, exporters, menu items, and more — see the [Mod Development docs](https://github.com/Toskan4134/maker-studio-mods) for what they can do, or [Publishing a Mod](https://github.com/Toskan4134/maker-studio-mods/blob/main/PUBLISHING.md) if you want to share one.
+The Marketplace is where you discover, install, and update community mods without leaving the editor. Mods are JS extensions that add tools, panels, exporters, menu items, and more — see the [Mod Development docs](https://github.com/Toskan4134/maker-studio-mods) for what they can do, or [Publishing a Mod](https://github.com/Toskan4134/maker-studio-mods/blob/main/docs/publishing.md) if you want to share one.
 
 ## Opening the Marketplace
 

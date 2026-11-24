@@ -1,14 +1,12 @@
 # Guía de capas
 
-Los desplegables se animan al abrirse. Los grupos de capas y los detalles de mods también se animan al cerrarse. El editor respeta la preferencia del sistema de reducir el movimiento.
+## Capas nativas
 
-## Capas nativas (0–2)
+El editor ofrece tres capas nativas totalmente compatibles con RPG Maker XP. Estas capas usan el tileset asignado al mapa y los IDs de tile estándar. Los tiles estándar de estas capas funcionan en RPG Maker XP. Los tiles de otros tilesets, los autotiles extra y los efectos por tile usan datos de Maker Studio y requieren una integración de juego.
 
-El editor ofrece tres capas nativas totalmente compatibles con RPG Maker XP. Estas capas usan el tileset asignado al mapa y los IDs de tile estándar. Las capas nativas son exactamente lo que RMXP lee y renderiza, así que cualquier cosa que pintes aquí aparecerá correctamente cuando el juego corra solo en RMXP.
+## Capas de tiles extendidas
 
-## Capas extendidas (3+)
-
-Más allá de las tres capas nativas, el editor admite capas extendidas ilimitadas. Las capas extendidas ofrecen varias funciones no disponibles en RMXP:
+El panel deja de añadir capas de tiles cuando la lista del mapa llega a 99 entradas. Las capas nativas, Eventos y las filas de grupo cuentan para ese límite.
 
 - **Tiles entre tilesets**: pinta tiles de cualquier tileset, no solo del predeterminado del mapa.
 - **Autotiles extra**: usa autotiles con nombre más allá del límite de ocho ranuras de RMXP.
@@ -21,7 +19,23 @@ Los datos de capa extendida se incrustan dentro del archivo `.rxdata` del mapa. 
 
 El panel de capas lista cada capa — nativas, extendidas y de sombra por igual, más los grupos de capa de fog / panorama / personalizados descritos abajo.
 
-- **Insignia MS**: las filas de capa extendida, las filas de grupo de fog/panorama (y cualquier grupo añadido por mods) y la fila de grupo de sombras llevan una pequeña insignia **MS** — estas funciones requieren el plugin MakerStudio en el juego (consulta [Indicadores de funciones exclusivas de MS](interface-guide.md#ms-exclusive-feature-indicators)). Las filas de capa nativa no llevan insignia porque funcionan en RMXP estándar. Oculta las insignias con **View → Show MS-Exclusive Indicators**.
+Pulsa **Layer 2** para ocultar los árboles, las flores y las rocas. Pulsa otra vez para recuperarlos.
+
+<div class="ms-layer-demo">
+<details class="not-content">
+<summary>Layer 2</summary>
+
+[![El mismo mapa con la segunda capa oculta. Se siguen viendo el río, el camino y la hierba.](../../docs-site/public/guide-media/layer-hidden.webp)](../../docs-site/public/guide-media/layer-hidden.webp)
+
+</details>
+<div class="ms-layer-demo-visible">
+
+[![Mapa con árboles, flores y rocas sobre el terreno de la capa inferior.](../../docs-site/public/guide-media/layer-visible.webp)](../../docs-site/public/guide-media/layer-visible.webp)
+
+</div>
+</div>
+
+- **Insignia MS**: las filas de capa extendida, las filas de grupo de fog/panorama (y cualquier grupo añadido por mods) y la fila de grupo de sombras llevan una pequeña insignia **MS** — estas funciones requieren el plugin MakerStudio en el juego (consulta [Indicadores de funciones exclusivas de MS](interface-guide.md#indicadores-de-funciones-exclusivas-de-ms)). Las filas de capa nativa no llevan insignia porque funcionan en RMXP estándar. Oculta las insignias con **View → Show MS-Exclusive Indicators**.
 - **Icono de ojo**: activa y desactiva la visibilidad de la capa. **Alt+Clic** en un ojo deja *solo* esa capa: se oculta todo lo demás para que puedas verla aislada. Alt+Clic otra vez en el mismo ojo devuelve las demás exactamente como estaban, incluida cualquier capa que hubieras ocultado a propósito. (La fila de eventos tiene su propio conmutador de visibilidad y el solo no la toca.)
 - **Deslizador de opacidad**: ajusta la transparencia general de la capa. Arrastrar el deslizador ajusta solo la opacidad — ya no reordena la capa.
 - **Seleccionar varias filas**: Ctrl/Meta+clic alterna una fila; Shift+clic selecciona el rango visible. Esta selección no cambia la capa activa. Puede incluir capas de tiles, Eventos, sombras y capas gráficas individuales; los títulos de grupo no se pueden seleccionar. Si las filas seleccionadas admiten la misma acción, puedes cambiar su visibilidad y opacidad a la vez, y reordenar en bloque las capas extendidas o de sombra.
@@ -37,7 +51,7 @@ Además de las capas de tiles, el panel de capas alberga **grupos de capa de ima
 En modo nativo, usa las filas de niebla y panorama para editar la niebla o el panorama del tileset. El panorama tiene gráfico y tono. La niebla también admite opacidad, modo de mezcla, zoom y velocidad de desplazamiento en X e Y. Activa **Herramientas → Autotiles y efectos de Maker Studio** para acceder a los controles de grupos siguientes.
 
 - **Fog Layers** — dibujados *encima* de todos los tiles, como el fog de RPG Maker XP, pero puedes apilar tantos como quieras. Las imágenes vienen de `Graphics/Fogs/`. Las nuevas capas de fog empiezan al 20% de opacidad.
-- **Panorama Layers** — dibujados *debajo* de todos los tiles, reemplazando el panorama único del tileset. Las imágenes vienen de `Graphics/Panoramas/`. Las nuevas capas de panorama empiezan a opacidad completa. Consulta [Gestión de mapas](map-management.md#panorama-layers-and-battleback) para saber cómo se captan automáticamente los panoramas de tileset existentes.
+- **Panorama Layers** — dibujados *debajo* de todos los tiles, reemplazando el panorama único del tileset. Las imágenes vienen de `Graphics/Panoramas/`. Las nuevas capas de panorama empiezan a opacidad completa. Consulta [Gestión de mapas](map-management.md#capas-de-panorama-y-battleback) para saber cómo se captan automáticamente los panoramas de tileset existentes.
 
 Ambos grupos funcionan igual:
 

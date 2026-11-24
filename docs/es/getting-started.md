@@ -2,7 +2,7 @@
 
 ## Requisitos previos
 
-Necesitas una carpeta de proyecto de RPG Maker XP — en concreto, un directorio que contenga `Game.exe` y una subcarpeta `Data/` con tus archivos de mapa y tileset. El editor lee y escribe los archivos `.rxdata` directamente, así que no hace falta ningún paso de exportación ni conversión.
+Selecciona la raíz de un proyecto de RPG Maker XP que contenga `Data/MapInfos.rxdata`, tus mapas y tus tilesets. Para probar el juego desde el editor también necesitas un [ejecutable del juego](map-management.md#ejecutar-el-juego). El editor lee y escribe los archivos `.rxdata` directamente, así que no hace falta ningún paso de exportación ni conversión.
 
 ## Instalación
 
@@ -25,7 +25,7 @@ Descarga la versión para tu sistema (estos enlaces siempre apuntan a la última
 | **macOS** | [`.dmg`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_aarch64.dmg) (Apple Silicon) |
 | **Linux** | [`.AppImage`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_x86_64.AppImage) (universal) · [`.deb`](https://github.com/Toskan4134/maker-studio/releases/latest/download/Maker.Studio_amd64.deb) (Debian/Ubuntu) |
 
-Todas las versiones (la actual y las anteriores) están también en la página de [Releases](https://github.com/Toskan4134/maker-studio/releases). Una vez instalada, la app se mantiene actualizada sola.
+Todas las versiones (la actual y las anteriores) están también en la página de [Releases](https://github.com/Toskan4134/maker-studio/releases). La aplicación comprueba si hay actualizaciones al arrancar y las muestra antes de preguntar por la integración del proyecto.
 
 Si quieres apoyar el proyecto, puedes hacerlo con [Maker Studio Supporter](supporter.md), una licencia de pago que incluye pequeñas ventajas en el editor.
 
@@ -37,19 +37,25 @@ Los instaladores **aún no están firmados digitalmente**, así que tu sistema m
 
 ### Paso 2 — Instala el plugin del lado del juego
 
-Descarga la integración que corresponde a tu proyecto:
+**El editor puede instalarla.** Al abrir un proyecto sin integración, el cuadro de diálogo muestra un menú **Integración**. Elige la que corresponda a tu proyecto y pulsa **Instalar** para descargar el ZIP y preparar `Plugins/MakerStudio/`. Después, reinicia el juego. Puedes volver a abrir el cuadro desde **Ayuda → Comprobar integración del juego…**.
 
-| Tu proyecto | Descarga directa |
+En **Essentials v17.1** y **BES v5**, pulsa **Descargar** y después **Abrir carpeta**. Extrae el ZIP y pega el archivo `.rb` en el Editor de Scripts.
+
+Para instalarla manualmente, elige la variante de tu motor y descarga el ZIP de la publicación de integraciones que corresponda a tu versión del editor.
+
+| Tu proyecto | ZIP de integración u opción del editor |
 |-------------|------------------|
 | Pokémon Essentials **v22** (vanilla) | Selecciona `[PE22] Maker Studio` en Ayuda → Comprobar integración del juego… |
-| Pokémon Essentials **v21** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v20** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v19** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v17** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.1** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.2** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.3** | Selecciona `[LBDS1.3] Maker Studio` en Ayuda → Comprobar integración del juego… |
+| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.3.x** | Selecciona `[LBDS1.3] Maker Studio` en Ayuda → Comprobar integración del juego… |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/BES5.Maker.Studio.v1.10.0.zip) |
+
+> **Pokémon Essentials v22 y La Base de Sky 1.3.x** requieren una versión del editor que incluya sus integraciones. Consulta las [publicaciones de integraciones](https://github.com/Toskan4134/maker-studio/releases?q=integrations) para ver los ZIP disponibles para tu versión del editor.
 
 > **Nota sobre v19.1, v17.1 y BES v5:** el renderizado de tiles más antiguo de estos motores hace que las sustituciones de paso/prioridad/terreno por tile en un tile normal (no de capa extendida) no afecten a la colisión dentro del juego. Las capas extendidas, los autotiles extra y los tiles cross-tileset funcionan con normalidad.
 
@@ -77,19 +83,25 @@ El editor lo comprueba por ti. Cuando abres un proyecto cuyo `Plugins/MakerStudi
 - **Descargar manualmente** — abre la página de la publicación para que copies la carpeta tú mismo.
 - **Más tarde** — lo descarta para este proyecto hasta la próxima actualización del editor.
 
-Puedes lanzar la comprobación cuando quieras desde **Ayuda → Comprobar integración del juego…**, que además te dice qué versión de integración tiene el proyecto (`PE21.1`, `LBDS1.2.0`, …) y su número de versión junto a la última disponible.
+Puedes lanzar la comprobación cuando quieras desde **Ayuda → Comprobar integración del juego…**, que además te dice qué versión de integración tiene el proyecto (`PE21`, `LBDS1.2`, …) y su número de versión junto a la última disponible.
 
 **Los proyectos de BES v5 y v17.1 también entran.** Esas versiones son un único script pegado en lugar de una carpeta, así que llevan su versión como comentario dentro del propio script. El editor lo encuentra en `Data/Scripts` o en `Scripts.rxdata` y, al pulsar **Actualizar ahora**, reemplaza solo ese script en su sitio: no toca ningún otro y antes hace copia de seguridad del banco de scripts.
 
-Si el editor no encuentra ninguna integración, te lo dice una vez por proyecto y te lleva a las descargas: el editor funciona igual sin ella, pero tu juego ignorará las capas extendidas, las sombras, los autotiles extra y los efectos por tile.
+Si el editor no encuentra ninguna integración, te lo dice una vez por proyecto y te ofrece instalar una: el editor funciona igual sin ella, pero tu juego ignorará las capas extendidas, las sombras, los autotiles extra y los efectos por tile.
 
 Una advertencia para proyectos ya existentes: las integraciones instaladas antes de que existiera esta comprobación no llevan marca de versión. Un plugin de carpeta se sigue reconociendo — el editor deduce cuál es a partir de los propios archivos del plugin y lo muestra como *(detectada)* — pero un script *pegado* aparecerá como «no instalada» hasta que pegues encima el actual una vez.
 
 ## Arranque
 
-Ejecuta el programa del editor. En el primer arranque verás una pantalla de bienvenida que te pide elegir una carpeta de juego. Haz clic en **Examinar** y navega hasta la raíz de tu proyecto de RPG Maker XP (la carpeta que contiene `Game.exe`).
+Ejecuta el programa del editor. En el primer arranque verás una pantalla de bienvenida que te pide elegir una carpeta de juego. Haz clic en **Abrir carpeta del juego** y navega hasta la raíz de tu proyecto de RPG Maker XP (la carpeta que contiene `Data/MapInfos.rxdata`).
+
+[![Pantalla de bienvenida con el botón Abrir carpeta del juego.](../../docs-site/public/guide-media/welcome-es.webp)](../../docs-site/public/guide-media/welcome-es.webp)
 
 El editor recuerda tu último proyecto abierto, así que en los siguientes arranques irá directo al árbol de mapas.
+
+## Usar Maker Studio con un cliente MCP
+
+En **Ayuda → Ajustes → Supporter → Servidor MCP**, copia un comando de configuración para Codex o Claude Code, o el JSON para otro cliente local. Esta función requiere acceso al MCP en tu [licencia Supporter](supporter.md).
 
 Con el MCP, `edit_map` aplica y guarda por defecto. Usa `mode: "preview"` para revisar los cambios primero. Si el mapa ya tiene cambios pendientes, usa `includeUnsaved: true` solo cuando quieras guardarlos juntos.
 
@@ -117,13 +129,13 @@ Moverse por el lienzo es sencillo:
 
 ## Guardar
 
-Pulsa Ctrl+S para guardar el mapa actual. Los cambios se escriben directamente en el archivo `.rxdata` correspondiente. Cada guardado primero respalda el archivo anterior en `Data/map-backups/` (se conservan las 10 copias más recientes por archivo), así que siempre puedes revertir si algo va mal, y las escrituras son a prueba de fallos — un cierre inesperado o un corte de luz a mitad de guardado nunca pueden dejar un archivo a medio escribir. El trabajo sin guardar también se autoguarda en segundo plano cada pocos minutos; consulta [Gestión de mapas → Autoguardado y recuperación tras fallos](map-management.md#autosave-and-crash-recovery).
+Pulsa Ctrl+S para guardar el mapa actual. Los cambios se escriben directamente en el archivo `.rxdata` correspondiente. Cada guardado primero respalda el archivo anterior en `Data/map-backups/` (se conservan las 10 copias más recientes por archivo), así que siempre puedes revertir si algo va mal, y las escrituras son a prueba de fallos — un cierre inesperado o un corte de luz a mitad de guardado nunca pueden dejar un archivo a medio escribir. El trabajo sin guardar también se autoguarda en segundo plano cada pocos minutos; consulta [Gestión de mapas → Autoguardado y recuperación tras fallos](map-management.md#autoguardado-y-recuperación-tras-fallos).
 
 ## Informes de fallos y registros
 
 Si un error de renderizado hace fallar la interfaz, Maker Studio muestra un resumen y los detalles completos, con botones para copiar el error o recargar la interfaz. Los demás errores no capturados siguen apareciendo como avisos.
 
-Maker Studio guarda un registro por ejecución en `%APPDATA%/maker-studio/logs/` en Windows (en la carpeta de configuración de la aplicación en macOS y Linux). Cada archivo `log-AAAAMMDD-HHMMSS-PID.txt` recoge el inicio y cierre, la carga de proyectos y recursos, las ediciones del árbol de mapas y los tilesets, las exportaciones de mapas, las acciones sobre archivos de scripts, la carga de mods y los errores. No incluye el texto de los scripts de eventos editados. Si Maker Studio se cierra inesperadamente, el siguiente inicio muestra el informe guardado. Los autotiles se animan a una velocidad constante de cuatro fotogramas por segundo, también en mapas grandes.
+Maker Studio guarda un registro por ejecución en `%APPDATA%/maker-studio/logs/` en Windows (en la carpeta de configuración de la aplicación en macOS y Linux). Cada archivo `log-AAAAMMDD-HHMMSS-PID.txt` recoge el inicio y cierre, la carga de proyectos y recursos, las ediciones del árbol de mapas y los tilesets, las exportaciones de mapas, las acciones sobre archivos de scripts, la carga de mods y los errores. No incluye el texto de los scripts de eventos editados. Si Maker Studio se cierra inesperadamente, el siguiente inicio muestra el informe guardado.
 
 ## Créditos
 

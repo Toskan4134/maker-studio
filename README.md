@@ -29,15 +29,16 @@ Not sure which files you need? Follow the [**installation guide**](docs/getting-
 A modern, feature-rich tile map editor built as a **replacement for RPG Maker XP**'s game editor,
 with upgraded features and quality-of-life improvements. It reads and writes `.rxdata` files directly,
 so existing projects work without conversion — plus
-dockable panels, multi-tile brushes, per-tile properties, unlimited extended layers, multi-tileset
-support, unlimited autotiles, a built-in shadow system, a full event editor, an in-editor game
+dockable panels, multi-tile brushes, per-tile properties, extended tile layers, multi-tileset
+support, extra autotiles, a built-in shadow system, a full event editor, an in-editor game
 simulator, and a JavaScript mod system.
 
 ## Download
 
 Use the direct-download buttons at the top of this page, or get any build (current or previous)
-from the [**Releases**](https://github.com/Toskan4134/maker-studio/releases/latest)
-page — Windows, macOS (Apple Silicon), and Linux. Windows and macOS auto-update; on Linux use [Gear Lever](https://flathub.org/en/apps/it.mijorus.gearlever) for auto-updates.
+from the [**Releases**](https://github.com/Toskan4134/maker-studio/releases)
+page for Windows, macOS (Apple Silicon), and Linux. In-app updates are available on Windows, macOS,
+and Linux AppImage. Install new .deb packages from Releases.
 Step-by-step instructions: [installation guide](docs/getting-started.md#installation).
 
 > [!NOTE]
@@ -48,17 +49,15 @@ Step-by-step instructions: [installation guide](docs/getting-started.md#installa
 >   macOS 15+ go to **System Settings → Privacy & Security** and click **Open Anyway**.
 > - **Linux** — no warning, but the AppImage uses your system's WebKit: if the app doesn't start,
 >   install `webkit2gtk-4.1` and `gtk3` (Arch) or `libwebkit2gtk-4.1-0` and `libgtk-3-0` (Debian/Ubuntu).
->   The AppImage does not self-update — use [**Gear Lever**](https://flathub.org/en/apps/it.mijorus.gearlever)
->   to manage updates (it can auto-update AppImages from GitHub releases).
 
 ## Documentation
 
-User guides live in [`docs/`](docs/):
+Read the searchable documentation in [English](https://makerstudio.toskan.es/) or [Español](https://makerstudio.toskan.es/es/). The Markdown sources are in [`docs/`](docs/).
 
 - [Getting Started](docs/getting-started.md)
 - [Interface Guide](docs/interface-guide.md)
 - [Tools](docs/tools.md) · [Layers](docs/layers.md) · [Shadows](docs/shadows.md)
-- [Events Editor](docs/events-editor.md) · [Game Simulator](docs/game-simulator.md)
+- [Events Editor](docs/events-editor.md) · [Game Simulator](docs/game-simulator.md) · [Git Integration](docs/git.md)
 - [Tileset Editor](docs/tileset-editor.md) · [Map Management](docs/map-management.md)
 - [Keyboard Shortcuts](docs/keyboard-shortcuts.md)
 - [Mod Marketplace](docs/marketplace.md)

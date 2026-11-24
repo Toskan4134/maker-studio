@@ -95,6 +95,8 @@ Once you've used a custom brush, a compact indicator on the toolbar shows its **
 
 ### Building a brush
 
+[![Brush Editor with the Custom shape selected and a cross drawn on the grid.](../docs-site/public/guide-media/brush-en.webp)](../docs-site/public/guide-media/brush-en.webp)
+
 The editor has three sections:
 
 - **Shape** — pick **Square**, **Circle**, **Diamond**, **Plus**, or **Custom**. The size slider sets the footprint, bounded by the **Min size** / **Max size** you set below it. There is no hard upper limit on size — set Max as large as you like. **Custom** instead gives you a grid: set its Width and Height, then click cells to toggle them on or off and draw any shape you like. Resizing the grid keeps the cells you've already drawn.

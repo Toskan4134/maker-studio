@@ -36,7 +36,7 @@
     ],
     "links": [
       {
-        "href": "guides/getting-started/#installation",
+        "href": "guides/getting-started/",
         "text": { "en": "Installation guide", "es": "Guía de instalación" }
       },
       {
@@ -86,8 +86,8 @@
     ]
   },
   "intro": {
-    "en": "Maker Studio is a modern, feature-rich tile map editor built as a replacement for RPG Maker XP's game editor, with upgraded features and quality-of-life improvements. It reads and writes <code>.rxdata</code> files directly, so existing projects work <strong>without conversion</strong> — plus dockable panels, multi-tile brushes, per-tile properties, unlimited extended layers, multi-tileset support, unlimited autotiles, a built-in shadow system, a full event editor, an in-editor game simulator, and a JavaScript mod system.",
-    "es": "Maker Studio es un editor de mapas de tiles moderno y completo, creado como reemplazo del editor de juego de RPG Maker XP, con funciones mejoradas y comodidades de uso. Lee y escribe los archivos <code>.rxdata</code> directamente, así que tus proyectos actuales funcionan <strong>sin conversión</strong> — con paneles acoplables, pinceles multi-tile, propiedades por tile, capas extendidas ilimitadas, soporte de varios tilesets, autotiles ilimitados, un sistema de sombras integrado, un editor de eventos completo, un simulador de juego dentro del editor y un sistema de mods en JavaScript."
+    "en": "Maker Studio is a modern, feature-rich tile map editor built as a replacement for RPG Maker XP's game editor, with upgraded features and quality-of-life improvements. It reads and writes <code>.rxdata</code> files directly, so existing projects work <strong>without conversion</strong> — plus dockable panels, multi-tile brushes, per-tile properties, extended tile layers, multi-tileset support, extra autotiles, a built-in shadow system, a full event editor, an in-editor game simulator, and a JavaScript mod system.",
+    "es": "Maker Studio es un editor de mapas de tiles moderno y completo, creado como reemplazo del editor de juego de RPG Maker XP, con funciones mejoradas y comodidades de uso. Lee y escribe los archivos <code>.rxdata</code> directamente, así que tus proyectos actuales funcionan <strong>sin conversión</strong> — con paneles acoplables, pinceles multi-tile, propiedades por tile, capas de tiles extendidas, soporte de varios tilesets, autotiles extra, un sistema de sombras integrado, un editor de eventos completo, un simulador de juego dentro del editor y un sistema de mods en JavaScript."
   },
   "sections": {
     "whatIs": { "heading": { "en": "What is Maker Studio?", "es": "¿Qué es Maker Studio?" } },
@@ -99,16 +99,16 @@
       "icon": "brush",
       "title": { "en": "Paint faster", "es": "Pinta más rápido" },
       "desc": {
-        "en": "Multi-tile brushes, custom shape brushes, autotiles, and per-tile passage, priority, and terrain properties — all on an infinitely zoomable canvas.",
-        "es": "Pinceles multi-tile, pinceles de forma personalizada, autotiles y propiedades de paso, prioridad y terreno por tile — todo en un lienzo con zoom infinito."
+        "en": "Multi-tile brushes, custom shapes, autotiles, and per-tile passage, priority, and terrain properties.",
+        "es": "Pinceles multi-tile, formas personalizadas, autotiles y propiedades de paso, prioridad y terreno por tile."
       }
     },
     {
       "icon": "layers",
-      "title": { "en": "Unlimited layers", "es": "Capas ilimitadas" },
+      "title": { "en": "Extended layers", "es": "Capas extendidas" },
       "desc": {
-        "en": "Three RMXP-compatible native layers plus unlimited extended layers, fog, panorama, and shadow groups — switch states in-game with a switch or variable.",
-        "es": "Tres capas nativas compatibles con RMXP más capas extendidas ilimitadas, niebla, panorama y grupos de sombras — cambia de estado en el juego con un switch o variable."
+        "en": "Three RMXP-compatible native layers plus extended tile layers, fog, panorama, and shadow groups — switch states in-game with a switch or variable.",
+        "es": "Tres capas nativas compatibles con RMXP más capas de tiles extendidas, niebla, panorama y grupos de sombras — cambia de estado en el juego con un switch o variable."
       }
     },
     {
@@ -150,8 +150,8 @@
         "href": "guides/keyboard-shortcuts/",
         "title": { "en": "Keyboard Shortcuts", "es": "Atajos de teclado" },
         "desc": {
-          "en": "Every default shortcut — all of them customizable.",
-          "es": "Todos los atajos por defecto — todos personalizables."
+          "en": "Default shortcuts, which ones you can rebind, and where they work.",
+          "es": "Atajos predeterminados, cuáles puedes reasignar y dónde funcionan."
         }
       },
       {

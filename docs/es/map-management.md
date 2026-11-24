@@ -64,7 +64,7 @@ Consejos:
 
 ## Redimensionar y desplazar mapas
 
-Abre el diálogo de redimensión desde Map y luego Resize / Shift Map, o haz clic derecho en un mapa del árbol y elige Resize/Shift.
+Abre **Mapa → Redimensionar / desplazar mapa…**. También puedes hacer clic derecho en el mapa del árbol y elegir la misma opción.
 
 ### Redimensionar
 
@@ -72,16 +72,18 @@ Introduce el nuevo ancho y alto. Un **panel de anclaje de 9 posiciones** decide 
 
 ### Wrap
 
-Un conmutador **Wrap** (activado por defecto) controla qué ocurre con el contenido que cae fuera de los nuevos límites:
+La opción **Envolver** (*Wrap* en inglés) está activada por defecto y controla qué ocurre con el contenido que cae fuera de los nuevos límites:
 
-- **Wrap activado**: los tiles, eventos y sombras que salen de un borde reaparecen en el lado opuesto (wrap toroidal).
-- **Wrap desactivado**: todo lo que queda fuera de los nuevos límites se descarta.
+- **Envolver activado**: los tiles, eventos y sombras que salen de un borde reaparecen en el lado opuesto.
+- **Envolver desactivado**: todo lo que queda fuera de los nuevos límites se descarta.
 
 También puedes desplazar el contenido manualmente sobrescribiendo los valores de desplazamiento calculados.
 
 ### Vista previa y deshacer
 
 Una vista previa SVG muestra dónde quedará tu contenido dentro del nuevo lienzo antes de confirmar. La redimensión es un solo paso de deshacer — pulsa Ctrl+Z después para restaurar el tamaño y el contenido originales.
+
+[![Diálogo Redimensionar mapa con la vista previa de un mapa de 16 × 11 reducido a 12 × 10, con anclaje central y Envolver activado.](../../docs-site/public/guide-media/map-resize-es.webp)](../../docs-site/public/guide-media/map-resize-es.webp)
 
 ## Cambiar el tileset de un mapa
 
@@ -203,7 +205,7 @@ Un marcador verde **Start** aparece en ese tile, y la posición se guarda en tu 
 
 ## Ejecutar el juego
 
-Haz clic en el botón verde Run de la barra de herramientas (o usa File y luego Run Game). El editor lanza `Game.exe` en modo depuración desde la carpeta de tu proyecto.
+Pulsa **Ejecutar juego** en la barra de herramientas o elige **Archivo → Ejecutar juego** para iniciar el proyecto en modo depuración. La detección automática busca `Game.exe`, `mkxp-z.exe` y `mkxp.exe`.
 
 En **Ayuda → Ajustes → Juego**, escribe una ruta relativa en **Ejecutable del juego** o pulsa **…** para buscar desde la carpeta del proyecto. Déjala en blanco para usar la detección automática. El cambio se aplica en la próxima ejecución.
 

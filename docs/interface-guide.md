@@ -1,5 +1,9 @@
 # Interface Guide
 
+[![Maker Studio workspace with four markers: 1 toolbar, 2 map tree, 3 map canvas, 4 Layers panel.](../docs-site/public/guide-media/editor-en.webp)](../docs-site/public/guide-media/editor-en.webp)
+
+**1.** Toolbar · **2.** Map tree · **3.** Map canvas · **4.** Layers panel
+
 ## Menu Bar
 
 When a project is open, the standalone **Git** button opens [Git integration](git.md) for changes, commit history, file comparisons, and branch operations.

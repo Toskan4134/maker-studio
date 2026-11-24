@@ -10,8 +10,7 @@ import Select from '@astrojs/starlight/components/Select.astro';
 // Each option's target pathname is computed here, server-side, by stripping the
 // current build's base (import.meta.env.BASE_URL) off the page URL and
 // re-prefixing the target version's base. The locale segment (e.g. `es`) lives
-// inside the base, so it is preserved unchanged across versions. The client only
-// does `window.location.pathname = value` on change — no regex, no edge cases.
+// inside the base, so it is preserved across versions.
 
 const TAGS_API = 'https://api.github.com/repos/Toskan4134/maker-studio/tags?per_page=100';
 const VERSION_RE = /^v\d+\.\d+\.\d+$/;
@@ -54,6 +53,7 @@ async function getVersions() {
 }
 
 const versions = await getVersions();
+const isSpanish = Astro.currentLocale === 'es';
 const CURRENT = process.env.DOCS_VERSION || 'latest';
 const SITE_PREFIX = (process.env.SITE_PREFIX || '').replace(/\/+$/, '');
 const base = import.meta.env.BASE_URL; // may or may not end with '/'
@@ -67,19 +67,21 @@ const rest = (
 
 const options = versions.map((v) => {
 	const vBase = SITE_PREFIX + (v.id === 'latest' ? '/' : `/${v.id}/`);
-	return { value: vBase + rest, selected: v.id === CURRENT, label: v.label };
+	return { value: vBase + rest, selected: v.id === CURRENT, label: isSpanish && v.id === 'latest' ? 'Actual' : v.label };
 });
 ---
 
 {
 	options.length > 0 && (
 		<starlight-version-select>
-			<Select icon="clock" label="Docs version" options={options} width="8em" />
+			<Select icon="clock" label={isSpanish ? 'Versión de Maker Studio' : 'Maker Studio version'} options={options} width="8em" />
 		</starlight-version-select>
 	)
 }
 
 <script>
+	import { navigateToVersion } from '../lib/version-navigation';
+
 	class StarlightVersionSelect extends HTMLElement {
 		constructor() {
 			super();
@@ -87,7 +89,7 @@ const options = versions.map((v) => {
 			if (!select) return;
 			select.addEventListener('change', (e) => {
 				if (e.currentTarget instanceof HTMLSelectElement) {
-					window.location.pathname = e.currentTarget.value;
+					void navigateToVersion(e.currentTarget);
 				}
 			});
 			// Re-sync the selected index if the page is restored from bfcache.

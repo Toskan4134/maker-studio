@@ -1,14 +1,12 @@
 # Layers Guide
 
-Dropdowns animate when opened. Layer groups and mod details also animate when closed. The editor respects your system's reduced motion preference.
+## Native layers
 
-## Native Layers (0--2)
+The editor provides three native layers that are fully compatible with RPG Maker XP. These layers use the map's assigned tileset and standard tile IDs. Standard tiles on these layers work in RPG Maker XP. Cross-tileset tiles, extra autotiles, and per-tile effects use Maker Studio data and require a game integration.
 
-The editor provides three native layers that are fully compatible with RPG Maker XP. These layers use the map's assigned tileset and standard tile IDs. Native layers are exactly what RMXP reads and renders, so anything you paint here will appear correctly when the game runs in RMXP alone.
+## Extended tile layers
 
-## Extended Layers (3+)
-
-Beyond the three native layers, the editor supports unlimited extended layers. Extended layers offer several features not available in RMXP:
+The Layers panel stops adding tile layers when the map's layer list reaches 99 entries. Native layers, Events, and group rows count toward that limit.
 
 - **Cross-tileset tiles**: Paint tiles from any tileset, not just the map's default one.
 - **Extra autotiles**: Use named autotiles beyond RMXP's eight-slot limit.
@@ -20,6 +18,22 @@ Extended layer data is embedded inside the map's `.rxdata` file. It is invisible
 ## Layer Panel
 
 The Layer Panel lists every layer -- native, extended, and shadow layers alike, plus the fog / panorama / custom layer groups described below.
+
+Select **Layer 2** to hide the trees, flowers, and rocks. Select it again to bring them back.
+
+<div class="ms-layer-demo">
+<details class="not-content">
+<summary>Layer 2</summary>
+
+[![The same map with Layer 2 hidden. The river, path, and grass are still visible.](../docs-site/public/guide-media/layer-hidden.webp)](../docs-site/public/guide-media/layer-hidden.webp)
+
+</details>
+<div class="ms-layer-demo-visible">
+
+[![Map with trees, flowers, and rocks over the ground layer.](../docs-site/public/guide-media/layer-visible.webp)](../docs-site/public/guide-media/layer-visible.webp)
+
+</div>
+</div>
 
 - **MS badge**: Extended layer rows, the fog/panorama (and any mod-added) group rows, and the shadow group row carry a small **MS** badge — these features require the MakerStudio plugin in-game (see [MS-Exclusive Feature Indicators](interface-guide.md#ms-exclusive-feature-indicators)). Native layer rows have no badge because they work in stock RMXP. Hide the badges via **View → Show MS-Exclusive Indicators**.
 - **Eye icon**: Toggle layer visibility on and off. **Alt+click** an eye to *solo* that layer — everything else is hidden so you can see it on its own. Alt+click the same eye again to bring the others back exactly as they were, including any layer you had hidden on purpose. (The Events row has its own visibility toggle and is left alone by solo.)

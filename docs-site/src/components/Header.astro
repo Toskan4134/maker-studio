@@ -31,6 +31,7 @@ for (const l of _localePrefixes) {
 	}
 }
 const isModPage = _seg.startsWith('mods/');
+const isSplash = Astro.locals.starlightRoute.entry.data.template === 'splash';
 ---
 
 <div class="header">
@@ -40,13 +41,17 @@ const isModPage = _seg.startsWith('mods/');
 	<div class="sl-flex print:hidden">
 		{shouldRenderSearch && <Search />}
 	</div>
-	<div class="sl-hidden md:sl-flex print:hidden right-group">
-		<div class="sl-flex social-icons">
+	<div class="sl-flex print:hidden right-group">
+		<div class="sl-hidden md:sl-flex social-icons">
 			<SocialIcons />
 		</div>
-		<ThemeSelect />
-		<LanguageSelect />
-		{isModPage ? <ModVersionSelect /> : <VersionSelect />}
+		<div class:list={['preferences', isSplash ? 'sl-flex' : 'sl-hidden md:sl-flex']}>
+			<div class="sl-hidden md:sl-flex"><ThemeSelect /></div>
+			<LanguageSelect />
+		</div>
+		<div class:list={{ 'sl-hidden md:sl-flex': isSplash }}>
+			{isModPage ? <ModVersionSelect /> : <VersionSelect />}
+		</div>
 	</div>
 </div>
 
@@ -70,9 +75,21 @@ const isModPage = _seg.startsWith('mods/');
 		}
 
 		.right-group,
+		.preferences,
 		.social-icons {
 			gap: 1rem;
 			align-items: center;
+		}
+
+		.social-icons {
+			gap: 0.375rem;
+		}
+
+		@media (max-width: 49.999rem) {
+			.right-group,
+			.preferences {
+				gap: 0.375rem;
+			}
 		}
 		.social-icons::after {
 			content: '';

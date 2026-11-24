@@ -244,7 +244,9 @@ La lista de comandos es donde construyes la lógica del evento. Puedes añadir, 
 
 ### Añadir comandos
 
-Haz clic en Insert (o pulsa Insert / Enter) para abrir el Command Picker. También puedes **hacer doble clic en la última fila vacía** de la lista (o en el espacio vacío debajo) para abrir el selector y añadir al final. El selector ordena los comandos en varias categorías con nombre específicas, cada una con una descripción de una línea bajo la pestaña activa:
+Haz clic en **Insertar** (o pulsa Insert / Enter) para abrir el selector de comandos. También puedes **hacer doble clic en la última fila vacía** de la lista (o en el espacio vacío debajo) para abrir el selector y añadir al final. El selector ordena los comandos en varias categorías con nombre específicas, cada una con una descripción de una línea bajo la pestaña activa:
+
+[![Selector de comandos con la pestaña Mensajes activa y el comando Mostrar texto resaltado.](../../docs-site/public/guide-media/event-commands-es.webp)](../../docs-site/public/guide-media/event-commands-es.webp)
 
 - **Mensajes** — mostrar texto, opciones y demás comandos de mensaje.
 - **Lógica** — condiciones, switches, variables, bucles, etiquetas y control de flujo.
@@ -386,7 +388,7 @@ Al elegir esa opción aparece además **Reutilizar esta capa cuando el comando s
 - **Marcado** (por defecto) — el comando controla siempre la misma capa. Volver a ejecutarlo reaplica los ajustes en vez de acumular copias, y como la capa tiene un **Id de la capa** fijo, un Change Fog Opacity o un Change Fog Color Tone posterior pueden apuntarla. El id se rellena solo con uno libre; cámbialo solo si quieres que dos comandos compartan una capa.
 - **Sin marcar** — cada activación añade *otra* capa, numeradas 1, 2, 3… según aparecen, así que Change Fog Opacity o Tone pueden seguir apuntando a una por ese número. Está bien para algo que deba acumularse; solo recuerda que una página en paralelo o autorun salta constantemente y seguirá apilando capas mientras se ejecute.
 
-Los comandos de tono y opacidad siguen afectando solo a capas de **fog**. Los grupos de capa personalizados no tienen comandos de evento (se editan en el panel de capas; los battlebacks vienen del menú Map — consulta [Gestión de mapas](map-management.md#panorama-layers-and-battleback)).
+Los comandos de tono y opacidad siguen afectando solo a capas de **fog**. Los grupos de capa personalizados no tienen comandos de evento (se editan en el panel de capas; los battlebacks vienen del menú Map — consulta [Gestión de mapas](map-management.md#capas-de-panorama-y-battleback)).
 
 ### Set Move Route
 
@@ -435,7 +437,7 @@ Las acciones que toman parámetros abren su propio formulario, usando los mismos
 
 #### Acciones de frame (Maker Studio)
 
-Debajo de las acciones estándar hay un grupo **Frame** que avanza o establece qué celda de la hoja de personaje muestra el objetivo, usando la cuadrícula **Sheet Cols / Sheet Rows** de la página (consulta [Gráfico](#graphic)). Las **columnas de la hoja son los frames horizontales** y sus **filas son los frames verticales**.
+Debajo de las acciones estándar hay un grupo **Frame** que avanza o establece qué celda de la hoja de personaje muestra el objetivo, usando la cuadrícula **Sheet Cols / Sheet Rows** de la página (consulta [Gráfico](#gráfico)). Las **columnas de la hoja son los frames horizontales** y sus **filas son los frames verticales**.
 
 - **Next Frame / Previous Frame** — avanza un frame por la fila; al final de una fila salta al inicio de la siguiente fila (y toda la hoja da la vuelta al final del todo).
 - **Next / Previous Horizontal Frame** — avanza una columna, dando la vuelta solo dentro de la fila actual.
