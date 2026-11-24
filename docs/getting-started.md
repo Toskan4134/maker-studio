@@ -44,13 +44,13 @@ To install by hand instead, download the integration that matches your project:
 | Your project | Direct download |
 |--------------|-----------------|
 | Pokémon Essentials **v22** (vanilla) | Select `[PE22] Maker Studio` in Help → Check Game Integration… |
-| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.3.x** | Select `[LBDS1.3.0] Maker Studio` in Help → Check Game Integration… |
+| Pokémon Essentials **v21** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v20** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v19** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v17** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.1** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.2** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.3** | Select `[LBDS1.3] Maker Studio` in Help → Check Game Integration… |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/BES5.Maker.Studio.v1.10.0.zip) |
 
 > **Note on v19.1, v17.1 and BES v5:** these engines' older tile renderers mean per-tile passage/priority/terrain overrides on a plain (non-extended) tile don't affect in-game collision. Extended layers, extra autotiles, and cross-tileset tiles all work normally.
@@ -69,7 +69,7 @@ To check it worked: start your game in **Debug mode**, open the Debug menu (F9),
 
 To change an installed folder integration, open **Help → Check Game Integration…**, select the new build, and click **Replace**. The editor preserves `003_Editor/`.
 
-After upgrading La Base de Sky from 1.2.x to 1.3.x, close the game and select `[LBDS1.3.0] Maker Studio`. For manual installation, use `LBDS1.3.0.Maker.Studio.v<version>.zip` from the integrations release.
+After upgrading La Base de Sky from 1.2.x to 1.3.x, close the game and select `[LBDS1.3] Maker Studio`. For manual installation, use `LBDS1.3.Maker.Studio.v<version>.zip` from the integrations release.
 
 The plugin ships alongside the editor, so a project can end up running an older one than the app — usually after you update the editor and forget to re-copy the folder. Symptoms are subtle: the game renders something differently from the editor, or a fix you read about in the changelog doesn't apply in-game.
 

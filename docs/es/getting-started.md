@@ -40,13 +40,13 @@ Descarga la integración que corresponde a tu proyecto:
 | Tu proyecto | Descarga directa |
 |-------------|------------------|
 | Pokémon Essentials **v22** (vanilla) | Selecciona `[PE22] Maker Studio` en Ayuda → Comprobar integración del juego… |
-| Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
-| Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.3.x** | Selecciona `[LBDS1.3.0] Maker Studio` en Ayuda → Comprobar integración del juego… |
+| Pokémon Essentials **v21** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v20** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v19** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
+| Pokémon Essentials **v17** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.1** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.2** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
+| La Base de Sky **1.3** | Selecciona `[LBDS1.3] Maker Studio` en Ayuda → Comprobar integración del juego… |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/BES5.Maker.Studio.v1.10.0.zip) |
 
 > **Nota sobre v19.1, v17.1 y BES v5:** el renderizado de tiles más antiguo de estos motores hace que las sustituciones de paso/prioridad/terreno por tile en un tile normal (no de capa extendida) no afecten a la colisión dentro del juego. Las capas extendidas, los autotiles extra y los tiles cross-tileset funcionan con normalidad.
@@ -65,7 +65,7 @@ Para comprobar que funcionó: arranca tu juego en **modo Debug**, abre el menú 
 
 Para cambiar una integración de carpeta ya instalada, abre **Ayuda → Comprobar integración del juego…**, selecciona la nueva variante y pulsa **Reemplazar**. El editor conserva `003_Editor/`.
 
-Al actualizar La Base de Sky de 1.2.x a 1.3.x, cierra el juego y selecciona `[LBDS1.3.0] Maker Studio`. Para la instalación manual, usa `LBDS1.3.0.Maker.Studio.v<versión>.zip` de la publicación de integraciones.
+Al actualizar La Base de Sky de 1.2.x a 1.3.x, cierra el juego y selecciona `[LBDS1.3] Maker Studio`. Para la instalación manual, usa `LBDS1.3.Maker.Studio.v<versión>.zip` de la publicación de integraciones.
 
 El plugin se publica junto al editor, así que un proyecto puede acabar con uno más antiguo que la app — normalmente al actualizar el editor y olvidarte de volver a copiar la carpeta. Los síntomas son sutiles: el juego dibuja algo distinto que el editor, o una corrección que leíste en el registro de cambios no se aplica dentro del juego.
 
