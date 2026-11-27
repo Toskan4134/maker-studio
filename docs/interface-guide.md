@@ -68,6 +68,8 @@ If the window is too narrow to show every toolbar group at once, the groups that
 
 ## Map Tree (left panel)
 
+In the New Map dialog, hover over the closed parent map selector and use the mouse wheel to move through the map tree in display order, starting at the root.
+
 The Map Tree shows a hierarchical view of every map in your project. Its header has **Add** and **Delete** buttons; Delete uses the same confirmation as the context menu. It deletes explicitly selected maps plus the active map if it is not already selected; with no explicit selection, it deletes only the active map. The button is disabled only when there is neither a selection nor an active map. You can:
 
 - Double-click a map name to rename it.
@@ -95,6 +97,8 @@ Maps, Layers, Events, Tile Palette, and Tile Properties use a consistent panel h
 Press **F2** to rename one selected layer inline.
 
 ## Status Bar (bottom)
+
+Hover over the closed map version selector and use the mouse wheel to switch to the previous or next version in the list.
 
 The status bar displays useful context at a glance: cursor coordinates (X, Y), the event name under your cursor, the current tool, brush size, the active layer's name, zoom level, and whether undo history is available.
 
@@ -142,6 +146,8 @@ digit. An empty field left as-is falls back to that field's minimum.
 Panels added by [mods](marketplace.md) keep their place in your layout. If a mod is disabled, uninstalled, or reloading, its panel slot stays where you docked it and shows a placeholder ("Panel provided by mod … — not loaded") until the mod is back; close the placeholder if you don't want to keep the slot. Exported layout configurations (**View → Layout → Export Configuration**) also record which mods provided which panels — importing a layout that uses panels from mods you don't have installed warns you with the list of missing mods and keeps those panels as placeholders. Older exported configurations still import fine.
 
 ### Tile Palette
+
+Hover over the tileset field with the results closed and use the mouse wheel to browse the previous or next tileset.
 
 In by-tileset mode, the expanded **Autotiles** section follows the panel width as you drag the divider. The checkerboard squares stay the same size.
 

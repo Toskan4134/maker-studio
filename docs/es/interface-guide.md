@@ -68,6 +68,8 @@ Si la ventana es demasiado estrecha para mostrar todos los grupos de la barra a 
 
 ## Árbol de mapas (panel izquierdo)
 
+En el diálogo de mapa nuevo, coloca el cursor sobre el selector cerrado de mapa padre y usa la rueda para recorrer los mapas en el orden del árbol, empezando por la raíz.
+
 El Árbol de mapas muestra una vista jerárquica de todos los mapas de tu proyecto. La cabecera tiene botones de **Añadir** y **Eliminar**; Eliminar usa la misma confirmación que el menú contextual. Borra los mapas seleccionados explícitamente y también el mapa activo si no estaba seleccionado. Si no hay selección explícita, solo borra el mapa activo. El botón solo se desactiva cuando no hay selección ni mapa activo. Puedes:
 
 - Hacer doble clic en el nombre de un mapa para renombrarlo.
@@ -95,6 +97,8 @@ Mapas, Capas, Events, Paleta de tiles y Propiedades de tile usan cabeceras coher
 Pulsa **F2** para renombrar en línea una sola capa seleccionada.
 
 ## Barra de estado (inferior)
+
+Coloca el cursor sobre el selector cerrado de versión del mapa y usa la rueda para pasar a la versión anterior o a la siguiente de la lista.
 
 La barra de estado muestra contexto útil de un vistazo: coordenadas del cursor (X, Y), el nombre del evento bajo el cursor, la herramienta actual, el tamaño del pincel, el nombre de la capa activa, el nivel de zoom y si hay historial de deshacer disponible.
 
@@ -142,6 +146,8 @@ es 160 ya no te pelea desde el primer dígito. Un campo que se deja vacío cae a
 Los paneles añadidos por [mods](marketplace.md) mantienen su lugar en tu disposición. Si un mod está desactivado, desinstalado o recargándose, su hueco de panel se queda donde lo acoplaste y muestra un marcador de posición ("Panel provided by mod … — not loaded") hasta que el mod vuelva; cierra el marcador si no quieres conservar el hueco. Las configuraciones de disposición exportadas (**View → Layout → Export Configuration**) también registran qué mods aportaron qué paneles — importar una disposición que usa paneles de mods que no tienes instalados te avisa con la lista de mods que faltan y mantiene esos paneles como marcadores. Las configuraciones exportadas antiguas siguen importándose bien.
 
 ### Paleta de tiles
+
+Con los resultados cerrados, coloca el cursor sobre el campo de tileset y usa la rueda para pasar al tileset anterior o al siguiente.
 
 En modo por tileset, la sección **Autotiles** desplegada se ajusta al ancho del panel mientras arrastras el separador. Los cuadros del fondo mantienen su tamaño.
 

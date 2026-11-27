@@ -6,6 +6,8 @@ El editor de **Scripts** te permite ver, reordenar, renombrar, añadir, borrar y
 
 ## La ventana
 
+El botón de atajos está en el extremo derecho de la barra de herramientas. Coloca el cursor sobre el selector de origen cerrado y gira la rueda para pasar al origen anterior o al siguiente. Si hay cambios sin guardar, el editor pide confirmación antes de cambiar.
+
 - **Izquierda:** la lista de scripts, en el orden en que RPG Maker XP los ejecuta. Los divisores de sección (títulos hechos de signos `=`) aparecen atenuados.
 - **Derecha:** el código del script seleccionado, con resaltado de sintaxis Ruby, números de línea y búsqueda con reemplazo (Ctrl+F por defecto). El editor de código usa los atajos compartidos de Deshacer y Rehacer (Ctrl+Z y Ctrl+Y por defecto). Haz cuatro clics seguidos en el código para seleccionar todo el script. Consulta [Encontrar cosas](#encontrar-cosas).
 

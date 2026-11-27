@@ -9,6 +9,8 @@ Open it from the **Scripts** button on the toolbar (next to **Database**) or **T
 
 ## The window
 
+The shortcuts button is at the far right of the toolbar. Hover over the closed source selector and scroll up or down to move to the previous or next source. If you have unsaved changes, the editor asks before switching.
+
 - **Left:** the list of scripts, in the order RPG Maker XP runs them. Section dividers (titles made of
   `=` signs) appear dimmed.
 - **Right:** the selected script's code, with Ruby syntax highlighting, line numbers, and find &

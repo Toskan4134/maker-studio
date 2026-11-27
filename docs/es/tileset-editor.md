@@ -75,6 +75,8 @@ Activa la bandera de mostrador (counter). Permite la interacción a través del 
 
 ### Terrain Tag
 
+Coloca el cursor sobre el desplegable cerrado de Terrain Tag o Priority y gira la rueda hacia arriba o hacia abajo para elegir el valor anterior o el siguiente.
+
 Elige un terrain tag del desplegable con búsqueda, luego haz clic en un tile (o selecciona una región arrastrando y pulsa **Apply**) para asignarlo. La lista incluye tags con nombre 0–17 (los valores por defecto de Pokémon Essentials), y puedes filtrar por nombre o número. Los mods instalados pueden añadir sus propios tags con nombre a este mismo desplegable. Los terrain tags los usan eventos y scripts para comportamientos específicos del terreno, como cambiar la velocidad de movimiento en arena frente a carretera, y se leen en el juego a través del terrain tag del motor.
 
 **Sonido de la hierba (grass rustle).** Cuando el jugador pisa un tile cuyo terrain tag hace crujir la hierba (como **Grass**), es el motor —no Maker Studio— quien reproduce la **animación 1** ("Grass rustle") de la base de datos de Animaciones de tu proyecto. En un proyecto de Pokémon Essentials sin modificar esa animación no tiene ningún timing de SE, así que el crujido se reproduce sin sonido; algunos kits (La Base de Sky, por ejemplo) sí traen un sonido en ella. Para añadirlo, dale a la animación 1 un timing de SE en la pestaña **Animations** de la [Base de datos](database.md). El terrain tag funciona correctamente — el sonido vive en la animación.
