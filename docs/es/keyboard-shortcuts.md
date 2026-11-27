@@ -27,6 +27,7 @@ Cuando hay un diálogo abierto, sus atajos tienen prioridad sobre los del espaci
 | Tecla por defecto | Conmutador |
 |-------------|--------|
 | G | Grid |
+| Ctrl+G | Mostrar u ocultar mapas vecinos |
 | C | Overlay de colisión |
 | D | Modo Dim |
 | Shift+C | Alternar la visualización de las casillas de eventos |

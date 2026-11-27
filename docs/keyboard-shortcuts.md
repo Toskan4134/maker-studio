@@ -27,6 +27,7 @@ When a dialog is open, its shortcuts take over from the workspace. **Reset App**
 | Default Key | Toggle |
 |-------------|--------|
 | G | Grid |
+| Ctrl+G | Show or hide neighbor maps |
 | C | Collision overlay |
 | D | Dim mode |
 | Shift+C | Toggle the cell overlay for events |
