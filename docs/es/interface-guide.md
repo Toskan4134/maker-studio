@@ -168,6 +168,10 @@ así que probar un tema y cambiar de idea no cuesta nada.
 
 ### Pestaña Editor
 
+**Opacidad de las capas atenuadas**, en **Lienzo del mapa**, controla cuánto se ven las capas
+inactivas con **Atenuar capas** activado. Puedes elegir entre 0 % y 100 % (40 % por defecto).
+La capa activa conserva su opacidad habitual y el ajuste se aplica al guardar.
+
 **Tamaño de la ventana al arrancar** — déjalo en el valor por defecto (1400 × 900, centrada), recuerda
 el tamaño y la posición de la última vez, ábrela siempre maximizada o en pantalla completa, o dale un
 tamaño exacto.

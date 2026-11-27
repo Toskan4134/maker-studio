@@ -168,6 +168,10 @@ changing your mind costs nothing.
 
 ### Editor tab
 
+**Dimmed layer opacity** under **Map canvas** sets how much of the inactive layers you see while
+**Dim** is on. Choose 0–100% (default 40%). The active layer keeps its usual opacity, and the
+preference applies as soon as you save it.
+
 **Window size at startup** — leave it at the default (1400 × 900, centred), remember the size and
 position from last time, always open maximized or fullscreen, or give it an exact size.
 
