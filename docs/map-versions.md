@@ -25,9 +25,9 @@ You can reach map versions from several places — they all drive the same actio
 
 - **Versions** button in the **toolbar** — shows the current version as a badge (e.g. `V2/3`) and opens
   the **Version Manager**.
-- **Map → Map Versions…** in the menu bar.
+- **Map → Map Versions** in the menu bar.
 - The **Version** control at the right end of the **status bar** (quick switch + menu).
-- **Right-click a map** in the Maps tree → **Versions** (quick switch) or **Manage Versions…**.
+- **Right-click a map** in the Maps tree → **Versions** (quick switch) or **Manage Versions**.
 
 ### The Version Manager
 

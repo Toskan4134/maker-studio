@@ -62,7 +62,7 @@ Con la **capa de eventos** activa, puedes duplicar eventos enteros (todas las p�
 
 ## Presets de eventos
 
-Haz clic derecho en una casilla de la capa de eventos y elige **Presets…** debajo de las acciones de edición. El panel Events también tiene un botón **Presets**; si hay un evento seleccionado, abre el gestor con su nombre y todas sus páginas listas para guardarse como un preset. Sin un evento seleccionado, abre la biblioteca sin un evento actual.
+Haz clic derecho en una casilla de la capa de eventos y elige **Presets** debajo de las acciones de edición. El panel Events también tiene un botón **Presets**; si hay un evento seleccionado, abre el gestor con su nombre y todas sus páginas listas para guardarse como un preset. Sin un evento seleccionado, abre la biblioteca sin un evento actual.
 
 Haz clic derecho sobre un evento y elige **Añadir a presets** para guardarlo al momento. Elige **Proyecto** o **Global** en la pregunta; **Cancelar** cierra solo la pregunta. El preset se guarda en la raíz de la biblioteca elegida. Si ya existe ese nombre, tendrás que confirmar antes de reemplazarlo.
 
@@ -88,7 +88,7 @@ La ventana del diálogo se puede redimensionar — arrastra su esquina inferior 
 
 Abajo del todo: **Aceptar** guarda los cambios y cierra el editor, **Aplicar** los guarda y lo deja abierto (útil para probar un evento largo por partes), y **Cancelar** los descarta — si hay algo sin guardar, se te pregunta antes.
 
-Pulsa **Presets…** abajo a la izquierda para explorar y guardar presets a partir del borrador actual, incluidos los cambios aún no aplicados al mapa. Usar un preset pregunta antes de reemplazar el nombre y todas las páginas del borrador. Conserva la ID y la posición del evento, activa la página 1 y solo modifica el mapa al pulsar **Aplicar** o **Aceptar**.
+Pulsa **Presets** abajo a la izquierda para explorar y guardar presets a partir del borrador actual, incluidos los cambios aún no aplicados al mapa. Usar un preset pregunta antes de reemplazar el nombre y todas las páginas del borrador. Conserva la ID y la posición del evento, activa la página 1 y solo modifica el mapa al pulsar **Aplicar** o **Aceptar**.
 
 ### General
 
@@ -331,9 +331,9 @@ windowskin de tu juego.
 
 ### Fragmentos de script
 
-Todo cuadro de script del editor de eventos tiene un botón **Fragmentos…** junto a su título **Script** — úsalo para mantener una biblioteca del código Ruby que reutilizas, en vez de reescribir (o buscar) las mismas líneas cada vez.
+Todo cuadro de script del editor de eventos tiene un botón **Fragmentos** junto a su título **Script** — úsalo para mantener una biblioteca del código Ruby que reutilizas, en vez de reescribir (o buscar) las mismas líneas cada vez.
 
-**Selecciona antes las líneas que quieras.** Marca las tres líneas que reutilizas, pulsa **Fragmentos…**, usa el botón **+** para añadir un *Nuevo preset…* y ponle nombre — Maker Studio te pregunta entonces si guardar el **Código seleccionado** o el **Script entero**, diciéndote cuántas líneas es cada uno, así que aún puedes cambiar de idea. Si no hay nada seleccionado no hay nada que preguntar y se guarda el script entero. **Sobrescribir** hace la misma pregunta antes de reemplazar un fragmento.
+**Selecciona antes las líneas que quieras.** Marca las tres líneas que reutilizas, pulsa **Fragmentos**, usa el botón **+** para añadir un *Nuevo preset* y ponle nombre — Maker Studio te pregunta entonces si guardar el **Código seleccionado** o el **Script entero**, diciéndote cuántas líneas es cada uno, así que aún puedes cambiar de idea. Si no hay nada seleccionado no hay nada que preguntar y se guarda el script entero. **Sobrescribir** hace la misma pregunta antes de reemplazar un fragmento.
 
 Al elegir un fragmento guardado, la parte derecha muestra su **nombre** arriba y su **código** en un cuadro editable debajo. Desde ahí:
 
@@ -342,14 +342,14 @@ Al elegir un fragmento guardado, la parte derecha muestra su **nombre** arriba y
 - **Sobrescribir** reemplaza el fragmento con lo que haya ahora en el cuadro de script (tu selección, o el script entero).
 - **Renombrar** y **Eliminar** funcionan como esperas.
 
-También puedes **seleccionar varios fragmentos** — Ctrl+clic para añadir uno, Mayús+clic para un rango, o clic en el **nombre de una carpeta** para coger todo lo que contiene — y luego **Mover a…** una carpeta, **Exportar…** o **Eliminar** todo de una vez. **Exportar…** / **Importar…** escriben y leen archivos de fragmentos, y exportar con una selección escribe solo los fragmentos elegidos, así compartes un puñado en vez de toda tu biblioteca.
+También puedes **seleccionar varios fragmentos** — Ctrl+clic para añadir uno, Mayús+clic para un rango, o clic en el **nombre de una carpeta** para coger todo lo que contiene — y luego **Mover a** una carpeta, **Exportar** o **Eliminar** todo de una vez. **Exportar** / **Importar** escriben y leen archivos de fragmentos, y exportar con una selección escribe solo los fragmentos elegidos, así compartes un puñado en vez de toda tu biblioteca.
 
 Cuatro sitios comparten **una misma** biblioteca de fragmentos, así que lo que guardes en uno aparece en los demás:
 
 - el comando **Script**,
 - la acción **Script** dentro de Set Move Route,
 - el cuadro de script de un comando de mod que no define sus propios campos,
-- el editor de **Scripts** (Herramientas → Scripts…), que tiene el mismo botón **Snippets…** en su barra.
+- el editor de **Scripts** (Herramientas → Scripts), que tiene el mismo botón **Snippets** en su barra.
 
 Usar un fragmento lo inserta **donde está el cursor**. Si el cuadro está vacío, el código entra directamente; si ya tiene código, se te pregunta qué hacer con él — **Insertar en el cursor** deja el fragmento en el cursor (reemplazando el código seleccionado, si hay) y no toca nada más, **Reemplazar** cambia el cuadro entero por el fragmento, y Cancelar no hace nada.
 
@@ -412,9 +412,9 @@ botones de acción, las opciones de la ruta y las filas también se leen en espa
 fila se dibuja con una guía de sangría, así que de un vistazo las acciones se leen como
 parte de la ruta y no como comandos propios.
 
-#### Dibujar ruta… — el editor visual de rutas
+#### Dibujar ruta — el editor visual de rutas
 
-Construir un paseo pulsando **Move Up** doce veces cansa rápido. **Dibujar ruta…** (junto a Test Move Route) abre el propio mapa y te deja trazar la ruta encima.
+Construir un paseo pulsando **Move Up** doce veces cansa rápido. **Dibujar ruta** (junto a Test Move Route) abre el propio mapa y te deja trazar la ruta encima.
 
 - Elige **Caminar**, **Saltar** o **Fijar inicio** en la barra de herramientas. Con **Caminar**, haz clic o arrastra por las tiles; al hacer clic en una tile lejana, el camino llega hasta ella, con diagonales incluidas. Al arrastrar por una esquina también se pueden crear pasos diagonales, y al volver sobre tiles anteriores se añaden pasos de regreso.
 - Con **Saltar**, haz clic en una tile para añadir una acción Jump; si es una tile adyacente, se añade un único Move. El editor calcula la tile de inicio a partir de los comandos anteriores de la misma página y el mismo objetivo, incluidos cambios directos de posición, intercambios conocidos y rutas anteriores; si una ruta puede seguir ejecutándose o la posición depende de una variable o una rama, el pie la marca como **Estimada**. Con **Fijar inicio**, haz clic en una tile para cambiarla (esto limpia la ruta y vuelve a Caminar); el ajuste se guarda al aplicar la ruta y se recuerda al volver a abrirla.
@@ -442,7 +442,7 @@ Debajo de las acciones estándar hay un grupo **Frame** que avanza o establece q
 - **Next Frame / Previous Frame** — avanza un frame por la fila; al final de una fila salta al inicio de la siguiente fila (y toda la hoja da la vuelta al final del todo).
 - **Next / Previous Horizontal Frame** — avanza una columna, dando la vuelta solo dentro de la fila actual.
 - **Next / Previous Vertical Frame** — avanza una fila, dando la vuelta solo dentro de la columna actual.
-- **Set Frame…** — establece la columna y/o la fila directamente. Cada eje tiene su propia casilla, así que puedes cambiar solo la columna, solo la fila o ambas, dejando la otra sin cambios. Los números de frame empiezan en 1.
+- **Set Frame** — establece la columna y/o la fila directamente. Cada eje tiene su propia casilla, así que puedes cambiar solo la columna, solo la fila o ambas, dejando la otra sin cambios. Los números de frame empiezan en 1.
 
 Estas te dejan controlar la animación de un sprite a mano — p. ej. el parpadeo escalonado de una antorcha, un retrato que cicla expresiones o una hoja de poses ancha. Como el frame se establece manualmente, desactiva la **Move Animation** y la **Stop Animation** del objetivo (acciones Move Animation OFF / Stop Animation OFF) para que el ciclo de caminar automático del motor no sobrescriba el frame que estableciste.
 

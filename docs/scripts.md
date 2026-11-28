@@ -5,7 +5,7 @@ scripts directly from Maker Studio — the same scripts RPG Maker XP keeps in `D
 It is handy on bases that don't ship a `scripts_extract.rb`, so you can work with the code without
 leaving the editor.
 
-Open it from the **Scripts** button on the toolbar (next to **Database**) or **Tools → Scripts…**.
+Open it from the **Scripts** button on the toolbar (next to **Database**) or **Tools → Scripts**.
 
 ## The window
 
@@ -86,7 +86,7 @@ Only the **order** stays with `Scripts.rxdata` — on disk, files sort themselve
 
 ## Snippets
 
-The toolbar's **Snippets…** button opens the same saved snippet library the Event Editor's script
+The toolbar's **Snippets** button opens the same saved snippet library the Event Editor's script
 boxes use, so a helper you saved while writing an event is one click away here — and anything you
 save here shows up there. A new snippet is cut from whatever you have **selected** in the code (or
 from the whole script when nothing is selected), and using one asks whether to **Insert at cursor**

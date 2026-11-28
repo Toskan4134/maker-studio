@@ -2,7 +2,7 @@
 
 ## Opening the Tileset Editor
 
-Open the **Tileset Manager** from the **Tilesets** tab of the Database (**Tools → Database…**, or the toolbar **Database** button). The manager lists every tileset (with a searchable list); select one and click **Edit Properties...** to open the Tileset Editor for it.
+Open the **Tileset Manager** from the **Tilesets** tab of the Database (**Tools → Database…**, or the toolbar **Database** button). The manager lists every tileset (with a searchable list); select one and click **Edit Properties** to open the Tileset Editor for it.
 
 The manager's detail pane also shows a **thumbnail of the selected tileset's graphic**, so
 you can tell at a glance which tileset you are about to edit. The **…** button beside the
@@ -26,7 +26,7 @@ Ctrl+Z/Ctrl+Y undo/redo the change, including on-disk writes.
 used everywhere else in the editor, instead of its own custom popup — and deleting is undoable:
 **Ctrl+Z** right after confirming writes the tileset straight back into its old slot.
 
-(The separate **Map → Change Tileset...** command is different — it swaps which tileset a *map* uses for its native layers; see [Map Management](map-management.md). It does not edit tile properties.)
+(The separate **Map → Change Tileset** command is different — it swaps which tileset a *map* uses for its native layers; see [Map Management](map-management.md). It does not edit tile properties.)
 
 ## Overview
 
@@ -89,7 +89,7 @@ The Terrain Tag and Priority dropdowns are not limited to the built-in values. T
 
 - **Names read from your game.** The Terrain Tag dropdown reads the names your base actually defines — `PBS/terrain_tags.txt`, `GameData::TerrainTag` registrations, `module PBTerrain` constants, and any custom registration helper your project uses (e.g. `ChronoverseManager.register_terrain_tag`) — scanning the core scripts, the loose `Data/Scripts/` tree, and `Plugins/`. A tag your base or a plugin defines (Grass, Ledge, Water, a custom Mirror tag…) shows its real name instead of a bare number. If none are found, the list falls back to the hardcoded 0–17 Pokemon Essentials defaults. Priority has no equivalent in-game registry (RMXP priorities are the positional 0–5 z-levels), so it always starts from the standard 0–5 names.
 - **Auto-detected values.** If your game already uses a terrain tag or priority level beyond the built-in list — for example a value a script or an older tool wrote to a tile — the editor scans every tileset and autotile, finds the highest value in use, and raises the dropdown maximum so every value the game actually uses is selectable.
-- **Your own labels, and you can rename anything.** In the sidebar's Terrain Tag or Priority mode, click **Add new…** at the bottom of the list to open an inline form — pick an id, type a name, and (for both terrain tags and priorities) choose a marker colour that tints the on-canvas marker and the dropdown chip. Every row is editable: the pencil icon on any row renames it, including built-in defaults and names a [mod](marketplace.md) added — and your label wins. The trash icon appears only on rows you've overridden or added; on a default it reverts to the original name, on a tag you added it removes it. (The right-click context-menu picker stays a plain selector.) The controls are icons, not text characters. Custom labels are saved per-project in `.maker-studio/tile-labels.json` inside your game folder, so they travel with the game.
+- **Your own labels, and you can rename anything.** In the sidebar's Terrain Tag or Priority mode, click **Add new** at the bottom of the list to open an inline form — pick an id, type a name, and (for both terrain tags and priorities) choose a marker colour that tints the on-canvas marker and the dropdown chip. Every row is editable: the pencil icon on any row renames it, including built-in defaults and names a [mod](marketplace.md) added — and your label wins. The trash icon appears only on rows you've overridden or added; on a default it reverts to the original name, on a tag you added it removes it. (The right-click context-menu picker stays a plain selector.) The controls are icons, not text characters. Custom labels are saved per-project in `.maker-studio/tile-labels.json` inside your game folder, so they travel with the game.
 
 So you can translate a default name (for example rename "Grass" to "Hierba"), give a colour to a terrain tag the way priorities already have one, and put a name on any auto-detected id.
 
@@ -97,7 +97,7 @@ So you can translate a default name (for example rename "Grass" to "Hierba"), gi
 
 The **Autotiles** switch is on by default and shows all project autotiles. Turn it off to see the selected tileset’s native autotiles. Maker Studio remembers the setting per project on this computer. You can paint a graphic on a native layer when it is assigned to the map's own tileset. Changing maps clears the autotile selection.
 
-With grouping off, open **Database → Tilesets**, select a tileset, then choose **Autotiles**. You can also right-click a palette autotile and choose **Edit Properties…** to open that view directly. Under **Mode**, click **Replace autotile graphic**, then click a slot in the grid to assign, replace, or clear its graphic. Use **Ctrl+Z** to undo a change to a slot and **Ctrl+Y** to redo it. The grid tracks graphic and property edits in the order you make them, even if you switch property modes. Edit their properties and choose **Apply** or **Save**. Replacing or clearing a slot affects cells already using it. Turn grouping back on to restore the virtual **Autotiles** entry.
+With grouping off, open **Database → Tilesets**, select a tileset, then choose **Autotiles**. You can also right-click a palette autotile and choose **Edit Properties** to open that view directly. Under **Mode**, click **Replace autotile graphic**, then click a slot in the grid to assign, replace, or clear its graphic. Use **Ctrl+Z** to undo a change to a slot and **Ctrl+Y** to redo it. The grid tracks graphic and property edits in the order you make them, even if you switch property modes. Edit their properties and choose **Apply** or **Save**. Replacing or clearing a slot affects cells already using it. Turn grouping back on to restore the virtual **Autotiles** entry.
 
 With grouping on, select the virtual **Autotiles** entry (shown as `000: Autotiles` at the top of the list), or click **Autotiles** while viewing a regular tileset. This opens a dedicated grid of every autotile (native slots + named extra autotiles). Editing a property for an autotile applies it to all 48 pattern tiles of that autotile at once.
 
@@ -120,7 +120,7 @@ A backup of the original file is created automatically on first save. If you clo
 
 ### Switching to Another Tileset with Unsaved Changes
 
-Picking a different tileset — from the list, from the Tile Palette's right-click **Edit Properties…**, or from the tileset picker — starts editing that tileset instead. If the one you're leaving has unsaved changes, the editor now asks first: **Discard** throws the changes away and switches, **Keep editing** stays where you are. Use **Apply** before switching if you want to keep them.
+Picking a different tileset — from the list, from the Tile Palette's right-click **Edit Properties**, or from the tileset picker — starts editing that tileset instead. If the one you're leaving has unsaved changes, the editor now asks first: **Discard** throws the changes away and switches, **Keep editing** stays where you are. Use **Apply** before switching if you want to keep them.
 
 After saving, collision and priority overlays update immediately on all open maps that use the tileset — including tiles you placed earlier. This applies to every placed tile: normal tiles, tiles painted from another tileset, extra (named) autotiles, and tiles you rotated or flipped. Rotated and flipped tiles automatically re-apply the new passage in the correct orientation, in the editor and in-game.
 

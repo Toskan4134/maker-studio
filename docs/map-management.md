@@ -20,7 +20,7 @@ To nest the new map under an existing one, **right-click that map** in the Map T
 
 ## Changing a Map's ID
 
-Right-click the map in the Map Tree and choose **Change ID…**, then type a free ID from 1 to 999. Maker Studio renames `Map###.rxdata`, moves the map's entry in `MapInfos.rxdata` (its child maps stay attached), rewrites **every Transfer Player command in the project** that pointed at the old ID, follows the **player start position** if it was on that map, and renames the map's baked shadow images. The toast tells you how many Transfer Player commands were updated.
+Right-click the map in the Map Tree and choose **Change ID**, then type a free ID from 1 to 999. Maker Studio renames `Map###.rxdata`, moves the map's entry in `MapInfos.rxdata` (its child maps stay attached), rewrites **every Transfer Player command in the project** that pointed at the old ID, follows the **player start position** if it was on that map, and renames the map's baked shadow images. The toast tells you how many Transfer Player commands were updated.
 
 Map IDs written inside **Ruby scripts** are not touched — nothing can find them reliably, so check those by hand. Unsaved maps are saved first, since the rewrite happens on disk.
 
@@ -36,7 +36,7 @@ To revert a map to its last saved state, right-click its tab and choose **Discar
 
 ## Neighbor Maps
 
-Right-click a map in the tree or right-click anywhere on the active map’s canvas and choose **Manage Neighbor Maps…**. Add a neighboring map, choose its side, and adjust its offset in tiles. Positive offsets shift a north or south neighbor to the right, or an east or west neighbor down. Check the shared edge in the live tile preview, then click **Save**. Use Space+drag or middle-drag to pan and Ctrl+scroll or the zoom buttons to inspect the edge. **Fit view** shows the whole preview again. Click a neighbor strip to select it, or drag it along the edge to change its offset. While dragging, dashed drop zones mark the other three sides. Drag toward another edge to move the connection there. Ctrl+drag moves the selected neighbor even where strips overlap. Each connection can override the global depth in both directions. Enter `0` to use the global setting or `−1` for full depth. A connection works both ways. You can attach several neighbors to the same side if each touches the edge and their shared stretches do not overlap. Right-click a neighbor in the list or preview for its actions. Ctrl+T adds neighbors, Delete removes the selected one, Ctrl+D deselects it, and Ctrl+Z / Ctrl+Y undo or redo changes until you save. Ctrl+C, Ctrl+X and Ctrl+V copy, cut and paste a neighbor with its side and offset, including into another map’s neighbor manager. Pasting a neighbor that is already attached only updates its side and offset. A map copied with **Copy Map** in the map tree also pastes here; it is added on the east side.
+Right-click a map in the tree or right-click anywhere on the active map’s canvas and choose **Manage Neighbor Maps**. Add a neighboring map, choose its side, and adjust its offset in tiles. Positive offsets shift a north or south neighbor to the right, or an east or west neighbor down. Check the shared edge in the live tile preview, then click **Save**. Use Space+drag or middle-drag to pan and Ctrl+scroll or the zoom buttons to inspect the edge. **Fit view** shows the whole preview again. Click a neighbor strip to select it, or drag it along the edge to change its offset. While dragging, dashed drop zones mark the other three sides. Drag toward another edge to move the connection there. Ctrl+drag moves the selected neighbor even where strips overlap. Each connection can override the global depth in both directions. Enter `0` to use the global setting or `−1` for full depth. A connection works both ways. You can attach several neighbors to the same side if each touches the edge and their shared stretches do not overlap. Right-click a neighbor in the list or preview for its actions. Ctrl+T adds neighbors, Delete removes the selected one, Ctrl+D deselects it, and Ctrl+Z / Ctrl+Y undo or redo changes until you save. Ctrl+C, Ctrl+X and Ctrl+V copy, cut and paste a neighbor with its side and offset, including into another map’s neighbor manager. Pasting a neighbor that is already attached only updates its side and offset. A map copied with **Copy Map** in the map tree also pastes here; it is added on the east side.
 
 **View → Show Neighbor Maps** is enabled by default and displays dimmed, read-only tiles beyond the outlined active map. By default the editor draws four tiles into each neighbor. In Settings, set **Neighbor map depth** to `−1` to see the full depth along that shared stretch. Double-click a neighbor’s strip to edit it while keeping the current zoom and edge position. Neighbor strips appear after their tile graphics have loaded and include unsaved tile edits from open neighbors.
 
@@ -101,7 +101,7 @@ Right-click a map in the Map Tree and choose Change Tileset, or use Map then Cha
 
 Use **Tools → Maker Studio Autotiles and Effects** or the autotile palette switch to choose how you edit backgrounds. The setting is saved per project. Turning it off shows a warning about existing content that may need the integration in-game.
 
-With the setting off, fog and panorama belong to the tileset. Use **Change Fog…** or **Change Panorama…** in the Map menu, or edit the native entry in the Layers panel. Applying a change saves it immediately for every map that uses the tileset. **Map → Change Battleback…** sets the tileset graphic in standard RPG Maker XP or the map's `BattleBack` metadata in Pokémon Essentials and its derivatives. An empty selection restores the engine default. If the editor reports that the PBS change is pending, compile the PBS data in Essentials before testing.
+With the setting off, fog and panorama belong to the tileset. Use **Change Fog** or **Change Panorama** in the Map menu, or edit the native entry in the Layers panel. Applying a change saves it immediately for every map that uses the tileset. **Map → Change Battleback** sets the tileset graphic in standard RPG Maker XP or the map's `BattleBack` metadata in Pokémon Essentials and its derivatives. An empty selection restores the engine default. If the editor reports that the PBS change is pending, compile the PBS data in Essentials before testing.
 
 With the setting on, use the options below to edit multiple layers and set battlebacks per map or version.
 
@@ -122,9 +122,9 @@ If a map already has a panorama from its tileset (or a version override saved wi
 
 There are three ways to change the battleback, all opening the same image picker:
 
-- **Menu bar → Map → Change Battleback…** (next to Change Tileset…).
-- **Right-click a map** in the Map Tree → **Change Battleback…**.
-- When you're editing a [map version](map-versions.md), the version's right-click submenu has **Change Battleback (this version)…**.
+- **Menu bar → Map → Change Battleback** (next to Change Tileset).
+- **Right-click a map** in the Map Tree → **Change Battleback**.
+- When you're editing a [map version](map-versions.md), the version's right-click submenu has **Change Battleback (this version)**.
 
 Pick a battleback from `Graphics/Battlebacks/`. Battlebacks come in families of files that share one name: `<name>_bg`, `<name>_base0`, `<name>_base1`, `<name>_message` in Pokémon Essentials 19.1 and newer (and LBDS), or `battlebg<Name>`, `playerbase<Name>`, `enemybase<Name>` in Essentials 17.1 and BES. Either way the picker lists **one entry per family** and stores that shared name, not an individual file. Leave it blank to clear it.
 
@@ -146,8 +146,8 @@ The **battleback is not shown on the map canvas** — it only appears in battles
 
 Each map can carry its own background music and background sound, played automatically when the player enters it — the same **Auto-Change BGM / BGS** fields RPG Maker XP puts in Map Properties. Open the dialog from:
 
-- **Menu bar → Map → Map Audio…**, or
-- **Right-click a map** in the Map Tree → **Map Audio…**
+- **Menu bar → Map → Map Audio**, or
+- **Right-click a map** in the Map Tree → **Map Audio**
 
 The dialog has one row per track:
 

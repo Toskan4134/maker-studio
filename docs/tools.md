@@ -50,21 +50,21 @@ The lock state is remembered across sessions. The Eyedropper always applies the 
 
 ### Presets
 
-Click **Presets…** in the Tile Properties panel header to open the preset manager. From here you can:
+Click **Presets** in the Tile Properties panel header to open the preset manager. From here you can:
 
 - **Save current** as a new named preset — useful for combinations you reuse (e.g. "Faded Night", "Sepia").
 - **Use** a saved preset on the current brush — the dialog closes after using it (double-clicking a preset does the same).
 - **Rename** an existing preset.
 - **Overwrite** a preset with the current brush values.
 - **Delete** a preset.
-- **Export…** your presets — choose a folder and each preset is saved as its own `ms_<name>_<index>_preset.json` file. **If you have presets selected, only those are exported**; with nothing selected the active library goes out. The button tells you which it is (`Export 3…` when three are selected).
-- **Import…** one or more preset files at once — select several files in the picker and they all merge in. Nothing you already have is deleted. Presets with a new name are added straight away, and one that arrives identical to what you already have is left alone without asking. If any imported preset shares a name with one of yours but holds *different* contents, a list opens with all of them at once: grouped by folder, everything ticked, with a checkbox per preset and per folder. Untick the few you want to keep as they are, click a preset's name to compare **Yours** against **Imported** side by side (script snippets keep the script editor's syntax colors), tick **Show diff** to collapse that into a single pane where the lines that change are marked in place (red for what goes, green for what comes in), still with the editor's syntax colors, then **Replace N** — or **Keep all mine** to leave everything untouched. Files holding a different kind of preset (e.g. shadow presets) are skipped.
+- **Export** your presets — choose a folder and each preset is saved as its own `ms_<name>_<index>_preset.json` file. **If you have presets selected, only those are exported**; with nothing selected the active library goes out. The button tells you which it is (`Export 3…` when three are selected).
+- **Import** one or more preset files at once — select several files in the picker and they all merge in. Nothing you already have is deleted. Presets with a new name are added straight away, and one that arrives identical to what you already have is left alone without asking. If any imported preset shares a name with one of yours but holds *different* contents, a list opens with all of them at once: grouped by folder, everything ticked, with a checkbox per preset and per folder. Untick the few you want to keep as they are, click a preset's name to compare **Yours** against **Imported** side by side (script snippets keep the script editor's syntax colors), tick **Show diff** to collapse that into a single pane where the lines that change are marked in place (red for what goes, green for what comes in), still with the editor's syntax colors, then **Replace N** — or **Keep all mine** to leave everything untouched. Files holding a different kind of preset (e.g. shadow presets) are skipped.
 
 A preview canvas shows what the highlighted preset would look like applied to the currently selected tile. With a project open, the manager has Project and Global tabs; project presets live with that game, while global presets remain shared across projects. Search spans both libraries, and each tab shows its matching count. New presets, folders, and imports go to the active tab. Copy to... keeps a preset in its current library while copying it to the other. Import files keep the existing JSON format, exports work as before, and both libraries are remembered across sessions. Folded-folder preferences stay on this computer.
 
-**Selecting several.** Click a preset to select it, **Ctrl+click** to add or remove one, **Shift+click** to take everything between. Clicking a **folder's name** selects the folder and everything inside it (the arrow beside the name folds it instead). With more than one thing selected, the right side swaps to a list of what you picked plus **Move to…**, **Export…** and **Delete** — so you can file, share or clear a handful of presets in one go instead of one at a time.
+**Selecting several.** Click a preset to select it, **Ctrl+click** to add or remove one, **Shift+click** to take everything between. Clicking a **folder's name** selects the folder and everything inside it (the arrow beside the name folds it instead). With more than one thing selected, the right side swaps to a list of what you picked plus **Move to**, **Export** and **Delete** — so you can file, share or clear a handful of presets in one go instead of one at a time.
 
-**Folders.** The **+** button offers *New Preset…* and *New Folder…*. A folder can be empty — it stays until you delete it. Presets go in and out of folders by **dragging** (the whole selection travels if you drag one of the selected ones) or with **Move to…**: drop one on a folder (or on any preset inside it) to file it there, and drop it in the loose area below the folders to take it back out. Dropping one preset on another also reorders. Right-click a folder to rename it or delete it; deleting asks whether the presets inside should go with it or simply move out. Deleting a **selected** folder from the bulk panel always takes its presets with it. Folded folders **stay folded** — the arrow beside a folder's name is remembered, so the ones you closed come back closed next time you open the dialog (renaming a folder reopens it).
+**Folders.** The **+** button offers *New Preset* and *New Folder*. A folder can be empty — it stays until you delete it. Presets go in and out of folders by **dragging** (the whole selection travels if you drag one of the selected ones) or with **Move to**: drop one on a folder (or on any preset inside it) to file it there, and drop it in the loose area below the folders to take it back out. Dropping one preset on another also reorders. Right-click a folder to rename it or delete it; deleting asks whether the presets inside should go with it or simply move out. Deleting a **selected** folder from the bulk panel always takes its presets with it. Folded folders **stay folded** — the arrow beside a folder's name is remembered, so the ones you closed come back closed next time you open the dialog (renaming a folder reopens it).
 
 ## Brush & Eraser Size
 
@@ -87,7 +87,7 @@ A Custom Shape Brush lets you build a reusable brush from a shape, a weighted po
 Open the Brush Editor from either of:
 
 - The **Brush tool's hover popover** in the toolbar (hover the Brush tool button).
-- **Tools → Brush Editor…** in the menu bar.
+- **Tools → Brush Editor** in the menu bar.
 
 The Brush hover popover also has a **quick switcher**: a dropdown listing saved brush presets from both the Project and Global libraries, plus Default (square) and Custom (unsaved). Pick one to activate it immediately without opening the editor.
 
@@ -121,7 +121,7 @@ Click **Apply** to save the brush, or **Close** to discard your changes.
 
 ### Saving and sharing
 
-Click **Presets…** in the editor to save the current brush as a named preset, apply a saved one, or **Export** / **Import** brushes as files to share them or move them between projects. The brush's size range travels with it, so an imported brush keeps its own Min/Max. (This works just like the Tile Properties presets — see [Presets](#presets) above.)
+Click **Presets** in the editor to save the current brush as a named preset, apply a saved one, or **Export** / **Import** brushes as files to share them or move them between projects. The brush's size range travels with it, so an imported brush keeps its own Min/Max. (This works just like the Tile Properties presets — see [Presets](#presets) above.)
 
 ## Multi-Tile Stamps
 

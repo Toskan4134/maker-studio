@@ -62,7 +62,7 @@ With the **Events layer** active, you can duplicate whole events (all pages and 
 
 ## Event Presets
 
-Right-click a cell on the Events layer and choose **Presets…** below the editing actions. The Events panel also has a **Presets** button; when an event is selected, it opens the manager with that event's name and every page ready to save as one preset. With no event selected, the button opens the library without a current event.
+Right-click a cell on the Events layer and choose **Presets** below the editing actions. The Events panel also has a **Presets** button; when an event is selected, it opens the manager with that event's name and every page ready to save as one preset. With no event selected, the button opens the library without a current event.
 
 Right-click an existing event and choose **Add to presets** to save it immediately. Choose **Project** or **Global** in the prompt; **Cancel** closes only the prompt. The preset goes in the selected library's root folder. If that name already exists, confirm before replacing it.
 
@@ -87,7 +87,7 @@ The dialog window is resizable — drag its bottom-right corner to make it bigge
 
 At the bottom: **OK** saves your changes and closes the editor, **Apply** saves them and leaves it open (handy for testing a long event in steps), and **Cancel** discards them — if there is anything unsaved, you are asked first.
 
-Use **Presets…** at the bottom left to browse and save presets from the current draft, including edits not yet applied to the map. Using a preset asks before replacing the draft's name and all pages. It keeps the event's id and position, selects page 1, and changes the map only when you press **Apply** or **OK**.
+Use **Presets** at the bottom left to browse and save presets from the current draft, including edits not yet applied to the map. Using a preset asks before replacing the draft's name and all pages. It keeps the event's id and position, selects page 1, and changes the map only when you press **Apply** or **OK**.
 
 ### General
 
@@ -334,9 +334,9 @@ and windowskin.
 
 ### Script Snippets
 
-Any script box in the Event Editor has a **Snippets…** button next to its **Script** title — use it to keep a library of Ruby code you reuse instead of retyping (or hunting for) the same lines every time.
+Any script box in the Event Editor has a **Snippets** button next to its **Script** title — use it to keep a library of Ruby code you reuse instead of retyping (or hunting for) the same lines every time.
 
-**Select the lines you want first.** Highlight the three lines you reuse, click **Snippets…**, use the **+** button to add a *New Preset…* and name it — Maker Studio then asks whether to save **Selected code** or the **Whole script**, telling you how many lines each one is, so you can still change your mind. With nothing selected there is nothing to ask and the whole script is saved. **Overwrite** asks the same question before replacing a snippet.
+**Select the lines you want first.** Highlight the three lines you reuse, click **Snippets**, use the **+** button to add a *New Preset* and name it — Maker Studio then asks whether to save **Selected code** or the **Whole script**, telling you how many lines each one is, so you can still change your mind. With nothing selected there is nothing to ask and the whole script is saved. **Overwrite** asks the same question before replacing a snippet.
 
 Pick a saved snippet and the right side shows its **name** on top and its **code** in an editable box below. From there:
 
@@ -345,14 +345,14 @@ Pick a saved snippet and the right side shows its **name** on top and its **code
 - **Overwrite** replaces the snippet with what is currently in the script box (your selection, or the whole script).
 - **Rename** and **Delete** work as you would expect.
 
-You can also **select several snippets** — Ctrl+click to add one, Shift+click for a range, or click a **folder's name** to take everything inside it — and then **Move to…** a folder, **Export…** or **Delete** the lot in one action. **Export…** / **Import…** write and read snippet files, and exporting with a selection writes only the snippets you picked, so you can share a handful instead of your whole library.
+You can also **select several snippets** — Ctrl+click to add one, Shift+click for a range, or click a **folder's name** to take everything inside it — and then **Move to** a folder, **Export** or **Delete** the lot in one action. **Export** / **Import** write and read snippet files, and exporting with a selection writes only the snippets you picked, so you can share a handful instead of your whole library.
 
 Four places share **one** snippet library, so anything you save in one shows up in the others:
 
 - the **Script** command,
 - the **Script** action inside Set Move Route,
 - the script box of a mod command that doesn't define its own fields,
-- the **Scripts** editor (Tools → Scripts…), which has the same **Snippets…** button in its toolbar.
+- the **Scripts** editor (Tools → Scripts), which has the same **Snippets** button in its toolbar.
 
 Using a snippet lands it **where your cursor is**. If the box is empty the code goes straight in; if it already has code, you are asked what to do with it — **Insert at cursor** drops the snippet at the caret (replacing the selected code, if any) and leaves everything else alone, **Replace** swaps the whole box for the snippet, and Cancel does nothing.
 
@@ -413,9 +413,9 @@ buttons, the route options and the rows read in Spanish too. Each row is drawn w
 an indent guide, so at a glance the actions read as belonging to the route rather
 than as commands of their own.
 
-#### Draw path… — the visual route editor
+#### Draw path — the visual route editor
 
-Building a walk by clicking **Move Up** twelve times gets old fast. **Draw path…** (next to Test Move Route) opens the map itself and lets you draw the route on it.
+Building a walk by clicking **Move Up** twelve times gets old fast. **Draw path** (next to Test Move Route) opens the map itself and lets you draw the route on it.
 
 - Choose **Walk**, **Jump**, or **Set Start** from the toolbar. **Walk** by clicking or dragging across tiles; clicking a distant tile walks there, diagonal steps included. Dragging across a corner can also create diagonal steps, and dragging back over earlier tiles adds return steps.
 - With **Jump** selected, click a tile to add one Jump action; clicking an adjacent tile adds a single Move instead. The editor derives the start tile from earlier commands on the same page for the same target, including direct location changes, known swaps, and earlier move routes; when a route may still be running or the position depends on a variable or branch, the footer marks it **Estimated**. With **Set Start**, click a tile to override it (this clears the route and returns to Walk); the override is saved when you apply the route and remembered the next time you open it.
@@ -443,7 +443,7 @@ Below the standard actions is a **Frame** group that steps or sets which cell of
 - **Next Frame / Previous Frame** — move one frame across the row; at the end of a row it wraps to the start of the next row (and the whole sheet wraps around at the very end).
 - **Next / Previous Horizontal Frame** — move one column, wrapping within the current row only.
 - **Next / Previous Vertical Frame** — move one row, wrapping within the current column only.
-- **Set Frame…** — set the column and/or row directly. Each axis has its own checkbox, so you can change just the column, just the row, or both, leaving the other unchanged. Frame numbers are 1-based.
+- **Set Frame** — set the column and/or row directly. Each axis has its own checkbox, so you can change just the column, just the row, or both, leaving the other unchanged. Frame numbers are 1-based.
 
 These let you drive a sprite's animation by hand — e.g. a stepped torch flicker, a portrait that cycles expressions, or a wide pose sheet. Because the frame is set manually, turn the target's **Move Animation** and **Stop Animation** off (Move Animation OFF / Stop Animation OFF actions) so the engine's automatic walk cycle doesn't overwrite the frame you set.
 

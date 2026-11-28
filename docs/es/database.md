@@ -23,11 +23,11 @@ Arrastra cualquier pestaña a la izquierda o a la derecha para reordenarla. Acé
 
 Haz clic derecho en una pestaña y elige **Ocultar pestaña** para quitarla de la fila. Mientras haya alguna pestaña oculta, aparece al final de la fila una pestaña con un ojo tachado y el número de pestañas ocultas; haz clic en ella para mostrarlas atenuadas en su sitio habitual, y otra vez para recogerlas. Desde ahí también puedes abrir una pestaña oculta. Haz clic derecho en una pestaña oculta y elige **Mostrar pestaña** para recuperarla. Las pestañas ocultas se recuerdan igual que el orden.
 
-Busca los registros por su nombre o ID en la barra lateral. Los editores de registros de XP comparten la lista con búsqueda de Eventos comunes y Animaciones. Los paneles relacionados se muestran en paralelo si hay espacio y se apilan al estrechar la ventana. Edita los campos del registro y pulsa **Aplicar** para guardar los cambios de esa pestaña. Abre **Acciones** junto al buscador o haz clic derecho en una fila para copiar, cortar, pegar, duplicar, copiar varios registros, limpiar o eliminar. **Limpiar** pide confirmación antes de restaurar los valores predeterminados. Para copiar un bloque, parte del primer registro, elige **Copiar registros…** e indica cuántos quieres copiar. Las ranuras vacías se omiten. El pegado empieza en el ID seleccionado y ocupa las ranuras disponibles. **Añadir** agrega una ranura al final. **Cambiar máximo…** añade ranuras al final o elimina las que superen el nuevo límite. Usa **Deshacer** o **Rehacer** en el pie antes de aplicar tus cambios. Los atajos de registros configurados funcionan con el foco en la lista. Deshacer y Rehacer también funcionan en los campos del formulario. El buscador y el editor de comandos de evento usan sus propios atajos.
+Busca los registros por su nombre o ID en la barra lateral. Los editores de registros de XP comparten la lista con búsqueda de Eventos comunes y Animaciones. Los paneles relacionados se muestran en paralelo si hay espacio y se apilan al estrechar la ventana. Edita los campos del registro y pulsa **Aplicar** para guardar los cambios de esa pestaña. Abre **Acciones** junto al buscador o haz clic derecho en una fila para copiar, cortar, pegar, duplicar, copiar varios registros, limpiar o eliminar. **Limpiar** pide confirmación antes de restaurar los valores predeterminados. Para copiar un bloque, parte del primer registro, elige **Copiar registros** e indica cuántos quieres copiar. Las ranuras vacías se omiten. El pegado empieza en el ID seleccionado y ocupa las ranuras disponibles. **Añadir** agrega una ranura al final. **Cambiar máximo** añade ranuras al final o elimina las que superen el nuevo límite. Usa **Deshacer** o **Rehacer** en el pie antes de aplicar tus cambios. Los atajos de registros configurados funcionan con el foco en la lista. Deshacer y Rehacer también funcionan en los campos del formulario. El buscador y el editor de comandos de evento usan sus propios atajos.
 
 En **Sistema** puedes editar el grupo inicial, los elementos, la terminología, los gráficos, la música y los efectos de sonido. Los gráficos conservan su recuadro de vista previa cuando están vacíos o cargando. **Terminología** define los nombres de las estadísticas, la moneda, las ranuras de equipo y los comandos de menú y batalla que muestra el juego. Estos editores trabajan con los registros estándar de RPG Maker XP, incluidos los de proyectos Essentials que contienen esos archivos `.rxdata`.
 
-Elige **Eliminar** o pulsa **Supr** con el foco en la lista. La confirmación se abre mientras Maker Studio comprueba las referencias al registro. Si las hay, elige un sustituto. La eliminación queda en el borrador y se puede deshacer o rehacer. Al eliminar un registro, la lista se renumera al instante y **Añadir** usa el siguiente ID en ese orden. **Cambiar máximo…** queda desactivado si hay eliminaciones pendientes. Guarda los cambios de los mapas y cierra los editores de eventos antes de pulsar **Aplicar**. Al aplicar, Maker Studio guarda juntos el borrador y las eliminaciones, cierra los huecos entre los ID y actualiza las referencias nativas en la base de datos, los mapas, los eventos comunes y los eventos de tropa. Las referencias que ya apuntaban a un ID vacío o inexistente siguen rotas en lugar de pasar a otro registro. Los archivos `.rxdata` modificados se respaldan en `.maker-studio/database-backups`. Revisa manualmente los ID escritos en los scripts Ruby.
+Elige **Eliminar** o pulsa **Supr** con el foco en la lista. La confirmación se abre mientras Maker Studio comprueba las referencias al registro. Si las hay, elige un sustituto. La eliminación queda en el borrador y se puede deshacer o rehacer. Al eliminar un registro, la lista se renumera al instante y **Añadir** usa el siguiente ID en ese orden. **Cambiar máximo** queda desactivado si hay eliminaciones pendientes. Guarda los cambios de los mapas y cierra los editores de eventos antes de pulsar **Aplicar**. Al aplicar, Maker Studio guarda juntos el borrador y las eliminaciones, cierra los huecos entre los ID y actualiza las referencias nativas en la base de datos, los mapas, los eventos comunes y los eventos de tropa. Las referencias que ya apuntaban a un ID vacío o inexistente siguen rotas en lugar de pasar a otro registro. Los archivos `.rxdata` modificados se respaldan en `.maker-studio/database-backups`. Revisa manualmente los ID escritos en los scripts Ruby.
 
 En **Actores**, la gráfica muestra cómo cambia el parámetro seleccionado con el nivel. Puedes modificar un nivel concreto o generar una curva de crecimiento para ese parámetro. **Curva de experiencia** muestra la experiencia total y la necesaria para el siguiente nivel entre el nivel inicial y el máximo. Los controles de gráficos muestran una vista previa de los archivos del proyecto. **Clases** y **Enemigos** usan tablas para el aprendizaje de habilidades y las acciones. La tabla de acciones de un enemigo muestra solo las condiciones que se aplican, o **Siempre**; selecciona una acción para editarla junto con sus condiciones, con el turno en forma `A + B × n`. Cuando un efecto permite aplicar y quitar estados, ambas opciones aparecen en la misma tabla.
 
@@ -79,7 +79,7 @@ o duplicado) en Switches se puede pegar en Variables (y al revés).
 **Atajos de teclado y deshacer**: haz clic en una fila para dar el foco de teclado a su lista, luego
 **Ctrl+C** / **Ctrl+X** / **Ctrl+V** / **Ctrl+J** copian, cortan, pegan y duplican igual que el menú
 contextual — las teclas exactas son las que tengas asignadas a Copiar/Cortar/Pegar/Duplicar en
-**Help → Keyboard Shortcuts...**. **Ctrl+Z** / **Ctrl+Y** deshacen y rehacen ediciones a nivel de
+**Help → Keyboard Shortcuts**. **Ctrl+Z** / **Ctrl+Y** deshacen y rehacen ediciones a nivel de
 registro en esa lista — ya no solo pegar/cortar/reemplazar/duplicar, sino también **+ Add**, **Change
 Maximum…**, **New Tileset** y borrar un registro, incluyendo las escrituras a disco de Tilesets:
 deshacer un tileset pegado o recién añadido escribe de vuelta los datos anteriores (o quita la ranura
@@ -91,7 +91,7 @@ el historial de deshacer propio de un editor abierto.
 
 Los common events son listas de comandos que puedes llamar desde cualquier sitio (mediante **Call Common Event**) o ejecutar automáticamente.
 
-1. Elige un evento de la lista de la izquierda. Usa **Change Maximum…** para añadir o quitar ranuras.
+1. Elige un evento de la lista de la izquierda. Usa **Change Maximum** para añadir o quitar ranuras.
 2. Define su **Name**.
 3. Elige un **Trigger**:
    - **None** — solo se ejecuta cuando otro evento lo llama.
@@ -110,7 +110,7 @@ El editor de Animations recrea la herramienta de animación de RPG Maker XP, con
 
 **Configurar la animación**
 
-1. Selecciona una animación a la izquierda (o **Change Maximum…** para añadir ranuras) y dale un **Name**.
+1. Selecciona una animación a la izquierda (o **Change Maximum** para añadir ranuras) y dale un **Name**.
 2. Haz clic en **Graphic** para elegir la spritesheet de `Graphics/Animations/` (y un desplazamiento de hue opcional).
 3. Elige una **Position** (Top / Middle / Bottom / Screen) y el número de **Frames**.
 
@@ -128,9 +128,9 @@ Cada frame se compone de *celdas* — piezas de la spritesheet colocadas sobre e
 
 - **+ Frame** añade un frame; **Paste Last** copia las celdas del frame anterior en el actual.
 - **Copy Frame / Paste Frame / Clear Frame** actúan sobre todo el frame actual.
-- **Tweening…** interpola suavemente un rango de celdas entre dos frames (elige qué frames, qué celdas y si interpolar Pattern, Position/Zoom/Angle y/o Opacity/Blending).
-- **Cell Batch…** establece valores elegidos (X, Y, Zoom, Angle, Flip, Opacity, Blending, Pattern) en un rango de celdas a lo largo de un rango de frames.
-- **Entire Slide…** desliza cada celda a lo largo de un rango de frames por una cantidad X/Y por frame.
+- **Tweening** interpola suavemente un rango de celdas entre dos frames (elige qué frames, qué celdas y si interpolar Pattern, Position/Zoom/Angle y/o Opacity/Blending).
+- **Cell Batch** establece valores elegidos (X, Y, Zoom, Angle, Flip, Opacity, Blending, Pattern) en un rango de celdas a lo largo de un rango de frames.
+- **Entire Slide** desliza cada celda a lo largo de un rango de frames por una cantidad X/Y por frame.
 
 **Temporización de SE y flash**
 

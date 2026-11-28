@@ -2,7 +2,7 @@
 
 ## Abrir el editor de tilesets
 
-Abre el **Tileset Manager** desde la pestaña **Tilesets** de la Database (**Tools → Database…**, o el botón **Database** de la barra de herramientas). El gestor lista cada tileset (con una lista con búsqueda); selecciona uno y haz clic en **Edit Properties...** para abrir el editor de tilesets para él.
+Abre el **Tileset Manager** desde la pestaña **Tilesets** de la Database (**Tools → Database…**, o el botón **Database** de la barra de herramientas). El gestor lista cada tileset (con una lista con búsqueda); selecciona uno y haz clic en **Edit Properties** para abrir el editor de tilesets para él.
 
 El panel de detalle del gestor muestra además una **miniatura del gráfico del tileset
 seleccionado**, así de un vistazo sabes qué tileset vas a editar. El botón **…** junto al nombre
@@ -10,7 +10,7 @@ del gráfico abre el selector de gráficos normal, así ves la imagen a la que v
 zoom, desplazamiento y favoritos— en lugar de elegir a ciegas de una lista de nombres.
 
 Una vía más rápida para un tile que ya tienes a la vista: **clic derecho en ese tile en la
-Paleta de tiles → Editar tileset…**. El editor se abre desplazado hasta ese tile exacto y
+Paleta de tiles → Editar tileset**. El editor se abre desplazado hasta ese tile exacto y
 con él ya seleccionado, en vez de al principio de una hoja larga. Pulsa **Esc** para cerrar
 el editor (sigue preguntando por los cambios sin guardar).
 
@@ -28,7 +28,7 @@ diálogo de confirmación que usa el resto del editor, en lugar de su propia ven
 borrar es deshacible: **Ctrl+Z** justo después de confirmar escribe el tileset de vuelta en su
 antigua ranura.
 
-(El comando aparte **Map → Change Tileset...** es distinto — intercambia qué tileset usa un *mapa* para sus capas nativas; consulta [Gestión de mapas](map-management.md). No edita las propiedades de los tiles.)
+(El comando aparte **Map → Change Tileset** es distinto — intercambia qué tileset usa un *mapa* para sus capas nativas; consulta [Gestión de mapas](map-management.md). No edita las propiedades de los tiles.)
 
 ## Resumen
 
@@ -91,7 +91,7 @@ Los desplegables de Terrain Tag y Priority no se limitan a los valores integrado
 
 - **Nombres leídos de tu juego.** El desplegable de Terrain Tag lee los nombres que tu base define de verdad —`PBS/terrain_tags.txt`, los registros de `GameData::TerrainTag`, las constantes de `module PBTerrain` y cualquier helper de registro personalizado que use tu proyecto (p. ej. `ChronoverseManager.register_terrain_tag`)— escaneando los scripts del núcleo, el árbol suelto de `Data/Scripts/` y `Plugins/`. Un terrain tag que define tu base o un plugin (Grass, Ledge, Water, un tag personalizado Mirror…) muestra su nombre real en vez de un número suelto. Si no encuentra ninguna de esas fuentes, la lista vuelve a los defaults 0–17 de Pokemon Essentials. Priority no tiene un registro equivalente en el juego (las priorities de RMXP son los niveles z posicionales 0–5), así que siempre parte de los nombres estándar 0–5.
 - **Valores detectados automáticamente.** Si tu juego ya usa un terrain tag o un nivel de priority más allá de la lista integrada —por ejemplo un valor que un script o una herramienta anterior escribió en un tile— el editor escanea cada tileset y autotile, encuentra el valor más alto en uso y sube el máximo del desplegable para que cada valor que el juego usa de verdad sea seleccionable.
-- **Tus propias etiquetas, y puedes renombrarlo todo.** En la barra lateral, en modo Terrain Tag o Priority, haz clic en **Añadir nuevo…** al final de la lista para abrir un formulario en línea —elige un id, escribe un nombre y (tanto para terrain tags como para priorities) elige un color de marca que tinta el marcador del canvas y la tarjeta del desplegable. Todas las filas son editables: el icono de lápiz de cualquier fila la renombra, incluidos los defaults y los nombres que haya añadido un [mod](marketplace.md) —y tu etiqueta gana. El icono de papelera aparece solo en filas que has sobreescrito o añadido; sobre un default revierte al nombre original, sobre un tag que añadiste lo elimina. (El selector del menú contextual del clic derecho se queda como selector simple.) Los controles son iconos, no caracteres de texto. Las etiquetas personalizadas se guardan por proyecto en `.maker-studio/tile-labels.json` dentro de la carpeta de tu juego, así viajan con él.
+- **Tus propias etiquetas, y puedes renombrarlo todo.** En la barra lateral, en modo Terrain Tag o Priority, haz clic en **Añadir nuevo** al final de la lista para abrir un formulario en línea —elige un id, escribe un nombre y (tanto para terrain tags como para priorities) elige un color de marca que tinta el marcador del canvas y la tarjeta del desplegable. Todas las filas son editables: el icono de lápiz de cualquier fila la renombra, incluidos los defaults y los nombres que haya añadido un [mod](marketplace.md) —y tu etiqueta gana. El icono de papelera aparece solo en filas que has sobreescrito o añadido; sobre un default revierte al nombre original, sobre un tag que añadiste lo elimina. (El selector del menú contextual del clic derecho se queda como selector simple.) Los controles son iconos, no caracteres de texto. Las etiquetas personalizadas se guardan por proyecto en `.maker-studio/tile-labels.json` dentro de la carpeta de tu juego, así viajan con él.
 
 Así puedes traducir un nombre por defecto (por ejemplo renombrar "Grass" a "Hierba"), darle color a un terrain tag igual que ya lo tienen las priorities, y ponerle nombre a cualquier id detectado automáticamente.
 
@@ -99,7 +99,7 @@ Así puedes traducir un nombre por defecto (por ejemplo renombrar "Grass" a "Hie
 
 El interruptor de **Autotiles** está activado por defecto y muestra los autotiles de todo el proyecto. Desactívalo para ver los autotiles nativos del tileset seleccionado. Maker Studio recuerda esta elección por proyecto en este equipo. Puedes pintar en una capa nativa si el gráfico está asignado al tileset del mapa. Al cambiar de mapa se borra la selección del autotile.
 
-Con la agrupación desactivada, abre **Base de datos → Tilesets**, selecciona un tileset y pulsa **Autotiles**. También puedes abrir esa vista directamente con **Editar propiedades…** en el menú contextual de la paleta. En **Modo**, pulsa **Reemplazar gráfico del autotile** y luego elige una ranura en la cuadrícula para asignar, reemplazar o quitar su gráfico. Edita sus propiedades y pulsa **Aplicar** o **Guardar**. Reemplazar o vaciar una ranura afecta a las casillas que ya la usan. Reactiva la agrupación para recuperar la entrada virtual **Autotiles**.
+Con la agrupación desactivada, abre **Base de datos → Tilesets**, selecciona un tileset y pulsa **Autotiles**. También puedes abrir esa vista directamente con **Editar propiedades** en el menú contextual de la paleta. En **Modo**, pulsa **Reemplazar gráfico del autotile** y luego elige una ranura en la cuadrícula para asignar, reemplazar o quitar su gráfico. Edita sus propiedades y pulsa **Aplicar** o **Guardar**. Reemplazar o vaciar una ranura afecta a las casillas que ya la usan. Reactiva la agrupación para recuperar la entrada virtual **Autotiles**.
 
 Con la agrupación activada, selecciona la entrada virtual **Autotiles** (mostrada como `000: Autotiles` al principio de la lista) o pulsa **Autotiles** desde un tileset normal. Esto abre una cuadrícula dedicada de cada autotile (ranuras nativas + autotiles extra con nombre). Editar una propiedad para un autotile la aplica a los 48 tiles de patrón de ese autotile a la vez.
 
@@ -122,7 +122,7 @@ Se crea una copia de seguridad del archivo original automáticamente en el prime
 
 ### Cambiar a otro tileset con cambios sin guardar
 
-Elegir otro tileset — desde la lista, desde **Edit Properties…** del clic derecho en la Paleta de tiles, o desde el selector de tilesets — pasa a editar ese tileset. Si el que dejas tiene cambios sin guardar, ahora el editor pregunta primero: **Descartar** tira los cambios y cambia, **Seguir editando** te deja donde estabas. Usa **Aplicar** antes de cambiar si quieres conservarlos.
+Elegir otro tileset — desde la lista, desde **Edit Properties** del clic derecho en la Paleta de tiles, o desde el selector de tilesets — pasa a editar ese tileset. Si el que dejas tiene cambios sin guardar, ahora el editor pregunta primero: **Descartar** tira los cambios y cambia, **Seguir editando** te deja donde estabas. Usa **Aplicar** antes de cambiar si quieres conservarlos.
 
 Tras guardar, los overlays de colisión y prioridad se actualizan al instante en todos los mapas abiertos que usan el tileset — incluidos los tiles que colocaste antes. Esto se aplica a cada tile colocado: tiles normales, tiles pintados desde otro tileset, autotiles extra (con nombre) y tiles que rotaste o volteaste. Los tiles rotados y volteados reaplican automáticamente el nuevo paso en la orientación correcta, en el editor y en el juego.
 

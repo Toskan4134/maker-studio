@@ -219,7 +219,7 @@ undo history per list. See [Database](database.md#copying-cutting-and-pasting-re
 | Ctrl+X | Cut — copies, then removes. Blanks the slot on Common Events/Animations instead of renumbering; opens the delete confirmation on Tilesets |
 | Ctrl+V | Paste (Replace) over the selected record |
 | Ctrl+J | Duplicate the selected record — appends a copy to a new slot at the end of the list |
-| Ctrl+Z | Undo the last edit in that list — paste, cut, replace, duplicate, add, delete, and Change Maximum… all count, including on-disk Tileset writes |
+| Ctrl+Z | Undo the last edit in that list — paste, cut, replace, duplicate, add, delete, and Change Maximum all count, including on-disk Tileset writes |
 | Ctrl+Y | Redo the last edit in that list |
 
 Outside the Animations record list, the animation editor uses Copy, Paste, Cut, Undo, and Redo for cells and frames. Use **Delete** or the fixed **Backspace** fallback to remove the selected cell. In the Switch/Variable picker, **↑ / ↓** select the previous or next visible entry.
@@ -239,7 +239,7 @@ In **Set Move Route**, click to select one move action. **Shift+click** extends 
 | Alt + ↑ / ↓ | Move the selected action up / down |
 | ← / → (sequence divider focused) | Resize the route sequence panel (fixed) |
 
-## Move Route Editor (Draw path…)
+## Move Route Editor (Draw path)
 
 These only apply while the visual route editor is open, which is why they can use the bare arrow keys without clashing with anything else. They are all rebindable — see [Set Move Route](events-editor.md#draw-path--the-visual-route-editor).
 

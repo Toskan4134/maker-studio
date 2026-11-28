@@ -37,7 +37,7 @@ Los instaladores **aún no están firmados digitalmente**, así que tu sistema m
 
 ### Paso 2 — Instala el plugin del lado del juego
 
-**El editor puede instalarla.** Al abrir un proyecto sin integración, el cuadro de diálogo muestra un menú **Integración**. Elige la que corresponda a tu proyecto y pulsa **Instalar** para descargar el ZIP y preparar `Plugins/MakerStudio/`. Después, reinicia el juego. Puedes volver a abrir el cuadro desde **Ayuda → Comprobar integración del juego…**.
+**El editor puede instalarla.** Al abrir un proyecto sin integración, el cuadro de diálogo muestra un menú **Integración**. Elige la que corresponda a tu proyecto y pulsa **Instalar** para descargar el ZIP y preparar `Plugins/MakerStudio/`. Después, reinicia el juego. Puedes volver a abrir el cuadro desde **Ayuda → Comprobar integración del juego**.
 
 En **Essentials v17.1** y **BES v5**, pulsa **Descargar** y después **Abrir carpeta**. Extrae el ZIP y pega el archivo `.rb` en el Editor de Scripts.
 
@@ -45,14 +45,14 @@ Para instalarla manualmente, elige la variante de tu motor y descarga el ZIP de 
 
 | Tu proyecto | ZIP de integración u opción del editor |
 |-------------|------------------|
-| Pokémon Essentials **v22** (vanilla) | Selecciona `[PE22] Maker Studio` en Ayuda → Comprobar integración del juego… |
+| Pokémon Essentials **v22** (vanilla) | Selecciona `[PE22] Maker Studio` en Ayuda → Comprobar integración del juego |
 | Pokémon Essentials **v21.1** (vanilla) | [`PE21.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE21.1.Maker.Studio.v1.10.0.zip) |
 | Pokémon Essentials **v20.1** (vanilla) | [`PE20.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE20.1.Maker.Studio.v1.10.0.zip) |
 | Pokémon Essentials **v19.1** (vanilla) | [`PE19.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE19.1.Maker.Studio.v1.10.0.zip) |
 | Pokémon Essentials **v17.1** (vanilla) | [`PE17.1.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/PE17.1.Maker.Studio.v1.10.0.zip) |
 | La Base de Sky **1.1.x** | [`LBDS1.1.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.1.0.Maker.Studio.v1.10.0.zip) |
 | La Base de Sky **1.2.x** | [`LBDS1.2.0.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/LBDS1.2.0.Maker.Studio.v1.10.0.zip) |
-| La Base de Sky **1.3.x** | Selecciona `[LBDS1.3] Maker Studio` en Ayuda → Comprobar integración del juego… |
+| La Base de Sky **1.3.x** | Selecciona `[LBDS1.3] Maker Studio` en Ayuda → Comprobar integración del juego |
 | Pokémon Essentials **BES v5** | [`BES5.Maker.Studio.zip`](https://github.com/Toskan4134/maker-studio/releases/download/integrations-v1.10.0/BES5.Maker.Studio.v1.10.0.zip) |
 
 > **Pokémon Essentials v22 y La Base de Sky 1.3.x** requieren una versión del editor que incluya sus integraciones. Consulta las [publicaciones de integraciones](https://github.com/Toskan4134/maker-studio/releases?q=integrations) para ver los ZIP disponibles para tu versión del editor.
@@ -71,7 +71,7 @@ Para comprobar que funcionó: arranca tu juego en **modo Debug**, abre el menú 
 
 ### Mantener el plugin actualizado
 
-Para cambiar una integración de carpeta ya instalada, abre **Ayuda → Comprobar integración del juego…**, selecciona la nueva variante y pulsa **Reemplazar**. El editor conserva `003_Editor/`.
+Para cambiar una integración de carpeta ya instalada, abre **Ayuda → Comprobar integración del juego**, selecciona la nueva variante y pulsa **Reemplazar**. El editor conserva `003_Editor/`.
 
 Al actualizar La Base de Sky de 1.2.x a 1.3.x, cierra el juego y selecciona `[LBDS1.3] Maker Studio`. Para la instalación manual, usa `LBDS1.3.Maker.Studio.v<versión>.zip` de la publicación de integraciones.
 
@@ -83,7 +83,7 @@ El editor lo comprueba por ti. Cuando abres un proyecto cuyo `Plugins/MakerStudi
 - **Descargar manualmente** — abre la página de la publicación para que copies la carpeta tú mismo.
 - **Más tarde** — lo descarta para este proyecto hasta la próxima actualización del editor.
 
-Puedes lanzar la comprobación cuando quieras desde **Ayuda → Comprobar integración del juego…**, que además te dice qué versión de integración tiene el proyecto (`PE21`, `LBDS1.2`, …) y su número de versión junto a la última disponible.
+Puedes lanzar la comprobación cuando quieras desde **Ayuda → Comprobar integración del juego**, que además te dice qué versión de integración tiene el proyecto (`PE21`, `LBDS1.2`, …) y su número de versión junto a la última disponible.
 
 **Los proyectos de BES v5 y v17.1 también entran.** Esas versiones son un único script pegado en lugar de una carpeta, así que llevan su versión como comentario dentro del propio script. El editor lo encuentra en `Data/Scripts` o en `Scripts.rxdata` y, al pulsar **Actualizar ahora**, reemplaza solo ese script en su sitio: no toca ningún otro y antes hace copia de seguridad del banco de scripts.
 

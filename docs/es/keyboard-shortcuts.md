@@ -2,7 +2,7 @@
 
 Pulsa el botón de teclado de la barra de herramientas, los paneles y los diálogos para ver sus atajos y las teclas configuradas. La lista se abre junto al botón y puede extenderse fuera de un panel estrecho.
 
-Abre **Ayuda → Atajos de teclado…** para consultar y reasignar las acciones integradas. Puedes buscar por acción, categoría o atajo actual. En las tablas, `Ctrl` también admite `Comando` en macOS para las acciones reasignables. Los controles fijos y los gestos del ratón se indican donde corresponden.
+Abre **Ayuda → Atajos de teclado** para consultar y reasignar las acciones integradas. Puedes buscar por acción, categoría o atajo actual. En las tablas, `Ctrl` también admite `Comando` en macOS para las acciones reasignables. Los controles fijos y los gestos del ratón se indican donde corresponden.
 
 Cuando hay un diálogo abierto, sus atajos tienen prioridad sobre los del espacio de trabajo. **Reiniciar aplicación** (Ctrl+R) y **Alternar DevTools** (F12) siguen disponibles en diálogos, campos de texto y el simulador. **Cerrar diálogo** (Escape) se puede reasignar en **Aplicación** y cierra el diálogo o la ventana superpuesta que esté encima. **Ctrl/Comando+Enter** es un atajo fijo que confirma el diálogo superior cuando ofrece una acción de confirmación. Enter puede enviar un diálogo de una sola línea y añade un salto de línea en un campo multilínea. Los formularios de comandos de evento con cambios sin guardar piden confirmación al cerrarse. Consulta el [Editor de eventos](events-editor.md).
 
@@ -221,7 +221,7 @@ actúan sobre todo el registro — un historial de deshacer por lista. Consulta
 | Ctrl+X | Cortar — copia y luego quita. Vacía la ranura en Common Events/Animations en vez de renumerar; abre la confirmación de borrado en Tilesets |
 | Ctrl+V | Pegar (reemplazar) sobre el registro seleccionado |
 | Ctrl+J | Duplicar el registro seleccionado — añade una copia en una ranura nueva al final de la lista |
-| Ctrl+Z | Deshacer la última edición de esa lista — pegar, cortar, reemplazar, duplicar, añadir, borrar y Change Maximum… cuentan todas, incluidas las escrituras a disco de Tilesets |
+| Ctrl+Z | Deshacer la última edición de esa lista — pegar, cortar, reemplazar, duplicar, añadir, borrar y Change Maximum cuentan todas, incluidas las escrituras a disco de Tilesets |
 | Ctrl+Y | Rehacer la última edición de esa lista |
 
 Fuera de la lista de registros de Animaciones, el editor usa Copiar, Pegar, Cortar, Deshacer y Rehacer para las celdas y los fotogramas. Usa **Delete** o la alternativa fija **Backspace** para borrar la celda seleccionada. En el selector de interruptores o variables, **↑ / ↓** seleccionan la entrada visible anterior o siguiente.
@@ -241,7 +241,7 @@ En **Establecer ruta de movimiento**, haz clic para seleccionar una acción. **S
 | Alt + ↑ / ↓ | Mover la acción seleccionada arriba / abajo |
 | ← / → (con el separador de secuencia enfocado) | Cambiar el ancho del panel de secuencia de la ruta (fijo) |
 
-## Editor de rutas de movimiento (Dibujar ruta…)
+## Editor de rutas de movimiento (Dibujar ruta)
 
 Solo se aplican mientras el editor visual de rutas está abierto, por eso pueden usar las flechas a secas sin chocar con nada más. Todos son reasignables — mira [Set Move Route](events-editor.md#dibujar-ruta--el-editor-visual-de-rutas).
 
@@ -349,7 +349,7 @@ En Fragmentos y Mods, **Siguiente pestaña** (Ctrl+Tab) y **Anterior pestaña** 
 
 ## Personalizar atajos
 
-Haz clic en una acción de **Ayuda → Atajos de teclado…** y pulsa la nueva combinación. Si ya está en uso, **Mantener** comparte la nueva tecla, **Intercambiar** asigna tu tecla anterior a las otras acciones en conflicto y **Cancelar** recupera tu asignación anterior. Si otras acciones siguen usando la tecla anterior, **Actualizar todo** también las cambia y **Solo este** conserva sus asignaciones.
+Haz clic en una acción de **Ayuda → Atajos de teclado** y pulsa la nueva combinación. Si ya está en uso, **Mantener** comparte la nueva tecla, **Intercambiar** asigna tu tecla anterior a las otras acciones en conflicto y **Cancelar** recupera tu asignación anterior. Si otras acciones siguen usando la tecla anterior, **Actualizar todo** también las cambia y **Solo este** conserva sus asignaciones.
 
 Dos acciones pueden compartir tecla cuando funcionan en contextos distintos. Por ejemplo, `1` selecciona una capa del mapa o un valor del tileset. Acciones compartidas como **Deshacer** tienen una única asignación que se usa en todos los editores compatibles. Usa el botón de restablecer de cada fila para recuperar su valor predeterminado o **Restablecer todo** para recuperar los de las acciones integradas y los menús de mods. Las asignaciones se conservan entre sesiones.
 

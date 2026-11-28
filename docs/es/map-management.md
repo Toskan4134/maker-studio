@@ -16,11 +16,11 @@ Haz clic en Crear para añadir el mapa a tu proyecto.
 
 ### Crear un mapa dentro de otro
 
-Para anidar el mapa nuevo bajo uno existente, **haz clic derecho en ese mapa** en el árbol de mapas y elige **Nuevo mapa aquí…**. El diálogo de nuevo mapa se abre con ese mapa ya puesto como **Padre**, y el mapa nuevo se crea como hijo suyo. (Puedes cambiar el padre antes de pulsar Crear.)
+Para anidar el mapa nuevo bajo uno existente, **haz clic derecho en ese mapa** en el árbol de mapas y elige **Nuevo mapa aquí**. El diálogo de nuevo mapa se abre con ese mapa ya puesto como **Padre**, y el mapa nuevo se crea como hijo suyo. (Puedes cambiar el padre antes de pulsar Crear.)
 
 ## Cambiar el ID de un mapa
 
-Haz clic derecho en el mapa dentro del árbol de mapas y elige **Cambiar ID…**, luego escribe un ID libre entre 1 y 999. Maker Studio renombra `Map###.rxdata`, mueve la entrada del mapa en `MapInfos.rxdata` (sus mapas hijos siguen colgando de él), reescribe **todos los comandos Transferir jugador del proyecto** que apuntaban al ID antiguo, sigue la **posición inicial del jugador** si estaba en ese mapa, y renombra las imágenes de sombra horneadas del mapa. El aviso te dice cuántos comandos Transferir jugador se actualizaron.
+Haz clic derecho en el mapa dentro del árbol de mapas y elige **Cambiar ID**, luego escribe un ID libre entre 1 y 999. Maker Studio renombra `Map###.rxdata`, mueve la entrada del mapa en `MapInfos.rxdata` (sus mapas hijos siguen colgando de él), reescribe **todos los comandos Transferir jugador del proyecto** que apuntaban al ID antiguo, sigue la **posición inicial del jugador** si estaba en ese mapa, y renombra las imágenes de sombra horneadas del mapa. El aviso te dice cuántos comandos Transferir jugador se actualizaron.
 
 Los IDs de mapa escritos dentro de **scripts de Ruby** no se tocan: no hay forma fiable de encontrarlos, así que revísalos a mano. Los mapas sin guardar se guardan primero, porque la reescritura ocurre en disco.
 
@@ -36,7 +36,7 @@ Para volver al último estado guardado de un mapa, haz clic derecho en su pesta�
 
 ## Mapas vecinos
 
-Haz clic derecho sobre un mapa en el árbol o en cualquier punto del lienzo del mapa activo y elige **Gestionar mapas vecinos…**. Añade un mapa vecino, elige el lado y ajusta el desfase en casillas. Un desfase positivo desplaza hacia la derecha a un vecino situado al norte o al sur, y hacia abajo a uno situado al este o al oeste. Comprueba el borde en la vista previa de tiles y pulsa **Guardar**. Usa Espacio+arrastrar o el botón central para desplazar la vista y Ctrl+rueda o los botones de zoom para inspeccionar el borde. **Ajustar vista** vuelve a mostrar la vista previa completa. Haz clic en una franja para seleccionarla o arrástrala por el borde para cambiar el desfase. Durante el arrastre, las zonas de borde discontinuo indican los otros tres lados. Arrastra la franja hacia otro borde para cambiarla de lado. Ctrl+arrastrar mueve el vecino seleccionado aunque haya franjas superpuestas. Cada conexión puede usar una profundidad propia en ambos sentidos. Escribe `0` para usar el ajuste global o `−1` para mostrar toda la profundidad. La conexión funciona en ambos sentidos. Puedes añadir varios vecinos en el mismo lado si cada uno toca el borde y los tramos compartidos no se solapan.
+Haz clic derecho sobre un mapa en el árbol o en cualquier punto del lienzo del mapa activo y elige **Gestionar mapas vecinos**. Añade un mapa vecino, elige el lado y ajusta el desfase en casillas. Un desfase positivo desplaza hacia la derecha a un vecino situado al norte o al sur, y hacia abajo a uno situado al este o al oeste. Comprueba el borde en la vista previa de tiles y pulsa **Guardar**. Usa Espacio+arrastrar o el botón central para desplazar la vista y Ctrl+rueda o los botones de zoom para inspeccionar el borde. **Ajustar vista** vuelve a mostrar la vista previa completa. Haz clic en una franja para seleccionarla o arrástrala por el borde para cambiar el desfase. Durante el arrastre, las zonas de borde discontinuo indican los otros tres lados. Arrastra la franja hacia otro borde para cambiarla de lado. Ctrl+arrastrar mueve el vecino seleccionado aunque haya franjas superpuestas. Cada conexión puede usar una profundidad propia en ambos sentidos. Escribe `0` para usar el ajuste global o `−1` para mostrar toda la profundidad. La conexión funciona en ambos sentidos. Puedes añadir varios vecinos en el mismo lado si cada uno toca el borde y los tramos compartidos no se solapan.
 
 **Ver → Mostrar mapas vecinos** está activado por defecto y muestra los tiles atenuados y de solo lectura por fuera del contorno del mapa activo. Por defecto se muestran cuatro casillas hacia el interior de cada vecino. En Ajustes, usa `−1` para ver toda la profundidad a lo largo del tramo compartido. Haz doble clic en la franja de un vecino para editarlo conservando el zoom y la posición del borde en pantalla. Las franjas aparecen cuando se cargan sus gráficos de tiles y reflejan los cambios sin guardar de los vecinos abiertos.
 
@@ -67,12 +67,12 @@ Consejos:
 
 - Copiar entre ventanas necesita **Cross-Project Clipboard** activado. Dentro de una sola ventana el conmutador no importa — usa **Duplicate Map** para un clon en el mismo proyecto.
 - La copia pasa por el portapapeles del SO (cuando el conmutador está activado), así que sobrevive a cerrar la ventana de origen. Sin embargo, es grande — pega pronto para no dejar un payload grande en el portapapeles.
-- El mapa pegado cae justo debajo del mapa seleccionado; arrástralo a otro sitio después si quieres anidarlo bajo un padre distinto (o usa **Nuevo mapa aquí…** para un mapa nuevo anidado).
+- El mapa pegado cae justo debajo del mapa seleccionado; arrástralo a otro sitio después si quieres anidarlo bajo un padre distinto (o usa **Nuevo mapa aquí** para un mapa nuevo anidado).
 - El tileset del mapa se referencia por los gráficos de tile que usa; si al proyecto de destino le faltan esos tilesets/autotiles, los tiles se pegan con sus ids originales pero se renderizarán mal hasta que añadas los gráficos ausentes. Los tiles de capas extendidas conservan su referencia original al tileset.
 
 ## Redimensionar y desplazar mapas
 
-Abre **Mapa → Redimensionar / desplazar mapa…**. También puedes hacer clic derecho en el mapa del árbol y elegir la misma opción.
+Abre **Mapa → Redimensionar / desplazar mapa**. También puedes hacer clic derecho en el mapa del árbol y elegir la misma opción.
 
 ### Redimensionar
 
@@ -101,7 +101,7 @@ Haz clic derecho en un mapa del árbol y elige Change Tileset, o usa Map y luego
 
 Usa **Herramientas → Autotiles y efectos de Maker Studio** o el interruptor de la paleta de autotiles para elegir cómo editas los fondos. El ajuste se guarda por proyecto. Al desactivarlo, aparece un aviso sobre el contenido existente que puede requerir la integración en el juego.
 
-Con el ajuste desactivado, la niebla y el panorama pertenecen al tileset. Usa **Cambiar niebla…** o **Cambiar panorama…** en el menú Mapa, o edita la entrada nativa del panel Capas. Aplicar guarda el cambio enseguida para todos los mapas que usan ese tileset. **Mapa → Cambiar fondo de batalla…** cambia el gráfico del tileset en RPG Maker XP estándar o los metadatos `BattleBack` del mapa en Pokémon Essentials y sus derivados. Dejar la selección vacía recupera el fondo predeterminado del motor. Si el editor indica que el cambio de PBS está pendiente, compila los datos PBS en Essentials antes de probarlo.
+Con el ajuste desactivado, la niebla y el panorama pertenecen al tileset. Usa **Cambiar niebla** o **Cambiar panorama** en el menú Mapa, o edita la entrada nativa del panel Capas. Aplicar guarda el cambio enseguida para todos los mapas que usan ese tileset. **Mapa → Cambiar fondo de batalla** cambia el gráfico del tileset en RPG Maker XP estándar o los metadatos `BattleBack` del mapa en Pokémon Essentials y sus derivados. Dejar la selección vacía recupera el fondo predeterminado del motor. Si el editor indica que el cambio de PBS está pendiente, compila los datos PBS en Essentials antes de probarlo.
 
 Con el ajuste activado, usa las opciones siguientes para editar varias capas y configurar fondos de batalla por mapa o versión.
 
@@ -122,9 +122,9 @@ Si un mapa ya tiene un panorama de su tileset (o una sustitución por versión g
 
 Hay tres formas de cambiar el battleback, todas abriendo el mismo selector de imágenes:
 
-- **Barra de menús → Map → Change Battleback…** (junto a Change Tileset…).
-- **Clic derecho en un mapa** del árbol → **Change Battleback…**.
-- Cuando editas una [versión de mapa](map-versions.md), el submenú de clic derecho de la versión tiene **Change Battleback (this version)…**.
+- **Barra de menús → Map → Change Battleback** (junto a Change Tileset).
+- **Clic derecho en un mapa** del árbol → **Change Battleback**.
+- Cuando editas una [versión de mapa](map-versions.md), el submenú de clic derecho de la versión tiene **Change Battleback (this version)**.
 
 Elige un battleback de `Graphics/Battlebacks/`. Los battlebacks vienen en familias de archivos que comparten un nombre: `<nombre>_bg`, `<nombre>_base0`, `<nombre>_base1`, `<nombre>_message` en Pokémon Essentials 19.1 y posteriores (y LBDS), o `battlebg<Nombre>`, `playerbase<Nombre>`, `enemybase<Nombre>` en Essentials 17.1 y BES. En ambos casos el selector lista **una entrada por familia** y guarda ese nombre compartido, no un archivo individual. Déjalo en blanco para quitarlo.
 
@@ -146,8 +146,8 @@ El **battleback no se muestra en el lienzo del mapa** — solo aparece en las ba
 
 Cada mapa puede llevar su propia música y sonido de fondo, que suenan automáticamente al entrar el jugador — los mismos campos **Auto-Change BGM / BGS** que RPG Maker XP pone en Map Properties. Abre el diálogo desde:
 
-- **Barra de menú → Map → Map Audio…**, o
-- **Clic derecho en un mapa** del árbol → **Map Audio…**
+- **Barra de menú → Map → Map Audio**, o
+- **Clic derecho en un mapa** del árbol → **Map Audio**
 
 El diálogo tiene una fila por pista:
 

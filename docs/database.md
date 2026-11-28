@@ -23,11 +23,11 @@ Drag any tab left or right to reorder it. Hold it near either edge to scroll the
 
 Right-click a tab and choose **Hide Tab** to remove it from the row. While any tab is hidden, an eye-off tab with the hidden count appears at the right end of the row; click it to show the hidden tabs dimmed in their usual places, and click again to put them away. You can still open a hidden tab from there. Right-click a hidden tab and choose **Show Tab** to restore it. Hidden tabs are remembered like the order.
 
-Find records by name or ID in the sidebar. The list-based XP editors share the searchable record list with Common Events and Animations. Related panels appear alongside one another when there is room and stack when the window narrows. Change its fields, then click **Apply** to write that tab’s changes to the project. Open **Actions** next to the search field or right-click a row to copy, cut, paste, duplicate, copy multiple records, clear, or delete. **Clear** asks before restoring defaults. To copy a block, start at the first record, choose **Copy Records…**, and enter the number of records. Empty slots are skipped. Paste starts at the selected ID and fills the available slots. **Add** appends one slot. **Change Maximum…** adds slots at the end or removes slots above the new limit. Use **Undo** or **Redo** in the footer before applying your changes. The configured record shortcuts work while the list has focus. Undo and redo also work in the form fields. Search and the event command editor use their own shortcuts.
+Find records by name or ID in the sidebar. The list-based XP editors share the searchable record list with Common Events and Animations. Related panels appear alongside one another when there is room and stack when the window narrows. Change its fields, then click **Apply** to write that tab’s changes to the project. Open **Actions** next to the search field or right-click a row to copy, cut, paste, duplicate, copy multiple records, clear, or delete. **Clear** asks before restoring defaults. To copy a block, start at the first record, choose **Copy Records**, and enter the number of records. Empty slots are skipped. Paste starts at the selected ID and fills the available slots. **Add** appends one slot. **Change Maximum** adds slots at the end or removes slots above the new limit. Use **Undo** or **Redo** in the footer before applying your changes. The configured record shortcuts work while the list has focus. Undo and redo also work in the form fields. Search and the event command editor use their own shortcuts.
 
 Open **System** to edit the starting party, elements, terms, graphics, music, and sound effects. Graphics keep their preview frames visible while empty or loading. **Terminology** sets the labels the game uses for stats, currency, equipment slots, and menu and battle commands. These editors work on standard RPG Maker XP records, including those in Essentials projects with standard `.rxdata` files.
 
-Choose **Delete** or press **Delete** with the record list focused. The confirmation opens while Maker Studio checks references to the record. Choose a replacement if any references use its ID. The deletion stays in your draft and can be undone or redone. Deleting a record immediately closes the gap in the list, and **Add** uses the next ID in that order. **Change Maximum…** is unavailable while deletions are pending. Save map edits and close event editors before clicking **Apply**. Applying saves the draft and its deletions together, closes ID gaps, and updates native references in the database, maps, common events, and troop events. References that already pointed at an empty or missing ID stay broken rather than landing on another record. Changed `.rxdata` files are backed up under `.maker-studio/database-backups`. Review hard-coded IDs in Ruby scripts manually.
+Choose **Delete** or press **Delete** with the record list focused. The confirmation opens while Maker Studio checks references to the record. Choose a replacement if any references use its ID. The deletion stays in your draft and can be undone or redone. Deleting a record immediately closes the gap in the list, and **Add** uses the next ID in that order. **Change Maximum** is unavailable while deletions are pending. Save map edits and close event editors before clicking **Apply**. Applying saves the draft and its deletions together, closes ID gaps, and updates native references in the database, maps, common events, and troop events. References that already pointed at an empty or missing ID stay broken rather than landing on another record. Changed `.rxdata` files are backed up under `.maker-studio/database-backups`. Review hard-coded IDs in Ruby scripts manually.
 
 In **Actors**, use the parameter chart to see how a stat changes across levels. Edit one level at a time or generate a growth curve for that stat. **EXP Curve** lists the total EXP and the EXP to the next level from the initial to the final level. The graphics controls preview project assets. **Classes** and **Enemies** use tables for skill learnings and actions. An enemy's action table shows only the conditions that apply, or **Always**; select an action to edit it and its conditions below, with the turn entered as `A + B × n`. Where an effect can add or remove states, both choices appear in the same state table.
 
@@ -74,7 +74,7 @@ Switches can be pasted into Variables (and back).
 **Ctrl+X** / **Ctrl+V** / **Ctrl+J** copy, cut, paste, and duplicate the same way as the right-click
 menu — the exact keys are whatever you've bound to Copy/Cut/Paste/Duplicate in **Help → Keyboard
 Shortcuts...**. **Ctrl+Z** / **Ctrl+Y** undo and redo record-level edits on that list — not just
-paste/cut/replace/duplicate anymore, but also **+ Add**, **Change Maximum…**, **New Tileset**, and
+paste/cut/replace/duplicate anymore, but also **+ Add**, **Change Maximum**, **New Tileset**, and
 deleting a record, including the on-disk Tileset writes: undoing a pasted-in or newly-added tileset
 writes the old data straight back (or removes the slot it created), and undoing a deleted tileset
 writes it right back into its old slot. Each list's undo is independent of every other panel's —
@@ -84,7 +84,7 @@ undoing here never touches the map canvas or an open editor's own undo history.
 
 Common events are command lists you can call from anywhere (via **Call Common Event**) or run automatically.
 
-1. Pick an event from the list on the left. Use **Change Maximum…** to add or remove slots.
+1. Pick an event from the list on the left. Use **Change Maximum** to add or remove slots.
 2. Set its **Name**.
 3. Choose a **Trigger**:
    - **None** — only runs when another event calls it.
@@ -103,7 +103,7 @@ The Animations editor recreates the RPG Maker XP animation tool, with some extra
 
 **Set up the animation**
 
-1. Select an animation on the left (or **Change Maximum…** to add slots) and give it a **Name**.
+1. Select an animation on the left (or **Change Maximum** to add slots) and give it a **Name**.
 2. Click **Graphic** to choose the spritesheet from `Graphics/Animations/` (and an optional hue shift).
 3. Pick a **Position** (Top / Middle / Bottom / Screen) and the number of **Frames**.
 
@@ -121,9 +121,9 @@ Each frame is made of *cells* — pieces of the spritesheet placed over the targ
 
 - **+ Frame** adds a frame; **Paste Last** copies the previous frame's cells into the current one.
 - **Copy Frame / Paste Frame / Clear Frame** work on the whole current frame.
-- **Tweening…** smoothly interpolates a range of cells between two frames (pick which frames, which cells, and whether to tween Pattern, Position/Zoom/Angle, and/or Opacity/Blending).
-- **Cell Batch…** sets chosen values (X, Y, Zoom, Angle, Flip, Opacity, Blending, Pattern) on a range of cells across a range of frames.
-- **Entire Slide…** slides every cell across a range of frames by a per-frame X/Y amount.
+- **Tweening** smoothly interpolates a range of cells between two frames (pick which frames, which cells, and whether to tween Pattern, Position/Zoom/Angle, and/or Opacity/Blending).
+- **Cell Batch** sets chosen values (X, Y, Zoom, Angle, Flip, Opacity, Blending, Pattern) on a range of cells across a range of frames.
+- **Entire Slide** slides every cell across a range of frames by a per-frame X/Y amount.
 
 **SE and flash timing**
 

@@ -17,9 +17,9 @@ Las versiones comparten el **ancho y alto** del mapa (son el mismo mapa), y comp
 Puedes llegar a las versiones de mapa desde varios sitios — todos ejecutan las mismas acciones:
 
 - Botón **Versions** en la **barra de herramientas** — muestra la versión actual como una insignia (p. ej. `V2/3`) y abre el **Version Manager**.
-- **Map → Map Versions…** en la barra de menús.
+- **Map → Map Versions** en la barra de menús.
 - El control **Version** en el extremo derecho de la **barra de estado** (cambio rápido + menú).
-- **Clic derecho en un mapa** del árbol de mapas → **Versions** (cambio rápido) o **Manage Versions…**.
+- **Clic derecho en un mapa** del árbol de mapas → **Versions** (cambio rápido) o **Manage Versions**.
 
 ### El Version Manager
 

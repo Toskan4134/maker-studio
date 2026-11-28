@@ -50,21 +50,21 @@ El estado de bloqueo se recuerda entre sesiones. El Eyedropper siempre aplica la
 
 ### Presets
 
-Haz clic en **Presets…** en la cabecera del panel Tile Properties para abrir el gestor de presets. Desde aquí puedes:
+Haz clic en **Presets** en la cabecera del panel Tile Properties para abrir el gestor de presets. Desde aquí puedes:
 
 - **Guardar** los valores actuales como un preset nuevo con nombre — útil para combinaciones que reutilizas (p. ej. "Noche apagada", "Sepia").
 - **Usar** un preset guardado en el pincel actual — el diálogo se cierra al usarlo (doble clic sobre un preset hace lo mismo).
 - **Renombrar** un preset existente.
 - **Sobrescribir** un preset con los valores actuales del pincel.
 - **Eliminar** un preset.
-- **Exportar…** tus presets — elige una carpeta y cada preset se guarda como su propio archivo `ms_<name>_<index>_preset.json`. **Si tienes presets seleccionados solo se exportan esos**; sin nada seleccionado se exporta la biblioteca activa. El botón te dice cuál es el caso (`Exportar 3…` cuando hay tres seleccionados).
-- **Importar…** uno o varios archivos de preset a la vez — selecciona varios archivos en el selector y todos se fusionan. No se borra nada de lo que ya tienes. Los presets con un nombre nuevo se añaden directamente, y uno que llega idéntico al que ya tienes se deja como está sin preguntar. Si algún preset importado comparte nombre con uno tuyo pero tiene contenido *distinto*, se abre una lista con todos a la vez: agrupados por carpeta, todo marcado, con una casilla por preset y por carpeta. Desmarca los pocos que quieras mantener como están, haz clic en el nombre de un preset para comparar **El tuyo** con el **Importado** lado a lado (los fragmentos de script conservan los colores de sintaxis del editor de scripts), marca **Ver diferencias** para verlo en un solo panel donde las líneas que cambian van marcadas en su sitio (rojo lo que se va, verde lo que entra), con los colores de sintaxis del editor, y pulsa **Reemplazar N** — o **Mantener los míos** para no tocar nada. Los archivos que contienen otro tipo de preset (p. ej. presets de sombra) se omiten.
+- **Exportar** tus presets — elige una carpeta y cada preset se guarda como su propio archivo `ms_<name>_<index>_preset.json`. **Si tienes presets seleccionados solo se exportan esos**; sin nada seleccionado se exporta la biblioteca activa. El botón te dice cuál es el caso (`Exportar 3…` cuando hay tres seleccionados).
+- **Importar** uno o varios archivos de preset a la vez — selecciona varios archivos en el selector y todos se fusionan. No se borra nada de lo que ya tienes. Los presets con un nombre nuevo se añaden directamente, y uno que llega idéntico al que ya tienes se deja como está sin preguntar. Si algún preset importado comparte nombre con uno tuyo pero tiene contenido *distinto*, se abre una lista con todos a la vez: agrupados por carpeta, todo marcado, con una casilla por preset y por carpeta. Desmarca los pocos que quieras mantener como están, haz clic en el nombre de un preset para comparar **El tuyo** con el **Importado** lado a lado (los fragmentos de script conservan los colores de sintaxis del editor de scripts), marca **Ver diferencias** para verlo en un solo panel donde las líneas que cambian van marcadas en su sitio (rojo lo que se va, verde lo que entra), con los colores de sintaxis del editor, y pulsa **Reemplazar N** — o **Mantener los míos** para no tocar nada. Los archivos que contienen otro tipo de preset (p. ej. presets de sombra) se omiten.
 
 Un lienzo de vista previa muestra cómo quedaría el preset resaltado aplicado al tile seleccionado. Con un proyecto abierto, el gestor tiene pestañas Proyecto y Global; los presets del proyecto se guardan con ese juego y los globales se comparten entre proyectos. La búsqueda cubre ambas bibliotecas y cada pestaña muestra cuántos resultados tiene. Los presets, las carpetas y las importaciones nuevas se guardan en la pestaña activa. Copiar a… conserva el preset original y lo copia a la otra biblioteca. Los archivos de importación mantienen el formato JSON actual, la exportación funciona igual y ambas bibliotecas se recuerdan entre sesiones. Las preferencias de carpetas plegadas se guardan en este equipo.
 
-**Seleccionar varios.** Haz clic en un preset para seleccionarlo, **Ctrl+clic** para añadir o quitar uno y **Mayús+clic** para coger todo lo que hay entre medias. Al hacer clic en el **nombre de una carpeta** se selecciona la carpeta y todo lo que contiene (la flecha de al lado la pliega). Con más de un elemento seleccionado, la parte derecha cambia a la lista de lo elegido más **Mover a…**, **Exportar…** y **Eliminar** — así archivas, compartes o borras un puñado de presets de una vez en lugar de uno a uno.
+**Seleccionar varios.** Haz clic en un preset para seleccionarlo, **Ctrl+clic** para añadir o quitar uno y **Mayús+clic** para coger todo lo que hay entre medias. Al hacer clic en el **nombre de una carpeta** se selecciona la carpeta y todo lo que contiene (la flecha de al lado la pliega). Con más de un elemento seleccionado, la parte derecha cambia a la lista de lo elegido más **Mover a**, **Exportar** y **Eliminar** — así archivas, compartes o borras un puñado de presets de una vez en lugar de uno a uno.
 
-**Carpetas.** El botón **+** ofrece *Nuevo preset…* y *Nueva carpeta…*. Una carpeta puede estar vacía: se queda hasta que la borres. Los presets entran y salen de las carpetas **arrastrando** (si arrastras uno de los seleccionados se mueve toda la selección) o con **Mover a…**: suelta uno sobre una carpeta (o sobre cualquier preset de dentro) para archivarlo ahí, y suéltalo en la zona suelta de debajo de las carpetas para sacarlo. Soltar un preset sobre otro además reordena. Haz clic derecho en una carpeta para renombrarla o borrarla; al borrarla te pregunta si los presets de dentro se van con ella o simplemente salen. Borrar una carpeta **seleccionada** desde el panel de selección se lleva siempre sus presets. Las carpetas plegadas **siguen plegadas**: la flecha de al lado del nombre se recuerda, así que las que cerraste vuelven cerradas la próxima vez que abras el diálogo (renombrar una carpeta la vuelve a abrir).
+**Carpetas.** El botón **+** ofrece *Nuevo preset* y *Nueva carpeta*. Una carpeta puede estar vacía: se queda hasta que la borres. Los presets entran y salen de las carpetas **arrastrando** (si arrastras uno de los seleccionados se mueve toda la selección) o con **Mover a**: suelta uno sobre una carpeta (o sobre cualquier preset de dentro) para archivarlo ahí, y suéltalo en la zona suelta de debajo de las carpetas para sacarlo. Soltar un preset sobre otro además reordena. Haz clic derecho en una carpeta para renombrarla o borrarla; al borrarla te pregunta si los presets de dentro se van con ella o simplemente salen. Borrar una carpeta **seleccionada** desde el panel de selección se lleva siempre sus presets. Las carpetas plegadas **siguen plegadas**: la flecha de al lado del nombre se recuerda, así que las que cerraste vuelven cerradas la próxima vez que abras el diálogo (renombrar una carpeta la vuelve a abrir).
 
 ## Tamaño de pincel y borrador
 
@@ -87,7 +87,7 @@ Un Custom Shape Brush te deja construir un pincel reutilizable a partir de una f
 Abre el Brush Editor desde cualquiera de estos:
 
 - El **popover del Brush al pasar el ratón** en la barra de herramientas (pasa sobre el botón de Brush).
-- **Tools → Brush Editor…** en la barra de menús.
+- **Tools → Brush Editor** en la barra de menús.
 
 El popover del Brush tambén tiene un **conmutador rápido**: un desplegable que lista presets guardados de las bibliotecas Proyecto y Globales, además de Default (square) y Custom (unsaved). Elige uno para activarlo al instante sin abrir el editor.
 
@@ -121,7 +121,7 @@ Haz clic en **Apply** para guardar el pincel, o **Close** para descartar tus cam
 
 ### Guardar y compartir
 
-Haz clic en **Presets…** en el editor para guardar el pincel actual como un preset con nombre, aplicar uno guardado, o **Export** / **Import** pinceles como archivos para compartirlos o moverlos entre proyectos. El rango de tamaño del pincel viaja con él, así que un pincel importado conserva su propio Min/Max. (Funciona igual que los presets de Tile Properties — consulta [Presets](#presets) arriba.)
+Haz clic en **Presets** en el editor para guardar el pincel actual como un preset con nombre, aplicar uno guardado, o **Export** / **Import** pinceles como archivos para compartirlos o moverlos entre proyectos. El rango de tamaño del pincel viaja con él, así que un pincel importado conserva su propio Min/Max. (Funciona igual que los presets de Tile Properties — consulta [Presets](#presets) arriba.)
 
 ## Estampas multi-tile
 

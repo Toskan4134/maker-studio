@@ -2,7 +2,7 @@
 
 El editor de **Scripts** te permite ver, reordenar, renombrar, añadir, borrar y editar los scripts Ruby de tu proyecto directamente desde Maker Studio — los mismos scripts que RPG Maker XP guarda en `Data/Scripts.rxdata`. Es útil en bases que no incluyen un `scripts_extract.rb`, para que puedas trabajar con el código sin salir del editor.
 
-Ábrelo desde el botón **Scripts** de la barra de herramientas (junto a **Database**) o **Tools → Scripts…**.
+Ábrelo desde el botón **Scripts** de la barra de herramientas (junto a **Database**) o **Tools → Scripts**.
 
 ## La ventana
 
@@ -30,7 +30,7 @@ Abre el botón de teclado de la barra de Scripts para consultar los atajos de b�
 - **Buscar en el script actual** — pulsa `Ctrl+F` para abrir una barra de buscar y reemplazar en lo alto del editor de código. Admite distinguir mayúsculas, expresiones regulares, coincidencia de palabra completa y reemplazar / reemplazar todo, y sigue el idioma y tema del editor.
 - **Buscar en todos los scripts** — pulsa `Ctrl+Shift+F` para abrir un panel de búsqueda que recorre el título y el código de **cada** script a la vez. Los resultados aparecen agrupados por script con números de línea y la coincidencia resaltada; haz clic en un resultado para saltar directo a esa línea, incluso en otro script. Activa **Aa** para coincidencia sensible a mayúsculas o **.*** para expresiones regulares (un patrón inválido simplemente no muestra resultados). Las búsquedas muy amplias se detienen en 500 resultados — acota la consulta para ver el resto.
 
-Puedes reasignar ambas acciones de búsqueda en la sección **Scripts** de **Ayuda → Atajos de teclado…**. El guardado usa el atajo compartido **Guardar**. Consulta [Atajos de teclado](keyboard-shortcuts.md#editor-de-scripts).
+Puedes reasignar ambas acciones de búsqueda en la sección **Scripts** de **Ayuda → Atajos de teclado**. El guardado usa el atajo compartido **Guardar**. Consulta [Atajos de teclado](keyboard-shortcuts.md#editor-de-scripts).
 
 ## De dónde sale el código
 
@@ -78,7 +78,7 @@ Lo único que se queda en `Scripts.rxdata` es el **orden**: en disco los archivo
 
 ## Fragmentos (Snippets)
 
-El botón **Snippets…** de la barra abre la misma biblioteca de fragmentos que usan los cuadros de
+El botón **Snippets** de la barra abre la misma biblioteca de fragmentos que usan los cuadros de
 script del editor de eventos, así que un ayudante que guardaste escribiendo un evento está aquí a un
 clic — y lo que guardes aquí aparece allí. Un fragmento nuevo se recorta de lo que tengas
 **seleccionado** en el código (o del script entero si no hay nada seleccionado), y al usar uno se te
