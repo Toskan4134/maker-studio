@@ -128,12 +128,12 @@ Si pulsas **Ctrl+R** mientras hay un diálogo o el simulador abierto, un aviso n
 | Ctrl+D | Deseleccionar (tiles, cualquier sombra seleccionada y evento[s] seleccionado[s]) |
 | Ctrl+Shift+D | Quitar la selección de la Paleta de tiles — descarta la estampa y el autotile actuales, dejando nada elegido. No toca la selección del mapa. |
 | Ctrl+C | Copiar las casillas seleccionadas de las capas de tiles seleccionadas |
-| Ctrl+V | Mostrar la vista previa de pegado en la capa de tiles activa. Haz clic para colocarla. |
+| Ctrl+V | Mostrar la vista previa de pegado: una capa copiada va a la capa activa; varias conservan sus capas. Haz clic para colocarla. Las casillas vacías solo borran con Edit → Advanced Clipboard → Empty Cells Erase on Paste. |
 | Ctrl+X | Cortar las casillas seleccionadas de las capas de tiles seleccionadas |
 | Ctrl+J | Duplicar la selección y activar la vista previa de pegado. Haz clic para colocar la copia. |
-| Ctrl+Shift+C | Copiar todas las capas |
-| Ctrl+Shift+V | Pegar en las capas seleccionadas |
-| Ctrl+Shift+X | Cortar todas las capas |
+| Ctrl+Shift+C | Copiar todas las capas visibles |
+| Ctrl+Shift+V | Pegar en las capas seleccionadas, de abajo arriba, siguiendo por las capas de encima de la selección |
+| Ctrl+Shift+X | Cortar todas las capas visibles |
 | Ctrl + clic/arrastrar | Añadir tiles a la selección (gesto fijo) |
 | Shift + clic/arrastrar | Quitar tiles de la selección (gesto fijo) |
 | Delete | Vaciar las casillas seleccionadas de las capas de tiles seleccionadas |
@@ -300,14 +300,14 @@ Haz clic en una fila del panel de capas para darle el foco. **Ctrl/Meta+clic** a
 
 | Tecla por defecto | Acción |
 |-------------|--------|
-| Ctrl+C | Copiar la capa activa, tiles y ajustes por tile incluidos (igual que clic derecho → Copiar capa) |
-| Ctrl+X | Cortar la capa activa — la copia y luego la vacía (igual que clic derecho → Cortar capa) |
-| Ctrl+V | Pegar la capa copiada — siempre pregunta si quieres reemplazar la capa activa o pegar en una capa nueva (igual que clic derecho → Pegar capa) |
-| Ctrl+J | Duplicar la capa activa, tiles incluidos — también funciona en capas nativas, y la copia siempre se convierte en una capa extendida nueva (igual que clic derecho → Duplicar capa) |
+| Ctrl+C | Sin zona marcada en el mapa, copiar la capa activa entera (igual que clic derecho → Copiar capa). Con una zona marcada, copiar la zona como en el lienzo. |
+| Ctrl+X | Misma regla: cortar la capa activa entera o la zona marcada |
+| Ctrl+V | Pegar la capa copiada (pregunta si reemplazar la capa activa o añadir una nueva) cuando una copia de capa es lo último que copiaste; si no, pegar tiles como en el lienzo |
+| Ctrl+J | Misma regla que Ctrl+C: duplicar la capa activa entera o la zona marcada |
 | Delete | Borrar las capas extendidas de tiles seleccionadas si todas se pueden eliminar |
 | F2 | Renombrar en línea la única capa seleccionada |
 
-Estas acciones usan la selección o la capa activa del panel de capas cuando tiene el foco. El portapapeles funciona con capas de tiles nativas y extendidas. F2 requiere una sola capa de tiles seleccionada y el foco fuera de un campo editable. Delete requiere que todas las filas seleccionadas sean capas de tiles extendidas que se puedan borrar. Con el foco en la lista, Shift+↑ y Shift+↓ amplían la selección de filas visibles. Consulta [Capas](layers.md#panel-de-capas).
+Estas acciones usan la selección o la capa activa del panel de capas cuando tiene el foco. Ctrl+C / Ctrl+X / Ctrl+J solo actúan sobre la capa entera cuando no hay ninguna zona marcada en el mapa, así que una zona marcada nunca se ignora. F2 requiere una sola capa de tiles seleccionada y el foco fuera de un campo editable. Delete requiere que todas las filas seleccionadas sean capas de tiles extendidas que se puedan borrar. Con el foco en la lista, Shift+↑ y Shift+↓ amplían la selección de filas visibles. Consulta [Capas](layers.md#panel-de-capas).
 
 ## Simulador de juego
 

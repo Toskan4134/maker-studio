@@ -128,12 +128,12 @@ If you press **Ctrl+R** while a dialog or the simulator is open, a native warnin
 | Ctrl+D | Deselect (tiles, any selected shadow, and selected event[s]) |
 | Ctrl+Shift+D | Clear the Tile Palette selection — drops the current stamp and autotile, leaving nothing picked. Does not touch a selection on the map. |
 | Ctrl+C | Copy selected cells from the selected tile layers |
-| Ctrl+V | Preview paste on the active tile layer. Click to place it. |
+| Ctrl+V | Preview the paste: one copied layer goes to the active layer, several keep their own layers. Click to place it. Empty cells erase only with Edit → Advanced Clipboard → Empty Cells Erase on Paste. |
 | Ctrl+X | Cut selected cells from the selected tile layers |
 | Ctrl+J | Duplicate the selection and start a paste preview. Click to place the copy. |
-| Ctrl+Shift+C | Copy all layers |
-| Ctrl+Shift+V | Paste in selected layers |
-| Ctrl+Shift+X | Cut all layers |
+| Ctrl+Shift+C | Copy all visible layers |
+| Ctrl+Shift+V | Paste into selected layers, bottom-up, continuing into the layers above the selection |
+| Ctrl+Shift+X | Cut all visible layers |
 | Ctrl + click/drag | Add tiles to selection (fixed gesture) |
 | Shift + click/drag | Remove tiles from selection (fixed gesture) |
 | Delete | Clear the selected cells on the selected tile layers |
@@ -298,14 +298,14 @@ Click a row in the Layer Panel to give it focus. **Ctrl/Meta+click** toggles row
 
 | Default Key | Action |
 |-------------|--------|
-| Ctrl+C | Copy the active layer, tiles and per-tile settings included (same as right-click → Copy Layer) |
-| Ctrl+X | Cut the active layer — copies it, then clears it (same as right-click → Cut Layer) |
-| Ctrl+V | Paste the copied layer — always asks whether to replace the active layer or paste into a new layer (same as right-click → Paste Layer) |
-| Ctrl+J | Duplicate the active layer, tiles included — works on native layers too, and the copy always lands as a new extended layer (same as right-click → Duplicate Layer) |
+| Ctrl+C | With no area marked on the map, copy the whole active layer (same as right-click → Copy Layer). With an area marked, copy the area as on the canvas. |
+| Ctrl+X | Same rule: cut the whole active layer, or the marked area |
+| Ctrl+V | Paste the copied layer (asks whether to replace the active layer or add a new one) when a layer copy is your latest copy; otherwise paste tiles as on the canvas |
+| Ctrl+J | Same rule as Ctrl+C: duplicate the whole active layer, or the marked area |
 | Delete | Delete selected extended tile layers when every selected row is removable |
 | F2 | Rename the one selected layer inline |
 
-These actions use the Layer Panel’s selection or active layer while it has focus. Clipboard actions work on native and extended tile layers. F2 requires one selected tile layer and a noneditable focus target. Delete requires all selected rows to be removable extended tile layers. The focused list also handles Shift+↑ / Shift+↓ to extend a range of visible rows. See [Layers](layers.md#layer-panel).
+These actions use the Layer Panel’s selection or active layer while it has focus. Ctrl+C / Ctrl+X / Ctrl+J only act on the whole layer when no area is marked on the map, so a marked area is never ignored. F2 requires one selected tile layer and a noneditable focus target. Delete requires all selected rows to be removable extended tile layers. The focused list also handles Shift+↑ / Shift+↓ to extend a range of visible rows. See [Layers](layers.md#layer-panel).
 
 ## Game Simulator
 
