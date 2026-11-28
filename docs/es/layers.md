@@ -1,5 +1,19 @@
 # Guía de capas
 
+## Capas de referencia
+
+Si editas el archivo original, el lienzo y la vista previa se actualizan automáticamente. Si borras el original, el editor sigue usando la última copia guardada en el proyecto. Si ambas copias faltan, puedes reemplazar la imagen desde **Editar referencia**.
+
+En **Editar referencia** puedes girar la imagen en pasos de 90°, introducir un ángulo exacto o voltearla en horizontal y vertical. Los cambios se previsualizan en el lienzo.
+
+En el lienzo, arrastra el tirador circular para girar la imagen. Mantén **Ctrl** (**⌘** en macOS) para ajustar a múltiplos de 15°. El menú contextual permite voltear la imagen o girarla 90°.
+
+Usa **+** en **Capas de referencia** para añadir un boceto PNG, JPEG o WebP al mapa actual. Puedes configurar la posición en píxeles del mapa, la escala y la opacidad en porcentajes y la posición de dibujo. Usa el menú contextual de la fila para reordenar la referencia entre las que comparten posición de dibujo.
+
+Selecciona una referencia para moverla o arrastra un borde o una esquina para redimensionarla. Mantén **Mayús** al redimensionar para conservar sus proporciones, o **Ctrl** (**⌘** en macOS) al mover para ajustarla a los bordes y ejes centrales del mapa. Desplázala un píxel con las flechas o diez si mantienes **Mayús**. Usa **+** o **−** para cambiar la opacidad y **Supr** para eliminarla. Para volver a pintar, deselecciona la referencia o selecciona una capa de tiles en **Capas**.
+
+Las referencias se guardan con el proyecto para cada mapa y solo aparecen en el editor. Si falta una imagen, abre su configuración y selecciona **Reemplazar imagen** para conservar sus ajustes.
+
 ## Capas nativas
 
 El editor ofrece tres capas nativas totalmente compatibles con RPG Maker XP. Estas capas usan el tileset asignado al mapa y los IDs de tile estándar. Los tiles estándar de estas capas funcionan en RPG Maker XP. Los tiles de otros tilesets, los autotiles extra y los efectos por tile usan datos de Maker Studio y requieren una integración de juego.

@@ -1,5 +1,19 @@
 # Layers Guide
 
+## Reference layers
+
+Edits to the original image refresh the canvas and preview automatically. If the original is deleted, the editor uses the latest project copy. If both copies are missing, choose a replacement in **Edit reference**.
+
+In **Edit reference**, rotate the image in 90° steps, enter an exact angle, or flip it horizontally or vertically. The canvas previews your changes.
+
+On the canvas, drag the circular handle to rotate the image. Hold **Ctrl** (**⌘** on macOS) to snap to 15° increments. Use the context menu to flip the image or rotate it 90°.
+
+Use **+** in **Reference Layers** to bring a PNG, JPEG, or WebP sketch into the current map. Edit its position in map pixels, scale and opacity in percent, and draw position. Use the reference row's context menu to reorder it relative to references at the same draw position.
+
+Select a reference to move it or drag an edge or corner to resize it. Hold **Shift** while resizing to preserve its proportions, or **Ctrl** (**⌘** on macOS) while moving to snap to the map edges and centerlines. Use the arrow keys to move it by one map pixel, or hold **Shift** to move by ten. Use **+** or **−** to change opacity and **Delete** to remove the reference. To resume painting, deselect the reference or select a tile layer in **Layers**.
+
+References save with the project for each map and appear only in the editor. If a copy goes missing, open the reference's settings and select **Replace image** to keep its existing settings.
+
 ## Native layers
 
 The editor provides three native layers that are fully compatible with RPG Maker XP. These layers use the map's assigned tileset and standard tile IDs. Standard tiles on these layers work in RPG Maker XP. Cross-tileset tiles, extra autotiles, and per-tile effects use Maker Studio data and require a game integration.
