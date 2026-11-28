@@ -163,8 +163,8 @@ In the editor and tile palette, hold the **Pan** shortcut (Space by default) or 
 | Default Key | Action |
 |-------------|--------|
 | Ctrl+S | Save tileset (keeps the editor open) |
-| Ctrl+Z | Undo tileset edit |
-| Ctrl+Y | Redo tileset edit |
+| Ctrl+Z | Undo tileset edit or selection change |
+| Ctrl+Y | Redo tileset edit or selection change |
 | Ctrl+A | Select all tiles |
 | Ctrl+D | Deselect tiles |
 

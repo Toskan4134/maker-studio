@@ -34,6 +34,10 @@ antigua ranura.
 
 El editor de tilesets te permite modificar las propiedades base de cada tile de un tileset. Son los mismos ajustes que encuentras en RPG Maker XP bajo Database y luego Tilesets. Los cambios hechos aquí se aplican a todos los mapas que usan este tileset.
 
+### Seleccionar tiles
+
+Ctrl+arrastrar añade tiles a la selección y Shift+arrastrar los quita. Ctrl+A selecciona todos los tiles y Ctrl+D borra la selección. La selección se dibuja como en el mapa: un relleno tintado con un contorno discontinuo alrededor de su borde exterior. Hacer clic en un tile dentro de la selección, o usar la barra lateral o el menú de clic derecho, edita todos los tiles seleccionados a la vez. Hacer clic fuera edita solo ese tile. La selección se mantiene tras una edición, así que puedes aplicar varias propiedades seguidas. Ctrl+Z y Ctrl+Y también deshacen y rehacen los cambios de selección.
+
 ## Dimensiones de los gráficos
 
 La paleta abre en modo **Ajustar** para los tilesets que todavía no tienen un zoom guardado. Usa **Ctrl + rueda** (**Cmd** en macOS) para cambiar el tamaño. **Ajustar** responde al ancho del panel mientras lo redimensionas. Los cuadros del fondo de transparencia conservan su tamaño a cualquier zoom. Usa **Ajustar** en la cabecera de la paleta para alternar entre ajustar al panel y fijar el tamaño actual. La paleta guarda el modo y el zoom por tileset en este dispositivo. Las celdas miden al menos 16 px, por lo que los tilesets anchos pueden seguir teniendo desplazamiento horizontal. En ambas vistas, mantén pulsado el atajo de **Pan** (Espacio por defecto) o el botón central del ratón y arrastra para moverte, aunque el foco esté en otro control. Ensancha el panel para ver más columnas o arrastra una selección hasta cualquier borde para desplazarla. En el editor de tilesets de la base de datos, usa **Shift + rueda** para desplazarte en horizontal y **Ctrl + rueda** (**Cmd** en macOS) para hacer zoom alrededor del puntero. Cada paso cambia el zoom en la misma proporción, tanto en la paleta como en el editor.

@@ -32,6 +32,10 @@ used everywhere else in the editor, instead of its own custom popup — and dele
 
 The Tileset Editor lets you modify base properties for every tile in a tileset. These are the same settings you find in RPG Maker XP under Database then Tilesets. Changes made here apply to every map that uses this tileset.
 
+### Selecting tiles
+
+Ctrl+drag adds tiles to the selection and Shift+drag removes them. Ctrl+A selects every tile and Ctrl+D clears the selection. The selection is drawn like a map selection: a tinted fill with a dashed outline around its outer edge. Clicking a tile inside a selection, or using the sidebar or right-click menu, edits every selected tile at once. Clicking outside it edits just that tile. The selection stays in place after an edit, so you can apply several properties in a row. Ctrl+Z and Ctrl+Y also undo and redo selection changes.
+
 ## Graphic dimensions
 
 The palette opens in **Fit** mode for tilesets without a saved zoom. Use **Ctrl + mouse wheel** (**Cmd** on macOS) to change their size. **Fit** follows the panel width as you resize it. The transparency checkerboard keeps the same square size at every zoom. Use **Fit** in the palette header to switch between fitting the panel and locking the current size. The palette saves the mode and zoom per tileset on this device. Cells stay at least 16 px wide, so wide sheets can still scroll horizontally in Fit mode. In either view, hold the **Pan** shortcut (Space by default) or the middle mouse button and drag to move the view, even when another control has focus. Widen the panel to reveal more columns, or drag a selection to any edge to scroll. In the Database Tileset Editor, use **Shift + mouse wheel** to scroll horizontally and **Ctrl + mouse wheel** (**Cmd** on macOS) to zoom around the pointer. Each step uses the same zoom ratio in the palette and the editor.

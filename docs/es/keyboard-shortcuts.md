@@ -163,8 +163,8 @@ En el editor y la paleta de tiles, mantén el atajo **Pan** (Espacio por defecto
 | Tecla por defecto | Acción |
 |-------------|--------|
 | Ctrl+S | Guardar tileset (mantiene el editor abierto) |
-| Ctrl+Z | Deshacer edición de tileset |
-| Ctrl+Y | Rehacer edición de tileset |
+| Ctrl+Z | Deshacer edición de tileset o cambio de selección |
+| Ctrl+Y | Rehacer edición de tileset o cambio de selección |
 | Ctrl+A | Seleccionar todos los tiles |
 | Ctrl+D | Deseleccionar tiles |
 
