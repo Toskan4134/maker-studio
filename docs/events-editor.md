@@ -277,6 +277,8 @@ Double-click a command to edit its parameters. Many commands have dedicated type
 
 If you change a command form, Escape, clicking outside, the close button, and Cancel ask whether to **Apply & Close**, **Discard**, or keep editing. If you revert all fields, it closes without a prompt. This applies to Show Text, Comment, Script, and other command forms. A new **Scroll Map** starts at Down, distance 0, speed 4.
 
+**Color tone presets.** Change Screen Color Tone, Change Fog Color Tone and Change Picture Color Tone have one-click presets above the sliders: **Normal**, **Black**, **B&W**, **Dark**, **Sepia**, **Sunset** and **Night**. A new Change Screen Color Tone or Change Picture Color Tone starts at 20 frames, so a fade to black is **Black** then OK, and back is **Normal**.
+
 **Selecting several commands from the keyboard**: hold **Shift** and press ↑ / ↓ to
 grow or shrink the selection from where you started, the same as Shift+clicking. Copy,
 cut, paste, delete and Alt+↑/↓ reorder then act on the whole run.
